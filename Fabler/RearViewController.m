@@ -25,6 +25,8 @@
     UIBarButtonItem *revealButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
             style:UIBarButtonItemStylePlain target:grandParentRevealController action:@selector(revealToggle:)];
     
+    self.navigationController.navigationBar.hidden = YES;
+    
     if ( grandParentRevealController )
     {
         NSInteger level=0;
@@ -41,7 +43,7 @@
     
     else
     {
-        self.navigationItem.title = @"Master";
+        self.navigationItem.title = @"lol";
     }
 }
 
@@ -77,7 +79,7 @@
     
 	if (nil == cell)
 	{
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
 	}
 	
     NSString *text = nil;
