@@ -1,15 +1,15 @@
 //
-//  FablerTests.swift
-//  FablerTests
+//  SidebarMenuTests.swift
+//  SidebarMenuTests
 //
-//  Created by Christopher Day on 10/19/15.
-//  Copyright © 2015 Fabler. All rights reserved.
+//  Created by Simon Ng on 2/2/15.
+//  Copyright (c) 2015 AppCoda. All rights reserved.
 //
 
+import UIKit
 import XCTest
-@testable import Fabler
 
-class FablerTests: XCTestCase {
+class SidebarMenuTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -23,12 +23,12 @@ class FablerTests: XCTestCase {
     
     func testExample() {
         // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        XCTAssert(true, "Pass")
     }
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
-        self.measureBlock {
+        self.measureBlock() {
             // Put the code you want to measure the time of here.
         }
     }

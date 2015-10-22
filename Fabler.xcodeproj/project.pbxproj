@@ -7,48 +7,56 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		45A8515D1BD5911300FC989D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A8515C1BD5911300FC989D /* AppDelegate.swift */; };
-		45A8515F1BD5911300FC989D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A8515E1BD5911300FC989D /* ViewController.swift */; };
-		45A851621BD5911300FC989D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45A851601BD5911300FC989D /* Main.storyboard */; };
-		45A851651BD5911300FC989D /* Fabler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 45A851631BD5911300FC989D /* Fabler.xcdatamodeld */; };
-		45A851671BD5911300FC989D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45A851661BD5911300FC989D /* Assets.xcassets */; };
-		45A8516A1BD5911300FC989D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45A851681BD5911300FC989D /* LaunchScreen.storyboard */; };
-		45A851751BD5911300FC989D /* FablerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A851741BD5911300FC989D /* FablerTests.swift */; };
+		F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47029F51A7F27DB00E30A3C /* AppDelegate.swift */; };
+		F47029FB1A7F27DB00E30A3C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47029F91A7F27DB00E30A3C /* Main.storyboard */; };
+		F47029FD1A7F27DB00E30A3C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47029FC1A7F27DB00E30A3C /* Images.xcassets */; };
+		F4702A001A7F27DC00E30A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F47029FE1A7F27DB00E30A3C /* LaunchScreen.xib */; };
+		F4702A0C1A7F27DC00E30A3C /* SidebarMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4702A0B1A7F27DC00E30A3C /* SidebarMenuTests.swift */; };
+		F4702A181A7F351C00E30A3C /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4702A171A7F351C00E30A3C /* MenuController.swift */; };
+		F491E74A1A7F4B300026528E /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7491A7F4B300026528E /* NewsTableViewController.swift */; };
+		F491E74C1A7F4C630026528E /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E74B1A7F4C630026528E /* NewsTableViewCell.swift */; };
+		F491E7551A7F7E010026528E /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7541A7F7E010026528E /* PhotoViewController.swift */; };
+		F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D750171BD38F0C009E1003 /* SWRevealViewController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		45A851711BD5911300FC989D /* PBXContainerItemProxy */ = {
+		F4702A061A7F27DC00E30A3C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 45A851511BD5911300FC989D /* Project object */;
+			containerPortal = F47029E81A7F27DB00E30A3C /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 45A851581BD5911300FC989D;
-			remoteInfo = Fabler;
+			remoteGlobalIDString = F47029EF1A7F27DB00E30A3C;
+			remoteInfo = SidebarMenu;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		45A851591BD5911300FC989D /* Fabler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fabler.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		45A8515C1BD5911300FC989D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		45A8515E1BD5911300FC989D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		45A851611BD5911300FC989D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		45A851641BD5911300FC989D /* Fabler.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Fabler.xcdatamodel; sourceTree = "<group>"; };
-		45A851661BD5911300FC989D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		45A851691BD5911300FC989D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		45A8516B1BD5911300FC989D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		45A851701BD5911300FC989D /* FablerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FablerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		45A851741BD5911300FC989D /* FablerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FablerTests.swift; sourceTree = "<group>"; };
-		45A851761BD5911300FC989D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F47029F01A7F27DB00E30A3C /* Fabler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fabler.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F47029F41A7F27DB00E30A3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F47029F51A7F27DB00E30A3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F47029FA1A7F27DB00E30A3C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F47029FC1A7F27DB00E30A3C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F47029FF1A7F27DB00E30A3C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		F4702A051A7F27DC00E30A3C /* Fabler.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Fabler.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4702A0A1A7F27DC00E30A3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F4702A0B1A7F27DC00E30A3C /* SidebarMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarMenuTests.swift; sourceTree = "<group>"; };
+		F4702A171A7F351C00E30A3C /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
+		F491E7491A7F4B300026528E /* NewsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewController.swift; sourceTree = "<group>"; };
+		F491E74B1A7F4C630026528E /* NewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
+		F491E7541A7F7E010026528E /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
+		F4D750151BD38F0C009E1003 /* SidebarMenu-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SidebarMenu-Bridging-Header.h"; sourceTree = "<group>"; };
+		F4D750161BD38F0C009E1003 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		F4D750171BD38F0C009E1003 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		45A851561BD5911300FC989D /* Frameworks */ = {
+		F47029ED1A7F27DB00E30A3C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		45A8516D1BD5911300FC989D /* Frameworks */ = {
+		F4702A021A7F27DC00E30A3C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -58,104 +66,139 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		45A851501BD5911300FC989D = {
+		F47029E71A7F27DB00E30A3C = {
 			isa = PBXGroup;
 			children = (
-				45A8515B1BD5911300FC989D /* Fabler */,
-				45A851731BD5911300FC989D /* FablerTests */,
-				45A8515A1BD5911300FC989D /* Products */,
+				F47029F21A7F27DB00E30A3C /* Fabler */,
+				F4702A081A7F27DC00E30A3C /* FablerTests */,
+				F47029F11A7F27DB00E30A3C /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		45A8515A1BD5911300FC989D /* Products */ = {
+		F47029F11A7F27DB00E30A3C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				45A851591BD5911300FC989D /* Fabler.app */,
-				45A851701BD5911300FC989D /* FablerTests.xctest */,
+				F47029F01A7F27DB00E30A3C /* Fabler.app */,
+				F4702A051A7F27DC00E30A3C /* Fabler.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		45A8515B1BD5911300FC989D /* Fabler */ = {
+		F47029F21A7F27DB00E30A3C /* Fabler */ = {
 			isa = PBXGroup;
 			children = (
-				45A8515C1BD5911300FC989D /* AppDelegate.swift */,
-				45A8515E1BD5911300FC989D /* ViewController.swift */,
-				45A851601BD5911300FC989D /* Main.storyboard */,
-				45A851661BD5911300FC989D /* Assets.xcassets */,
-				45A851681BD5911300FC989D /* LaunchScreen.storyboard */,
-				45A8516B1BD5911300FC989D /* Info.plist */,
-				45A851631BD5911300FC989D /* Fabler.xcdatamodeld */,
+				F4D750141BD38E56009E1003 /* SWRevealViewController */,
+				F47029F51A7F27DB00E30A3C /* AppDelegate.swift */,
+				F47029F91A7F27DB00E30A3C /* Main.storyboard */,
+				F47029FC1A7F27DB00E30A3C /* Images.xcassets */,
+				F47029FE1A7F27DB00E30A3C /* LaunchScreen.xib */,
+				F47029F31A7F27DB00E30A3C /* Supporting Files */,
+				F4702A171A7F351C00E30A3C /* MenuController.swift */,
+				F491E7491A7F4B300026528E /* NewsTableViewController.swift */,
+				F491E74B1A7F4C630026528E /* NewsTableViewCell.swift */,
+				F491E7541A7F7E010026528E /* PhotoViewController.swift */,
 			);
 			path = Fabler;
 			sourceTree = "<group>";
 		};
-		45A851731BD5911300FC989D /* FablerTests */ = {
+		F47029F31A7F27DB00E30A3C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				45A851741BD5911300FC989D /* FablerTests.swift */,
-				45A851761BD5911300FC989D /* Info.plist */,
+				F47029F41A7F27DB00E30A3C /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F4702A081A7F27DC00E30A3C /* FablerTests */ = {
+			isa = PBXGroup;
+			children = (
+				F4702A0B1A7F27DC00E30A3C /* SidebarMenuTests.swift */,
+				F4702A091A7F27DC00E30A3C /* Supporting Files */,
 			);
 			path = FablerTests;
+			sourceTree = "<group>";
+		};
+		F4702A091A7F27DC00E30A3C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F4702A0A1A7F27DC00E30A3C /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F4D750141BD38E56009E1003 /* SWRevealViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F4D750161BD38F0C009E1003 /* SWRevealViewController.h */,
+				F4D750171BD38F0C009E1003 /* SWRevealViewController.m */,
+				F4D750151BD38F0C009E1003 /* SidebarMenu-Bridging-Header.h */,
+			);
+			name = SWRevealViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		45A851581BD5911300FC989D /* Fabler */ = {
+		F47029EF1A7F27DB00E30A3C /* Fabler */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 45A851791BD5911300FC989D /* Build configuration list for PBXNativeTarget "Fabler" */;
+			buildConfigurationList = F4702A0F1A7F27DC00E30A3C /* Build configuration list for PBXNativeTarget "Fabler" */;
 			buildPhases = (
-				45A851551BD5911300FC989D /* Sources */,
-				45A851561BD5911300FC989D /* Frameworks */,
-				45A851571BD5911300FC989D /* Resources */,
+				F47029EC1A7F27DB00E30A3C /* Sources */,
+				F47029ED1A7F27DB00E30A3C /* Frameworks */,
+				F47029EE1A7F27DB00E30A3C /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Fabler;
-			productName = Fabler;
-			productReference = 45A851591BD5911300FC989D /* Fabler.app */;
+			productName = SidebarMenu;
+			productReference = F47029F01A7F27DB00E30A3C /* Fabler.app */;
 			productType = "com.apple.product-type.application";
 		};
-		45A8516F1BD5911300FC989D /* FablerTests */ = {
+		F4702A041A7F27DC00E30A3C /* FablerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 45A8517C1BD5911300FC989D /* Build configuration list for PBXNativeTarget "FablerTests" */;
+			buildConfigurationList = F4702A121A7F27DC00E30A3C /* Build configuration list for PBXNativeTarget "FablerTests" */;
 			buildPhases = (
-				45A8516C1BD5911300FC989D /* Sources */,
-				45A8516D1BD5911300FC989D /* Frameworks */,
-				45A8516E1BD5911300FC989D /* Resources */,
+				F4702A011A7F27DC00E30A3C /* Sources */,
+				F4702A021A7F27DC00E30A3C /* Frameworks */,
+				F4702A031A7F27DC00E30A3C /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				45A851721BD5911300FC989D /* PBXTargetDependency */,
+				F4702A071A7F27DC00E30A3C /* PBXTargetDependency */,
 			);
 			name = FablerTests;
-			productName = FablerTests;
-			productReference = 45A851701BD5911300FC989D /* FablerTests.xctest */;
+			productName = SidebarMenuTests;
+			productReference = F4702A051A7F27DC00E30A3C /* Fabler.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		45A851511BD5911300FC989D /* Project object */ = {
+		F47029E81A7F27DB00E30A3C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
-				ORGANIZATIONNAME = Fabler;
+				ORGANIZATIONNAME = AppCoda;
 				TargetAttributes = {
-					45A851581BD5911300FC989D = {
-						CreatedOnToolsVersion = 7.0.1;
+					F47029EF1A7F27DB00E30A3C = {
+						CreatedOnToolsVersion = 6.1.1;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
+						};
 					};
-					45A8516F1BD5911300FC989D = {
-						CreatedOnToolsVersion = 7.0.1;
-						TestTargetID = 45A851581BD5911300FC989D;
+					F4702A041A7F27DC00E30A3C = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = F47029EF1A7F27DB00E30A3C;
 					};
 				};
 			};
-			buildConfigurationList = 45A851541BD5911300FC989D /* Build configuration list for PBXProject "Fabler" */;
+			buildConfigurationList = F47029EB1A7F27DB00E30A3C /* Build configuration list for PBXProject "Fabler" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -163,29 +206,29 @@
 				en,
 				Base,
 			);
-			mainGroup = 45A851501BD5911300FC989D;
-			productRefGroup = 45A8515A1BD5911300FC989D /* Products */;
+			mainGroup = F47029E71A7F27DB00E30A3C;
+			productRefGroup = F47029F11A7F27DB00E30A3C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				45A851581BD5911300FC989D /* Fabler */,
-				45A8516F1BD5911300FC989D /* FablerTests */,
+				F47029EF1A7F27DB00E30A3C /* Fabler */,
+				F4702A041A7F27DC00E30A3C /* FablerTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		45A851571BD5911300FC989D /* Resources */ = {
+		F47029EE1A7F27DB00E30A3C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45A8516A1BD5911300FC989D /* LaunchScreen.storyboard in Resources */,
-				45A851671BD5911300FC989D /* Assets.xcassets in Resources */,
-				45A851621BD5911300FC989D /* Main.storyboard in Resources */,
+				F47029FB1A7F27DB00E30A3C /* Main.storyboard in Resources */,
+				F4702A001A7F27DC00E30A3C /* LaunchScreen.xib in Resources */,
+				F47029FD1A7F27DB00E30A3C /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		45A8516E1BD5911300FC989D /* Resources */ = {
+		F4702A031A7F27DC00E30A3C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -195,55 +238,58 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		45A851551BD5911300FC989D /* Sources */ = {
+		F47029EC1A7F27DB00E30A3C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45A8515F1BD5911300FC989D /* ViewController.swift in Sources */,
-				45A8515D1BD5911300FC989D /* AppDelegate.swift in Sources */,
-				45A851651BD5911300FC989D /* Fabler.xcdatamodeld in Sources */,
+				F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */,
+				F4702A181A7F351C00E30A3C /* MenuController.swift in Sources */,
+				F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */,
+				F491E74C1A7F4C630026528E /* NewsTableViewCell.swift in Sources */,
+				F491E74A1A7F4B300026528E /* NewsTableViewController.swift in Sources */,
+				F491E7551A7F7E010026528E /* PhotoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		45A8516C1BD5911300FC989D /* Sources */ = {
+		F4702A011A7F27DC00E30A3C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45A851751BD5911300FC989D /* FablerTests.swift in Sources */,
+				F4702A0C1A7F27DC00E30A3C /* SidebarMenuTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		45A851721BD5911300FC989D /* PBXTargetDependency */ = {
+		F4702A071A7F27DC00E30A3C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 45A851581BD5911300FC989D /* Fabler */;
-			targetProxy = 45A851711BD5911300FC989D /* PBXContainerItemProxy */;
+			target = F47029EF1A7F27DB00E30A3C /* Fabler */;
+			targetProxy = F4702A061A7F27DC00E30A3C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		45A851601BD5911300FC989D /* Main.storyboard */ = {
+		F47029F91A7F27DB00E30A3C /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				45A851611BD5911300FC989D /* Base */,
+				F47029FA1A7F27DB00E30A3C /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		45A851681BD5911300FC989D /* LaunchScreen.storyboard */ = {
+		F47029FE1A7F27DB00E30A3C /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				45A851691BD5911300FC989D /* Base */,
+				F47029FF1A7F27DB00E30A3C /* Base */,
 			);
-			name = LaunchScreen.storyboard;
+			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		45A851771BD5911300FC989D /* Debug */ = {
+		F4702A0D1A7F27DC00E30A3C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -262,33 +308,31 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		45A851781BD5911300FC989D /* Release */ = {
+		F4702A0E1A7F27DC00E30A3C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -306,68 +350,82 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		45A8517A1BD5911300FC989D /* Debug */ = {
+		F4702A101A7F27DC00E30A3C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = Fabler/Info.plist;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Fabler/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Fabler.Fabler;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Fabler.Fabler;
+				PRODUCT_NAME = Fabler;
+				SWIFT_OBJC_BRIDGING_HEADER = "Fabler/SidebarMenu-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		45A8517B1BD5911300FC989D /* Release */ = {
+		F4702A111A7F27DC00E30A3C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = Fabler/Info.plist;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Fabler/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Fabler.Fabler;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Fabler.Fabler;
+				PRODUCT_NAME = Fabler;
+				SWIFT_OBJC_BRIDGING_HEADER = "Fabler/SidebarMenu-Bridging-Header.h";
 			};
 			name = Release;
 		};
-		45A8517D1BD5911300FC989D /* Debug */ = {
+		F4702A131A7F27DC00E30A3C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = FablerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Fabler.FablerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Fabler.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = Fabler;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Fabler.app/Fabler";
 			};
 			name = Debug;
 		};
-		45A8517E1BD5911300FC989D /* Release */ = {
+		F4702A141A7F27DC00E30A3C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = FablerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Fabler.FablerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Fabler.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = Fabler;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Fabler.app/Fabler";
 			};
 			name = Release;
@@ -375,45 +433,34 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		45A851541BD5911300FC989D /* Build configuration list for PBXProject "Fabler" */ = {
+		F47029EB1A7F27DB00E30A3C /* Build configuration list for PBXProject "Fabler" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				45A851771BD5911300FC989D /* Debug */,
-				45A851781BD5911300FC989D /* Release */,
+				F4702A0D1A7F27DC00E30A3C /* Debug */,
+				F4702A0E1A7F27DC00E30A3C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		45A851791BD5911300FC989D /* Build configuration list for PBXNativeTarget "Fabler" */ = {
+		F4702A0F1A7F27DC00E30A3C /* Build configuration list for PBXNativeTarget "Fabler" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				45A8517A1BD5911300FC989D /* Debug */,
-				45A8517B1BD5911300FC989D /* Release */,
+				F4702A101A7F27DC00E30A3C /* Debug */,
+				F4702A111A7F27DC00E30A3C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		45A8517C1BD5911300FC989D /* Build configuration list for PBXNativeTarget "FablerTests" */ = {
+		F4702A121A7F27DC00E30A3C /* Build configuration list for PBXNativeTarget "FablerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				45A8517D1BD5911300FC989D /* Debug */,
-				45A8517E1BD5911300FC989D /* Release */,
+				F4702A131A7F27DC00E30A3C /* Debug */,
+				F4702A141A7F27DC00E30A3C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		45A851631BD5911300FC989D /* Fabler.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				45A851641BD5911300FC989D /* Fabler.xcdatamodel */,
-			);
-			currentVersion = 45A851641BD5911300FC989D /* Fabler.xcdatamodel */;
-			path = Fabler.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
-	rootObject = 45A851511BD5911300FC989D /* Project object */;
+	rootObject = F47029E81A7F27DB00E30A3C /* Project object */;
 }
