@@ -2,8 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "webkit-featured.jpg"
+      "filename" : "webkit-featured.jpg",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
