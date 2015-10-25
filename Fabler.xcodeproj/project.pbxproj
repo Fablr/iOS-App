@@ -8,8 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4588CF2C1BDB46E40080E13D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4588CF2B1BDB46E40080E13D /* LoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		45BBDD2B1BDB5AD0009FC7B9 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45BBDD291BDB5AD0009FC7B9 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
-		45BBDD2C1BDB5AD0009FC7B9 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45BBDD2A1BDB5AD0009FC7B9 /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
+		C777D4C75928ACC892324CE5 /* Pods_Fabler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FC93F29D694A1CBEDC5F5BA /* Pods_Fabler.framework */; };
 		F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47029F51A7F27DB00E30A3C /* AppDelegate.swift */; };
 		F47029FB1A7F27DB00E30A3C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47029F91A7F27DB00E30A3C /* Main.storyboard */; };
 		F47029FD1A7F27DB00E30A3C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47029FC1A7F27DB00E30A3C /* Images.xcassets */; };
@@ -33,9 +32,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0FC93F29D694A1CBEDC5F5BA /* Pods_Fabler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Fabler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		13FDB02D974B5D5C39CBB968 /* Pods-Fabler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fabler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fabler/Pods-Fabler.debug.xcconfig"; sourceTree = "<group>"; };
 		4588CF2B1BDB46E40080E13D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		45BBDD291BDB5AD0009FC7B9 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		45BBDD2A1BDB5AD0009FC7B9 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		45BBDD2D1BDC9533009FC7B9 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		CB0B104F21EAF1E935FB6C42 /* Pods-Fabler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fabler.release.xcconfig"; path = "Pods/Target Support Files/Pods-Fabler/Pods-Fabler.release.xcconfig"; sourceTree = "<group>"; };
 		F47029F01A7F27DB00E30A3C /* Fabler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fabler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F47029F41A7F27DB00E30A3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F47029F51A7F27DB00E30A3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -59,8 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45BBDD2C1BDB5AD0009FC7B9 /* FBSDKLoginKit.framework in Frameworks */,
-				45BBDD2B1BDB5AD0009FC7B9 /* FBSDKCoreKit.framework in Frameworks */,
+				C777D4C75928ACC892324CE5 /* Pods_Fabler.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,19 +77,29 @@
 		4588CF221BDB2A3C0080E13D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				45BBDD291BDB5AD0009FC7B9 /* FBSDKCoreKit.framework */,
-				45BBDD2A1BDB5AD0009FC7B9 /* FBSDKLoginKit.framework */,
+				0FC93F29D694A1CBEDC5F5BA /* Pods_Fabler.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8ABCB3973AE274F3A6620CD0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				13FDB02D974B5D5C39CBB968 /* Pods-Fabler.debug.xcconfig */,
+				CB0B104F21EAF1E935FB6C42 /* Pods-Fabler.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		F47029E71A7F27DB00E30A3C = {
 			isa = PBXGroup;
 			children = (
+				45BBDD2D1BDC9533009FC7B9 /* Podfile */,
 				4588CF221BDB2A3C0080E13D /* Frameworks */,
 				F47029F21A7F27DB00E30A3C /* Fabler */,
 				F4702A081A7F27DC00E30A3C /* FablerTests */,
 				F47029F11A7F27DB00E30A3C /* Products */,
+				8ABCB3973AE274F3A6620CD0 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -162,9 +172,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F4702A0F1A7F27DC00E30A3C /* Build configuration list for PBXNativeTarget "Fabler" */;
 			buildPhases = (
+				C8AC91276CA9152F6518674D /* Check Pods Manifest.lock */,
 				F47029EC1A7F27DB00E30A3C /* Sources */,
 				F47029ED1A7F27DB00E30A3C /* Frameworks */,
 				F47029EE1A7F27DB00E30A3C /* Resources */,
+				3C87B5B64B96F9D41C1384EE /* Embed Pods Frameworks */,
+				E3E37323B063321F5ABC5BEA /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -259,6 +272,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3C87B5B64B96F9D41C1384EE /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Fabler/Pods-Fabler-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C8AC91276CA9152F6518674D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E3E37323B063321F5ABC5BEA /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Fabler/Pods-Fabler-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F47029EC1A7F27DB00E30A3C /* Sources */ = {
@@ -393,6 +454,7 @@
 		};
 		F4702A101A7F27DC00E30A3C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13FDB02D974B5D5C39CBB968 /* Pods-Fabler.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -416,6 +478,7 @@
 		};
 		F4702A111A7F27DC00E30A3C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB0B104F21EAF1E935FB6C42 /* Pods-Fabler.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

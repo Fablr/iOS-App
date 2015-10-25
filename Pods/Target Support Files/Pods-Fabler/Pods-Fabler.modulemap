@@ -1,0 +1,6 @@
+framework module Pods_Fabler {
+  umbrella header "Pods-Fabler-umbrella.h"
+
+  export *
+  module * { export * }
+}
