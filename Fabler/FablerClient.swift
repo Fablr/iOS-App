@@ -6,23 +6,42 @@
 //  Copyright © 2015 AppCoda. All rights reserved.
 //
 
-import Foundation
+import Alamofire
 
-class FablerClient : TokenListenerDelegate {
+struct FablerClient {
+    enum Router: URLRequestConvertible {
+        static let baseURLString = "http://api.fablersite-dev.elasticbeanstalk.com/"
+        static var OAuthToken: String?
 
-    // MARK: - Members
+        case FacebookLogin(token:String)
 
-    var token:String?
+        var method: Alamofire.Method {
+            switch self {
+            case .FacebookLogin:
+                return .GET
+            }
+        }
 
-    // MARK: - FablerClient functions
+        var path: String {
+            switch self {
+            case .FacebookLogin(let token):
+                return "/facebook/?access_token=\(token)"
+            }
+        }
 
-    init() {
-        token = nil
-    }
+        var URLRequest: NSMutableURLRequest {
+            let URL = NSURL(string: Router.baseURLString)!
+            let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
+            mutableURLRequest.HTTPMethod = method.rawValue
 
-    // MARK: - TokenListenerDelegate functions
+            if let token = Router.OAuthToken {
+                mutableURLRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            }
 
-    func tokenDidChange(token: String) {
-        self.token = token
+            switch self {
+            default:
+                return mutableURLRequest
+            }
+        }
     }
 }

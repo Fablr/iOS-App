@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4588CF2C1BDB46E40080E13D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4588CF2B1BDB46E40080E13D /* LoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		45E536751BDF025F009E3F10 /* YouViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E536741BDF025F009E3F10 /* YouViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		45E536781BDF06E0009E3F10 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45E536761BDF06E0009E3F10 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
-		45E5367C1BE1E410009E3F10 /* TokenListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5367B1BE1E410009E3F10 /* TokenListener.swift */; settings = {ASSET_TAGS = (); }; };
-		45E5367E1BE1F980009E3F10 /* FablerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5367D1BE1F980009E3F10 /* FablerClient.swift */; settings = {ASSET_TAGS = (); }; };
+		4588CF2C1BDB46E40080E13D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4588CF2B1BDB46E40080E13D /* LoginViewController.swift */; };
+		45BF1C661BE31EF600665402 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF1C651BE31EF600665402 /* LoginService.swift */; };
+		45E536751BDF025F009E3F10 /* YouViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E536741BDF025F009E3F10 /* YouViewController.swift */; };
+		45E536781BDF06E0009E3F10 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45E536761BDF06E0009E3F10 /* Main.storyboard */; };
+		45E5367C1BE1E410009E3F10 /* TokenListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5367B1BE1E410009E3F10 /* TokenListener.swift */; };
+		45E5367E1BE1F980009E3F10 /* FablerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5367D1BE1F980009E3F10 /* FablerClient.swift */; };
 		C777D4C75928ACC892324CE5 /* Pods_Fabler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FC93F29D694A1CBEDC5F5BA /* Pods_Fabler.framework */; };
 		F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47029F51A7F27DB00E30A3C /* AppDelegate.swift */; };
 		F47029FD1A7F27DB00E30A3C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47029FC1A7F27DB00E30A3C /* Images.xcassets */; };
@@ -21,7 +22,7 @@
 		F491E74A1A7F4B300026528E /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7491A7F4B300026528E /* NewsTableViewController.swift */; };
 		F491E74C1A7F4C630026528E /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E74B1A7F4C630026528E /* NewsTableViewCell.swift */; };
 		F491E7551A7F7E010026528E /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7541A7F7E010026528E /* PhotoViewController.swift */; };
-		F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D750171BD38F0C009E1003 /* SWRevealViewController.m */; settings = {ASSET_TAGS = (); }; };
+		F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D750171BD38F0C009E1003 /* SWRevealViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		0FC93F29D694A1CBEDC5F5BA /* Pods_Fabler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Fabler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13FDB02D974B5D5C39CBB968 /* Pods-Fabler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fabler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fabler/Pods-Fabler.debug.xcconfig"; sourceTree = "<group>"; };
 		4588CF2B1BDB46E40080E13D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		45BF1C651BE31EF600665402 /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		45E536741BDF025F009E3F10 /* YouViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YouViewController.swift; sourceTree = "<group>"; };
 		45E536771BDF06E0009E3F10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		45E5367B1BE1E410009E3F10 /* TokenListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenListener.swift; sourceTree = "<group>"; };
@@ -85,6 +87,14 @@
 				0FC93F29D694A1CBEDC5F5BA /* Pods_Fabler.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		45BF1C641BE31EE500665402 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				45BF1C651BE31EF600665402 /* LoginService.swift */,
+			);
+			name = Services;
 			sourceTree = "<group>";
 		};
 		45E5367A1BE173EB009E3F10 /* Controllers */ = {
@@ -137,6 +147,7 @@
 				45E5367D1BE1F980009E3F10 /* FablerClient.swift */,
 				F47029FE1A7F27DB00E30A3C /* LaunchScreen.xib */,
 				45E536761BDF06E0009E3F10 /* Main.storyboard */,
+				45BF1C641BE31EE500665402 /* Services */,
 				45E5367A1BE173EB009E3F10 /* Controllers */,
 				F47029F31A7F27DB00E30A3C /* Supporting Files */,
 				F4D750141BD38E56009E1003 /* SWRevealViewController */,
@@ -347,6 +358,7 @@
 				F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */,
 				F4702A181A7F351C00E30A3C /* MenuController.swift in Sources */,
 				F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */,
+				45BF1C661BE31EF600665402 /* LoginService.swift in Sources */,
 				F491E74C1A7F4C630026528E /* NewsTableViewCell.swift in Sources */,
 				F491E74A1A7F4B300026528E /* NewsTableViewController.swift in Sources */,
 				45E536751BDF025F009E3F10 /* YouViewController.swift in Sources */,

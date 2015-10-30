@@ -13,7 +13,6 @@ protocol TokenListenerDelegate {
     func tokenDidChange(token:String)
 }
 
-
 class TokenListener : NSObject {
 
     // MARK: - Members

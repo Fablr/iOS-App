@@ -14,12 +14,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var listener: TokenListener?
-    var client: FablerClient?
+    var loginService: LoginService?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         listener = TokenListener()
-        client = FablerClient()
-        listener?.delegate = client
+        loginService = LoginService()
+        listener?.delegate = loginService
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 

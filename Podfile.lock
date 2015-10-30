@@ -17,17 +17,20 @@ PODS:
     - FBSDKCoreKit/arc
   - FBSDKLoginKit (4.7.0.1):
     - FBSDKCoreKit
+  - SwiftyJSON (2.3.1)
 
 DEPENDENCIES:
   - Alamofire (~> 3.1.0)
   - Bolts (~> 1.4.0)
   - FBSDKCoreKit (~> 4.7.0)
   - FBSDKLoginKit (~> 4.7.0.1)
+  - SwiftyJSON (~> 2.3.1)
 
 SPEC CHECKSUMS:
   Alamofire: 415bd7f56197722978759078486689f7ef913dce
   Bolts: 0e9bce58b9b9f5e8a7a4d47b16d2fabec289072b
   FBSDKCoreKit: eb580bfc2040ad44f4c0b4f4d0befb1d35bce59c
   FBSDKLoginKit: 028c5a205990441123764609fe795e65027c447f
+  SwiftyJSON: 592b53bee5ef3dd9b3bebc6b9cb7ee35426ae8c3
 
 COCOAPODS: 0.39.0
