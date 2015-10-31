@@ -10,7 +10,7 @@ import Alamofire
 
 struct FablerClient {
     enum Router: URLRequestConvertible {
-        static let baseURLString = "http://api.fablersite-dev.elasticbeanstalk.com/"
+        static let baseURLString = "http://api.fablersite-dev.elasticbeanstalk.com"
         static var OAuthToken: String?
 
         case FacebookLogin(token:String)
@@ -24,8 +24,8 @@ struct FablerClient {
 
         var path: String {
             switch self {
-            case .FacebookLogin(let token):
-                return "/facebook/?access_token=\(token)"
+            case .FacebookLogin:
+                return "/facebook/"
             }
         }
 
@@ -39,8 +39,9 @@ struct FablerClient {
             }
 
             switch self {
-            default:
-                return mutableURLRequest
+            case .FacebookLogin(let token):
+                let parameters = ["access_token": token]
+                return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
             }
         }
     }
