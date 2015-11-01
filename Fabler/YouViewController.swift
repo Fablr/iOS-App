@@ -6,15 +6,17 @@
 //  Copyright © 2015 AppCoda. All rights reserved.
 //
 
-import Foundation
-
 import UIKit
 import FBSDKLoginKit
 
 class YouViewController : UIViewController, FBSDKLoginButtonDelegate {
-    
+
+    // MARK: - IBOutlets
+
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var loginButton: FBSDKLoginButton!
+
+    // MARK: - UIViewController functions
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +36,8 @@ class YouViewController : UIViewController, FBSDKLoginButtonDelegate {
         super.didReceiveMemoryWarning()
     }
 
+    // MARK: - FBSDKLoginButtonDelegate functions
+
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         if error != nil {
             print(error.localizedDescription)
@@ -43,5 +47,4 @@ class YouViewController : UIViewController, FBSDKLoginButtonDelegate {
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         performSegueWithIdentifier("loggedOutSegue", sender: nil)
     }
-    
 }

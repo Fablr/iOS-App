@@ -11,7 +11,11 @@ import FBSDKLoginKit
 
 class LoginViewController : UIViewController, FBSDKLoginButtonDelegate {
 
+    // MARK: - IBOutlets
+
     @IBOutlet var loginButton: FBSDKLoginButton!
+
+    // MARK: - UIViewController functions
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +35,8 @@ class LoginViewController : UIViewController, FBSDKLoginButtonDelegate {
         super.didReceiveMemoryWarning()
     }
 
+    // MARK: - FBSDKLoginButtonDelegate functions
+
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         if error == nil {
             //update facebook token
@@ -43,5 +49,4 @@ class LoginViewController : UIViewController, FBSDKLoginButtonDelegate {
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
 
     }
-
 }

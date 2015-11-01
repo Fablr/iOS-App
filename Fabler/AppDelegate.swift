@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  SidebarMenu
+//  Fabler
 //
-//  Created by Simon Ng on 2/2/15.
-//  Copyright (c) 2015 AppCoda. All rights reserved.
+//  Created by Christopher Day on 10/28/15.
+//  Copyright © 2015 AppCoda. All rights reserved.
 //
 
 import UIKit

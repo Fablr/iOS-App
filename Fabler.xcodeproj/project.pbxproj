@@ -21,9 +21,9 @@
 		F4702A001A7F27DC00E30A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F47029FE1A7F27DB00E30A3C /* LaunchScreen.xib */; };
 		F4702A0C1A7F27DC00E30A3C /* SidebarMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4702A0B1A7F27DC00E30A3C /* SidebarMenuTests.swift */; };
 		F4702A181A7F351C00E30A3C /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4702A171A7F351C00E30A3C /* MenuController.swift */; };
-		F491E74A1A7F4B300026528E /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7491A7F4B300026528E /* NewsTableViewController.swift */; };
-		F491E74C1A7F4C630026528E /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E74B1A7F4C630026528E /* NewsTableViewCell.swift */; };
-		F491E7551A7F7E010026528E /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7541A7F7E010026528E /* PhotoViewController.swift */; };
+		F491E74A1A7F4B300026528E /* CollectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7491A7F4B300026528E /* CollectionTableViewController.swift */; };
+		F491E74C1A7F4C630026528E /* ShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E74B1A7F4C630026528E /* ShowTableViewCell.swift */; };
+		F491E7551A7F7E010026528E /* DiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7541A7F7E010026528E /* DiscoveryViewController.swift */; };
 		F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D750171BD38F0C009E1003 /* SWRevealViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -58,10 +58,10 @@
 		F4702A0A1A7F27DC00E30A3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4702A0B1A7F27DC00E30A3C /* SidebarMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarMenuTests.swift; sourceTree = "<group>"; };
 		F4702A171A7F351C00E30A3C /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
-		F491E7491A7F4B300026528E /* NewsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewController.swift; sourceTree = "<group>"; };
-		F491E74B1A7F4C630026528E /* NewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
-		F491E7541A7F7E010026528E /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
-		F4D750151BD38F0C009E1003 /* SidebarMenu-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SidebarMenu-Bridging-Header.h"; sourceTree = "<group>"; };
+		F491E7491A7F4B300026528E /* CollectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionTableViewController.swift; sourceTree = "<group>"; };
+		F491E74B1A7F4C630026528E /* ShowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowTableViewCell.swift; sourceTree = "<group>"; };
+		F491E7541A7F7E010026528E /* DiscoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryViewController.swift; sourceTree = "<group>"; };
+		F4D750151BD38F0C009E1003 /* Fabler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Fabler-Bridging-Header.h"; sourceTree = "<group>"; };
 		F4D750161BD38F0C009E1003 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		F4D750171BD38F0C009E1003 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -114,9 +114,9 @@
 			isa = PBXGroup;
 			children = (
 				F4702A171A7F351C00E30A3C /* MenuController.swift */,
-				F491E7491A7F4B300026528E /* NewsTableViewController.swift */,
-				F491E74B1A7F4C630026528E /* NewsTableViewCell.swift */,
-				F491E7541A7F7E010026528E /* PhotoViewController.swift */,
+				F491E7491A7F4B300026528E /* CollectionTableViewController.swift */,
+				F491E74B1A7F4C630026528E /* ShowTableViewCell.swift */,
+				F491E7541A7F7E010026528E /* DiscoveryViewController.swift */,
 				4588CF2B1BDB46E40080E13D /* LoginViewController.swift */,
 				45E536741BDF025F009E3F10 /* YouViewController.swift */,
 			);
@@ -200,7 +200,7 @@
 			children = (
 				F4D750161BD38F0C009E1003 /* SWRevealViewController.h */,
 				F4D750171BD38F0C009E1003 /* SWRevealViewController.m */,
-				F4D750151BD38F0C009E1003 /* SidebarMenu-Bridging-Header.h */,
+				F4D750151BD38F0C009E1003 /* Fabler-Bridging-Header.h */,
 			);
 			name = SWRevealViewController;
 			sourceTree = "<group>";
@@ -375,10 +375,10 @@
 				45B51D0B1BE495E700F289F7 /* Podcast.swift in Sources */,
 				F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */,
 				45BF1C661BE31EF600665402 /* LoginService.swift in Sources */,
-				F491E74C1A7F4C630026528E /* NewsTableViewCell.swift in Sources */,
-				F491E74A1A7F4B300026528E /* NewsTableViewController.swift in Sources */,
+				F491E74C1A7F4C630026528E /* ShowTableViewCell.swift in Sources */,
+				F491E74A1A7F4B300026528E /* CollectionTableViewController.swift in Sources */,
 				45E536751BDF025F009E3F10 /* YouViewController.swift in Sources */,
-				F491E7551A7F7E010026528E /* PhotoViewController.swift in Sources */,
+				F491E7551A7F7E010026528E /* DiscoveryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,7 +517,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Fabler.Fabler;
 				PRODUCT_NAME = Fabler;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Fabler/SidebarMenu-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Fabler/Fabler-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -541,7 +541,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Fabler.Fabler;
 				PRODUCT_NAME = Fabler;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Fabler/SidebarMenu-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Fabler/Fabler-Bridging-Header.h";
 			};
 			name = Release;
 		};
