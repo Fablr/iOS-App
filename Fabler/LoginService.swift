@@ -7,7 +7,6 @@
 //
 
 import Alamofire
-import SwiftyJSON
 
 class LoginService : TokenListenerDelegate {
 
@@ -26,8 +25,9 @@ class LoginService : TokenListenerDelegate {
             .responseJSON { response in
                 switch response.result {
                 case .Success(let data):
-                    let json = JSON(data)
-                    FablerClient.Router.OAuthToken = json["access_token"].stringValue
+                    if let token = data.valueForKeyPath("access_token") as? String {
+                        FablerClient.Router.OAuthToken = token
+                    }
                 case .Failure(let error):
                     print(error)
                 }

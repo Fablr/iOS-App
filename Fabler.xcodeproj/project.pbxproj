@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		4588CF2C1BDB46E40080E13D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4588CF2B1BDB46E40080E13D /* LoginViewController.swift */; };
+		45B51D0B1BE495E700F289F7 /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B51D0A1BE495E700F289F7 /* Podcast.swift */; };
 		45BF1C661BE31EF600665402 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF1C651BE31EF600665402 /* LoginService.swift */; };
+		45BF1C681BE4921900665402 /* PodcastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF1C671BE4921900665402 /* PodcastService.swift */; };
 		45E536751BDF025F009E3F10 /* YouViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E536741BDF025F009E3F10 /* YouViewController.swift */; };
 		45E536781BDF06E0009E3F10 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45E536761BDF06E0009E3F10 /* Main.storyboard */; };
 		45E5367C1BE1E410009E3F10 /* TokenListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5367B1BE1E410009E3F10 /* TokenListener.swift */; };
@@ -39,7 +41,9 @@
 		0FC93F29D694A1CBEDC5F5BA /* Pods_Fabler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Fabler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13FDB02D974B5D5C39CBB968 /* Pods-Fabler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fabler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fabler/Pods-Fabler.debug.xcconfig"; sourceTree = "<group>"; };
 		4588CF2B1BDB46E40080E13D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		45B51D0A1BE495E700F289F7 /* Podcast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
 		45BF1C651BE31EF600665402 /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		45BF1C671BE4921900665402 /* PodcastService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastService.swift; sourceTree = "<group>"; };
 		45E536741BDF025F009E3F10 /* YouViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YouViewController.swift; sourceTree = "<group>"; };
 		45E536771BDF06E0009E3F10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		45E5367B1BE1E410009E3F10 /* TokenListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenListener.swift; sourceTree = "<group>"; };
@@ -89,10 +93,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		45B51D091BE495D500F289F7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				45B51D0A1BE495E700F289F7 /* Podcast.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		45BF1C641BE31EE500665402 /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				45BF1C651BE31EF600665402 /* LoginService.swift */,
+				45BF1C671BE4921900665402 /* PodcastService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -147,6 +160,7 @@
 				45E5367D1BE1F980009E3F10 /* FablerClient.swift */,
 				F47029FE1A7F27DB00E30A3C /* LaunchScreen.xib */,
 				45E536761BDF06E0009E3F10 /* Main.storyboard */,
+				45B51D091BE495D500F289F7 /* Models */,
 				45BF1C641BE31EE500665402 /* Services */,
 				45E5367A1BE173EB009E3F10 /* Controllers */,
 				F47029F31A7F27DB00E30A3C /* Supporting Files */,
@@ -354,9 +368,11 @@
 			files = (
 				4588CF2C1BDB46E40080E13D /* LoginViewController.swift in Sources */,
 				45E5367C1BE1E410009E3F10 /* TokenListener.swift in Sources */,
+				45BF1C681BE4921900665402 /* PodcastService.swift in Sources */,
 				45E5367E1BE1F980009E3F10 /* FablerClient.swift in Sources */,
 				F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */,
 				F4702A181A7F351C00E30A3C /* MenuController.swift in Sources */,
+				45B51D0B1BE495E700F289F7 /* Podcast.swift in Sources */,
 				F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */,
 				45BF1C661BE31EF600665402 /* LoginService.swift in Sources */,
 				F491E74C1A7F4C630026528E /* NewsTableViewCell.swift in Sources */,
