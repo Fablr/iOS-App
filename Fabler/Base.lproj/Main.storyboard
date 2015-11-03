@@ -362,10 +362,10 @@
                                     <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y4Z-HD-cmv">
-                                            <rect key="frame" x="13" y="13" width="124" height="26"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y4Z-HD-cmv">
+                                            <rect key="frame" x="13" y="13" width="124" height="124"/>
                                             <animations/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -380,6 +380,7 @@
                                     <constraint firstItem="y4Z-HD-cmv" firstAttribute="top" secondItem="9gj-lg-n5F" secondAttribute="topMargin" constant="5" id="DQt-Ly-IfP"/>
                                     <constraint firstItem="y4Z-HD-cmv" firstAttribute="centerX" secondItem="9gj-lg-n5F" secondAttribute="centerX" id="Dc9-Wh-sLs"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="y4Z-HD-cmv" secondAttribute="trailing" constant="5" id="Fk4-jC-tNh"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="y4Z-HD-cmv" secondAttribute="bottom" constant="5" id="ujg-eY-C25"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="titleLabel" destination="y4Z-HD-cmv" id="yvg-69-wTc"/>
