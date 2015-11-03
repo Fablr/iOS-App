@@ -8,11 +8,16 @@
 
 import UIKit
 
-class DiscoveryViewController: UIViewController {
+class DiscoveryViewController: UICollectionViewController {
 
     // MARK: - IBOutlets
 
     @IBOutlet weak var menuButton:UIBarButtonItem!
+
+    // MARK: - DiscoveryViewController members
+
+    private let reuseIdentifier = "ShowCell"
+    private var podcasts:[Podcast]?
 
     // MARK: - UIViewController functions
 
@@ -24,9 +29,37 @@ class DiscoveryViewController: UIViewController {
             menuButton.action = "revealToggle:"
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+
+        let service = PodcastService()
+        service.readAllPodcasts { podcasts in
+            self.podcasts = podcasts
+            self.collectionView!.reloadData()
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+
+    // MARK: - UICollectionViewDataSource functions
+
+    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return podcasts != nil ? 1 : 0
+    }
+
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard podcasts != nil else {
+            return 0
+        }
+
+        return (podcasts?.count)!
+    }
+
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! ShowCell
+
+        cell.titleLabel.text = podcasts?[indexPath.row].title
+
+        return cell
     }
 }

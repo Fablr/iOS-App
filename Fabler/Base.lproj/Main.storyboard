@@ -21,7 +21,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ES1-aW-U8k" customClass="FBSDKLoginButton">
                                 <rect key="frame" x="45" y="464" width="510" height="111"/>
                                 <animations/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="ES1-aW-U8k" secondAttribute="height" multiplier="405:88" id="kmH-yx-0Fb"/>
                                 </constraints>
@@ -343,16 +343,50 @@
         <scene sceneID="yCp-Wv-509">
             <objects>
                 <viewController id="sE8-Cy-yWP" customClass="DiscoveryViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="IPC-hk-0Qs"/>
-                        <viewControllerLayoutGuide type="bottom" id="VBi-dM-ohh"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="pBu-io-TV5">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="HhH-vc-Jc6">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KeO-ve-FQX">
+                            <size key="itemSize" width="150" height="150"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ShowCell" id="9gj-lg-n5F" customClass="ShowCell" customModule="Fabler" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="150" height="150"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y4Z-HD-cmv">
+                                            <rect key="frame" x="13" y="13" width="124" height="26"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <animations/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <animations/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="y4Z-HD-cmv" firstAttribute="leading" secondItem="9gj-lg-n5F" secondAttribute="leadingMargin" constant="5" id="C2B-TN-pP8"/>
+                                    <constraint firstItem="y4Z-HD-cmv" firstAttribute="top" secondItem="9gj-lg-n5F" secondAttribute="topMargin" constant="5" id="DQt-Ly-IfP"/>
+                                    <constraint firstItem="y4Z-HD-cmv" firstAttribute="centerX" secondItem="9gj-lg-n5F" secondAttribute="centerX" id="Dc9-Wh-sLs"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="y4Z-HD-cmv" secondAttribute="trailing" constant="5" id="Fk4-jC-tNh"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="titleLabel" destination="y4Z-HD-cmv" id="yvg-69-wTc"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                    </collectionView>
                     <navigationItem key="navigationItem" title="Discovery" id="cfc-BV-ZDE">
                         <barButtonItem key="leftBarButtonItem" image="menu" id="okk-0h-9oo"/>
                     </navigationItem>
@@ -398,7 +432,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zh3-ak-4sy" customClass="FBSDKLoginButton">
                                 <rect key="frame" x="45" y="464" width="510" height="111"/>
                                 <animations/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="zh3-ak-4sy" secondAttribute="height" multiplier="405:88" id="UwT-Yh-Y43"/>
                                 </constraints>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		457E51E31BE864170079845E /* ShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E51E21BE864170079845E /* ShowCell.swift */; };
 		4588CF2C1BDB46E40080E13D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4588CF2B1BDB46E40080E13D /* LoginViewController.swift */; };
 		45B51D0B1BE495E700F289F7 /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B51D0A1BE495E700F289F7 /* Podcast.swift */; };
 		45BF1C661BE31EF600665402 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF1C651BE31EF600665402 /* LoginService.swift */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		0FC93F29D694A1CBEDC5F5BA /* Pods_Fabler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Fabler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13FDB02D974B5D5C39CBB968 /* Pods-Fabler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fabler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fabler/Pods-Fabler.debug.xcconfig"; sourceTree = "<group>"; };
+		457E51E21BE864170079845E /* ShowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCell.swift; sourceTree = "<group>"; };
 		4588CF2B1BDB46E40080E13D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		45B51D0A1BE495E700F289F7 /* Podcast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
 		45BF1C651BE31EF600665402 /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				F491E7541A7F7E010026528E /* DiscoveryViewController.swift */,
 				4588CF2B1BDB46E40080E13D /* LoginViewController.swift */,
 				45E536741BDF025F009E3F10 /* YouViewController.swift */,
+				457E51E21BE864170079845E /* ShowCell.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */,
 				45BF1C661BE31EF600665402 /* LoginService.swift in Sources */,
 				F491E74C1A7F4C630026528E /* ShowTableViewCell.swift in Sources */,
+				457E51E31BE864170079845E /* ShowCell.swift in Sources */,
 				F491E74A1A7F4B300026528E /* CollectionTableViewController.swift in Sources */,
 				45E536751BDF025F009E3F10 /* YouViewController.swift in Sources */,
 				F491E7551A7F7E010026528E /* DiscoveryViewController.swift in Sources */,

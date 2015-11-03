@@ -27,20 +27,21 @@ final class Podcast : ResponseObjectSerializable, ResponseCollectionSerializable
     required init?(response: NSHTTPURLResponse, representation: AnyObject) {
         self.title = representation.valueForKeyPath("title") as! String
         self.author = representation.valueForKeyPath("author") as! String
-        self.explicit = representation.valueForKeyPath("explicit") as! Bool
+        self.explicit = (representation.valueForKeyPath("explicit") as! String).toBool()!
         self.id = representation.valueForKeyPath("id") as! Int
     }
 
     static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [Podcast] {
         var podcasts: [Podcast] = []
 
-        if let representation = representation as? [[String: AnyObject]] {
+        if let representation = representation.valueForKeyPath("results") as? [[String: AnyObject]] {
             for podcastRepresentation in representation {
                 if let podcast = Podcast(response: response, representation: podcastRepresentation) {
                     podcasts.append(podcast)
                 }
             }
         }
+
 
         return podcasts
     }
