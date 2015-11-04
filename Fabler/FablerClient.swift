@@ -131,4 +131,31 @@ extension String {
             return nil
         }
     }
+
+    func toNSTimeInterval() -> NSTimeInterval {
+        var result: NSTimeInterval
+
+        result = 0
+
+        let tokens = self.componentsSeparatedByString(":")
+
+        switch tokens.count {
+        case 1:
+            if let seconds = Int(tokens[0]) {
+                result = Double(seconds)
+            }
+        case 2:
+            if let minutes = Int(tokens[0]), seconds = Int(tokens[1]) {
+                result = Double((minutes * 60) + seconds)
+            }
+        case 3:
+            if let hours = Int(tokens[0]), minutes = Int(tokens[1]), seconds = Int(tokens[2]) {
+                result = Double((hours * 60 * 60) + (minutes * 60) + seconds)
+            }
+        default:
+            break
+        }
+
+        return result
+    }
 }

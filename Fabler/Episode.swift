@@ -14,7 +14,7 @@ final class Episode : ResponseObjectSerializable, ResponseCollectionSerializable
     let subtitle: String
     let explicit: Bool
     let pubdate: NSDate
-    let duration: String
+    let duration: NSTimeInterval
     let description: String
     let id: Int
 
@@ -27,7 +27,7 @@ final class Episode : ResponseObjectSerializable, ResponseCollectionSerializable
         self.subtitle = subtitle
         self.explicit = explicit
         self.pubdate = dateFormatter.dateFromString(pubdate)!
-        self.duration = duration
+        self.duration = duration.toNSTimeInterval()
         self.description = description
         self.id = id
     }
@@ -39,7 +39,7 @@ final class Episode : ResponseObjectSerializable, ResponseCollectionSerializable
         self.subtitle = representation.valueForKeyPath("subtitle") as! String
         self.explicit = (representation.valueForKeyPath("explicit") as! String).toBool()!
         self.pubdate = dateFormatter.dateFromString(representation.valueForKeyPath("pubdate") as! String)!
-        self.duration = representation.valueForKeyPath("duration") as! String
+        self.duration = (representation.valueForKeyPath("duration") as! String).toNSTimeInterval()
         self.description = representation.valueForKeyPath("description") as! String
         self.id = representation.valueForKeyPath("id") as! Int
     }
