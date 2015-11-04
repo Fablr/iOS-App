@@ -79,7 +79,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="243" id="m7N-Q8-5h6" customClass="ShowTableViewCell" customModule="Fabler" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="66" width="600" height="243"/>
+                                <rect key="frame" x="0.0" y="86" width="600" height="243"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m7N-Q8-5h6" id="uxv-3b-FYp">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="242"/>
@@ -165,6 +165,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="menuButton" destination="bvR-yD-ToH" id="Rui-eS-C5i"/>
+                        <segue destination="PzG-pe-aiM" kind="show" identifier="displayShowSegue" id="fZO-iY-zYI"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wHq-4Y-pqk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -393,11 +394,43 @@
                     </navigationItem>
                     <connections>
                         <outlet property="menuButton" destination="okk-0h-9oo" id="XbV-1C-7L9"/>
+                        <segue destination="PzG-pe-aiM" kind="show" identifier="displayShowSegue" id="rNg-9Z-Etf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ne9-ho-vGn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2577" y="162"/>
+        </scene>
+        <!--Show View Controller-->
+        <scene sceneID="rNI-qd-T78">
+            <objects>
+                <tableViewController id="PzG-pe-aiM" customClass="ShowViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="3e9-IY-alh">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="dlc-2c-ME0">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dlc-2c-ME0" id="0em-dv-JdV">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="PzG-pe-aiM" id="63G-qj-cSE"/>
+                            <outlet property="delegate" destination="PzG-pe-aiM" id="a8o-9S-ea2"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nwy-zu-OOS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3457" y="162"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="UtP-zp-P1I">
@@ -489,6 +522,7 @@
         <image name="menu" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="foL-zu-uHU"/>
+        <segue reference="tWZ-CD-OTO"/>
+        <segue reference="fZO-iY-zYI"/>
     </inferredMetricsTieBreakers>
 </document>

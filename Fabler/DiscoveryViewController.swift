@@ -41,6 +41,23 @@ class DiscoveryViewController: UICollectionViewController {
         super.didReceiveMemoryWarning()
     }
 
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "displayShowSegue" {
+            (segue.destinationViewController as! ShowViewController).podcast = (sender as! Podcast)
+        }
+    }
+
+    // MARK: - UICollectionViewController functions
+
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        guard indexPath.section == 0 else {
+            print("Unexpected section selected.")
+            return
+        }
+
+        performSegueWithIdentifier("displayShowSegue", sender: podcasts![indexPath.row])
+    }
+
     // MARK: - UICollectionViewDataSource functions
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {

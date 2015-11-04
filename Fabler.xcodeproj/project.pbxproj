@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		450B76741BE983670033C0B6 /* ShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76731BE983670033C0B6 /* ShowViewController.swift */; };
+		450B76761BE9CC270033C0B6 /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76751BE9CC270033C0B6 /* Episode.swift */; };
+		450B76781BE9DAA90033C0B6 /* EpisodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76771BE9DAA90033C0B6 /* EpisodeService.swift */; };
 		457E51E31BE864170079845E /* ShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E51E21BE864170079845E /* ShowCell.swift */; };
 		4588CF2C1BDB46E40080E13D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4588CF2B1BDB46E40080E13D /* LoginViewController.swift */; };
 		45B51D0B1BE495E700F289F7 /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B51D0A1BE495E700F289F7 /* Podcast.swift */; };
@@ -41,6 +44,9 @@
 /* Begin PBXFileReference section */
 		0FC93F29D694A1CBEDC5F5BA /* Pods_Fabler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Fabler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13FDB02D974B5D5C39CBB968 /* Pods-Fabler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fabler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fabler/Pods-Fabler.debug.xcconfig"; sourceTree = "<group>"; };
+		450B76731BE983670033C0B6 /* ShowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowViewController.swift; sourceTree = "<group>"; };
+		450B76751BE9CC270033C0B6 /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
+		450B76771BE9DAA90033C0B6 /* EpisodeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeService.swift; sourceTree = "<group>"; };
 		457E51E21BE864170079845E /* ShowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCell.swift; sourceTree = "<group>"; };
 		4588CF2B1BDB46E40080E13D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		45B51D0A1BE495E700F289F7 /* Podcast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
@@ -99,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				45B51D0A1BE495E700F289F7 /* Podcast.swift */,
+				450B76751BE9CC270033C0B6 /* Episode.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -108,6 +115,7 @@
 			children = (
 				45BF1C651BE31EF600665402 /* LoginService.swift */,
 				45BF1C671BE4921900665402 /* PodcastService.swift */,
+				450B76771BE9DAA90033C0B6 /* EpisodeService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -122,6 +130,7 @@
 				4588CF2B1BDB46E40080E13D /* LoginViewController.swift */,
 				45E536741BDF025F009E3F10 /* YouViewController.swift */,
 				457E51E21BE864170079845E /* ShowCell.swift */,
+				450B76731BE983670033C0B6 /* ShowViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -370,10 +379,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4588CF2C1BDB46E40080E13D /* LoginViewController.swift in Sources */,
+				450B76761BE9CC270033C0B6 /* Episode.swift in Sources */,
 				45E5367C1BE1E410009E3F10 /* TokenListener.swift in Sources */,
 				45BF1C681BE4921900665402 /* PodcastService.swift in Sources */,
 				45E5367E1BE1F980009E3F10 /* FablerClient.swift in Sources */,
 				F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */,
+				450B76741BE983670033C0B6 /* ShowViewController.swift in Sources */,
 				F4702A181A7F351C00E30A3C /* MenuController.swift in Sources */,
 				45B51D0B1BE495E700F289F7 /* Podcast.swift in Sources */,
 				F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */,
@@ -382,6 +393,7 @@
 				457E51E31BE864170079845E /* ShowCell.swift in Sources */,
 				F491E74A1A7F4B300026528E /* CollectionTableViewController.swift in Sources */,
 				45E536751BDF025F009E3F10 /* YouViewController.swift in Sources */,
+				450B76781BE9DAA90033C0B6 /* EpisodeService.swift in Sources */,
 				F491E7551A7F7E010026528E /* DiscoveryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

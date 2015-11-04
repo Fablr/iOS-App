@@ -10,7 +10,7 @@ import Alamofire
 
 class PodcastService {
 
-    // MARK: - LoginService functions
+    // MARK: - PodcastService functions
 
     init() {
     }
