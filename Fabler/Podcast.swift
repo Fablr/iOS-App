@@ -34,7 +34,7 @@ final class Podcast : ResponseObjectSerializable, ResponseCollectionSerializable
     static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [Podcast] {
         var podcasts: [Podcast] = []
 
-        if let representation = representation.valueForKeyPath("results") as? [[String: AnyObject]] {
+        if let representation = representation as? [[String: AnyObject]] {
             for podcastRepresentation in representation {
                 if let podcast = Podcast(response: response, representation: podcastRepresentation) {
                     podcasts.append(podcast)

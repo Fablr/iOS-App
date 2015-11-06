@@ -17,12 +17,15 @@ struct FablerClient {
 
         case FacebookLogin(token:String)
         case ReadPodcasts()
+        case ReadEpisodesForPodcast(podcast:Int)
 
         var method: Alamofire.Method {
             switch self {
             case .FacebookLogin:
                 return .GET
             case .ReadPodcasts:
+                return .GET
+            case .ReadEpisodesForPodcast:
                 return .GET
             }
         }
@@ -33,6 +36,8 @@ struct FablerClient {
                 return "/facebook/"
             case .ReadPodcasts:
                 return "/podcast/"
+            case .ReadEpisodesForPodcast:
+                return "/episode/"
             }
         }
 
@@ -48,6 +53,9 @@ struct FablerClient {
             switch self {
             case .FacebookLogin(let token):
                 let parameters = ["access_token": token]
+                return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
+            case .ReadEpisodesForPodcast(let podcast):
+                let parameters = ["podcast": podcast]
                 return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
             default:
                 return mutableURLRequest
@@ -157,5 +165,11 @@ extension String {
         }
 
         return result
+    }
+
+    func toNSDate() -> NSDate? {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        return dateFormatter.dateFromString(self)
     }
 }

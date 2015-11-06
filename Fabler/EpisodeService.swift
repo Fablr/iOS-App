@@ -16,6 +16,16 @@ class EpisodeService {
     }
 
     func getEpisodesForPodcast(podcastId: Int, completion: (result: [Episode]) -> Void) {
-
+        Alamofire
+            .request(FablerClient.Router.ReadEpisodesForPodcast(podcast: podcastId))
+            .validate()
+            .responseCollection { (response: Response<[Episode], NSError>) in
+                switch response.result {
+                case .Success(let value):
+                    completion(result: value)
+                case .Failure(let error):
+                    print(error)
+                }
+        }
     }
 }
