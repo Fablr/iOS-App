@@ -30,7 +30,7 @@ class CollectionTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
     }
 
-    // MARK: - UITableViewController functions
+    // MARK: - UITableViewDataSource functions
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1

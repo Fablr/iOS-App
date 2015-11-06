@@ -1,21 +1,18 @@
 //
-//  ShowTableViewCell.swift
+//  EpisodeTableViewCell.swift
 //  Fabler
 //
-//  Created by Christopher Day on 10/28/15.
+//  Created by Christopher Day on 11/6/15.
 //  Copyright © 2015 AppCoda. All rights reserved.
 //
 
 import UIKit
 
-class ShowTableViewCell: UITableViewCell {
+class EpisodeTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var postImageView:UIImageView!
-    @IBOutlet weak var authorImageView:UIImageView!
-    @IBOutlet weak var postTitleLabel:UILabel!
-    @IBOutlet weak var authorLabel:UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
 
     // MARK: - UITableViewCell functions
 

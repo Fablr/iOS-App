@@ -43,7 +43,7 @@ class DiscoveryViewController: UICollectionViewController {
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "displayShowSegue" {
-            (segue.destinationViewController as! ShowViewController).podcast = (sender as! Podcast)
+            (segue.destinationViewController as! ShowTableViewController).podcast = (sender as! Podcast)
         }
     }
 
@@ -61,7 +61,7 @@ class DiscoveryViewController: UICollectionViewController {
     // MARK: - UICollectionViewDataSource functions
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return podcasts != nil ? 1 : 0
+        return 1
     }
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
