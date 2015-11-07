@@ -17,6 +17,7 @@ struct FablerClient {
 
         case FacebookLogin(token:String)
         case ReadPodcasts()
+        case ReadSubscribedPodcasts()
         case ReadEpisodesForPodcast(podcast:Int)
 
         var method: Alamofire.Method {
@@ -24,6 +25,8 @@ struct FablerClient {
             case .FacebookLogin:
                 return .GET
             case .ReadPodcasts:
+                return .GET
+            case .ReadSubscribedPodcasts:
                 return .GET
             case .ReadEpisodesForPodcast:
                 return .GET
@@ -36,6 +39,8 @@ struct FablerClient {
                 return "/facebook/"
             case .ReadPodcasts:
                 return "/podcast/"
+            case .ReadSubscribedPodcasts:
+                return "/get-subscribed-podcasts/"
             case .ReadEpisodesForPodcast:
                 return "/episode/"
             }

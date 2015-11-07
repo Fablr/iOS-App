@@ -14,6 +14,10 @@ class CollectionTableViewController: UITableViewController {
 
     @IBOutlet var menuButton:UIBarButtonItem!
 
+    // MARK: - CollectionTableViewController members
+
+    var podcasts: [Podcast]?
+
     // MARK: - UIViewController functions
 
     override func viewDidLoad() {
@@ -23,6 +27,12 @@ class CollectionTableViewController: UITableViewController {
             menuButton.target = revealViewController()
             menuButton.action = "revealToggle:"
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+
+        let service = PodcastService()
+        service.readSubscribedPodcasts { podcasts in
+            self.podcasts = podcasts
+            self.tableView.reloadData()
         }
     }
 
@@ -37,23 +47,20 @@ class CollectionTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        guard podcasts != nil else {
+            return 0
+        }
+
+        return (podcasts?.count)!
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! ShowTableViewCell
 
-        if indexPath.row == 0 {
-            cell.postImageView.image = UIImage(named: "watchkit-intro")
-            cell.postTitleLabel.text = "test row 0"
-            cell.authorLabel.text = "Chris Day"
-
-        } else {
-            cell.postImageView.image = UIImage(named: "webkit-featured")
-            cell.postTitleLabel.text = "test row 1"
-            cell.authorLabel.text = "Dustin Replogle"
-            
+        if let podcast = podcasts?[indexPath.row] {
+            cell.postTitleLabel.text = podcast.title
+            cell.authorLabel.text = podcast.author
         }
 
         return cell

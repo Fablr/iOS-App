@@ -28,4 +28,18 @@ class PodcastService {
                 }
             }
     }
+
+    func readSubscribedPodcasts(completion: (result: [Podcast]) -> Void) {
+        Alamofire
+            .request(FablerClient.Router.ReadSubscribedPodcasts())
+            .validate()
+            .responseCollection { (response: Response<[Podcast], NSError>) in
+                switch response.result {
+                case .Success(let value):
+                    completion(result: value)
+                case .Failure(let error):
+                    print(error)
+                }
+            }
+    }
 }
