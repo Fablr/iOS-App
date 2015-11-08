@@ -3,7 +3,7 @@
 //  Fabler
 //
 //  Created by Christopher Day on 10/26/15.
-//  Copyright © 2015 AppCoda. All rights reserved.
+//  Copyright © 2015 Fabler. All rights reserved.
 //
 
 import UIKit
@@ -15,6 +15,21 @@ class YouViewController : UIViewController, FBSDKLoginButtonDelegate {
 
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var loginButton: FBSDKLoginButton!
+    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var firstNameLabel: UILabel!
+    @IBOutlet weak var lastNameLabel: UILabel!
+
+    // MARK: - YouViewController members
+
+    private var user:User?
+
+    // MARK: - YouViewController functions
+
+    func updateUserElements() {
+        self.userNameLabel.text = user!.userName
+        self.firstNameLabel.text = user!.firstName
+        self.lastNameLabel.text = user!.lastName
+    }
 
     // MARK: - UIViewController functions
 
@@ -30,6 +45,17 @@ class YouViewController : UIViewController, FBSDKLoginButtonDelegate {
             menuButton.action = "revealToggle:"
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        let mainQueue = NSOperationQueue.mainQueue()
+
+        notificationCenter.addObserverForName(CurrentUserDidChangeNotification, object: nil, queue: mainQueue) { _ in
+            self.user = User.currentUser
+            self.updateUserElements()
+        }
+
+        self.user = User.currentUser
+        updateUserElements()
     }
 
     override func didReceiveMemoryWarning() {

@@ -79,7 +79,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="243" id="m7N-Q8-5h6" customClass="ShowTableViewCell" customModule="Fabler" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="86" width="600" height="243"/>
+                                <rect key="frame" x="0.0" y="66" width="600" height="243"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m7N-Q8-5h6" id="uxv-3b-FYp">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="242"/>
@@ -172,10 +172,10 @@
             </objects>
             <point key="canvasLocation" x="2577" y="-686"/>
         </scene>
-        <!--View Controller-->
+        <!--Backpane View Controller-->
         <scene sceneID="4SI-bp-lri">
             <objects>
-                <viewController id="F7u-T7-oZO" sceneMemberID="viewController">
+                <viewController id="F7u-T7-oZO" customClass="BackpaneViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ww7-5k-WrJ"/>
                         <viewControllerLayoutGuide type="bottom" id="nP2-YR-nef"/>
@@ -234,15 +234,18 @@
                             <constraint firstItem="MVf-hA-Eff" firstAttribute="top" secondItem="vSE-Om-cvH" secondAttribute="bottom" constant="5" id="eRW-55-NlN"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="userButton" destination="jIg-j1-TCs" id="uzq-SZ-vd9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fjX-l1-SZ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="160" y="162"/>
         </scene>
-        <!--Menu Controller-->
+        <!--Menu Table View Controller-->
         <scene sceneID="WvI-gM-KFV">
             <objects>
-                <tableViewController id="c8U-hf-vWv" customClass="MenuController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="c8U-hf-vWv" customClass="MenuTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="none" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" id="haP-s8-5Sh">
                         <rect key="frame" x="0.0" y="0.0" width="550" height="360"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -560,6 +563,27 @@
                                     <outlet property="delegate" destination="TX9-Ex-k35" id="tST-eH-bnG"/>
                                 </connections>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w23-Rx-fhY">
+                                <rect key="frame" x="45" y="97" width="42" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WUo-Ej-fQq">
+                                <rect key="frame" x="45" y="137" width="42" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o9z-NB-kGd">
+                                <rect key="frame" x="45" y="177" width="42" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -574,8 +598,11 @@
                         <barButtonItem key="leftBarButtonItem" image="menu" id="OAz-pa-Onn"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="firstNameLabel" destination="WUo-Ej-fQq" id="f19-z3-UFb"/>
+                        <outlet property="lastNameLabel" destination="o9z-NB-kGd" id="jxn-qH-3Mw"/>
                         <outlet property="loginButton" destination="zh3-ak-4sy" id="DKx-oW-bCR"/>
                         <outlet property="menuButton" destination="OAz-pa-Onn" id="lFn-mp-txl"/>
+                        <outlet property="userNameLabel" destination="w23-Rx-fhY" id="1s6-Ju-dim"/>
                         <segue destination="skb-Nh-TJo" kind="presentation" identifier="loggedOutSegue" id="Cfe-qX-6IJ"/>
                     </connections>
                 </viewController>
@@ -608,7 +635,7 @@
         <image name="menu" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tWZ-CD-OTO"/>
+        <segue reference="foL-zu-uHU"/>
         <segue reference="fZO-iY-zYI"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -3,7 +3,7 @@
 //  Fabler
 //
 //  Created by Christopher Day on 10/28/15.
-//  Copyright © 2015 AppCoda. All rights reserved.
+//  Copyright © 2015 Fabler. All rights reserved.
 //
 
 import Alamofire
@@ -21,6 +21,7 @@ struct FablerClient {
         case ReadEpisodesForPodcast(podcast:Int)
         case SubscribeToPodcast(podcast:Int)
         case UnsubscribeToPodcast(podcast:Int)
+        case ReadCurrentUser()
 
         var method: Alamofire.Method {
             switch self {
@@ -36,6 +37,8 @@ struct FablerClient {
                 return .POST
             case .UnsubscribeToPodcast:
                 return .POST
+            case .ReadCurrentUser:
+                return .GET
             }
         }
 
@@ -53,6 +56,8 @@ struct FablerClient {
                 return "/subscription/"
             case .UnsubscribeToPodcast:
                 return "/subscription/"
+            case .ReadCurrentUser:
+                return "/users/current/"
             }
         }
 

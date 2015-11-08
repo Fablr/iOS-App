@@ -12,6 +12,8 @@
 		450B76781BE9DAA90033C0B6 /* EpisodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76771BE9DAA90033C0B6 /* EpisodeService.swift */; };
 		450B767A1BECA7610033C0B6 /* EpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76791BECA7610033C0B6 /* EpisodeTableViewCell.swift */; };
 		450B767C1BECABB30033C0B6 /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B767B1BECABB30033C0B6 /* EpisodeViewController.swift */; };
+		450B767E1BEF49120033C0B6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B767D1BEF49120033C0B6 /* User.swift */; };
+		450B76801BEF567D0033C0B6 /* BackpaneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B767F1BEF567D0033C0B6 /* BackpaneViewController.swift */; };
 		457E51E31BE864170079845E /* ShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E51E21BE864170079845E /* ShowCell.swift */; };
 		4588CF2C1BDB46E40080E13D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4588CF2B1BDB46E40080E13D /* LoginViewController.swift */; };
 		45B51D0B1BE495E700F289F7 /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B51D0A1BE495E700F289F7 /* Podcast.swift */; };
@@ -25,8 +27,8 @@
 		F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47029F51A7F27DB00E30A3C /* AppDelegate.swift */; };
 		F47029FD1A7F27DB00E30A3C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47029FC1A7F27DB00E30A3C /* Images.xcassets */; };
 		F4702A001A7F27DC00E30A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F47029FE1A7F27DB00E30A3C /* LaunchScreen.xib */; };
-		F4702A0C1A7F27DC00E30A3C /* SidebarMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4702A0B1A7F27DC00E30A3C /* SidebarMenuTests.swift */; };
-		F4702A181A7F351C00E30A3C /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4702A171A7F351C00E30A3C /* MenuController.swift */; };
+		F4702A0C1A7F27DC00E30A3C /* FablerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4702A0B1A7F27DC00E30A3C /* FablerTests.swift */; };
+		F4702A181A7F351C00E30A3C /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4702A171A7F351C00E30A3C /* MenuTableViewController.swift */; };
 		F491E74A1A7F4B300026528E /* CollectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7491A7F4B300026528E /* CollectionTableViewController.swift */; };
 		F491E74C1A7F4C630026528E /* ShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E74B1A7F4C630026528E /* ShowTableViewCell.swift */; };
 		F491E7551A7F7E010026528E /* DiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7541A7F7E010026528E /* DiscoveryViewController.swift */; };
@@ -51,6 +53,8 @@
 		450B76771BE9DAA90033C0B6 /* EpisodeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeService.swift; sourceTree = "<group>"; };
 		450B76791BECA7610033C0B6 /* EpisodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeTableViewCell.swift; sourceTree = "<group>"; };
 		450B767B1BECABB30033C0B6 /* EpisodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
+		450B767D1BEF49120033C0B6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		450B767F1BEF567D0033C0B6 /* BackpaneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackpaneViewController.swift; sourceTree = "<group>"; };
 		457E51E21BE864170079845E /* ShowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCell.swift; sourceTree = "<group>"; };
 		4588CF2B1BDB46E40080E13D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		45B51D0A1BE495E700F289F7 /* Podcast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
@@ -68,8 +72,8 @@
 		F47029FF1A7F27DB00E30A3C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		F4702A051A7F27DC00E30A3C /* Fabler.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Fabler.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4702A0A1A7F27DC00E30A3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F4702A0B1A7F27DC00E30A3C /* SidebarMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarMenuTests.swift; sourceTree = "<group>"; };
-		F4702A171A7F351C00E30A3C /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
+		F4702A0B1A7F27DC00E30A3C /* FablerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FablerTests.swift; sourceTree = "<group>"; };
+		F4702A171A7F351C00E30A3C /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		F491E7491A7F4B300026528E /* CollectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionTableViewController.swift; sourceTree = "<group>"; };
 		F491E74B1A7F4C630026528E /* ShowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowTableViewCell.swift; sourceTree = "<group>"; };
 		F491E7541A7F7E010026528E /* DiscoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +114,7 @@
 			children = (
 				45B51D0A1BE495E700F289F7 /* Podcast.swift */,
 				450B76751BE9CC270033C0B6 /* Episode.swift */,
+				450B767D1BEF49120033C0B6 /* User.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -127,11 +132,12 @@
 		45E5367A1BE173EB009E3F10 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F4702A171A7F351C00E30A3C /* MenuController.swift */,
+				450B767F1BEF567D0033C0B6 /* BackpaneViewController.swift */,
 				4588CF2B1BDB46E40080E13D /* LoginViewController.swift */,
 				45E536741BDF025F009E3F10 /* YouViewController.swift */,
 				F491E7541A7F7E010026528E /* DiscoveryViewController.swift */,
 				450B767B1BECABB30033C0B6 /* EpisodeViewController.swift */,
+				F4702A171A7F351C00E30A3C /* MenuTableViewController.swift */,
 				F491E7491A7F4B300026528E /* CollectionTableViewController.swift */,
 				450B76731BE983670033C0B6 /* ShowTableViewController.swift */,
 				450B76791BECA7610033C0B6 /* EpisodeTableViewCell.swift */,
@@ -199,7 +205,7 @@
 		F4702A081A7F27DC00E30A3C /* FablerTests */ = {
 			isa = PBXGroup;
 			children = (
-				F4702A0B1A7F27DC00E30A3C /* SidebarMenuTests.swift */,
+				F4702A0B1A7F27DC00E30A3C /* FablerTests.swift */,
 				F4702A091A7F27DC00E30A3C /* Supporting Files */,
 			);
 			path = FablerTests;
@@ -272,7 +278,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
-				ORGANIZATIONNAME = AppCoda;
+				ORGANIZATIONNAME = Fabler;
 				TargetAttributes = {
 					F47029EF1A7F27DB00E30A3C = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -392,10 +398,12 @@
 				45E5367E1BE1F980009E3F10 /* FablerClient.swift in Sources */,
 				F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */,
 				450B76741BE983670033C0B6 /* ShowTableViewController.swift in Sources */,
-				F4702A181A7F351C00E30A3C /* MenuController.swift in Sources */,
+				450B767E1BEF49120033C0B6 /* User.swift in Sources */,
+				F4702A181A7F351C00E30A3C /* MenuTableViewController.swift in Sources */,
 				45B51D0B1BE495E700F289F7 /* Podcast.swift in Sources */,
 				450B767A1BECA7610033C0B6 /* EpisodeTableViewCell.swift in Sources */,
 				F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */,
+				450B76801BEF567D0033C0B6 /* BackpaneViewController.swift in Sources */,
 				45BF1C661BE31EF600665402 /* LoginService.swift in Sources */,
 				F491E74C1A7F4C630026528E /* ShowTableViewCell.swift in Sources */,
 				457E51E31BE864170079845E /* ShowCell.swift in Sources */,
@@ -410,7 +418,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4702A0C1A7F27DC00E30A3C /* SidebarMenuTests.swift in Sources */,
+				F4702A0C1A7F27DC00E30A3C /* FablerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

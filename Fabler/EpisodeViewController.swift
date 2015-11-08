@@ -3,7 +3,7 @@
 //  Fabler
 //
 //  Created by Christopher Day on 11/6/15.
-//  Copyright © 2015 AppCoda. All rights reserved.
+//  Copyright © 2015 Fabler. All rights reserved.
 //
 
 import UIKit

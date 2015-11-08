@@ -3,17 +3,16 @@
 //  Fabler
 //
 //  Created by Christopher Day on 10/28/15.
-//  Copyright © 2015 AppCoda. All rights reserved.
+//  Copyright © 2015 Fabler. All rights reserved.
 //
 
-import Foundation
 import FBSDKLoginKit
 
 protocol TokenListenerDelegate {
     func tokenDidChange(token:String)
 }
 
-class TokenListener : NSObject {
+class TokenListener {
 
     // MARK: - Members
 
@@ -21,16 +20,14 @@ class TokenListener : NSObject {
 
     // MARK: - TokenListener functions
 
-    override init() {
-        super.init()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "facebookTokenDidChange", name: FBSDKAccessTokenDidChangeNotification, object: nil)
-    }
+    init() {
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        let mainQueue = NSOperationQueue.mainQueue()
 
-    // MARK: - NSNotificationCenter selectors
-
-    func facebookTokenDidChange() {
-        if let facebookToken = FBSDKAccessToken.currentAccessToken() {
-            delegate?.tokenDidChange(facebookToken.tokenString)
+        notificationCenter.addObserverForName(FBSDKAccessTokenDidChangeNotification, object: nil, queue: mainQueue) { _ in
+            if let facebookToken = FBSDKAccessToken.currentAccessToken() {
+                self.delegate?.tokenDidChange(facebookToken.tokenString)
+            }
         }
     }
 }

@@ -3,7 +3,7 @@
 //  Fabler
 //
 //  Created by Christopher Day on 10/23/15.
-//  Copyright © 2015 AppCoda. All rights reserved.
+//  Copyright © 2015 Fabler. All rights reserved.
 //
 
 import UIKit
@@ -39,7 +39,6 @@ class LoginViewController : UIViewController, FBSDKLoginButtonDelegate {
 
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         if error == nil {
-            //update facebook token
             performSegueWithIdentifier("loggedInSegue", sender: nil)
         } else {
             print(error.localizedDescription)
