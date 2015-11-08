@@ -40,6 +40,23 @@ class CollectionTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
     }
 
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "displayShowSegue" {
+            (segue.destinationViewController as! ShowTableViewController).podcast = (sender as! Podcast)
+        }
+    }
+
+    // MARK: - UITableViewController functions
+
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        guard indexPath.section == 0 else {
+            print("Unexpected section selected.")
+            return
+        }
+
+        performSegueWithIdentifier("displayShowSegue", sender: podcasts![indexPath.row])
+    }
+
     // MARK: - UITableViewDataSource functions
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {

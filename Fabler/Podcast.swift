@@ -42,7 +42,6 @@ final class Podcast : ResponseObjectSerializable, ResponseCollectionSerializable
             }
         }
 
-
         return podcasts
     }
 }

@@ -19,6 +19,8 @@ struct FablerClient {
         case ReadPodcasts()
         case ReadSubscribedPodcasts()
         case ReadEpisodesForPodcast(podcast:Int)
+        case SubscribeToPodcast(podcast:Int)
+        case UnsubscribeToPodcast(podcast:Int)
 
         var method: Alamofire.Method {
             switch self {
@@ -30,6 +32,10 @@ struct FablerClient {
                 return .GET
             case .ReadEpisodesForPodcast:
                 return .GET
+            case .SubscribeToPodcast:
+                return .POST
+            case .UnsubscribeToPodcast:
+                return .POST
             }
         }
 
@@ -40,9 +46,13 @@ struct FablerClient {
             case .ReadPodcasts:
                 return "/podcast/"
             case .ReadSubscribedPodcasts:
-                return "/get-subscribed-podcasts/"
+                return "/podcast/subscribed/"
             case .ReadEpisodesForPodcast:
                 return "/episode/"
+            case .SubscribeToPodcast:
+                return "/subscription/"
+            case .UnsubscribeToPodcast:
+                return "/subscription/"
             }
         }
 
@@ -62,6 +72,12 @@ struct FablerClient {
             case .ReadEpisodesForPodcast(let podcast):
                 let parameters = ["podcast": podcast]
                 return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
+            case .SubscribeToPodcast(let podcast):
+                let parameters = ["podcast": podcast]
+                return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
+            case .UnsubscribeToPodcast(let podcast):
+                let parameters = ["podcast": podcast, "active": false]
+                return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: (parameters as! [String : AnyObject])).0
             default:
                 return mutableURLRequest
             }

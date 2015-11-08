@@ -42,4 +42,19 @@ class PodcastService {
                 }
             }
     }
+
+    func subscribeToPodcast(podcastId: Int, completion: (result: Bool) -> Void) {
+        Alamofire
+            .request(FablerClient.Router.SubscribeToPodcast(podcast: podcastId))
+            .validate(statusCode: 201..<202)
+            .responseJSON { response in
+                switch response.result {
+                case .Success:
+                    completion(result: true)
+                case .Failure(let error):
+                    print(error)
+                    completion(result: false)
+                }
+            }
+    }
 }
