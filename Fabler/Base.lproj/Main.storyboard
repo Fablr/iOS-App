@@ -404,7 +404,7 @@
             </objects>
             <point key="canvasLocation" x="2577" y="162"/>
         </scene>
-        <!--Show Table View Controller-->
+        <!--Title-->
         <scene sceneID="rNI-qd-T78">
             <objects>
                 <tableViewController id="PzG-pe-aiM" customClass="ShowTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
@@ -448,7 +448,15 @@
                             <outlet property="delegate" destination="PzG-pe-aiM" id="a8o-9S-ea2"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Title" id="z2A-2g-KPH">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="QRR-bP-ROf">
+                            <connections>
+                                <action selector="subscribeButtonPressed:" destination="PzG-pe-aiM" id="rIx-Up-lPd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="subscribeButton" destination="QRR-bP-ROf" id="Tuw-jD-yTl"/>
                         <segue destination="NvI-Q6-IdB" kind="show" identifier="displayEpisodeSegue" id="nTj-nK-dK8"/>
                     </connections>
                 </tableViewController>
@@ -636,6 +644,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="foL-zu-uHU"/>
-        <segue reference="fZO-iY-zYI"/>
+        <segue reference="rNg-9Z-Etf"/>
     </inferredMetricsTieBreakers>
 </document>

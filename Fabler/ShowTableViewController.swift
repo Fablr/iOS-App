@@ -10,11 +10,32 @@ import UIKit
 
 class ShowTableViewController: UITableViewController {
 
+    // MARK: - IBOutlets
+
+    @IBOutlet weak var subscribeButton: UIBarButtonItem!
+
     // MARK: - ShowTableViewController members
 
     var podcast: Podcast?
     var episodes: [Episode]?
-    
+
+    // MARK: - IBActions
+
+    @IBAction func subscribeButtonPressed(sender: AnyObject) {
+        let service = PodcastService()
+        let subscribed = !(podcast?.subscribed)!
+
+        self.subscribeButton.title = subscribed ? "Unsubscribe" : "Subscribe"
+
+        service.subscribeToPodcast((podcast?.id)!, subscribe: subscribed, completion: { result in
+            if result {
+                self.podcast?.subscribed = subscribed
+            } else {
+                self.subscribeButton.title = !subscribed ? "Unsubscribe" : "Subscribe"
+            }
+        })
+    }
+
     // MARK: - UIViewController functions
 
     override func viewDidLoad() {
@@ -26,6 +47,8 @@ class ShowTableViewController: UITableViewController {
             self.episodes = episodes
             self.tableView.reloadData()
         })
+
+        self.subscribeButton.title = self.podcast!.subscribed ? "Unsubscribe" : "Subscribe"
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,7 +60,7 @@ class ShowTableViewController: UITableViewController {
             (segue.destinationViewController as! EpisodeViewController).episode = (sender as! Episode)
         }
     }
-
+    
     // MARK: - UITableViewController functions
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

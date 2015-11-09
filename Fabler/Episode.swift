@@ -34,10 +34,20 @@ final class Episode : ResponseObjectSerializable, ResponseCollectionSerializable
         self.title = representation.valueForKeyPath("title") as! String
         self.subtitle = representation.valueForKeyPath("subtitle") as! String
         self.explicit = (representation.valueForKeyPath("explicit") as! String).toBool()!
-        self.pubdate = (representation.valueForKeyPath("pubdate") as! String).toNSDate()!
-        self.duration = (representation.valueForKeyPath("duration") as! String).toNSTimeInterval()
         self.description = representation.valueForKeyPath("description") as! String
         self.id = representation.valueForKeyPath("id") as! Int
+
+        if let duration = representation.valueForKeyPath("duration") as? String {
+            self.duration = duration.toNSTimeInterval()
+        } else {
+            self.duration = 0
+        }
+
+        if let pubdate = representation.valueForKeyPath("pubdate") as? String {
+            self.pubdate = pubdate.toNSDate()!
+        } else {
+            self.pubdate = NSDate()
+        }
     }
 
     static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [Episode] {

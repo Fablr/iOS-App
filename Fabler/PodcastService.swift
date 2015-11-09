@@ -43,10 +43,10 @@ class PodcastService {
             }
     }
 
-    func subscribeToPodcast(podcastId: Int, completion: (result: Bool) -> Void) {
+    func subscribeToPodcast(podcastId: Int, subscribe: Bool, completion: (result: Bool) -> Void) {
         Alamofire
-            .request(FablerClient.Router.SubscribeToPodcast(podcast: podcastId))
-            .validate(statusCode: 201..<202)
+            .request(FablerClient.Router.SubscribeToPodcast(podcast: podcastId, subscribe: subscribe))
+            .validate(statusCode: 200..<202)
             .responseJSON { response in
                 switch response.result {
                 case .Success:

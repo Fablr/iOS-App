@@ -19,8 +19,7 @@ struct FablerClient {
         case ReadPodcasts()
         case ReadSubscribedPodcasts()
         case ReadEpisodesForPodcast(podcast:Int)
-        case SubscribeToPodcast(podcast:Int)
-        case UnsubscribeToPodcast(podcast:Int)
+        case SubscribeToPodcast(podcast:Int, subscribe:Bool)
         case ReadCurrentUser()
 
         var method: Alamofire.Method {
@@ -34,8 +33,6 @@ struct FablerClient {
             case .ReadEpisodesForPodcast:
                 return .GET
             case .SubscribeToPodcast:
-                return .POST
-            case .UnsubscribeToPodcast:
                 return .POST
             case .ReadCurrentUser:
                 return .GET
@@ -53,8 +50,6 @@ struct FablerClient {
             case .ReadEpisodesForPodcast:
                 return "/episode/"
             case .SubscribeToPodcast:
-                return "/subscription/"
-            case .UnsubscribeToPodcast:
                 return "/subscription/"
             case .ReadCurrentUser:
                 return "/users/current/"
@@ -77,12 +72,9 @@ struct FablerClient {
             case .ReadEpisodesForPodcast(let podcast):
                 let parameters = ["podcast": podcast]
                 return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
-            case .SubscribeToPodcast(let podcast):
-                let parameters = ["podcast": podcast]
-                return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
-            case .UnsubscribeToPodcast(let podcast):
-                let parameters = ["podcast": podcast, "active": false]
-                return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: (parameters as! [String : AnyObject])).0
+            case .SubscribeToPodcast(let podcast, let subscribe):
+                let parameters = ["podcast": podcast, "active": subscribe]
+                return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters as? [String : AnyObject]).0
             default:
                 return mutableURLRequest
             }

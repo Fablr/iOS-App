@@ -10,18 +10,20 @@ final class Podcast : ResponseObjectSerializable, ResponseCollectionSerializable
 
     // MARK: - Podcast members
 
-    let title: String
-    let author: String
-    let explicit: Bool
-    let id: Int
+    var title: String
+    var author: String
+    var explicit: Bool
+    var id: Int
+    var subscribed: Bool
 
     // MARK: - Podcast functions
 
-    init (title: String,  author: String, explicit: Bool, id: Int) {
+    init (title: String,  author: String, explicit: Bool, id: Int, subscribed: Bool) {
         self.title = title
         self.author = author
         self.explicit = explicit
         self.id = id
+        self.subscribed = subscribed
     }
 
     required init?(response: NSHTTPURLResponse, representation: AnyObject) {
@@ -29,6 +31,7 @@ final class Podcast : ResponseObjectSerializable, ResponseCollectionSerializable
         self.author = representation.valueForKeyPath("author") as! String
         self.explicit = (representation.valueForKeyPath("explicit") as! String).toBool()!
         self.id = representation.valueForKeyPath("id") as! Int
+        self.subscribed = representation.valueForKeyPath("subscribed") as! Bool
     }
 
     static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [Podcast] {
