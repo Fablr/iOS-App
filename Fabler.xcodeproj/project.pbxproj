@@ -245,6 +245,7 @@
 				F47029EE1A7F27DB00E30A3C /* Resources */,
 				3C87B5B64B96F9D41C1384EE /* Embed Pods Frameworks */,
 				E3E37323B063321F5ABC5BEA /* Copy Pods Resources */,
+				45D056111BF2D9F0003FDC6C /* Run Script (Delete Apps from Simulator) */,
 			);
 			buildRules = (
 			);
@@ -355,6 +356,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Fabler/Pods-Fabler-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		45D056111BF2D9F0003FDC6C /* Run Script (Delete Apps from Simulator) */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script (Delete Apps from Simulator)";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\necho \"Running Delete Content Directory Script...\"\n\n#Change this to folder under your application that contains content\nCONTENTSUBPATH=\"/Library/Application Support/Content\"\n\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\nSIMULATOR_BASE_DIR=\"/Users/$USER/Library/Application Support/iPhone Simulator/\"\n\n# Get the most recent install, i.e. the one we just installed\nMOST_RECENT_APP=`find \"$SIMULATOR_BASE_DIR\" -name \"$FULL_PRODUCT_NAME\" -type d -mtime -1 -print0 | xargs -0 stat -f \"%m %N\" | sort -rn | head -1 | cut -f2- -d\" \"`\necho \"Most Recent App $MOST_RECENT_APP\"\n\n# Get the containing folder\nMOST_RECENT_APP_DIRECTORY=`dirname \"$MOST_RECENT_APP\"`\necho \"Most recent app path $MOST_RECENT_APP_DIRECTORY\"\n\nMOST_RECENT_APP_DIRECTORY_CONTENT=\"$MOST_RECENT_APP_DIRECTORY$CONTENTSUBPATH\"\necho \"Most recent app content path: $MOST_RECENT_APP_DIRECTORY_CONTENT\"\n\n# Only try to delete if the content folder exists\nif [ -d \"$MOST_RECENT_APP_DIRECTORY_CONTENT\" ]\nthen\nrm -R \"$MOST_RECENT_APP_DIRECTORY_CONTENT\"\nfi\nfi";
 		};
 		C8AC91276CA9152F6518674D /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

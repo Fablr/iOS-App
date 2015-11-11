@@ -1,4 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Xcode 7.0">
-    <elements/>
+    <entity name="Episode" representedClassName="Episode" syncable="YES">
+        <attribute name="duration" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="episodeDescription" attributeType="String" defaultValueString="Episode." syncable="YES"/>
+        <attribute name="explicit" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 64" indexed="YES" syncable="YES"/>
+        <attribute name="pubdate" attributeType="Date" defaultDateTimeInterval="-372902400" syncable="YES"/>
+        <attribute name="subtitle" attributeType="String" defaultValueString="Episode" syncable="YES"/>
+        <attribute name="title" attributeType="String" defaultValueString="Episode" syncable="YES"/>
+    </entity>
+    <entity name="Podcast" representedClassName="Podcast" syncable="YES">
+        <attribute name="author" attributeType="String" defaultValueString="Bob Smith" syncable="YES"/>
+        <attribute name="explicit" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 64" indexed="YES" syncable="YES"/>
+        <attribute name="subscribed" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="title" attributeType="String" defaultValueString="Podcast" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="email" attributeType="String" defaultValueString="bob.smith@gmail.com" syncable="YES"/>
+        <attribute name="firstName" attributeType="String" defaultValueString="Bob" syncable="YES"/>
+        <attribute name="lastName" attributeType="String" defaultValueString="Smith" syncable="YES"/>
+        <attribute name="userName" attributeType="String" defaultValueString="User" indexed="YES" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Podcast" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="Episode" positionX="-54" positionY="27" width="128" height="150"/>
+        <element name="User" positionX="-36" positionY="72" width="128" height="105"/>
+    </elements>
 </model>

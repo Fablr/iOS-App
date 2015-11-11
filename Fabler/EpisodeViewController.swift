@@ -27,7 +27,7 @@ class EpisodeViewController: UIViewController {
 
         titleLabel.text = episode!.title
         subtitleLabel.text = episode!.subtitle
-        descriptionLabel.text = episode!.description
+        descriptionLabel.text = episode!.episodeDescription
     }
 
     override func didReceiveMemoryWarning() {

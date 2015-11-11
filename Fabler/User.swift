@@ -6,32 +6,35 @@
 //  Copyright © 2015 Fabler. All rights reserved.
 //
 
-final class User : ResponseObjectSerializable, ResponseCollectionSerializable {
+import CoreData
 
-    // MARK: - Episode members
+@objc(User)
+final class User : NSManagedObject, ResponseObjectSerializable, ResponseCollectionSerializable {
+
+    // MARK: - User static members
 
     static var currentUser: User?
 
-    let userName: String
-    let firstName: String
-    let lastName: String
-    let email: String
+    // MARK: - User members
 
-    // MARK: - Episode functions
+    @NSManaged var userName: String
+    @NSManaged var firstName: String
+    @NSManaged var lastName: String
+    @NSManaged var email: String
 
-    init (userName: String, firstName: String, lastName: String, email: String) {
-        self.userName = userName
-        self.firstName = firstName
-        self.lastName = lastName
-        self.email = email
-    }
+    // MARK: - ResponseObjectSerializable functions
 
     required init?(response: NSHTTPURLResponse, representation: AnyObject) {
+        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        super.init(entity: NSEntityDescription.entityForName("User", inManagedObjectContext: context)!, insertIntoManagedObjectContext: context)
+
         self.userName = representation.valueForKeyPath("username") as! String
         self.firstName = representation.valueForKeyPath("first_name") as! String
         self.lastName = representation.valueForKeyPath("last_name") as! String
         self.email = representation.valueForKeyPath("email") as! String
     }
+
+    // MARK: - ResponseCollectionSerializable static functions
 
     static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [User] {
         var users: [User] = []

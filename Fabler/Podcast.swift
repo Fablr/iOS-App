@@ -6,33 +6,33 @@
 //  Copyright © 2015 Fabler. All rights reserved.
 //
 
-final class Podcast : ResponseObjectSerializable, ResponseCollectionSerializable {
+import CoreData
+
+@objc(Podcast)
+final class Podcast : NSManagedObject, ResponseObjectSerializable, ResponseCollectionSerializable {
 
     // MARK: - Podcast members
 
-    var title: String
-    var author: String
-    var explicit: Bool
-    var id: Int
-    var subscribed: Bool
+    @NSManaged var title: String
+    @NSManaged var author: String
+    @NSManaged var explicit: Bool
+    @NSManaged var id: Int
+    @NSManaged var subscribed: Bool
 
-    // MARK: - Podcast functions
-
-    init (title: String,  author: String, explicit: Bool, id: Int, subscribed: Bool) {
-        self.title = title
-        self.author = author
-        self.explicit = explicit
-        self.id = id
-        self.subscribed = subscribed
-    }
+    // MARK: - ResponseObjectSerializable functions
 
     required init?(response: NSHTTPURLResponse, representation: AnyObject) {
+        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        super.init(entity: NSEntityDescription.entityForName("Podcast", inManagedObjectContext: context)!, insertIntoManagedObjectContext: context)
+
         self.title = representation.valueForKeyPath("title") as! String
         self.author = representation.valueForKeyPath("author") as! String
-        self.explicit = (representation.valueForKeyPath("explicit") as! String).toBool()!
+        self.explicit = representation.valueForKeyPath("explicit") as! Bool
         self.id = representation.valueForKeyPath("id") as! Int
         self.subscribed = representation.valueForKeyPath("subscribed") as! Bool
     }
+
+    // MARK: - ResponseCollectionSerializable functions
 
     static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [Podcast] {
         var podcasts: [Podcast] = []
