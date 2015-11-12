@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         listener = TokenListener()
         loginService = LoginService()
         listener?.delegate = loginService
+        loginService?.getCurrentUser()
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 

@@ -30,7 +30,7 @@ class CollectionTableViewController: UITableViewController {
         }
 
         let service = PodcastService()
-        service.readSubscribedPodcasts { podcasts in
+        self.podcasts = service.readSubscribedPodcasts { podcasts in
             self.podcasts = podcasts
             self.tableView.reloadData()
         }

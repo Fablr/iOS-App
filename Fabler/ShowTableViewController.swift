@@ -43,7 +43,7 @@ class ShowTableViewController: UITableViewController {
         self.title = podcast?.title
 
         let service = EpisodeService()
-        service.getEpisodesForPodcast(podcast!.id, completion: { episodes in
+        self.episodes = service.getEpisodesForPodcast(podcast!.id, completion: { episodes in
             self.episodes = episodes
             self.tableView.reloadData()
         })

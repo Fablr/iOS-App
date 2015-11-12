@@ -21,7 +21,9 @@ class BackpaneViewController : UIViewController {
     // MARK: - BackpaneViewController functions
 
     func updateUserElements() {
-        self.userButton.setTitle(self.user!.userName, forState: .Normal)
+        if let title = self.user?.userName {
+            self.userButton.setTitle(title, forState: .Normal)
+        }
     }
 
     // MARK: - UIViewController functions

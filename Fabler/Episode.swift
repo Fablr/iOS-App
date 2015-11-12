@@ -9,7 +9,7 @@
 import CoreData
 
 @objc(Episode)
-final class Episode : NSManagedObject, ResponseObjectSerializable, ResponseCollectionSerializable {
+final class Episode : NSManagedObject {
 
     // MARK: - Episode members
 
@@ -20,35 +20,6 @@ final class Episode : NSManagedObject, ResponseObjectSerializable, ResponseColle
     @NSManaged var duration: NSTimeInterval
     @NSManaged var episodeDescription: String
     @NSManaged var id: Int
-
-    // MARK: - ResponseObjectSerializable functions
-
-    required init?(response: NSHTTPURLResponse, representation: AnyObject) {
-        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        super.init(entity: NSEntityDescription.entityForName("Episode", inManagedObjectContext: context)!, insertIntoManagedObjectContext: context)
-
-        self.title = representation.valueForKeyPath("title") as! String
-        self.subtitle = representation.valueForKeyPath("subtitle") as! String
-        self.explicit = representation.valueForKeyPath("explicit") as! Bool
-        self.episodeDescription = representation.valueForKeyPath("description") as! String
-        self.id = representation.valueForKeyPath("id") as! Int
-        self.duration = (representation.valueForKeyPath("duration") as! String).toNSTimeInterval()
-        self.pubdate = (representation.valueForKeyPath("pubdate") as! String).toNSDate()!
-    }
-
-    // MARK: - ResponseCollectionSerializable functions
-
-    static func collection(response response: NSHTTPURLResponse, representation: AnyObject) -> [Episode] {
-        var episodes: [Episode] = []
-
-        if let representation = representation as? [[String: AnyObject]] {
-            for episodeRepresentation in representation {
-                if let episode = Episode(response: response, representation: episodeRepresentation) {
-                    episodes.append(episode)
-                }
-            }
-        }
-        
-        return episodes
-    }
+    @NSManaged var link: String
+    @NSManaged var podcastId: Int
 }
