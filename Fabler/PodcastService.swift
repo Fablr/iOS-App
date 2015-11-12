@@ -72,6 +72,7 @@ class PodcastService {
                 switch response.result {
                 case .Success(let json):
                     let server_podcasts = self.serializePodcastCollection(json)
+                    self.updateUnsubscribedPodcasts(local_podcasts, server: server_podcasts)
                     completion(result: server_podcasts)
                 case .Failure(let error):
                     print(error)
@@ -82,9 +83,20 @@ class PodcastService {
         return local_podcasts
     }
 
-    func subscribeToPodcast(podcastId: Int, subscribe: Bool, completion: (result: Bool) -> Void) {
+    func subscribeToPodcast(podcast: Podcast, subscribe: Bool, completion: (result: Bool) -> Void) {
+        podcast.subscribed = subscribe
+
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                print(nserror)
+            }
+        }
+
         Alamofire
-            .request(FablerClient.Router.SubscribeToPodcast(podcast: podcastId, subscribe: subscribe))
+            .request(FablerClient.Router.SubscribeToPodcast(podcast: podcast.id, subscribe: subscribe))
             .validate(statusCode: 200..<202)
             .responseJSON { response in
                 switch response.result {
@@ -187,5 +199,24 @@ class PodcastService {
         }
 
         return podcasts
+    }
+
+    // MARK: - PodcastService helper functions
+
+    private func updateUnsubscribedPodcasts(local: [Podcast], server: [Podcast]) {
+        for podcast in local {
+            if !server.contains(podcast) {
+                podcast.subscribed = false
+            }
+        }
+
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                print(nserror)
+            }
+        }
     }
 }

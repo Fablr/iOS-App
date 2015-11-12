@@ -27,7 +27,7 @@ class ShowTableViewController: UITableViewController {
 
         self.subscribeButton.title = subscribed ? "Unsubscribe" : "Subscribe"
 
-        service.subscribeToPodcast((podcast?.id)!, subscribe: subscribed, completion: { result in
+        service.subscribeToPodcast(podcast!, subscribe: subscribed, completion: { result in
             if result {
                 self.podcast?.subscribed = subscribed
             } else {
