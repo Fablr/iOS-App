@@ -48,6 +48,7 @@
         <!--Reveal View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
                 <viewController id="vXZ-lx-hvc" customClass="SWRevealViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
@@ -64,7 +65,6 @@
                         <segue destination="F7u-T7-oZO" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="ze8-9r-kN4"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="160" y="-686"/>
         </scene>
@@ -175,6 +175,7 @@
         <!--Backpane View Controller-->
         <scene sceneID="4SI-bp-lri">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fjX-l1-SZ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="F7u-T7-oZO" customClass="BackpaneViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ww7-5k-WrJ"/>
@@ -238,13 +239,13 @@
                         <outlet property="userButton" destination="jIg-j1-TCs" id="uzq-SZ-vd9"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fjX-l1-SZ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="160" y="162"/>
         </scene>
         <!--Menu Table View Controller-->
         <scene sceneID="WvI-gM-KFV">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eHO-uu-C6D" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="c8U-hf-vWv" customClass="MenuTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="none" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" id="haP-s8-5Sh">
                         <rect key="frame" x="0.0" y="0.0" width="550" height="360"/>
@@ -320,14 +321,13 @@
                         </connections>
                     </tableView>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eHO-uu-C6D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="888" y="162"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Fabler Navigation Controller-->
         <scene sceneID="a23-LC-1XJ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dXH-rC-dKS" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dXH-rC-dKS" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WmJ-Ml-X7j">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -529,10 +529,10 @@
             </objects>
             <point key="canvasLocation" x="4249" y="162"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Fabler Navigation Controller-->
         <scene sceneID="UtP-zp-P1I">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0J7-Hk-VFu" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0J7-Hk-VFu" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="nxz-TN-o7k">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -597,9 +597,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="zh3-ak-4sy" firstAttribute="leading" secondItem="9Ro-kO-FVG" secondAttribute="leadingMargin" constant="25" id="BGT-j2-Mrd"/>
+                            <constraint firstItem="a17-so-ZGo" firstAttribute="top" secondItem="zh3-ak-4sy" secondAttribute="bottom" constant="25" id="Bhl-aj-1ca"/>
                             <constraint firstItem="zh3-ak-4sy" firstAttribute="centerX" secondItem="9Ro-kO-FVG" secondAttribute="centerX" id="kwP-hJ-t3W"/>
                             <constraint firstAttribute="trailingMargin" secondItem="zh3-ak-4sy" secondAttribute="trailing" constant="25" id="lyx-hu-rIy"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="zh3-ak-4sy" secondAttribute="bottom" constant="25" id="o17-Am-4Yy"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="You" id="K8K-cf-Lb4">
@@ -644,6 +644,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="foL-zu-uHU"/>
-        <segue reference="rNg-9Z-Etf"/>
+        <segue reference="fZO-iY-zYI"/>
     </inferredMetricsTieBreakers>
 </document>
