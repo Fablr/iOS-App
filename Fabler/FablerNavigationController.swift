@@ -26,10 +26,12 @@ class FablerNavigationController : UINavigationController {
             self.view.addSubview(player.smallPlayer.view)
         }
 
-        player.registerPlaybackStarted {
-            if !self.playerAdded {
-                self.playerAdded = true
-                self.view.addSubview(player.smallPlayer.view)
+        player.registerPlaybackStarted { [weak self] in
+            if let controller = self {
+                if !controller.playerAdded {
+                    controller.playerAdded = true
+                    controller.view.addSubview(player.smallPlayer.view)
+                }
             }
         }
     }

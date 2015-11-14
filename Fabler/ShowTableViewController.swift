@@ -70,7 +70,7 @@ class ShowTableViewController: UITableViewController {
         }
 
         let player = (UIApplication.sharedApplication().delegate as! AppDelegate).player!
-        player.startPlayback()
+        player.startPlayback(episodes![indexPath.row])
 
         performSegueWithIdentifier("displayEpisodeSegue", sender: episodes![indexPath.row])
     }

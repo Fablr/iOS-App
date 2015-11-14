@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9059"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SmallPlayerViewController" customModule="Fabler" customModuleProvider="target">
             <connections>
                 <outlet property="barView" destination="RM0-zr-hpZ" id="yEm-AC-Laj"/>
+                <outlet property="playButton" destination="gzs-US-6ee" id="DHb-J1-K72"/>
+                <outlet property="progressView" destination="RD7-Wh-VMP" id="GXM-B8-qKv"/>
+                <outlet property="titleLabel" destination="fSD-kB-wKQ" id="1jK-VF-OOV"/>
                 <outlet property="view" destination="iN0-l3-epB" id="q8Q-3t-tlF"/>
             </connections>
         </placeholder>
@@ -16,11 +19,72 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RM0-zr-hpZ">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="75"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="84r-HY-UHI">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                            <subviews>
+                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="RD7-Wh-VMP">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
+                                    <animations/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="2" id="lMU-dE-Vgw"/>
+                                    </constraints>
+                                </progressView>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="0lS-7H-hZl">
+                                    <rect key="frame" x="5" y="2" width="590" height="48"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gzs-US-6ee">
+                                            <rect key="frame" x="0.0" y="0.0" width="20" height="48"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="20" id="BYj-Yf-QQ1"/>
+                                            </constraints>
+                                            <state key="normal" image="play-white">
+                                                <attributedString key="attributedTitle">
+                                                    <fragment content="Play">
+                                                        <attributes>
+                                                            <font key="NSFont" size="18" name="HelveticaNeue"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                            </state>
+                                            <connections>
+                                                <action selector="playButtonPressed:" destination="-1" eventType="touchUpInside" id="vNB-uk-hlK"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fSD-kB-wKQ">
+                                            <rect key="frame" x="25" y="0.0" width="565" height="48"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="highlightedColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <animations/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="48" id="nhv-oD-O9R"/>
+                                        <constraint firstItem="gzs-US-6ee" firstAttribute="centerY" secondItem="0lS-7H-hZl" secondAttribute="centerY" id="xSZ-yg-plu"/>
+                                    </constraints>
+                                </stackView>
+                            </subviews>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="RD7-Wh-VMP" secondAttribute="trailing" id="KOv-fO-2Z5"/>
+                                <constraint firstAttribute="trailing" secondItem="0lS-7H-hZl" secondAttribute="trailing" constant="5" id="M8Z-1p-vs5"/>
+                                <constraint firstItem="0lS-7H-hZl" firstAttribute="leading" secondItem="84r-HY-UHI" secondAttribute="leading" constant="5" id="Qj9-Gg-U9O"/>
+                                <constraint firstItem="RD7-Wh-VMP" firstAttribute="leading" secondItem="84r-HY-UHI" secondAttribute="leading" id="ra2-kO-tXt"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
                     <animations/>
-                    <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="75" id="ybe-4x-Y74"/>
+                        <constraint firstAttribute="bottom" secondItem="84r-HY-UHI" secondAttribute="bottom" id="25N-bB-ceI"/>
+                        <constraint firstItem="84r-HY-UHI" firstAttribute="leading" secondItem="RM0-zr-hpZ" secondAttribute="leading" id="8CB-rS-sW4"/>
+                        <constraint firstItem="84r-HY-UHI" firstAttribute="top" secondItem="RM0-zr-hpZ" secondAttribute="top" id="9Pv-aD-Sc2"/>
+                        <constraint firstAttribute="trailing" secondItem="84r-HY-UHI" secondAttribute="trailing" id="Qyh-V8-ZaO"/>
+                        <constraint firstAttribute="height" constant="50" id="nMA-mO-sgU"/>
                     </constraints>
                 </view>
             </subviews>
@@ -34,7 +98,10 @@
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-            <point key="canvasLocation" x="857" y="299"/>
+            <point key="canvasLocation" x="780" y="211"/>
         </view>
     </objects>
+    <resources>
+        <image name="play-white" width="20" height="20"/>
+    </resources>
 </document>

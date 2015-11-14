@@ -10,6 +10,10 @@ import UIKit
 
 class LargePlayerViewController : UIViewController {
 
+    // MARK: - LargePlayerViewController members
+
+    var player = (UIApplication.sharedApplication().delegate as! AppDelegate).player
+
     // MARK: - IBActions
 
     @IBAction func doneButtonPressed(sender: AnyObject) {
