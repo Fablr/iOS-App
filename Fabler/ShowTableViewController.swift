@@ -49,6 +49,8 @@ class ShowTableViewController: UITableViewController {
         })
 
         self.subscribeButton.title = self.podcast!.subscribed ? "Unsubscribe" : "Subscribe"
+
+        self.navigationController?.navigationBar.tintColor = UIColor.orangeColor()
     }
 
     override func didReceiveMemoryWarning() {

@@ -16,11 +16,24 @@ class SmallPlayerViewController : UIViewController {
     weak var player: FablerPlayer?
 
     // MARK: - IBOutlets
-    @IBOutlet weak var progressView: UIProgressView!
-    @IBOutlet weak var barView: UIView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var playButton: UIButton!
 
+    @IBOutlet weak var progressView: UIProgressView?
+    @IBOutlet weak var barView: UIView?
+    @IBOutlet weak var titleLabel: UILabel?
+    @IBOutlet weak var playButton: UIButton?
+
+    // MARK: - IBActions
+
+    @IBAction func playButtonPressed(sender: AnyObject) {
+        if let player = self.player {
+            if player.playing {
+                player.pausePlayback()
+            } else {
+                player.playPlayback()
+            }
+        }
+    }
+    
     // MARK: - UIViewController functions
 
     override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
@@ -36,7 +49,7 @@ class SmallPlayerViewController : UIViewController {
 
         let tapRec = UITapGestureRecognizer()
         tapRec.addTarget(self, action: "barTapped")
-        barView.addGestureRecognizer(tapRec)
+        barView?.addGestureRecognizer(tapRec)
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,30 +77,18 @@ class SmallPlayerViewController : UIViewController {
         self.player = (UIApplication.sharedApplication().delegate as! AppDelegate).player
 
         if let player = self.player {
-            titleLabel.text = player.episode?.title
+            titleLabel?.text = player.episode?.title
 
             if player.playing {
-                playButton.setImage(UIImage(named: "pause-white"), forState: .Normal)
+                playButton?.setImage(UIImage(named: "pause"), forState: .Normal)
             } else {
-                playButton.setImage(UIImage(named: "play-white"), forState: .Normal)
+                playButton?.setImage(UIImage(named: "play"), forState: .Normal)
             }
         }
     }
 
-    func updatePlayerProgress(duration: CMTime, current: CMTime) {
-        let progress = current.seconds / duration.seconds
-        progressView.setProgress(Float(progress), animated: true)
-    }
-
-    // MARK: - IBActions
-
-    @IBAction func playButtonPressed(sender: AnyObject) {
-        if let player = self.player {
-            if player.playing {
-                player.pausePlayback()
-            } else {
-                player.playPlayback()
-            }
-        }
+    func updatePlayerProgress(duration: Float, current: Float) {
+        let progress = current / duration
+        progressView?.setProgress(Float(progress), animated: true)
     }
 }

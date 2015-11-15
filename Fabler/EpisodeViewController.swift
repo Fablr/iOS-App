@@ -28,6 +28,8 @@ class EpisodeViewController: UIViewController {
         titleLabel.text = episode!.title
         subtitleLabel.text = episode!.subtitle
         descriptionLabel.text = episode!.episodeDescription
+
+        self.navigationController?.navigationBar.tintColor = UIColor.orangeColor()
     }
 
     override func didReceiveMemoryWarning() {

@@ -21,7 +21,7 @@ class FablerNavigationController : UINavigationController {
 
         let player = (UIApplication.sharedApplication().delegate as! AppDelegate).player!
 
-        if player.playing {
+        if player.started {
             self.playerAdded = true
             self.view.addSubview(player.smallPlayer.view)
         }

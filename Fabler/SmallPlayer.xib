@@ -27,6 +27,7 @@
                                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="RD7-Wh-VMP">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
                                     <animations/>
+                                    <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="2" id="lMU-dE-Vgw"/>
                                     </constraints>
@@ -34,21 +35,13 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="0lS-7H-hZl">
                                     <rect key="frame" x="5" y="2" width="590" height="48"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gzs-US-6ee">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gzs-US-6ee">
                                             <rect key="frame" x="0.0" y="0.0" width="20" height="48"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="20" id="BYj-Yf-QQ1"/>
                                             </constraints>
-                                            <state key="normal" image="play-white">
-                                                <attributedString key="attributedTitle">
-                                                    <fragment content="Play">
-                                                        <attributes>
-                                                            <font key="NSFont" size="18" name="HelveticaNeue"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                            </state>
+                                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="playButtonPressed:" destination="-1" eventType="touchUpInside" id="vNB-uk-hlK"/>
                                             </connections>
@@ -57,7 +50,7 @@
                                             <rect key="frame" x="25" y="0.0" width="565" height="48"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
                                     </subviews>
@@ -78,7 +71,7 @@
                         </stackView>
                     </subviews>
                     <animations/>
-                    <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="84r-HY-UHI" secondAttribute="bottom" id="25N-bB-ceI"/>
                         <constraint firstItem="84r-HY-UHI" firstAttribute="leading" secondItem="RM0-zr-hpZ" secondAttribute="leading" id="8CB-rS-sW4"/>
@@ -101,7 +94,4 @@
             <point key="canvasLocation" x="780" y="211"/>
         </view>
     </objects>
-    <resources>
-        <image name="play-white" width="20" height="20"/>
-    </resources>
 </document>

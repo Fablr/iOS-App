@@ -19,9 +19,10 @@ class FablerPlayer : NSObject {
     let audioPlayer: AVQueuePlayer
 
     var playing: Bool
+    var started: Bool
     var timer: NSTimer?
 
-    weak var episode: Episode?
+    var episode: Episode?
 
     // MARK: - FablerPlayer functions
 
@@ -37,6 +38,7 @@ class FablerPlayer : NSObject {
         audioPlayer = AVQueuePlayer()
 
         playing = false
+        started = false
 
         super.init()
     }
@@ -45,13 +47,19 @@ class FablerPlayer : NSObject {
         timer?.invalidate()
     }
 
-    func updateCurrentTime() {
+    @objc private func updateCurrentTime() {
         if let current = audioPlayer.currentItem {
-            smallPlayer.updatePlayerProgress(current.duration, current: current.currentTime())
+            smallPlayer.updatePlayerProgress(Float(current.duration.seconds), current: Float(current.currentTime().seconds))
+            largePlayer.updatePlayerProgress(Float(current.duration.seconds), current: Float(current.currentTime().seconds))
         }
     }
 
     func startPlayback(episode: Episode) {
+        guard self.episode != episode else {
+            self.playPlayback()
+            return
+        }
+
         if let url = NSURL(string: episode.link) {
             let item = AVPlayerItem(URL: url)
 
@@ -59,28 +67,56 @@ class FablerPlayer : NSObject {
             audioPlayer.play()
 
             playing = true
+            started = true
             self.episode = episode
 
             timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "updateCurrentTime", userInfo: nil, repeats: true)
 
             smallPlayer.updateOutlets()
+            largePlayer.updateOutlets()
 
             NSNotificationCenter.defaultCenter().postNotificationName(PlayerStartPlayback, object: self)
         }
     }
 
     func pausePlayback() {
+        guard self.playing else {
+            return
+        }
+
         playing = false
         audioPlayer.pause()
         timer?.invalidate()
         smallPlayer.updateOutlets()
+        largePlayer.updateOutlets()
     }
 
     func playPlayback() {
+        guard !self.playing else {
+            return
+        }
+
         playing = true
         audioPlayer.play()
         timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "updateCurrentTime", userInfo: nil, repeats: true)
         smallPlayer.updateOutlets()
+        largePlayer.updateOutlets()
+    }
+
+    func setPlaybackTo(seconds: Float) {
+        audioPlayer.seekToTime(CMTime(seconds: Double(seconds), preferredTimescale: 10))
+    }
+
+    func getCurrentDuration() -> Float {
+        guard audioPlayer.currentItem != nil else {
+            return 0.0
+        }
+
+        return Float(audioPlayer.currentItem!.duration.seconds)
+    }
+
+    func getCurrentTime() -> Float {
+        return Float(audioPlayer.currentTime().seconds)
     }
 
     func registerPlaybackStarted(completion: () -> Void) {

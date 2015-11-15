@@ -1,30 +1,136 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LargePlayerViewController" customModule="Fabler" customModuleProvider="target">
             <connections>
+                <outlet property="artImage" destination="LVK-kF-V5Z" id="yvN-dv-3oO"/>
+                <outlet property="closeButton" destination="cHH-9U-EVP" id="pbj-dJ-3io"/>
+                <outlet property="forwardButton" destination="Ndf-Cf-xee" id="yY5-tj-RS2"/>
+                <outlet property="playButton" destination="Keb-kZ-4rN" id="CNy-SN-ENg"/>
+                <outlet property="playbackSlider" destination="nzd-t6-cgf" id="oeN-Jh-Nrk"/>
+                <outlet property="rewindButton" destination="A8D-GR-3Ho" id="yjI-UM-MBn"/>
+                <outlet property="titleLabel" destination="X9f-ZD-O8j" id="5pw-F0-mQx"/>
                 <outlet property="view" destination="iN0-l3-epB" id="XHp-1W-1lL"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="975"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cHH-9U-EVP">
-                    <rect key="frame" x="8" y="8" width="110" height="30"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="fh0-8i-7g6">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="975"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LVK-kF-V5Z">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <animations/>
+                            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="LVK-kF-V5Z" secondAttribute="height" multiplier="1:1" id="0Pk-dg-6hC"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X9f-ZD-O8j">
+                            <rect key="frame" x="10" y="600" width="580" height="50"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="wFu-1z-fdY"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="nzd-t6-cgf">
+                            <rect key="frame" x="8" y="650" width="584" height="51"/>
+                            <animations/>
+                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="JHM-MW-jg9"/>
+                            </constraints>
+                            <connections>
+                                <action selector="playbackSliderChanged:" destination="-1" eventType="valueChanged" id="orr-OR-jJD"/>
+                            </connections>
+                        </slider>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="h1m-gK-mvm">
+                            <rect key="frame" x="150" y="700" width="300" height="225"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A8D-GR-3Ho">
+                                    <rect key="frame" x="0.0" y="0.0" width="93" height="225"/>
+                                    <animations/>
+                                    <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <state key="normal" image="rewind">
+                                        <attributedString key="attributedTitle"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="rewindButtonPressed:" destination="-1" eventType="touchUpInside" id="82h-ul-Fk8"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Keb-kZ-4rN">
+                                    <rect key="frame" x="103" y="0.0" width="94" height="225"/>
+                                    <animations/>
+                                    <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <connections>
+                                        <action selector="playButtonPressed:" destination="-1" eventType="touchUpInside" id="4Ff-yR-1Bh"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ndf-Cf-xee">
+                                    <rect key="frame" x="207" y="0.0" width="93" height="225"/>
+                                    <animations/>
+                                    <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <state key="normal" image="forward">
+                                        <attributedString key="attributedTitle"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="forwardButtonPressed:" destination="-1" eventType="touchUpInside" id="DFP-QW-MQd"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="300" id="BXh-wM-zvE"/>
+                            </constraints>
+                        </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cHH-9U-EVP">
+                            <rect key="frame" x="150" y="925" width="300" height="50"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="jzN-8O-Z82"/>
+                                <constraint firstAttribute="width" constant="300" id="tXD-np-LUE"/>
+                            </constraints>
+                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="Close"/>
+                            <connections>
+                                <action selector="doneButtonPressed:" destination="-1" eventType="touchUpInside" id="Vsu-PD-1Fu"/>
+                            </connections>
+                        </button>
+                    </subviews>
                     <animations/>
-                    <state key="normal" title="This is a tribute."/>
-                    <connections>
-                        <action selector="doneButtonPressed:" destination="-1" eventType="touchUpInside" id="Vsu-PD-1Fu"/>
-                    </connections>
-                </button>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="nzd-t6-cgf" secondAttribute="trailing" constant="10" id="Aau-c2-LPg"/>
+                        <constraint firstItem="nzd-t6-cgf" firstAttribute="leading" secondItem="fh0-8i-7g6" secondAttribute="leading" constant="10" id="TNe-dq-ab4"/>
+                        <constraint firstItem="X9f-ZD-O8j" firstAttribute="leading" secondItem="nzd-t6-cgf" secondAttribute="leading" id="umw-qx-0wq"/>
+                    </constraints>
+                </stackView>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="fh0-8i-7g6" secondAttribute="bottom" id="EA1-p9-7rO"/>
+                <constraint firstItem="fh0-8i-7g6" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="fpD-T9-npV"/>
+                <constraint firstAttribute="trailing" secondItem="fh0-8i-7g6" secondAttribute="trailing" id="tFC-Xj-NC0"/>
+                <constraint firstItem="fh0-8i-7g6" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="uKH-t8-VHw"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="663" y="855.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="forward" width="20" height="20"/>
+        <image name="rewind" width="20" height="20"/>
+    </resources>
 </document>
