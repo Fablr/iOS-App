@@ -14,14 +14,11 @@ import FBSDKCoreKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var listener: TokenListener?
     var loginService: LoginService?
     var player: FablerPlayer?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        listener = TokenListener()
         loginService = LoginService()
-        listener?.delegate = loginService
         player = FablerPlayer()
 
         loginService?.getCurrentUser()

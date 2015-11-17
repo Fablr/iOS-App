@@ -26,7 +26,6 @@
 		45D055E11BF2A0F1003FDC6C /* FablerModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 45D055DF1BF2A0F1003FDC6C /* FablerModel.xcdatamodeld */; };
 		45E536751BDF025F009E3F10 /* YouViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E536741BDF025F009E3F10 /* YouViewController.swift */; };
 		45E536781BDF06E0009E3F10 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45E536761BDF06E0009E3F10 /* Main.storyboard */; };
-		45E5367C1BE1E410009E3F10 /* TokenListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5367B1BE1E410009E3F10 /* TokenListener.swift */; };
 		45E5367E1BE1F980009E3F10 /* FablerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5367D1BE1F980009E3F10 /* FablerClient.swift */; };
 		45FBA2581BF5E7E900DD8D14 /* LargePlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45FBA2571BF5E7E900DD8D14 /* LargePlayer.xib */; };
 		45FBA25A1BF5E7FE00DD8D14 /* LargePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBA2591BF5E7FE00DD8D14 /* LargePlayerViewController.swift */; };
@@ -74,7 +73,6 @@
 		45D055E01BF2A0F1003FDC6C /* FablerModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FablerModel.xcdatamodel; sourceTree = "<group>"; };
 		45E536741BDF025F009E3F10 /* YouViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YouViewController.swift; sourceTree = "<group>"; };
 		45E536771BDF06E0009E3F10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		45E5367B1BE1E410009E3F10 /* TokenListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenListener.swift; sourceTree = "<group>"; };
 		45E5367D1BE1F980009E3F10 /* FablerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerClient.swift; sourceTree = "<group>"; };
 		45FBA2571BF5E7E900DD8D14 /* LargePlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LargePlayer.xib; sourceTree = "<group>"; };
 		45FBA2591BF5E7FE00DD8D14 /* LargePlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargePlayerViewController.swift; sourceTree = "<group>"; };
@@ -208,7 +206,6 @@
 			isa = PBXGroup;
 			children = (
 				F47029F51A7F27DB00E30A3C /* AppDelegate.swift */,
-				45E5367B1BE1E410009E3F10 /* TokenListener.swift */,
 				45E5367D1BE1F980009E3F10 /* FablerClient.swift */,
 				456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */,
 				45D055DF1BF2A0F1003FDC6C /* FablerModel.xcdatamodeld */,
@@ -438,7 +435,6 @@
 			files = (
 				4588CF2C1BDB46E40080E13D /* LoginViewController.swift in Sources */,
 				450B76761BE9CC270033C0B6 /* Episode.swift in Sources */,
-				45E5367C1BE1E410009E3F10 /* TokenListener.swift in Sources */,
 				450B767C1BECABB30033C0B6 /* EpisodeViewController.swift in Sources */,
 				45BF1C681BE4921900665402 /* PodcastService.swift in Sources */,
 				45E5367E1BE1F980009E3F10 /* FablerClient.swift in Sources */,

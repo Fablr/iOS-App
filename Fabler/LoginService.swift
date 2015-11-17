@@ -8,11 +8,12 @@
 
 public let CurrentUserDidChangeNotification = "com.Fabler.CurrentUserDidChange"
 
+import FBSDKLoginKit
 import Alamofire
 import SwiftyJSON
 import CoreData
 
-class LoginService : TokenListenerDelegate {
+class LoginService {
 
     // MARK: - CoreData context
 
@@ -20,7 +21,29 @@ class LoginService : TokenListenerDelegate {
 
     // MARK: - LoginService functions
 
-    init() {        
+    init() {
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        let mainQueue = NSOperationQueue.mainQueue()
+
+        notificationCenter
+            .addObserverForName(FBSDKAccessTokenDidChangeNotification, object: nil, queue: mainQueue) { _ in
+                if let facebookToken = FBSDKAccessToken.currentAccessToken() {
+                    Alamofire
+                        .request(FablerClient.Router.FacebookLogin(token: facebookToken.tokenString))
+                        .validate()
+                        .responseJSON { response in
+                            switch response.result {
+                            case .Success(let data):
+                                if let token = data.valueForKeyPath("access_token") as? String {
+                                    FablerClient.Router.OAuthToken = token
+                                    self.getCurrentUser()
+                                }
+                            case .Failure(let error):
+                                print(error)
+                            }
+                        }
+                }
+            }
     }
 
     // MARK: - LoginService API functions
@@ -58,20 +81,7 @@ class LoginService : TokenListenerDelegate {
     // MARK: - TokenListenerDelegate functions
 
     func tokenDidChange(token: String) {
-        Alamofire
-            .request(FablerClient.Router.FacebookLogin(token: token))
-            .validate()
-            .responseJSON { response in
-                switch response.result {
-                case .Success(let data):
-                    if let token = data.valueForKeyPath("access_token") as? String {
-                        FablerClient.Router.OAuthToken = token
-                        self.getCurrentUser()
-                    }
-                case .Failure(let error):
-                    print(error)
-                }
-            }
+
     }
 
     // MARK: - UserService serialize functions
