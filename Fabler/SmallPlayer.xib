@@ -42,6 +42,7 @@
                                                 <constraint firstAttribute="width" constant="20" id="BYj-Yf-QQ1"/>
                                             </constraints>
                                             <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal" image="play"/>
                                             <connections>
                                                 <action selector="playButtonPressed:" destination="-1" eventType="touchUpInside" id="vNB-uk-hlK"/>
                                             </connections>
@@ -94,4 +95,7 @@
             <point key="canvasLocation" x="780" y="211"/>
         </view>
     </objects>
+    <resources>
+        <image name="play" width="20" height="20"/>
+    </resources>
 </document>

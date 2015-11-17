@@ -24,6 +24,8 @@ class LargePlayerViewController : UIViewController {
     @IBOutlet weak var playButton: UIButton?
     @IBOutlet weak var forwardButton: UIButton?
     @IBOutlet weak var closeButton: UIButton?
+    @IBOutlet weak var currentTimeLabel: UILabel?
+    @IBOutlet weak var durationLabel: UILabel?
 
     // MARK: - IBActions
 
@@ -104,6 +106,15 @@ class LargePlayerViewController : UIViewController {
     }
 
     func updatePlayerProgress(duration: Float, current: Float) {
+        let currentNSDate = NSDate.init(timeIntervalSince1970: Double(current))
+        let durationNSDate = NSDate.init(timeIntervalSince1970: Double(duration))
+        let formatter = NSDateFormatter()
+        formatter.timeZone = NSTimeZone(abbreviation: "UTC")
+        formatter.dateFormat = "HH:mm:ss"
+
+        currentTimeLabel?.text = formatter.stringFromDate(currentNSDate)
+        durationLabel?.text = formatter.stringFromDate(durationNSDate)
+
         if let highlighted = playbackSlider?.highlighted {
             if !highlighted {
                 playbackSlider?.maximumValue = duration

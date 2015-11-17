@@ -9,6 +9,8 @@
             <connections>
                 <outlet property="artImage" destination="LVK-kF-V5Z" id="yvN-dv-3oO"/>
                 <outlet property="closeButton" destination="cHH-9U-EVP" id="pbj-dJ-3io"/>
+                <outlet property="currentTimeLabel" destination="mfP-zs-nxe" id="ac1-Rv-lc7"/>
+                <outlet property="durationLabel" destination="I4a-uW-lhh" id="1XN-g4-FVc"/>
                 <outlet property="forwardButton" destination="Ndf-Cf-xee" id="yY5-tj-RS2"/>
                 <outlet property="playButton" destination="Keb-kZ-4rN" id="CNy-SN-ENg"/>
                 <outlet property="playbackSlider" destination="nzd-t6-cgf" id="oeN-Jh-Nrk"/>
@@ -43,17 +45,43 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="nzd-t6-cgf">
-                            <rect key="frame" x="8" y="650" width="584" height="51"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D47-3B-c7B">
+                            <rect key="frame" x="10" y="650" width="580" height="50"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfP-zs-nxe">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <animations/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="50" id="6iE-3u-69J"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="nzd-t6-cgf">
+                                    <rect key="frame" x="48" y="0.0" width="484" height="51"/>
+                                    <animations/>
+                                    <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <connections>
+                                        <action selector="playbackSliderChanged:" destination="-1" eventType="valueChanged" id="orr-OR-jJD"/>
+                                    </connections>
+                                </slider>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I4a-uW-lhh">
+                                    <rect key="frame" x="530" y="0.0" width="50" height="50"/>
+                                    <animations/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="50" id="qEe-bY-igl"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
                             <animations/>
-                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="50" id="JHM-MW-jg9"/>
+                                <constraint firstAttribute="height" constant="50" id="22Q-eN-jR1"/>
                             </constraints>
-                            <connections>
-                                <action selector="playbackSliderChanged:" destination="-1" eventType="valueChanged" id="orr-OR-jJD"/>
-                            </connections>
-                        </slider>
+                        </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="h1m-gK-mvm">
                             <rect key="frame" x="150" y="700" width="300" height="225"/>
                             <subviews>
@@ -72,6 +100,7 @@
                                     <rect key="frame" x="103" y="0.0" width="94" height="225"/>
                                     <animations/>
                                     <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <state key="normal" image="play"/>
                                     <connections>
                                         <action selector="playButtonPressed:" destination="-1" eventType="touchUpInside" id="4Ff-yR-1Bh"/>
                                     </connections>
@@ -109,9 +138,10 @@
                     </subviews>
                     <animations/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="nzd-t6-cgf" secondAttribute="trailing" constant="10" id="Aau-c2-LPg"/>
-                        <constraint firstItem="nzd-t6-cgf" firstAttribute="leading" secondItem="fh0-8i-7g6" secondAttribute="leading" constant="10" id="TNe-dq-ab4"/>
-                        <constraint firstItem="X9f-ZD-O8j" firstAttribute="leading" secondItem="nzd-t6-cgf" secondAttribute="leading" id="umw-qx-0wq"/>
+                        <constraint firstItem="X9f-ZD-O8j" firstAttribute="trailing" secondItem="D47-3B-c7B" secondAttribute="trailing" id="3TB-ep-b9e"/>
+                        <constraint firstAttribute="trailing" secondItem="D47-3B-c7B" secondAttribute="trailing" constant="10" id="ALN-fu-9zT"/>
+                        <constraint firstItem="D47-3B-c7B" firstAttribute="leading" secondItem="fh0-8i-7g6" secondAttribute="leading" constant="10" id="j6e-Qs-yDF"/>
+                        <constraint firstItem="X9f-ZD-O8j" firstAttribute="leading" secondItem="D47-3B-c7B" secondAttribute="leading" id="rbB-kJ-oX7"/>
                     </constraints>
                 </stackView>
             </subviews>
@@ -131,6 +161,7 @@
     </objects>
     <resources>
         <image name="forward" width="20" height="20"/>
+        <image name="play" width="20" height="20"/>
         <image name="rewind" width="20" height="20"/>
     </resources>
 </document>
