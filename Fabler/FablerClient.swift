@@ -8,6 +8,7 @@
 
 import Alamofire
 import SwiftyJSON
+import Foundation
 
 // MARK: - FablerClient
 
@@ -22,6 +23,7 @@ struct FablerClient {
         case ReadEpisodesForPodcast(podcast:Int)
         case SubscribeToPodcast(podcast:Int, subscribe:Bool)
         case ReadCurrentUser()
+        case UpdateEpisodeMark(episode:Int, mark:NSTimeInterval, completed:Bool)
 
         var method: Alamofire.Method {
             switch self {
@@ -37,6 +39,8 @@ struct FablerClient {
                 return .POST
             case .ReadCurrentUser:
                 return .GET
+            case .UpdateEpisodeMark:
+                return .POST
             }
         }
 
@@ -54,6 +58,8 @@ struct FablerClient {
                 return "/subscription/"
             case .ReadCurrentUser:
                 return "/users/current/"
+            case .UpdateEpisodeMark:
+                return "/episodereceipt/"
             }
         }
 
@@ -75,6 +81,9 @@ struct FablerClient {
                 return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
             case .SubscribeToPodcast(let podcast, let subscribe):
                 let parameters = ["podcast": podcast, "active": subscribe]
+                return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters as? [String : AnyObject]).0
+            case .UpdateEpisodeMark(let episode, let mark, let completed):
+                let parameters = ["episode": episode, "mark": mark.toString(), "completed": completed]
                 return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters as? [String : AnyObject]).0
             default:
                 return mutableURLRequest
@@ -165,5 +174,23 @@ extension String {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         return dateFormatter.dateFromString(self)
+    }
+}
+
+extension NSTimeInterval {
+    func toString() -> String {
+        var result: String
+
+        let days = Int(floor(self / (60 * 60 * 24)))
+        var remainder = Int(floor(self % (60 * 60 * 24)))
+        let hours = Int(remainder / (60 * 60))
+        remainder = Int(remainder % (60 * 60))
+        let minutes = Int(remainder / 60)
+        remainder = Int(remainder % 60)
+        let seconds = Int(remainder)
+
+        result = String(format: "%02d %02d:%02d:%02d", days, hours, minutes, seconds)
+
+        return result
     }
 }

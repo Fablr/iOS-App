@@ -53,6 +53,33 @@ class EpisodeService {
         return local_episodes
     }
 
+    func setMarkForEpisode(episode: Episode, mark: NSTimeInterval, completed: Bool) {
+        episode.completed = completed
+        episode.mark = mark
+
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                print(nserror)
+            }
+        }
+
+        Alamofire
+            .request(FablerClient.Router.UpdateEpisodeMark(episode: episode.id, mark: episode.mark, completed: episode.completed))
+            .validate(statusCode: 200..<202)
+            .responseJSON { response in
+                switch response.result {
+                case .Success:
+                    break
+                case .Failure(let error):
+                    print(error)
+                    // mark for reupload
+                }
+        }
+    }
+
     // MARK: - EpisodeService serialize functions
 
     private func serializeEpisodeObject(data: JSON) -> Episode? {
@@ -116,6 +143,14 @@ class EpisodeService {
 
         if let podcastId = data["podcast"].int {
             episode?.podcastId = podcastId
+        }
+
+        if let mark = (data["mark"].string)?.toNSTimeInterval() {
+            episode?.mark = mark
+        }
+
+        if let completed = data["completed"].bool {
+            episode?.completed = completed
         }
 
         if context.hasChanges {

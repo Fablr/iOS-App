@@ -22,4 +22,6 @@ final class Episode : NSManagedObject {
     @NSManaged var id: Int
     @NSManaged var link: String
     @NSManaged var podcastId: Int
+    @NSManaged var mark: NSTimeInterval
+    @NSManaged var completed: Bool
 }

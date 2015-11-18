@@ -16,10 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var loginService: LoginService?
     var player: FablerPlayer?
+    var engine: SyncEngine?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         loginService = LoginService()
         player = FablerPlayer()
+        engine = SyncEngine()
 
         loginService?.getCurrentUser()
 
