@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		450B76741BE983670033C0B6 /* ShowTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76731BE983670033C0B6 /* ShowTableViewController.swift */; };
+		450B76741BE983670033C0B6 /* ShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76731BE983670033C0B6 /* ShowViewController.swift */; };
 		450B76761BE9CC270033C0B6 /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76751BE9CC270033C0B6 /* Episode.swift */; };
 		450B76781BE9DAA90033C0B6 /* EpisodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76771BE9DAA90033C0B6 /* EpisodeService.swift */; };
 		450B767A1BECA7610033C0B6 /* EpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76791BECA7610033C0B6 /* EpisodeTableViewCell.swift */; };
@@ -55,7 +55,7 @@
 /* Begin PBXFileReference section */
 		0FC93F29D694A1CBEDC5F5BA /* Pods_Fabler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Fabler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13FDB02D974B5D5C39CBB968 /* Pods-Fabler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fabler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fabler/Pods-Fabler.debug.xcconfig"; sourceTree = "<group>"; };
-		450B76731BE983670033C0B6 /* ShowTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowTableViewController.swift; sourceTree = "<group>"; };
+		450B76731BE983670033C0B6 /* ShowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowViewController.swift; sourceTree = "<group>"; };
 		450B76751BE9CC270033C0B6 /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		450B76771BE9DAA90033C0B6 /* EpisodeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeService.swift; sourceTree = "<group>"; };
 		450B76791BECA7610033C0B6 /* EpisodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeTableViewCell.swift; sourceTree = "<group>"; };
@@ -164,10 +164,10 @@
 				4588CF2B1BDB46E40080E13D /* LoginViewController.swift */,
 				45E536741BDF025F009E3F10 /* YouViewController.swift */,
 				F491E7541A7F7E010026528E /* DiscoveryViewController.swift */,
+				450B76731BE983670033C0B6 /* ShowViewController.swift */,
 				450B767B1BECABB30033C0B6 /* EpisodeViewController.swift */,
 				F4702A171A7F351C00E30A3C /* MenuTableViewController.swift */,
 				F491E7491A7F4B300026528E /* CollectionTableViewController.swift */,
-				450B76731BE983670033C0B6 /* ShowTableViewController.swift */,
 				450B76791BECA7610033C0B6 /* EpisodeTableViewCell.swift */,
 				F491E74B1A7F4C630026528E /* ShowTableViewCell.swift */,
 				457E51E21BE864170079845E /* ShowCell.swift */,
@@ -444,7 +444,7 @@
 				4538B5801BF55E1800039DF1 /* SmallPlayerViewController.swift in Sources */,
 				45505F711BFB1EF600481291 /* SyncEngine.swift in Sources */,
 				F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */,
-				450B76741BE983670033C0B6 /* ShowTableViewController.swift in Sources */,
+				450B76741BE983670033C0B6 /* ShowViewController.swift in Sources */,
 				450B767E1BEF49120033C0B6 /* User.swift in Sources */,
 				45D055E11BF2A0F1003FDC6C /* FablerModel.xcdatamodeld in Sources */,
 				F4702A181A7F351C00E30A3C /* MenuTableViewController.swift in Sources */,

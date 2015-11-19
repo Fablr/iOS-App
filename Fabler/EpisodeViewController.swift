@@ -28,7 +28,13 @@ class EpisodeViewController: UIViewController {
         titleLabel.text = episode!.title
         subtitleLabel.text = episode!.subtitle
         descriptionLabel.text = episode!.episodeDescription
+    }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.tintColor = UIColor.orangeColor()
     }
 

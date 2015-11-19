@@ -8,16 +8,22 @@
 
 import UIKit
 
-class ShowTableViewController: UITableViewController {
+class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var subscribeButton: UIBarButtonItem!
+    @IBOutlet weak var showTableView: UITableView!
+    @IBOutlet weak var showLabel: UILabel!
+    @IBOutlet weak var subscribeButton: UIButton!
+    @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
 
     // MARK: - ShowTableViewController members
 
     var podcast: Podcast?
     var episodes: [Episode]?
+
+    var header: UIView?
 
     // MARK: - IBActions
 
@@ -25,13 +31,13 @@ class ShowTableViewController: UITableViewController {
         let service = PodcastService()
         let subscribed = !(podcast?.subscribed)!
 
-        self.subscribeButton.title = subscribed ? "Unsubscribe" : "Subscribe"
+        self.subscribeButton.setTitle(subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
 
         service.subscribeToPodcast(podcast!, subscribe: subscribed, completion: { result in
             if result {
                 self.podcast?.subscribed = subscribed
             } else {
-                self.subscribeButton.title = !subscribed ? "Unsubscribe" : "Subscribe"
+                self.subscribeButton.setTitle(!subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
             }
         })
     }
@@ -40,17 +46,34 @@ class ShowTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = podcast?.title
+        self.showLabel.text = podcast?.title
+
+        showTableView.delegate = self
+        showTableView.dataSource = self
+
+        self.automaticallyAdjustsScrollViewInsets = true
+
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.translucent = true
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
 
         let service = EpisodeService()
         self.episodes = service.getEpisodesForPodcast(podcast!.id, completion: { episodes in
             self.episodes = episodes
-            self.tableView.reloadData()
+            self.showTableView.reloadData()
         })
 
-        self.subscribeButton.title = self.podcast!.subscribed ? "Unsubscribe" : "Subscribe"
+        self.subscribeButton.setTitle(self.podcast!.subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
+    }
 
-        self.navigationController?.navigationBar.tintColor = UIColor.orangeColor()
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.translucent = true
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,7 +88,7 @@ class ShowTableViewController: UITableViewController {
     
     // MARK: - UITableViewController functions
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         guard indexPath.section == 0 else {
             print("Unexpected section selected.")
             return
@@ -79,11 +102,11 @@ class ShowTableViewController: UITableViewController {
 
     // MARK: - UITableViewDataSource functions
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard episodes != nil else {
             return 0
         }
@@ -92,7 +115,7 @@ class ShowTableViewController: UITableViewController {
     }
 
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! EpisodeTableViewCell
 
         if let episode = episodes?[indexPath.row] {
