@@ -34,7 +34,7 @@ class FablerPlayer : NSObject {
         smallPlayer.view.frame = CGRectMake(0, (height - 50), width, 50)
 
         largePlayer = LargePlayerViewController(nibName: "LargePlayer", bundle: nil)
-        largePlayer.modalPresentationStyle = .FullScreen
+        largePlayer.modalPresentationStyle = .OverCurrentContext
 
         audioPlayer = AVQueuePlayer()
 
@@ -68,16 +68,6 @@ class FablerPlayer : NSObject {
         guard self.episode != episode else {
             self.playPlayback()
             return
-        }
-
-        //
-        // If user previously finished the episode change the mark but,
-        // retain the completion status.
-        //
-        if episode.completed {
-            let service = EpisodeService()
-            let currentTime = 0.0
-            service.setMarkForEpisode(episode, mark: currentTime, completed: true)
         }
 
         if let url = NSURL(string: episode.link) {
@@ -118,9 +108,12 @@ class FablerPlayer : NSObject {
 
         playing = false
         audioPlayer.pause()
+
         uiTimer?.invalidate()
         serviceTimer?.invalidate()
+
         updateService()
+
         smallPlayer.updateOutlets()
         largePlayer.updateOutlets()
     }

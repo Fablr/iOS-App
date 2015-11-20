@@ -21,8 +21,11 @@
     <entity name="Podcast" representedClassName="Podcast" syncable="YES">
         <attribute name="author" attributeType="String" defaultValueString="Bob Smith" syncable="YES"/>
         <attribute name="category" attributeType="String" defaultValueString="None" syncable="YES"/>
+        <attribute name="download" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="downloadAmount" attributeType="Integer 64" defaultValueString="3" syncable="YES"/>
         <attribute name="explicit" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="id" attributeType="Integer 64" indexed="YES" syncable="YES"/>
+        <attribute name="notify" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="publisherId" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="publisherName" attributeType="String" defaultValueString="Bob Smith" syncable="YES"/>
         <attribute name="subscribed" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -49,7 +52,7 @@
     </entity>
     <elements>
         <element name="Episode" positionX="-234" positionY="-12" width="128" height="210"/>
-        <element name="Podcast" positionX="-63" positionY="-18" width="128" height="178"/>
+        <element name="Podcast" positionX="-63" positionY="-18" width="128" height="225"/>
         <element name="User" positionX="97" positionY="0" width="128" height="135"/>
     </elements>
 </model>

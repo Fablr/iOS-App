@@ -22,4 +22,10 @@ final class Podcast : NSManagedObject {
     @NSManaged var publisherId: Int
     @NSManaged var summary: String
     @NSManaged var category: String
+
+    // MARK: - Setting members
+
+    @NSManaged var notify: Bool
+    @NSManaged var download: Bool
+    @NSManaged var downloadAmount: Int
 }

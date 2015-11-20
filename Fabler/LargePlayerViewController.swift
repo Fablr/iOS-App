@@ -80,6 +80,12 @@ class LargePlayerViewController : UIViewController {
 
         self.updateOutlets()
 
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let veView = UIVisualEffectView(effect: blurEffect)
+        veView.frame = self.view.bounds
+        self.view.backgroundColor = UIColor.clearColor()
+        self.view.insertSubview(veView, atIndex: 0)
+
         super.viewDidLoad()
     }
 

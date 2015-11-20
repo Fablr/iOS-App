@@ -42,6 +42,10 @@ class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDat
         })
     }
 
+    @IBAction func settingsButtonPressed(sender: AnyObject) {
+        performSegueWithIdentifier("displaySettingsSegue", sender: self.podcast)
+    }
+
     // MARK: - UIViewController functions
 
     override func viewDidLoad() {
@@ -64,6 +68,11 @@ class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDat
             self.showTableView.reloadData()
         })
 
+        if !(podcast!.subscribed) {
+            self.settingsButton.hidden = true
+            self.settingsButton.removeConstraints(self.settingsButton.constraints)
+        }
+
         self.subscribeButton.setTitle(self.podcast!.subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
     }
 
@@ -83,6 +92,8 @@ class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDat
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "displayEpisodeSegue" {
             (segue.destinationViewController as! EpisodeViewController).episode = (sender as! Episode)
+        } else if segue.identifier == "displaySettingsSegue" {
+            (segue.destinationViewController as! ShowSettingsTableViewController).podcast = (sender as! Podcast)
         }
     }
     

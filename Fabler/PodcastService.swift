@@ -23,6 +23,45 @@ class PodcastService {
 
     // MARK: - PodcastService API functions
 
+    func setNotificationForPodcast(podcast: Podcast, allowNotifications: Bool) {
+        podcast.notify = allowNotifications
+
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                print(nserror)
+            }
+        }
+    }
+
+    func setDownloadForPodcast(podcast: Podcast, allowAutoDownload: Bool) {
+        podcast.download = allowAutoDownload
+
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                print(nserror)
+            }
+        }
+    }
+
+    func setDownloadAmountForPodcast(podcast: Podcast, amount: Int) {
+        podcast.downloadAmount = amount
+
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                print(nserror)
+            }
+        }
+    }
+
     func readAllPodcasts(completion: (result: [Podcast]) -> Void) -> [Podcast] {
         let local_podcasts: [Podcast]
 
