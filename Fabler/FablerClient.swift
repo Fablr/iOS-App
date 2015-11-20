@@ -123,6 +123,7 @@ extension Alamofire.Request {
         -> Self
     {
         return response(
+            queue: dispatch_get_global_queue(QOS_CLASS_UTILITY, 0),
             responseSerializer: Request.SwiftyJSONResponseSerializer(options: options),
             completionHandler: completionHandler
         )

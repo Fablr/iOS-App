@@ -31,7 +31,7 @@ class DiscoveryViewController: UICollectionViewController {
         }
 
         let service = PodcastService()
-        self.podcasts = service.readAllPodcasts { podcasts in
+        self.podcasts = service.readAllPodcasts{ podcasts in
             self.podcasts = podcasts
             self.collectionView!.reloadData()
         }

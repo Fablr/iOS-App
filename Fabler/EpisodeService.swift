@@ -23,7 +23,7 @@ class EpisodeService {
 
     // MARK: - EpisodeService API functions
 
-    func getEpisodesForPodcast(podcastId: Int, completion: (result: [Episode]) -> Void) -> [Episode] {
+    func getEpisodesForPodcast(podcastId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Episode]) -> Void) -> [Episode] {
         let local_episodes: [Episode]
 
         let request = NSFetchRequest(entityName: "Episode")
@@ -43,10 +43,10 @@ class EpisodeService {
                 switch response.result {
                 case .Success(let json):
                     let server_episodes = self.serializeEpisodeCollection(json)
-                    completion(result: server_episodes)
+                    dispatch_async(queue, {completion(result: server_episodes)})
                 case .Failure(let error):
                     print(error)
-                    completion(result: local_episodes)
+                    dispatch_async(queue, {completion(result: local_episodes)})
                 }
             }
 

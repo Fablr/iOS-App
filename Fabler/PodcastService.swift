@@ -62,7 +62,7 @@ class PodcastService {
         }
     }
 
-    func readAllPodcasts(completion: (result: [Podcast]) -> Void) -> [Podcast] {
+    func readAllPodcasts(queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Podcast]) -> Void) -> [Podcast] {
         let local_podcasts: [Podcast]
 
         let request = NSFetchRequest(entityName: "Podcast")
@@ -81,17 +81,17 @@ class PodcastService {
                 switch response.result {
                 case .Success(let json):
                     let server_podcasts = self.serializePodcastCollection(json)
-                    completion(result: server_podcasts)
+                    dispatch_async(queue, {completion(result: server_podcasts)})
                 case .Failure(let error):
                     print(error)
-                    completion(result: local_podcasts)
+                    dispatch_async(queue, {completion(result: local_podcasts)})
                 }
             }
 
         return local_podcasts
     }
 
-    func readSubscribedPodcasts(completion: (result: [Podcast]) -> Void) -> [Podcast] {
+    func readSubscribedPodcasts(queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Podcast]) -> Void) -> [Podcast] {
         let local_podcasts: [Podcast]
 
         let request = NSFetchRequest(entityName: "Podcast")
@@ -112,17 +112,17 @@ class PodcastService {
                 case .Success(let json):
                     let server_podcasts = self.serializePodcastCollection(json)
                     self.updateUnsubscribedPodcasts(local_podcasts, server: server_podcasts)
-                    completion(result: server_podcasts)
+                    dispatch_async(queue, {completion(result: server_podcasts)})
                 case .Failure(let error):
                     print(error)
-                    completion(result: local_podcasts)
+                    dispatch_async(queue, {completion(result: local_podcasts)})
                 }
             }
 
         return local_podcasts
     }
 
-    func subscribeToPodcast(podcast: Podcast, subscribe: Bool, completion: (result: Bool) -> Void) {
+    func subscribeToPodcast(podcast: Podcast, subscribe: Bool, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         podcast.subscribed = subscribe
 
         if context.hasChanges {
@@ -140,10 +140,10 @@ class PodcastService {
             .responseJSON { response in
                 switch response.result {
                 case .Success:
-                    completion(result: true)
+                    dispatch_async(queue, {completion(result: true)})
                 case .Failure(let error):
                     print(error)
-                    completion(result: false)
+                    dispatch_async(queue, {completion(result: false)})
                 }
             }
     }

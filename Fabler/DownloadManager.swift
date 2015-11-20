@@ -7,8 +7,15 @@
 //
 
 import CoreData
+import Alamofire
 
-class SyncEngine {
+class DownloadManager {
+
+    var queue: dispatch_queue_t {
+        return dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)
+    }
+
     init() {
+        
     }
 }

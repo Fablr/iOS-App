@@ -16,7 +16,7 @@
 		450B76801BEF567D0033C0B6 /* BackpaneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B767F1BEF567D0033C0B6 /* BackpaneViewController.swift */; };
 		4538B57D1BF55C3800039DF1 /* SmallPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */; };
 		4538B5801BF55E1800039DF1 /* SmallPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */; };
-		45505F711BFB1EF600481291 /* SyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45505F701BFB1EF600481291 /* SyncEngine.swift */; };
+		45505F711BFB1EF600481291 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45505F701BFB1EF600481291 /* DownloadManager.swift */; };
 		456BB5C91BF5B4A600D59C47 /* FablerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */; };
 		456BB5CB1BF5CD3E00D59C47 /* FablerPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */; };
 		457E51E31BE864170079845E /* ShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E51E21BE864170079845E /* ShowCell.swift */; };
@@ -65,7 +65,7 @@
 		450B767F1BEF567D0033C0B6 /* BackpaneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackpaneViewController.swift; sourceTree = "<group>"; };
 		4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPlayer.xib; sourceTree = "<group>"; };
 		4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallPlayerViewController.swift; sourceTree = "<group>"; };
-		45505F701BFB1EF600481291 /* SyncEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncEngine.swift; sourceTree = "<group>"; };
+		45505F701BFB1EF600481291 /* DownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerNavigationController.swift; sourceTree = "<group>"; };
 		456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerPlayer.swift; sourceTree = "<group>"; };
 		457E51E21BE864170079845E /* ShowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCell.swift; sourceTree = "<group>"; };
@@ -213,7 +213,7 @@
 				F47029F51A7F27DB00E30A3C /* AppDelegate.swift */,
 				45E5367D1BE1F980009E3F10 /* FablerClient.swift */,
 				456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */,
-				45505F701BFB1EF600481291 /* SyncEngine.swift */,
+				45505F701BFB1EF600481291 /* DownloadManager.swift */,
 				45D055DF1BF2A0F1003FDC6C /* FablerModel.xcdatamodeld */,
 				4538B57E1BF55C6F00039DF1 /* Views */,
 				45B51D091BE495D500F289F7 /* Models */,
@@ -445,7 +445,7 @@
 				45BF1C681BE4921900665402 /* PodcastService.swift in Sources */,
 				45E5367E1BE1F980009E3F10 /* FablerClient.swift in Sources */,
 				4538B5801BF55E1800039DF1 /* SmallPlayerViewController.swift in Sources */,
-				45505F711BFB1EF600481291 /* SyncEngine.swift in Sources */,
+				45505F711BFB1EF600481291 /* DownloadManager.swift in Sources */,
 				F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */,
 				450B76741BE983670033C0B6 /* ShowViewController.swift in Sources */,
 				450B767E1BEF49120033C0B6 /* User.swift in Sources */,
