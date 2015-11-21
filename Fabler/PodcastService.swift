@@ -8,13 +8,9 @@
 
 import Alamofire
 import SwiftyJSON
-import CoreData
+import RealmSwift
 
 class PodcastService {
-
-    // MARK: - CoreData context
-
-    let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 
     // MARK: - PodcastService functions
 
@@ -24,203 +20,168 @@ class PodcastService {
     // MARK: - PodcastService API functions
 
     func setNotificationForPodcast(podcast: Podcast, allowNotifications: Bool) {
-        podcast.notify = allowNotifications
+        let realm = try! Realm()
 
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                print(nserror)
-            }
+        try! realm.write {
+            podcast.notify = allowNotifications
         }
     }
 
     func setDownloadForPodcast(podcast: Podcast, allowAutoDownload: Bool) {
-        podcast.download = allowAutoDownload
+        let realm = try! Realm()
 
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                print(nserror)
-            }
+        try! realm.write {
+            podcast.download = allowAutoDownload
         }
     }
 
     func setDownloadAmountForPodcast(podcast: Podcast, amount: Int) {
-        podcast.downloadAmount = amount
+        let realm = try! Realm()
 
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                print(nserror)
-            }
+        try! realm.write {
+            podcast.downloadAmount = amount
         }
     }
 
-    func readAllPodcasts(queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Podcast]) -> Void) -> [Podcast] {
-        let local_podcasts: [Podcast]
+    func readPodcast(podcastId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Podcast) -> Void)?) -> Podcast? {
+        if completion != nil {
 
-        let request = NSFetchRequest(entityName: "Podcast")
-
-        do {
-            local_podcasts = try context.executeFetchRequest(request) as! [Podcast]
-        } catch _ {
-            local_podcasts = []
-            print("Error fetching subscribed Podcasts.")
         }
 
-        Alamofire
+        return readPodcastFromRealm(podcastId)
+    }
+
+    private func readPodcastFromRealm(podcastId: Int) -> Podcast? {
+        let realm = try! Realm()
+
+        return realm.objects(Podcast).filter("id == %d", podcastId).first
+    }
+
+    func readAllPodcasts(queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Podcast]) -> Void)?) -> [Podcast] {
+        if completion != nil {
+            let request = Alamofire
             .request(FablerClient.Router.ReadPodcasts())
             .validate()
             .responseSwiftyJSON { response in
                 switch response.result {
                 case .Success(let json):
-                    let server_podcasts = self.serializePodcastCollection(json)
-                    dispatch_async(queue, {completion(result: server_podcasts)})
+                    self.serializePodcastCollection(json)
                 case .Failure(let error):
                     print(error)
-                    dispatch_async(queue, {completion(result: local_podcasts)})
                 }
+
+                dispatch_async(queue, {completion!(result: self.readAllPodcastsFromRealm())})
             }
 
-        return local_podcasts
-    }
-
-    func readSubscribedPodcasts(queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Podcast]) -> Void) -> [Podcast] {
-        let local_podcasts: [Podcast]
-
-        let request = NSFetchRequest(entityName: "Podcast")
-        request.predicate = NSPredicate(format: "subscribed == YES")
-
-        do {
-            local_podcasts = try context.executeFetchRequest(request) as! [Podcast]
-        } catch _ {
-            local_podcasts = []
-            print("Error fetching subscribed Podcasts.")
+            debugPrint(request)
         }
 
-        Alamofire
+        return self.readAllPodcastsFromRealm()
+    }
+
+    private func readAllPodcastsFromRealm() -> [Podcast] {
+        let realm = try! Realm()
+
+        return Array(realm.objects(Podcast))
+    }
+
+    func readSubscribedPodcasts(queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Podcast]) -> Void)?) -> [Podcast] {
+        if completion != nil {
+            let request = Alamofire
             .request(FablerClient.Router.ReadSubscribedPodcasts())
             .validate()
             .responseSwiftyJSON { response in
                 switch response.result {
                 case .Success(let json):
+                    let local_podcasts = self.readSubscribedPodcastsFromRealm()
                     let server_podcasts = self.serializePodcastCollection(json)
                     self.updateUnsubscribedPodcasts(local_podcasts, server: server_podcasts)
-                    dispatch_async(queue, {completion(result: server_podcasts)})
                 case .Failure(let error):
                     print(error)
-                    dispatch_async(queue, {completion(result: local_podcasts)})
                 }
+
+                dispatch_async(queue, {completion!(result: self.readSubscribedPodcastsFromRealm())})
             }
 
-        return local_podcasts
+            debugPrint(request)
+        }
+
+        return self.readSubscribedPodcastsFromRealm()
+    }
+
+    private func readSubscribedPodcastsFromRealm() -> [Podcast] {
+        let realm = try! Realm()
+
+        return Array(realm.objects(Podcast).filter("subscribed == YES"))
     }
 
     func subscribeToPodcast(podcast: Podcast, subscribe: Bool, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
-        podcast.subscribed = subscribe
+        let realm = try! Realm()
 
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                print(nserror)
+        try! realm.write {
+            podcast.subscribed = subscribe
+        }
+
+        let request = Alamofire
+        .request(FablerClient.Router.SubscribeToPodcast(podcast: podcast.id, subscribe: subscribe))
+        .validate(statusCode: 200..<202)
+        .responseJSON { response in
+            switch response.result {
+            case .Success:
+                dispatch_async(queue, {completion(result: true)})
+            case .Failure(let error):
+                print(error)
+                dispatch_async(queue, {completion(result: false)})
             }
         }
 
-        Alamofire
-            .request(FablerClient.Router.SubscribeToPodcast(podcast: podcast.id, subscribe: subscribe))
-            .validate(statusCode: 200..<202)
-            .responseJSON { response in
-                switch response.result {
-                case .Success:
-                    dispatch_async(queue, {completion(result: true)})
-                case .Failure(let error):
-                    print(error)
-                    dispatch_async(queue, {completion(result: false)})
-                }
-            }
+        debugPrint(request)
     }
 
     // MARK: - PodcastService serialize functions
 
     private func serializePodcastObject(data: JSON) -> Podcast? {
-        var podcast: Podcast?
+        let podcast = Podcast()
+        let realm = try! Realm()
 
         if let id = data["id"].int {
-            let request = NSFetchRequest(entityName: "Podcast")
-            let predicate = NSPredicate(format: "id == %d", id)
-            request.predicate = predicate
-
-            do {
-                let result = try context.executeFetchRequest(request) as! [Podcast]
-                switch result.count {
-                case 1:
-                    podcast = result[0]
-                case 0:
-                    break
-                default:
-                    assert(false, "Invalid data returned from Core Data.")
-                }
-            } catch {
-                print("Unable to find returned Podcast in store.")
-            }
-        }
-
-        if podcast == nil {
-            podcast = NSEntityDescription.insertNewObjectForEntityForName("Podcast", inManagedObjectContext: self.context) as? Podcast
-        }
-
-        if let id = data["id"].int {
-            podcast?.id = id
+            podcast.id = id
         }
 
         if let title = data["title"].string {
-            podcast?.title = title
+            podcast.title = title
         }
 
         if let author = data["author"].string {
-            podcast?.author = author
+            podcast.author = author
         }
 
         if let explicit = data["explicit"].bool {
-            podcast?.explicit = explicit
+            podcast.explicit = explicit
         }
 
         if let subscribed = data["subscribed"].bool {
-            podcast?.subscribed = subscribed
+            podcast.subscribed = subscribed
         }
 
         if let publisherName = data["subscribed"].string {
-            podcast?.publisherName = publisherName
+            podcast.publisherName = publisherName
         }
 
         if let publisherId = data["publisher"].int {
-            podcast?.publisherId = publisherId
+            podcast.publisherId = publisherId
         }
 
         if let summary = data["summary"].string {
-            podcast?.summary = summary
+            podcast.summary = summary
         }
 
         if let category = data["category"].string {
-            podcast?.category = category
+            podcast.category = category
         }
 
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                print(nserror)
-                podcast = nil
-            }
+        try! realm.write {
+            realm.add(podcast, update: true)
         }
 
         return podcast
@@ -243,18 +204,13 @@ class PodcastService {
     // MARK: - PodcastService helper functions
 
     private func updateUnsubscribedPodcasts(local: [Podcast], server: [Podcast]) {
+        let realm = try! Realm()
+
         for podcast in local {
             if !server.contains(podcast) {
-                podcast.subscribed = false
-            }
-        }
-
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                print(nserror)
+                try! realm.write {
+                    podcast.subscribed = false
+                }
             }
         }
     }

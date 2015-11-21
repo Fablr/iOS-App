@@ -24,7 +24,6 @@
 		45B51D0B1BE495E700F289F7 /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B51D0A1BE495E700F289F7 /* Podcast.swift */; };
 		45BF1C661BE31EF600665402 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF1C651BE31EF600665402 /* LoginService.swift */; };
 		45BF1C681BE4921900665402 /* PodcastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF1C671BE4921900665402 /* PodcastService.swift */; };
-		45D055E11BF2A0F1003FDC6C /* FablerModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 45D055DF1BF2A0F1003FDC6C /* FablerModel.xcdatamodeld */; };
 		45E2E1381BFEBAEF00219098 /* ShowSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2E1371BFEBAEF00219098 /* ShowSettingsTableViewController.swift */; };
 		45E536751BDF025F009E3F10 /* YouViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E536741BDF025F009E3F10 /* YouViewController.swift */; };
 		45E536781BDF06E0009E3F10 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45E536761BDF06E0009E3F10 /* Main.storyboard */; };
@@ -73,7 +72,6 @@
 		45B51D0A1BE495E700F289F7 /* Podcast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
 		45BF1C651BE31EF600665402 /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		45BF1C671BE4921900665402 /* PodcastService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastService.swift; sourceTree = "<group>"; };
-		45D055E01BF2A0F1003FDC6C /* FablerModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FablerModel.xcdatamodel; sourceTree = "<group>"; };
 		45E2E1371BFEBAEF00219098 /* ShowSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowSettingsTableViewController.swift; sourceTree = "<group>"; };
 		45E536741BDF025F009E3F10 /* YouViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YouViewController.swift; sourceTree = "<group>"; };
 		45E536771BDF06E0009E3F10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -214,7 +212,6 @@
 				45E5367D1BE1F980009E3F10 /* FablerClient.swift */,
 				456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */,
 				45505F701BFB1EF600481291 /* DownloadManager.swift */,
-				45D055DF1BF2A0F1003FDC6C /* FablerModel.xcdatamodeld */,
 				4538B57E1BF55C6F00039DF1 /* Views */,
 				45B51D091BE495D500F289F7 /* Models */,
 				45BF1C641BE31EE500665402 /* Services */,
@@ -449,7 +446,6 @@
 				F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */,
 				450B76741BE983670033C0B6 /* ShowViewController.swift in Sources */,
 				450B767E1BEF49120033C0B6 /* User.swift in Sources */,
-				45D055E11BF2A0F1003FDC6C /* FablerModel.xcdatamodeld in Sources */,
 				F4702A181A7F351C00E30A3C /* MenuTableViewController.swift in Sources */,
 				45B51D0B1BE495E700F289F7 /* Podcast.swift in Sources */,
 				456BB5C91BF5B4A600D59C47 /* FablerNavigationController.swift in Sources */,
@@ -699,19 +695,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		45D055DF1BF2A0F1003FDC6C /* FablerModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				45D055E01BF2A0F1003FDC6C /* FablerModel.xcdatamodel */,
-			);
-			currentVersion = 45D055E01BF2A0F1003FDC6C /* FablerModel.xcdatamodel */;
-			path = FablerModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = F47029E81A7F27DB00E30A3C /* Project object */;
 }

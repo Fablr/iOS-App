@@ -6,21 +6,29 @@
 //  Copyright © 2015 Fabler. All rights reserved.
 //
 
-import CoreData
+import RealmSwift
 
-@objc(User)
-final class User : NSManagedObject {
+final class User : Object {
 
     // MARK: - User static members
 
-    static var currentUser: User?
+    static func getCurrentUser() -> User? {
+        let realm = try! Realm()
+        return realm.objects(User).filter("currentUser == YES").first
+    }
 
     // MARK: - User members
 
-    @NSManaged var userName: String
-    @NSManaged var firstName: String
-    @NSManaged var lastName: String
-    @NSManaged var email: String
-    @NSManaged var id: Int
-    @NSManaged var currentUser: Bool
+    dynamic var userName: String = ""
+    dynamic var firstName: String = ""
+    dynamic var lastName: String = ""
+    dynamic var email: String = ""
+    dynamic var id: Int = 0
+    dynamic var currentUser: Bool = false
+
+    // MARK: - Realm methods
+
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }

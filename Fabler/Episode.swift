@@ -6,22 +6,43 @@
 //  Copyright © 2015 Fabler. All rights reserved.
 //
 
-import CoreData
+import RealmSwift
 
-@objc(Episode)
-final class Episode : NSManagedObject {
+final class Episode : Object {
 
     // MARK: - Episode members
 
-    @NSManaged var title: String
-    @NSManaged var subtitle: String
-    @NSManaged var explicit: Bool
-    @NSManaged var pubdate: NSDate
-    @NSManaged var duration: NSTimeInterval
-    @NSManaged var episodeDescription: String
-    @NSManaged var id: Int
-    @NSManaged var link: String
-    @NSManaged var podcastId: Int
-    @NSManaged var mark: NSTimeInterval
-    @NSManaged var completed: Bool
+    dynamic var title: String = ""
+    dynamic var subtitle: String = ""
+    dynamic var explicit: Bool = false
+    dynamic var pubdate: NSDate = NSDate()
+    dynamic var duration: NSTimeInterval = 0
+    dynamic var episodeDescription: String = ""
+    dynamic var id: Int = 0
+    dynamic var link: String = ""
+    dynamic var podcastId: Int = 0
+    dynamic var mark: NSTimeInterval = 0
+    dynamic var completed: Bool = false
+
+    // MARK: - Local tracking members
+
+    dynamic var downloadStateRaw: Int = 0
+
+    // MARK: - Realm methods
+
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+
+    // MARK: - Computed properties
+
+    var downloadState: DownloadStatus {
+        get {
+            if let state = DownloadStatus(rawValue: self.downloadStateRaw) {
+                return state
+            }
+
+            return DownloadStatus.NotStarted
+        }
+    }
 }

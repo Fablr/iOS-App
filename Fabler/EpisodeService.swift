@@ -8,13 +8,9 @@
 
 import Alamofire
 import SwiftyJSON
-import CoreData
+import RealmSwift
 
 class EpisodeService {
-
-    // MARK: - CoreData context
-
-    let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 
     // MARK: - EpisodeService functions
 
@@ -23,144 +19,110 @@ class EpisodeService {
 
     // MARK: - EpisodeService API functions
 
-    func getEpisodesForPodcast(podcastId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Episode]) -> Void) -> [Episode] {
-        let local_episodes: [Episode]
+    func getEpisodesForPodcast(podcastId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Episode]) -> Void)?) -> [Episode] {
 
-        let request = NSFetchRequest(entityName: "Episode")
-        request.predicate = NSPredicate(format: "podcastId == %d", podcastId)
-
-        do {
-            local_episodes = try context.executeFetchRequest(request) as! [Episode]
-        } catch _ {
-            local_episodes = []
-            print("Error fetching subscribed Podcasts.")
-        }
-
-        Alamofire
+        if completion != nil {
+            let request = Alamofire
             .request(FablerClient.Router.ReadEpisodesForPodcast(podcast: podcastId))
             .validate()
             .responseSwiftyJSON { response in
                 switch response.result {
                 case .Success(let json):
-                    let server_episodes = self.serializeEpisodeCollection(json)
-                    dispatch_async(queue, {completion(result: server_episodes)})
+                    self.serializeEpisodeCollection(json)
                 case .Failure(let error):
                     print(error)
-                    dispatch_async(queue, {completion(result: local_episodes)})
                 }
+
+                dispatch_async(queue, {completion!(result: self.getEpisodesForPodcastFromRealm(podcastId))})
             }
 
-        return local_episodes
+            debugPrint(request)
+        }
+
+        return self.getEpisodesForPodcastFromRealm(podcastId)
+    }
+
+    private func getEpisodesForPodcastFromRealm(podcastId: Int) -> [Episode] {
+        let realm = try! Realm()
+
+        return Array(realm.objects(Episode).filter("podcastId == %d", podcastId))
     }
 
     func setMarkForEpisode(episode: Episode, mark: NSTimeInterval, completed: Bool) {
-        episode.completed = completed
-        episode.mark = mark
+        let realm = try! Realm()
 
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                print(nserror)
+        try! realm.write {
+            episode.completed = completed
+            episode.mark = mark
+        }
+
+        let request = Alamofire
+        .request(FablerClient.Router.UpdateEpisodeMark(episode: episode.id, mark: episode.mark, completed: episode.completed))
+        .validate(statusCode: 200..<202)
+        .responseJSON { response in
+            switch response.result {
+            case .Success:
+                break
+            case .Failure(let error):
+                print(error)
             }
         }
 
-        Alamofire
-            .request(FablerClient.Router.UpdateEpisodeMark(episode: episode.id, mark: episode.mark, completed: episode.completed))
-            .validate(statusCode: 200..<202)
-            .responseJSON { response in
-                switch response.result {
-                case .Success:
-                    break
-                case .Failure(let error):
-                    print(error)
-                    // mark for reupload
-                }
-        }
+        debugPrint(request)
     }
 
     // MARK: - EpisodeService serialize functions
 
     private func serializeEpisodeObject(data: JSON) -> Episode? {
-        var episode: Episode?
+        let episode = Episode()
+        let realm = try! Realm()
 
         if let id = data["id"].int {
-            let request = NSFetchRequest(entityName: "Episode")
-            let predicate = NSPredicate(format: "id == %d", id)
-            request.predicate = predicate
-
-            do {
-                let result = try context.executeFetchRequest(request) as! [Episode]
-                switch result.count {
-                case 1:
-                    episode = result[0]
-                case 0:
-                    break
-                default:
-                    assert(false, "Invalid data returned from Core Data.")
-                }
-            } catch _ {
-                print("Unable to find returned Podcast in store.")
-            }
-        }
-
-        if episode == nil {
-            episode = NSEntityDescription.insertNewObjectForEntityForName("Episode", inManagedObjectContext: self.context) as? Episode
-        }
-
-        if let id = data["id"].int {
-            episode?.id = id
+            episode.id = id
         }
 
         if let title = data["title"].string {
-            episode?.title = title
+            episode.title = title
         }
 
         if let link = data["link"].string {
-            episode?.link = link
+            episode.link = link
         }
 
         if let subtitle = data["subtitle"].string {
-            episode?.subtitle = subtitle
+            episode.subtitle = subtitle
         }
 
         if let episodeDescription = data["description"].string {
-            episode?.episodeDescription = episodeDescription
+            episode.episodeDescription = episodeDescription
         }
 
         if let pubdate = (data["pubdate"].string)?.toNSDate() {
-            episode?.pubdate = pubdate
+            episode.pubdate = pubdate
         }
 
         if let duration = (data["duration"].string)?.toNSTimeInterval() {
-            episode?.duration = duration
+            episode.duration = duration
         }
 
         if let explicit = data["explicit"].bool {
-            episode?.explicit = explicit
+            episode.explicit = explicit
         }
 
         if let podcastId = data["podcast"].int {
-            episode?.podcastId = podcastId
+            episode.podcastId = podcastId
         }
 
         if let mark = (data["mark"].string)?.toNSTimeInterval() {
-            episode?.mark = mark
+            episode.mark = mark
         }
 
         if let completed = data["completed"].bool {
-            episode?.completed = completed
+            episode.completed = completed
         }
 
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                print(nserror)
-                episode = nil
-            }
+        try! realm.write {
+            realm.add(episode, update: true)
         }
 
         return episode

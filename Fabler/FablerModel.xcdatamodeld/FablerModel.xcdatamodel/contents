@@ -10,6 +10,7 @@
         <attribute name="mark" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="podcastId" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="pubdate" attributeType="Date" defaultDateTimeInterval="-372902400" syncable="YES"/>
+        <attribute name="state" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="subtitle" attributeType="String" defaultValueString="Episode" syncable="YES"/>
         <attribute name="title" attributeType="String" defaultValueString="Episode" syncable="YES"/>
         <uniquenessConstraints>
@@ -51,7 +52,7 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Episode" positionX="-234" positionY="-12" width="128" height="210"/>
+        <element name="Episode" positionX="-234" positionY="-12" width="128" height="225"/>
         <element name="Podcast" positionX="-63" positionY="-18" width="128" height="225"/>
         <element name="User" positionX="97" positionY="0" width="128" height="135"/>
     </elements>

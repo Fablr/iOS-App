@@ -86,6 +86,9 @@ class LargePlayerViewController : UIViewController {
         self.view.backgroundColor = UIColor.clearColor()
         self.view.insertSubview(veView, atIndex: 0)
 
+        playbackSlider?.maximumValue = 0.0
+        playbackSlider?.minimumValue = 0.0
+
         super.viewDidLoad()
     }
 
@@ -111,7 +114,19 @@ class LargePlayerViewController : UIViewController {
         }
     }
 
-    func updatePlayerProgress(duration: Float, current: Float) {
+    func updatePlayerProgress(var duration: Float, var current: Float) {
+        if duration.isNaN {
+            duration = 0.0
+        }
+
+        if current.isNaN {
+            current = 0.0
+        }
+
+        guard current <= duration else {
+            return
+        }
+
         let currentNSDate = NSDate.init(timeIntervalSince1970: Double(current))
         let durationNSDate = NSDate.init(timeIntervalSince1970: Double(duration))
         let formatter = NSDateFormatter()

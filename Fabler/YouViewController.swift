@@ -50,11 +50,11 @@ class YouViewController : UIViewController, FBSDKLoginButtonDelegate {
         let mainQueue = NSOperationQueue.mainQueue()
 
         notificationCenter.addObserverForName(CurrentUserDidChangeNotification, object: nil, queue: mainQueue) { _ in
-            self.user = User.currentUser
+            self.user = User.getCurrentUser()
             self.updateUserElements()
         }
 
-        self.user = User.currentUser
+        self.user = User.getCurrentUser()
         updateUserElements()
     }
 

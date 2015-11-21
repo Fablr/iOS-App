@@ -6,26 +6,37 @@
 //  Copyright © 2015 Fabler. All rights reserved.
 //
 
-import CoreData
+import RealmSwift
 
-@objc(Podcast)
-final class Podcast : NSManagedObject {
+final class Podcast : Object, Equatable {
 
     // MARK: - Podcast members
 
-    @NSManaged var title: String
-    @NSManaged var author: String
-    @NSManaged var explicit: Bool
-    @NSManaged var id: Int
-    @NSManaged var subscribed: Bool
-    @NSManaged var publisherName: String
-    @NSManaged var publisherId: Int
-    @NSManaged var summary: String
-    @NSManaged var category: String
+    dynamic var title: String = ""
+    dynamic var author: String = ""
+    dynamic var explicit: Bool = false
+    dynamic var id: Int = 0
+    dynamic var subscribed: Bool = false
+    dynamic var publisherName: String = ""
+    dynamic var publisherId: Int = 0
+    dynamic var summary: String = ""
+    dynamic var category: String = ""
 
     // MARK: - Setting members
 
-    @NSManaged var notify: Bool
-    @NSManaged var download: Bool
-    @NSManaged var downloadAmount: Int
+    dynamic var notify: Bool = true
+    dynamic var download: Bool = true
+    dynamic var downloadAmount: Int = 3
+
+    // MARK: - Realm methods
+
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+}
+
+// MARK: - Podcast helper functions
+
+func ==(lhs: Podcast, rhs: Podcast) -> Bool {
+    return lhs.id == rhs.id
 }

@@ -70,35 +70,39 @@ class FablerPlayer : NSObject {
             return
         }
 
-        if let url = NSURL(string: episode.link) {
-            let item = AVPlayerItem(URL: url)
-            let notificationCenter = NSNotificationCenter.defaultCenter()
-            let mainQueue = NSOperationQueue.mainQueue()
+        self.episode = episode
 
-            notificationCenter.addObserverForName(AVPlayerItemDidPlayToEndTimeNotification, object: nil, queue: mainQueue) { item in
-                if let current = self.audioPlayer.currentItem {
-                    let service = EpisodeService()
-                    let currentTime = Double(current.duration.seconds)
-                    service.setMarkForEpisode(self.episode!, mark: currentTime, completed: true)
-                }
+        self.insertCurrentEpisode()
+        setPlaybackTo(Float(episode.mark - 1))
+        audioPlayer.play()
+
+        playing = true
+        started = true
+
+        uiTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "updateCurrentTime", userInfo: nil, repeats: true)
+        serviceTimer = NSTimer.scheduledTimerWithTimeInterval(5, target:  self, selector: "updateService", userInfo: nil, repeats: true)
+
+        smallPlayer.updateOutlets()
+        largePlayer.updateOutlets()
+
+        NSNotificationCenter.defaultCenter().postNotificationName(PlayerStartPlayback, object: self)
+    }
+
+    private func insertCurrentEpisode() {
+        let url = NSURL(string: self.episode!.link)!
+        let item = AVPlayerItem(URL:url)
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        let mainQueue = NSOperationQueue.mainQueue()
+
+        notificationCenter.addObserverForName(AVPlayerItemDidPlayToEndTimeNotification, object: nil, queue: mainQueue) { item in
+            if let current = self.audioPlayer.currentItem {
+                let service = EpisodeService()
+                let currentTime = Double(current.duration.seconds)
+                service.setMarkForEpisode(self.episode!, mark: currentTime, completed: true)
             }
-
-            audioPlayer.insertItem(item, afterItem: nil)
-            setPlaybackTo(Float(episode.mark))
-            audioPlayer.play()
-
-            playing = true
-            started = true
-            self.episode = episode
-
-            uiTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "updateCurrentTime", userInfo: nil, repeats: true)
-            serviceTimer = NSTimer.scheduledTimerWithTimeInterval(5, target:  self, selector: "updateService", userInfo: nil, repeats: true)
-
-            smallPlayer.updateOutlets()
-            largePlayer.updateOutlets()
-
-            NSNotificationCenter.defaultCenter().postNotificationName(PlayerStartPlayback, object: self)
         }
+
+        audioPlayer.insertItem(item, afterItem: nil)
     }
 
     func pausePlayback() {
@@ -134,7 +138,12 @@ class FablerPlayer : NSObject {
     }
 
     func setPlaybackTo(seconds: Float) {
+        if audioPlayer.currentItem == nil {
+            self.insertCurrentEpisode()
+        }
+
         audioPlayer.seekToTime(CMTime(seconds: Double(seconds), preferredTimescale: 10))
+        audioPlayer.play()
     }
 
     func getCurrentDuration() -> Float {

@@ -8,6 +8,7 @@ target 'Fabler' do
   pod 'FBSDKCoreKit', '~>4.7.0'
   pod 'Alamofire', '~>3.1.0'
   pod 'SwiftyJSON', '~>2.3.1'
+  pod 'RealmSwift', '~>0.96.2'
 end
 
 target 'FablerTests' do

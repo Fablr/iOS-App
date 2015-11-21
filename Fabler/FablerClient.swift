@@ -9,6 +9,7 @@
 import Alamofire
 import SwiftyJSON
 import Foundation
+import RealmSwift
 
 // MARK: - FablerClient
 
@@ -81,10 +82,10 @@ struct FablerClient {
                 return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
             case .SubscribeToPodcast(let podcast, let subscribe):
                 let parameters = ["podcast": podcast, "active": subscribe]
-                return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters as? [String : AnyObject]).0
+                return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters as? [String : AnyObject]).0
             case .UpdateEpisodeMark(let episode, let mark, let completed):
                 let parameters = ["episode": episode, "mark": mark.toString(), "completed": completed]
-                return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters as? [String : AnyObject]).0
+                return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters as? [String : AnyObject]).0
             default:
                 return mutableURLRequest
             }
@@ -129,6 +130,8 @@ extension Alamofire.Request {
         )
     }
 }
+
+
 
 // MARK: - String extension
 
