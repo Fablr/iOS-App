@@ -38,6 +38,8 @@ class FablerPlayer : NSObject {
 
         audioPlayer = AVQueuePlayer()
 
+        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+
         playing = false
         started = false
 

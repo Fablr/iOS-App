@@ -21,21 +21,32 @@ let PodcastDirectory = "podcasts"
 
 class DownloadManager {
 
+    let manager: Alamofire.Manager
+
     var queue: dispatch_queue_t {
         return dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)
     }
 
-    init() {
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        let mainQueue = NSOperationQueue.mainQueue()
+    init(background: Bool) {
+        let configuration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("com.Fabler.Fabler.background")
+        self.manager = Alamofire.Manager(configuration: configuration)
+
+        self.manager.delegate.taskDidComplete = self.taskDidComplete
+        self.manager.delegate.sessionDidFinishEventsForBackgroundURLSession = self.sessionDidFinishEventsForBackgroundURLSession
+        self.manager.delegate.downloadTaskDidFinishDownloadingToURL = self.downloadTaskDidFinishDownloadingToURL
+        self.manager.delegate.downloadTaskDidWriteData = self.downloadTaskDidWriteData
 
         //
-        // Only kickoff Auto-download sequence if we get a valid token
-        // back from the server.
+        // Only kickoff Auto-download sequence if we get a valid token back from the server and we are not running in the background.
         //
-        notificationCenter.addObserverForName(TokenDidChangeNotification, object: nil, queue: mainQueue) { _ in
-            let service = PodcastService()
-            service.readSubscribedPodcasts(self.queue, completion: self.readSubscribedPodcastEpisodes)
+        if !background {
+            let notificationCenter = NSNotificationCenter.defaultCenter()
+            let mainQueue = NSOperationQueue.mainQueue()
+
+            notificationCenter.addObserverForName(TokenDidChangeNotification, object: nil, queue: mainQueue) { _ in
+                let service = PodcastService()
+                service.readSubscribedPodcasts(self.queue, completion: self.readSubscribedPodcastEpisodes)
+            }
         }
     }
 
@@ -66,14 +77,7 @@ class DownloadManager {
 
             switch episode.downloadState {
             case .NotStarted:
-                _ = Alamofire
-                .download(Alamofire.Method.GET, url.path!, destination: {temporaryURL, response in return file})
-                .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
-
-                }
-                .response { _, _, data, error in
-
-                }
+                _ = self.manager.download(Alamofire.Method.GET, url.path!, destination: {temporaryURL, response in return file})
                 break
             case .DownloadStarted:
                 // ensure download is started
@@ -90,5 +94,21 @@ class DownloadManager {
                 break
             }
         }
+    }
+
+    func sessionDidFinishEventsForBackgroundURLSession(session: NSURLSession) {
+
+    }
+
+    func taskDidComplete(session: NSURLSession, task: NSURLSessionTask, error: NSError?) {
+
+    }
+
+    func downloadTaskDidFinishDownloadingToURL(session: NSURLSession, task: NSURLSessionDownloadTask, url: NSURL) {
+
+    }
+
+    func downloadTaskDidWriteData (session: NSURLSession, task: NSURLSessionDownloadTask, read: Int64, totalRead: Int64, expected: Int64) {
+
     }
 }
