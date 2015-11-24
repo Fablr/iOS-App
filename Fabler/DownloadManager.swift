@@ -6,7 +6,7 @@
 //  Copyright © 2015 Fabler. All rights reserved.
 //
 
-import CoreData
+import RealmSwift
 import Alamofire
 
 @objc enum DownloadStatus: Int {
@@ -17,6 +17,7 @@ import Alamofire
     case DeleteOnNextDownload = 4
 }
 
+let SessionIdentifier = "com.Fabler.Fabler.background"
 let PodcastDirectory = "podcasts"
 
 class DownloadManager {
@@ -28,11 +29,9 @@ class DownloadManager {
     }
 
     init(background: Bool) {
-        let configuration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("com.Fabler.Fabler.background")
+        let configuration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier(SessionIdentifier)
         self.manager = Alamofire.Manager(configuration: configuration)
 
-        self.manager.delegate.taskDidComplete = self.taskDidComplete
-        self.manager.delegate.sessionDidFinishEventsForBackgroundURLSession = self.sessionDidFinishEventsForBackgroundURLSession
         self.manager.delegate.downloadTaskDidFinishDownloadingToURL = self.downloadTaskDidFinishDownloadingToURL
         self.manager.delegate.downloadTaskDidWriteData = self.downloadTaskDidWriteData
 
@@ -71,16 +70,47 @@ class DownloadManager {
         let filteredEpisodes = episodes.sort({ $0.pubdate.compare($1.pubdate) == NSComparisonResult.OrderedAscending })[0...(podcast.downloadAmount - 1)]
 
         for episode in filteredEpisodes {
+            var error: NSError?
+            let realm = try! Realm()
+
             let url = NSURL(string: episode.link)!
             let ext = url.pathExtension!
             let file = root.URLByAppendingPathComponent(String(format: "%d.%s", episode.id, ext))
 
+            let persistedTask = realm.objects(DownloadTask).filter("objectId == %d", episode.id).first
+
+            if persistedTask != nil {
+                try! realm.write {
+                    episode.downloadStateRaw = DownloadStatus.DownloadStarted.rawValue
+                }
+
+                continue
+            }
+
+            if episode.completed && !episode.saved {
+                try! realm.write {
+                    episode.downloadStateRaw = DownloadStatus.DeleteOnNextDownload.rawValue
+                }
+            }
+
             switch episode.downloadState {
             case .NotStarted:
-                _ = self.manager.download(Alamofire.Method.GET, url.path!, destination: {temporaryURL, response in return file})
-                break
+                let request = self.manager.download(Alamofire.Method.GET, url.path!, destination: {temporaryURL, response in return file})
+
+                let task = DownloadTask()
+                task.sessionIdentifier = SessionIdentifier
+                task.taskIdentifier = request.task.taskIdentifier
+                task.localPath = file.path!
+                task.objectId = episode.id
+
+                try! realm.write {
+                    realm.add(task, update: true)
+                    episode.downloadStateRaw = DownloadStatus.DownloadStarted.rawValue
+                }
             case .DownloadStarted:
-                // ensure download is started
+                //
+                // Download is in progress.
+                //
                 break
             case .DownloadPaused:
                 //
@@ -88,27 +118,66 @@ class DownloadManager {
                 //
                 break
             case .DownloadComplete:
+                if !(file.checkResourceIsReachableAndReturnError(&error)) {
+                    try! realm.write {
+                        episode.downloadStateRaw = DownloadStatus.NotStarted.rawValue
+                    }
+                }
                 break
             case .DeleteOnNextDownload:
-                // delete from local cache
+                if !(file.checkResourceIsReachableAndReturnError(&error)) {
+                    try! realm.write {
+                        episode.downloadStateRaw = DownloadStatus.NotStarted.rawValue
+                    }
+                } else {
+                    do {
+                        try manager.removeItemAtURL(file)
+                        try realm.write {
+                            episode.downloadStateRaw = DownloadStatus.NotStarted.rawValue
+                        }
+                    } catch {
+                        print("failed to remove file")
+                    }
+                }
                 break
             }
         }
     }
 
-    func sessionDidFinishEventsForBackgroundURLSession(session: NSURLSession) {
-
-    }
-
-    func taskDidComplete(session: NSURLSession, task: NSURLSessionTask, error: NSError?) {
-
-    }
-
     func downloadTaskDidFinishDownloadingToURL(session: NSURLSession, task: NSURLSessionDownloadTask, url: NSURL) {
+        let realm = try! Realm()
 
+        if let sessionId = session.configuration.identifier {
+            if let persistedTask = realm.objects(DownloadTask).filter("sessionIdentifier == %@ AND taskIdentifier == %d", sessionId, task.taskIdentifier).first {
+                let localURL = NSURL(fileURLWithPath: persistedTask.localPath)
+
+                do {
+                    try NSFileManager.defaultManager().moveItemAtURL(url, toURL: localURL)
+
+                    if let episode = realm.objects(Episode).filter("id == %d", persistedTask.objectId).first {
+                        try realm.write {
+                            episode.downloadStateRaw = DownloadStatus.DownloadComplete.rawValue
+                            realm.delete(persistedTask)
+                        }
+                    }
+                } catch {
+                    print("failed to move file")
+                }
+            }
+        }
     }
 
     func downloadTaskDidWriteData (session: NSURLSession, task: NSURLSessionDownloadTask, read: Int64, totalRead: Int64, expected: Int64) {
+        let realm = try! Realm()
 
+        if let sessionId = session.configuration.identifier {
+            let persistedTask = realm.objects(DownloadTask).filter("sessionIdentifier == %@ AND taskIdentifier == %d", sessionId, task.taskIdentifier).first
+
+            try! realm.write {
+                persistedTask?.readBytes = read
+                persistedTask?.totalBytes = totalRead
+                persistedTask?.expectedBytes = expected
+            }
+        }
     }
 }

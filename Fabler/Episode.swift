@@ -24,9 +24,14 @@ final class Episode : Object {
     dynamic var mark: NSTimeInterval = 0
     dynamic var completed: Bool = false
 
+    // MARK: - Setting members
+
+    dynamic var saved: Bool = false
+
     // MARK: - Local tracking members
 
     dynamic var downloadStateRaw: Int = 0
+    dynamic var localPath: String = ""
 
     // MARK: - Realm methods
 
