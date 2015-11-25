@@ -26,9 +26,11 @@ class YouViewController : UIViewController, FBSDKLoginButtonDelegate {
     // MARK: - YouViewController functions
 
     func updateUserElements() {
-        self.userNameLabel?.text = user!.userName
-        self.firstNameLabel?.text = user!.firstName
-        self.lastNameLabel?.text = user!.lastName
+        if let user = self.user {
+            self.userNameLabel?.text = user.userName
+            self.firstNameLabel?.text = user.firstName
+            self.lastNameLabel?.text = user.lastName
+        }
     }
 
     // MARK: - UIViewController functions

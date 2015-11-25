@@ -31,31 +31,36 @@ class ShowSettingsTableViewController : UITableViewController {
     }
 
     @IBAction func downloadSwitchChanged(sender: AnyObject) {
-        let service = PodcastService()
-        if let strongDownloadSwitch = self.downloadSwitch {
-            service.setDownloadForPodcast(podcast!, allowAutoDownload: strongDownloadSwitch.on)
+        if let podcast = self.podcast, let strongDownloadSwitch = self.downloadSwitch {
+            let service = PodcastService()
+            service.setDownloadForPodcast(podcast, allowAutoDownload: strongDownloadSwitch.on)
         }
     }
 
     @IBAction func notificationSwitchChanged(sender: AnyObject) {
-        let service = PodcastService()
-        if let strongNotificationSwitch = self.notificationSwitch {
-            service.setNotificationForPodcast(podcast!, allowNotifications: strongNotificationSwitch.on)
+        if let podcast = self.podcast, let strongNotificationSwitch = self.notificationSwitch {
+            let service = PodcastService()
+            service.setNotificationForPodcast(podcast, allowNotifications: strongNotificationSwitch.on)
         }
     }
 
     @IBAction func amountStepperChanged(sender: AnyObject) {
-        let service = PodcastService()
-        if let stepper = self.amountStepper {
-            service.setDownloadAmountForPodcast(podcast!, amount: Int(stepper.value))
-        }
+        if let podcast = self.podcast, let stepper = self.amountStepper {
+            let service = PodcastService()
+            service.setDownloadAmountForPodcast(podcast, amount: Int(stepper.value))
 
-        self.amountLabel?.text = String(format: "Auto-download %d new episodes.", podcast!.downloadAmount)
+            self.amountLabel?.text = String(format: "Auto-download %d new episodes.", podcast.downloadAmount)
+        }
     }
 
     // MARK: - UIViewController functions
 
     override func viewDidLoad() {
+        guard self.podcast != nil else {
+            print("expected a podcast initiated via previous controller")
+            return
+        }
+
         super.viewDidLoad()
 
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)

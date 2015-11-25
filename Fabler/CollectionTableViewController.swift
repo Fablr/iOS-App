@@ -76,7 +76,7 @@ class CollectionTableViewController: UITableViewController {
             return 0
         }
 
-        return (podcasts?.count)!
+        return podcasts!.count
     }
 
     

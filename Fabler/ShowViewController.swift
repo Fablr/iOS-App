@@ -28,20 +28,22 @@ class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: - IBActions
 
     @IBAction func subscribeButtonPressed(sender: AnyObject) {
-        let service = PodcastService()
-        let subscribed = !(podcast?.subscribed)!
+        if let podcast = self.podcast {
+            let service = PodcastService()
+            let subscribed = !(podcast.subscribed)
 
-        self.subscribeButton?.setTitle(subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
+            self.subscribeButton?.setTitle(subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
 
-        service.subscribeToPodcast(podcast!, subscribe: subscribed, completion: { [weak self] (result) in
-            if let controller = self {
-                if result {
-                    controller.podcast?.subscribed = subscribed
-                } else {
-                    controller.subscribeButton?.setTitle(!subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
+            service.subscribeToPodcast(podcast, subscribe: subscribed, completion: { [weak self] (result) in
+                if let controller = self {
+                    if result {
+                        controller.podcast?.subscribed = subscribed
+                    } else {
+                        controller.subscribeButton?.setTitle(!subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     @IBAction func settingsButtonPressed(sender: AnyObject) {
@@ -51,6 +53,11 @@ class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: - UIViewController functions
 
     override func viewDidLoad() {
+        guard podcast != nil else {
+            print("expected a podcast initiated via previous controller")
+            return
+        }
+
         super.viewDidLoad()
         self.showLabel?.text = podcast?.title
 
@@ -128,7 +135,7 @@ class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDat
             return 0
         }
 
-        return (episodes?.count)!
+        return episodes!.count
     }
 
 

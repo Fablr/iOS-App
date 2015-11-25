@@ -33,7 +33,7 @@ class DiscoveryViewController: UICollectionViewController {
         let service = PodcastService()
         self.podcasts = service.readAllPodcasts{ podcasts in
             self.podcasts = podcasts
-            self.collectionView!.reloadData()
+            self.collectionView?.reloadData()
         }
     }
 
@@ -77,7 +77,7 @@ class DiscoveryViewController: UICollectionViewController {
             return 0
         }
 
-        return (podcasts?.count)!
+        return podcasts!.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {

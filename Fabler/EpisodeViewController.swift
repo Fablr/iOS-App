@@ -23,6 +23,11 @@ class EpisodeViewController: UIViewController {
     // MARK: - UIViewController functions
 
     override func viewDidLoad() {
+        guard self.episode != nil else {
+            print("expected a episode initiated via previous controller")
+            return
+        }
+
         super.viewDidLoad()
 
         self.titleLabel?.text = episode!.title

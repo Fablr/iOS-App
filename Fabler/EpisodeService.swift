@@ -21,7 +21,7 @@ class EpisodeService {
 
     func getEpisodesForPodcast(podcastId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Episode]) -> Void)?) -> [Episode] {
 
-        if completion != nil {
+        if let completion = completion {
             let request = Alamofire
             .request(FablerClient.Router.ReadEpisodesForPodcast(podcast: podcastId))
             .validate()
@@ -33,7 +33,7 @@ class EpisodeService {
                     print(error)
                 }
 
-                dispatch_async(queue, {completion!(result: self.getEpisodesForPodcastFromRealm(podcastId))})
+                dispatch_async(queue, {completion(result: self.getEpisodesForPodcastFromRealm(podcastId))})
             }
 
             debugPrint(request)
