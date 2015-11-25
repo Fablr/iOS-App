@@ -13,16 +13,16 @@ class LoginViewController : UIViewController, FBSDKLoginButtonDelegate {
 
     // MARK: - IBOutlets
 
-    @IBOutlet var loginButton: FBSDKLoginButton!
+    @IBOutlet var loginButton: FBSDKLoginButton?
 
     // MARK: - UIViewController functions
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        loginButton = FBSDKLoginButton()
-        loginButton.readPermissions = ["public_profile", "email", "user_friends"]
-        loginButton.delegate = self
+        self.loginButton = FBSDKLoginButton()
+        self.loginButton?.readPermissions = ["public_profile", "email", "user_friends"]
+        self.loginButton?.delegate = self
     }
 
     override func viewDidAppear(animated: Bool) {

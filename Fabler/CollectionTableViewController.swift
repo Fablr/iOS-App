@@ -12,7 +12,7 @@ class CollectionTableViewController: UITableViewController {
 
     // MARK: - IBOutlets
 
-    @IBOutlet var menuButton:UIBarButtonItem!
+    @IBOutlet var menuButton:UIBarButtonItem?
 
     // MARK: - CollectionTableViewController members
 
@@ -24,8 +24,8 @@ class CollectionTableViewController: UITableViewController {
         super.viewDidLoad()
 
         if revealViewController() != nil {
-            menuButton.target = revealViewController()
-            menuButton.action = "revealToggle:"
+            self.menuButton?.target = revealViewController()
+            self.menuButton?.action = "revealToggle:"
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
 
@@ -84,8 +84,8 @@ class CollectionTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! ShowTableViewCell
 
         if let podcast = podcasts?[indexPath.row] {
-            cell.postTitleLabel.text = podcast.title
-            cell.authorLabel.text = podcast.author
+            cell.postTitleLabel?.text = podcast.title
+            cell.authorLabel?.text = podcast.author
         }
 
         return cell

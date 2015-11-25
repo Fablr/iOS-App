@@ -14,11 +14,11 @@ class ShowSettingsTableViewController : UITableViewController {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var downloadSwitch: UISwitch!
-    @IBOutlet weak var notificationSwitch: UISwitch!
-    @IBOutlet weak var amountStepper: UIStepper!
-    @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel?
+    @IBOutlet weak var downloadSwitch: UISwitch?
+    @IBOutlet weak var notificationSwitch: UISwitch?
+    @IBOutlet weak var amountStepper: UIStepper?
+    @IBOutlet weak var amountLabel: UILabel?
 
     // MARK: - IBActions
 
@@ -32,19 +32,25 @@ class ShowSettingsTableViewController : UITableViewController {
 
     @IBAction func downloadSwitchChanged(sender: AnyObject) {
         let service = PodcastService()
-        service.setDownloadForPodcast(podcast!, allowAutoDownload: self.downloadSwitch.on)
+        if let strongDownloadSwitch = self.downloadSwitch {
+            service.setDownloadForPodcast(podcast!, allowAutoDownload: strongDownloadSwitch.on)
+        }
     }
 
     @IBAction func notificationSwitchChanged(sender: AnyObject) {
         let service = PodcastService()
-        service.setNotificationForPodcast(podcast!, allowNotifications: self.notificationSwitch.on)
+        if let strongNotificationSwitch = self.notificationSwitch {
+            service.setNotificationForPodcast(podcast!, allowNotifications: strongNotificationSwitch.on)
+        }
     }
 
     @IBAction func amountStepperChanged(sender: AnyObject) {
         let service = PodcastService()
-        service.setDownloadAmountForPodcast(podcast!, amount: Int(self.amountStepper.value))
+        if let stepper = self.amountStepper {
+            service.setDownloadAmountForPodcast(podcast!, amount: Int(stepper.value))
+        }
 
-        self.amountLabel.text = String(format: "Auto-download %d new episodes.", podcast!.downloadAmount)
+        self.amountLabel?.text = String(format: "Auto-download %d new episodes.", podcast!.downloadAmount)
     }
 
     // MARK: - UIViewController functions
@@ -62,13 +68,13 @@ class ShowSettingsTableViewController : UITableViewController {
         self.extendedLayoutIncludesOpaqueBars = false
         self.automaticallyAdjustsScrollViewInsets = false
 
-        self.downloadSwitch.on = podcast!.download
-        self.notificationSwitch.on = podcast!.notify
-        self.amountStepper.value = Double(podcast!.downloadAmount)
+        self.downloadSwitch?.on = podcast!.download
+        self.notificationSwitch?.on = podcast!.notify
+        self.amountStepper?.value = Double(podcast!.downloadAmount)
 
-        self.amountLabel.text = String(format: "Auto-download %d new episodes.", podcast!.downloadAmount)
+        self.amountLabel?.text = String(format: "Auto-download %d new episodes.", podcast!.downloadAmount)
 
-        titleLabel.text = podcast!.title + " Settings"
+        self.titleLabel?.text = podcast!.title + " Settings"
     }
 
     override func viewDidAppear(animated: Bool) {

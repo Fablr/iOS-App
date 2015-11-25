@@ -12,7 +12,7 @@ class DiscoveryViewController: UICollectionViewController {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var menuButton:UIBarButtonItem!
+    @IBOutlet weak var menuButton:UIBarButtonItem?
 
     // MARK: - DiscoveryViewController members
 
@@ -25,8 +25,8 @@ class DiscoveryViewController: UICollectionViewController {
         super.viewDidLoad()
 
         if revealViewController() != nil {
-            menuButton.target = revealViewController()
-            menuButton.action = "revealToggle:"
+            self.menuButton?.target = revealViewController()
+            self.menuButton?.action = "revealToggle:"
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
 
@@ -83,7 +83,7 @@ class DiscoveryViewController: UICollectionViewController {
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! ShowCell
 
-        cell.titleLabel.text = podcasts?[indexPath.row].title
+        cell.titleLabel?.text = podcasts?[indexPath.row].title
 
         return cell
     }

@@ -13,11 +13,11 @@ class YouViewController : UIViewController, FBSDKLoginButtonDelegate {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var menuButton: UIBarButtonItem!
-    @IBOutlet weak var loginButton: FBSDKLoginButton!
-    @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var firstNameLabel: UILabel!
-    @IBOutlet weak var lastNameLabel: UILabel!
+    @IBOutlet weak var menuButton: UIBarButtonItem?
+    @IBOutlet weak var loginButton: FBSDKLoginButton?
+    @IBOutlet weak var userNameLabel: UILabel?
+    @IBOutlet weak var firstNameLabel: UILabel?
+    @IBOutlet weak var lastNameLabel: UILabel?
 
     // MARK: - YouViewController members
 
@@ -26,9 +26,9 @@ class YouViewController : UIViewController, FBSDKLoginButtonDelegate {
     // MARK: - YouViewController functions
 
     func updateUserElements() {
-        self.userNameLabel.text = user!.userName
-        self.firstNameLabel.text = user!.firstName
-        self.lastNameLabel.text = user!.lastName
+        self.userNameLabel?.text = user!.userName
+        self.firstNameLabel?.text = user!.firstName
+        self.lastNameLabel?.text = user!.lastName
     }
 
     // MARK: - UIViewController functions
@@ -36,22 +36,24 @@ class YouViewController : UIViewController, FBSDKLoginButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        loginButton = FBSDKLoginButton()
-        loginButton.readPermissions = ["public_profile", "email", "user_friends"]
-        loginButton.delegate = self
+        self.loginButton = FBSDKLoginButton()
+        self.loginButton?.readPermissions = ["public_profile", "email", "user_friends"]
+        self.loginButton?.delegate = self
 
         if revealViewController() != nil {
-            menuButton.target = revealViewController()
-            menuButton.action = "revealToggle:"
+            menuButton?.target = revealViewController()
+            menuButton?.action = "revealToggle:"
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
 
         let notificationCenter = NSNotificationCenter.defaultCenter()
         let mainQueue = NSOperationQueue.mainQueue()
 
-        notificationCenter.addObserverForName(CurrentUserDidChangeNotification, object: nil, queue: mainQueue) { _ in
-            self.user = User.getCurrentUser()
-            self.updateUserElements()
+        notificationCenter.addObserverForName(CurrentUserDidChangeNotification, object: nil, queue: mainQueue) { [weak self] (_) in
+            if let controller = self {
+                controller.user = User.getCurrentUser()
+                controller.updateUserElements()
+            }
         }
 
         self.user = User.getCurrentUser()

@@ -21,13 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.loginService = LoginService()
         self.player = FablerPlayer()
-        self.downloader = DownloadManager()
-
-        if application.applicationState == UIApplicationState.Background {
-            //
-            // we are in the background
-            //
-        }
+        self.downloader = DownloadManager(identifier: "com.Fabler.Fabler.background")
 
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
@@ -59,6 +53,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: () -> Void) {
-        self.downloader?.manager.backgroundCompletionHandler = completionHandler
+        self.downloader?.setBackgroundCompletionHandler(completionHandler)
     }
 }

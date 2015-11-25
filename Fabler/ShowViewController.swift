@@ -12,11 +12,11 @@ class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDat
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var showTableView: UITableView!
-    @IBOutlet weak var showLabel: UILabel!
-    @IBOutlet weak var subscribeButton: UIButton!
-    @IBOutlet weak var settingsButton: UIButton!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var showTableView: UITableView?
+    @IBOutlet weak var showLabel: UILabel?
+    @IBOutlet weak var subscribeButton: UIButton?
+    @IBOutlet weak var settingsButton: UIButton?
+    @IBOutlet weak var imageView: UIImageView?
 
     // MARK: - ShowTableViewController members
 
@@ -31,13 +31,15 @@ class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDat
         let service = PodcastService()
         let subscribed = !(podcast?.subscribed)!
 
-        self.subscribeButton.setTitle(subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
+        self.subscribeButton?.setTitle(subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
 
-        service.subscribeToPodcast(podcast!, subscribe: subscribed, completion: { result in
-            if result {
-                self.podcast?.subscribed = subscribed
-            } else {
-                self.subscribeButton.setTitle(!subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
+        service.subscribeToPodcast(podcast!, subscribe: subscribed, completion: { [weak self] (result) in
+            if let controller = self {
+                if result {
+                    controller.podcast?.subscribed = subscribed
+                } else {
+                    controller.subscribeButton?.setTitle(!subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
+                }
             }
         })
     }
@@ -50,10 +52,10 @@ class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.showLabel.text = podcast?.title
+        self.showLabel?.text = podcast?.title
 
-        showTableView.delegate = self
-        showTableView.dataSource = self
+        self.showTableView?.delegate = self
+        self.showTableView?.dataSource = self
 
         self.automaticallyAdjustsScrollViewInsets = true
 
@@ -63,17 +65,21 @@ class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDat
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
 
         let service = EpisodeService()
-        self.episodes = service.getEpisodesForPodcast(podcast!.id, completion: { episodes in
-            self.episodes = episodes
-            self.showTableView.reloadData()
+        self.episodes = service.getEpisodesForPodcast(podcast!.id, completion: { [weak self] (episodes) in
+            if let controller = self {
+                controller.episodes = episodes
+                controller.showTableView?.reloadData()
+            }
         })
 
         if !(podcast!.subscribed) {
-            self.settingsButton.hidden = true
-            self.settingsButton.removeConstraints(self.settingsButton.constraints)
+            self.settingsButton?.hidden = true
+            if let button = self.settingsButton {
+                button.removeConstraints(button.constraints)
+            }
         }
 
-        self.subscribeButton.setTitle(self.podcast!.subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
+        self.subscribeButton?.setTitle(self.podcast!.subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -130,7 +136,7 @@ class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! EpisodeTableViewCell
 
         if let episode = episodes?[indexPath.row] {
-            cell.titleLabel.text = episode.title
+            cell.titleLabel?.text = episode.title
         }
         
         return cell

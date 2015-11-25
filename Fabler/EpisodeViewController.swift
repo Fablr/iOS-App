@@ -12,9 +12,9 @@ class EpisodeViewController: UIViewController {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel?
+    @IBOutlet weak var subtitleLabel: UILabel?
+    @IBOutlet weak var descriptionLabel: UILabel?
 
     // MARK: - EpisodeViewController members
 
@@ -25,9 +25,9 @@ class EpisodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleLabel.text = episode!.title
-        subtitleLabel.text = episode!.subtitle
-        descriptionLabel.text = episode!.episodeDescription
+        self.titleLabel?.text = episode!.title
+        self.subtitleLabel?.text = episode!.subtitle
+        self.descriptionLabel?.text = episode!.episodeDescription
     }
 
     override func viewWillAppear(animated: Bool) {

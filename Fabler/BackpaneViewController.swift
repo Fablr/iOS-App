@@ -12,7 +12,7 @@ class BackpaneViewController : UIViewController {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var userButton: UIButton!
+    @IBOutlet weak var userButton: UIButton?
 
     // MARK: - BackpaneViewController members
 
@@ -22,7 +22,7 @@ class BackpaneViewController : UIViewController {
 
     func updateUserElements() {
         if let title = self.user?.userName {
-            self.userButton.setTitle(title, forState: .Normal)
+            self.userButton?.setTitle(title, forState: .Normal)
         }
     }
 
@@ -34,9 +34,11 @@ class BackpaneViewController : UIViewController {
         let notificationCenter = NSNotificationCenter.defaultCenter()
         let mainQueue = NSOperationQueue.mainQueue()
 
-        notificationCenter.addObserverForName(CurrentUserDidChangeNotification, object: nil, queue: mainQueue) { _ in
-            self.user = User.getCurrentUser()
-            self.updateUserElements()
+        notificationCenter.addObserverForName(CurrentUserDidChangeNotification, object: nil, queue: mainQueue) { [weak self] (_) in
+            if let controller = self {
+                controller.user = User.getCurrentUser()
+                controller.updateUserElements()
+            }
         }
 
         self.user = User.getCurrentUser()

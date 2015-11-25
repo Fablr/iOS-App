@@ -12,7 +12,7 @@ class EpisodeTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlets
     
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel?
 
     // MARK: - UITableViewCell functions
 

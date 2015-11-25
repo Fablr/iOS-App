@@ -21,5 +21,5 @@ final class DownloadTask : Object {
     dynamic var objectId: Int = 0
 
     // MARK: - Realm methods
-    
+
 }

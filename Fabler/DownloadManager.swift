@@ -17,19 +17,20 @@ import Alamofire
     case DeleteOnNextDownload = 4
 }
 
-let SessionIdentifier = "com.Fabler.Fabler.background"
 let PodcastDirectory = "podcasts"
 
-class DownloadManager {
+public class DownloadManager {
 
-    let manager: Alamofire.Manager
+    private let manager: Alamofire.Manager
+    private let queue = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL)
+    private var backgroundCompletionHandler: (() -> Void)?
 
-    var queue: dispatch_queue_t {
-        return dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)
-    }
+    public let identifier: String
 
-    init(background: Bool) {
-        let configuration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier(SessionIdentifier)
+    init(identifier: String) {
+        self.identifier = identifier
+
+        let configuration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier(self.identifier)
         self.manager = Alamofire.Manager(configuration: configuration)
 
         self.manager.delegate.downloadTaskDidFinishDownloadingToURL = self.downloadTaskDidFinishDownloadingToURL
@@ -38,7 +39,7 @@ class DownloadManager {
         //
         // Only kickoff Auto-download sequence if we get a valid token back from the server and we are not running in the background.
         //
-        if !background {
+        if UIApplication.sharedApplication().applicationState != UIApplicationState.Background {
             let notificationCenter = NSNotificationCenter.defaultCenter()
             let mainQueue = NSOperationQueue.mainQueue()
 
@@ -47,6 +48,11 @@ class DownloadManager {
                 service.readSubscribedPodcasts(self.queue, completion: self.readSubscribedPodcastEpisodes)
             }
         }
+    }
+
+    public func setBackgroundCompletionHandler(handler: () -> Void) {
+        self.backgroundCompletionHandler = handler
+        self.manager.backgroundCompletionHandler = self.backgroundCompletionHandler
     }
 
     func readSubscribedPodcastEpisodes(podcasts: [Podcast]) {
@@ -98,7 +104,7 @@ class DownloadManager {
                 let request = self.manager.download(Alamofire.Method.GET, url.path!, destination: {temporaryURL, response in return file})
 
                 let task = DownloadTask()
-                task.sessionIdentifier = SessionIdentifier
+                task.sessionIdentifier = self.identifier
                 task.taskIdentifier = request.task.taskIdentifier
                 task.localPath = file.path!
                 task.objectId = episode.id
