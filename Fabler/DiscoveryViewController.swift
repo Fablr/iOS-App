@@ -12,12 +12,12 @@ class DiscoveryViewController: UICollectionViewController {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var menuButton:UIBarButtonItem?
+    @IBOutlet weak var menuButton: UIBarButtonItem?
 
     // MARK: - DiscoveryViewController members
 
     private let reuseIdentifier = "ShowCell"
-    private var podcasts:[Podcast]?
+    private var podcasts: [Podcast]?
 
     // MARK: - UIViewController functions
 
@@ -31,7 +31,7 @@ class DiscoveryViewController: UICollectionViewController {
         }
 
         let service = PodcastService()
-        self.podcasts = service.readAllPodcasts{ podcasts in
+        self.podcasts = service.readAllPodcasts { podcasts in
             self.podcasts = podcasts
             self.collectionView?.reloadData()
         }
@@ -51,7 +51,9 @@ class DiscoveryViewController: UICollectionViewController {
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "displayShowSegue" {
-            (segue.destinationViewController as! ShowViewController).podcast = (sender as! Podcast)
+            if let controller = segue.destinationViewController as? ShowViewController, let podcast = sender as? Podcast {
+                controller.podcast = podcast
+            }
         }
     }
 
@@ -81,9 +83,11 @@ class DiscoveryViewController: UICollectionViewController {
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! ShowCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
 
-        cell.titleLabel?.text = podcasts?[indexPath.row].title
+        if let cell = cell as? ShowCell {
+            cell.titleLabel?.text = podcasts?[indexPath.row].title
+        }
 
         return cell
     }

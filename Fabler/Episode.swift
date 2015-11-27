@@ -8,7 +8,7 @@
 
 import RealmSwift
 
-final class Episode : Object {
+final class Episode: Object {
 
     // MARK: - Episode members
 
@@ -18,7 +18,7 @@ final class Episode : Object {
     dynamic var pubdate: NSDate = NSDate()
     dynamic var duration: NSTimeInterval = 0
     dynamic var episodeDescription: String = ""
-    dynamic var id: Int = 0
+    dynamic var episodeId: Int = 0
     dynamic var link: String = ""
     dynamic var podcastId: Int = 0
     dynamic var mark: NSTimeInterval = 0
@@ -36,7 +36,7 @@ final class Episode : Object {
     // MARK: - Realm methods
 
     override static func primaryKey() -> String? {
-        return "id"
+        return "episodeId"
     }
 
     // MARK: - Computed properties

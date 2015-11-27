@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FablerNavigationController : UINavigationController {
+class FablerNavigationController: UINavigationController {
 
     // MARK: - FablerNavigationController members
 
@@ -16,21 +16,25 @@ class FablerNavigationController : UINavigationController {
 
     // MARK: - UIViewController functions
 
-    override func viewDidLoad(){
+    override func viewDidLoad() {
         super.viewDidLoad()
 
-        let player = (UIApplication.sharedApplication().delegate as! AppDelegate).player!
-
-        if player.started {
-            self.playerAdded = true
-            self.view.addSubview(player.smallPlayer.view)
+        guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
+            return
         }
 
-        player.registerPlaybackStarted { [weak self] in
-            if let controller = self {
-                if !controller.playerAdded {
-                    controller.playerAdded = true
-                    controller.view.addSubview(player.smallPlayer.view)
+        if let player = delegate.player {
+            if player.started {
+                self.playerAdded = true
+                self.view.addSubview(player.smallPlayer.view)
+            }
+
+            player.registerPlaybackStarted { [weak self] in
+                if let controller = self {
+                    if !controller.playerAdded {
+                        controller.playerAdded = true
+                        controller.view.addSubview(player.smallPlayer.view)
+                    }
                 }
             }
         }

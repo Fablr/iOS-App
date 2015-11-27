@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ShowViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: - IBOutlets
 
@@ -72,7 +72,7 @@ class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDat
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
 
         let service = EpisodeService()
-        self.episodes = service.getEpisodesForPodcast(podcast!.id, completion: { [weak self] (episodes) in
+        self.episodes = service.getEpisodesForPodcast(podcast!.podcastId, completion: { [weak self] (episodes) in
             if let controller = self {
                 controller.episodes = episodes
                 controller.showTableView?.reloadData()
@@ -104,12 +104,16 @@ class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDat
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "displayEpisodeSegue" {
-            (segue.destinationViewController as! EpisodeViewController).episode = (sender as! Episode)
+            if let controller = segue.destinationViewController as? EpisodeViewController, let episode = sender as? Episode {
+                controller.episode = episode
+            }
         } else if segue.identifier == "displaySettingsSegue" {
-            (segue.destinationViewController as! ShowSettingsTableViewController).podcast = (sender as! Podcast)
+            if let controller = segue.destinationViewController as? ShowSettingsTableViewController, let podcast = sender as? Podcast {
+                controller.podcast = podcast
+            }
         }
     }
-    
+
     // MARK: - UITableViewController functions
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -118,8 +122,13 @@ class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDat
             return
         }
 
-        let player = (UIApplication.sharedApplication().delegate as! AppDelegate).player!
-        player.startPlayback(episodes![indexPath.row])
+        guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
+            return
+        }
+
+        if let player = delegate.player {
+            player.startPlayback(episodes![indexPath.row])
+        }
 
         performSegueWithIdentifier("displayEpisodeSegue", sender: episodes![indexPath.row])
     }
@@ -140,12 +149,12 @@ class ShowViewController : UIViewController, UITableViewDelegate, UITableViewDat
 
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! EpisodeTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
 
-        if let episode = episodes?[indexPath.row] {
+        if let cell = cell as? EpisodeTableViewCell, let episode = episodes?[indexPath.row] {
             cell.titleLabel?.text = episode.title
         }
-        
+
         return cell
     }
 }

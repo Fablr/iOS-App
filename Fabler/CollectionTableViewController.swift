@@ -12,7 +12,7 @@ class CollectionTableViewController: UITableViewController {
 
     // MARK: - IBOutlets
 
-    @IBOutlet var menuButton:UIBarButtonItem?
+    @IBOutlet var menuButton: UIBarButtonItem?
 
     // MARK: - CollectionTableViewController members
 
@@ -50,7 +50,9 @@ class CollectionTableViewController: UITableViewController {
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "displayShowSegue" {
-            (segue.destinationViewController as! ShowViewController).podcast = (sender as! Podcast)
+            if let controller = segue.destinationViewController as? ShowViewController, let podcast = sender as? Podcast {
+                controller.podcast = podcast
+            }
         }
     }
 
@@ -79,11 +81,10 @@ class CollectionTableViewController: UITableViewController {
         return podcasts!.count
     }
 
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! ShowTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
 
-        if let podcast = podcasts?[indexPath.row] {
+        if let cell = cell as? ShowTableViewCell, let podcast = podcasts?[indexPath.row] {
             cell.postTitleLabel?.text = podcast.title
             cell.authorLabel?.text = podcast.author
         }

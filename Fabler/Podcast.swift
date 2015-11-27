@@ -8,14 +8,14 @@
 
 import RealmSwift
 
-final class Podcast : Object, Equatable {
+final class Podcast: Object, Equatable {
 
     // MARK: - Podcast members
 
     dynamic var title: String = ""
     dynamic var author: String = ""
     dynamic var explicit: Bool = false
-    dynamic var id: Int = 0
+    dynamic var podcastId: Int = 0
     dynamic var subscribed: Bool = false
     dynamic var publisherName: String = ""
     dynamic var publisherId: Int = 0
@@ -31,12 +31,12 @@ final class Podcast : Object, Equatable {
     // MARK: - Realm methods
 
     override static func primaryKey() -> String? {
-        return "id"
+        return "podcastId"
     }
 }
 
 // MARK: - Podcast helper functions
 
-func ==(lhs: Podcast, rhs: Podcast) -> Bool {
-    return lhs.id == rhs.id
+func == (lhs: Podcast, rhs: Podcast) -> Bool {
+    return lhs.podcastId == rhs.podcastId
 }

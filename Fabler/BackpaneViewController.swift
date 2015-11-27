@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BackpaneViewController : UIViewController {
+class BackpaneViewController: UIViewController {
 
     // MARK: - IBOutlets
 
@@ -16,7 +16,7 @@ class BackpaneViewController : UIViewController {
 
     // MARK: - BackpaneViewController members
 
-    private var user:User?
+    private var user: User?
 
     // MARK: - BackpaneViewController functions
 

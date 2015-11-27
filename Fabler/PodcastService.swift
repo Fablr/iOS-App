@@ -43,9 +43,23 @@ class PodcastService {
         }
     }
 
-    func readPodcast(podcastId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Podcast) -> Void)?) -> Podcast? {
+    func readPodcast(podcastId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Podcast?) -> Void)?) -> Podcast? {
         if let completion = completion {
+            let request = Alamofire
+            .request(FablerClient.Router.ReadPodcasts())
+            .validate()
+            .responseSwiftyJSON { response in
+                switch response.result {
+                case .Success(let json):
+                    self.serializePodcastObject(json)
+                case .Failure(let error):
+                    print(error)
+                }
 
+                dispatch_async(queue, {completion(result: self.readPodcastFromRealm(podcastId))})
+            }
+
+            debugPrint(request)
         }
 
         return readPodcastFromRealm(podcastId)
@@ -54,7 +68,7 @@ class PodcastService {
     private func readPodcastFromRealm(podcastId: Int) -> Podcast? {
         let realm = try! Realm()
 
-        return realm.objects(Podcast).filter("id == %d", podcastId).first
+        return realm.objects(Podcast).filter("podcastId == %d", podcastId).first
     }
 
     func readAllPodcasts(queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Podcast]) -> Void)?) -> [Podcast] {
@@ -123,7 +137,7 @@ class PodcastService {
         }
 
         let request = Alamofire
-        .request(FablerClient.Router.SubscribeToPodcast(podcast: podcast.id, subscribe: subscribe))
+        .request(FablerClient.Router.SubscribeToPodcast(podcast: podcast.podcastId, subscribe: subscribe))
         .validate(statusCode: 200..<202)
         .responseJSON { response in
             switch response.result {
@@ -145,7 +159,7 @@ class PodcastService {
         let realm = try! Realm()
 
         if let id = data["id"].int {
-            podcast.id = id
+            podcast.podcastId = id
         }
 
         if let title = data["title"].string {

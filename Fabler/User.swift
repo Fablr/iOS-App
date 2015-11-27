@@ -8,7 +8,7 @@
 
 import RealmSwift
 
-final class User : Object {
+final class User: Object {
 
     // MARK: - User static members
 
@@ -23,12 +23,12 @@ final class User : Object {
     dynamic var firstName: String = ""
     dynamic var lastName: String = ""
     dynamic var email: String = ""
-    dynamic var id: Int = 0
+    dynamic var userId: Int = 0
     dynamic var currentUser: Bool = false
 
     // MARK: - Realm methods
 
     override static func primaryKey() -> String? {
-        return "id"
+        return "userId"
     }
 }

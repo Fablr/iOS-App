@@ -6,11 +6,15 @@
 //  Copyright © 2015 Fabler. All rights reserved.
 //
 
-import AVFoundation
+// swiftlint:disable variable_name
 
 public let PlayerStartPlayback = "com.Fabler.PlayerStartPlayback"
 
-class FablerPlayer : NSObject {
+// swiftlint:enable variable_name
+
+import AVFoundation
+
+class FablerPlayer: NSObject {
 
     // MARK: - FablerPlayer members
 

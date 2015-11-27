@@ -57,7 +57,7 @@ class EpisodeService {
         }
 
         let request = Alamofire
-        .request(FablerClient.Router.UpdateEpisodeMark(episode: episode.id, mark: episode.mark, completed: episode.completed))
+        .request(FablerClient.Router.UpdateEpisodeMark(episode: episode.episodeId, mark: episode.mark, completed: episode.completed))
         .validate(statusCode: 200..<202)
         .responseJSON { response in
             switch response.result {
@@ -78,7 +78,7 @@ class EpisodeService {
         let realm = try! Realm()
 
         if let id = data["id"].int {
-            episode.id = id
+            episode.episodeId = id
         }
 
         if let title = data["title"].string {
@@ -138,7 +138,7 @@ class EpisodeService {
                 }
             }
         }
-        
+
         return episodes
     }
 }

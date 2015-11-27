@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class LargePlayerViewController : UIViewController {
+class LargePlayerViewController: UIViewController {
 
     // MARK: - LargePlayerViewController members
 
@@ -60,8 +60,8 @@ class LargePlayerViewController : UIViewController {
     }
 
     @IBAction func playbackSliderChanged(sender: AnyObject) {
-        if let player = self.player {
-            player.setPlaybackTo((sender as! UISlider).value)
+        if let player = self.player, let slider = sender as? UISlider {
+            player.setPlaybackTo(slider.value)
         }
     }
 
@@ -99,7 +99,11 @@ class LargePlayerViewController : UIViewController {
     // MARK: - SmallPlayerViewController functions
 
     func updateOutlets() {
-        self.player = (UIApplication.sharedApplication().delegate as! AppDelegate).player
+        guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
+            return
+        }
+
+        self.player = delegate.player
 
         if let player = self.player {
             titleLabel?.text = player.episode?.title

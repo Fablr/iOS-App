@@ -8,7 +8,7 @@
 
 import RealmSwift
 
-final class DownloadTask : Object {
+final class DownloadTask: Object {
 
     // MARK: - DownloadTask members
 
@@ -19,6 +19,7 @@ final class DownloadTask : Object {
     dynamic var expectedBytes: Int64 = 0
     dynamic var localPath: String = ""
     dynamic var objectId: Int = 0
+    dynamic var objectType: String = ""
 
     // MARK: - Realm methods
 

@@ -9,7 +9,7 @@
 import UIKit
 import FBSDKLoginKit
 
-class LoginViewController : UIViewController, FBSDKLoginButtonDelegate {
+class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
 
     // MARK: - IBOutlets
 

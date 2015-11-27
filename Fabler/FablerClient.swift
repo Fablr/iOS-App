@@ -13,13 +13,17 @@ import RealmSwift
 
 // MARK: - FablerClient
 
+// swiftlint:disable nesting
+// swiftlint:disable variable_name
+
 struct FablerClient {
     enum Router: URLRequestConvertible {
         static let baseURLString = "http://api.fablersite-dev.elasticbeanstalk.com"
-        static var OAuthToken: String?
+        static var token: String?
 
         case FacebookLogin(token:String)
         case ReadPodcasts()
+        case ReadPodcast(podcast:Int)
         case ReadSubscribedPodcasts()
         case ReadEpisodesForPodcast(podcast:Int)
         case SubscribeToPodcast(podcast:Int, subscribe:Bool)
@@ -31,6 +35,8 @@ struct FablerClient {
             case .FacebookLogin:
                 return .GET
             case .ReadPodcasts:
+                return .GET
+            case .ReadPodcast:
                 return .GET
             case .ReadSubscribedPodcasts:
                 return .GET
@@ -51,6 +57,8 @@ struct FablerClient {
                 return "/facebook/"
             case .ReadPodcasts:
                 return "/podcast/"
+            case .ReadPodcast(let podcast):
+                return "/podcast/\(podcast)/"
             case .ReadSubscribedPodcasts:
                 return "/podcast/subscribed/"
             case .ReadEpisodesForPodcast:
@@ -69,7 +77,7 @@ struct FablerClient {
             let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
             mutableURLRequest.HTTPMethod = method.rawValue
 
-            if let token = Router.OAuthToken {
+            if let token = Router.token {
                 mutableURLRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             }
 
@@ -96,10 +104,7 @@ struct FablerClient {
 // MARK: - Alamofire.Request extension
 
 extension Alamofire.Request {
-    public static func SwiftyJSONResponseSerializer(
-        options options: NSJSONReadingOptions = .AllowFragments)
-        -> ResponseSerializer<JSON, NSError>
-    {
+    public static func SwiftyJSONResponseSerializer(options: NSJSONReadingOptions = .AllowFragments) -> ResponseSerializer<JSON, NSError> {
         return ResponseSerializer { _, _, data, error in
             guard error == nil else { return .Failure(error!) }
 
@@ -109,7 +114,7 @@ extension Alamofire.Request {
                 return .Failure(error)
             }
 
-            let json:JSON = SwiftyJSON.JSON(data: validData)
+            let json: JSON = SwiftyJSON.JSON(data: validData)
             if let jsonError = json.error {
                 return Result.Failure(jsonError)
             }
@@ -118,14 +123,10 @@ extension Alamofire.Request {
         }
     }
 
-    public func responseSwiftyJSON(
-        options options: NSJSONReadingOptions = .AllowFragments,
-        completionHandler: Response<JSON, NSError> -> Void)
-        -> Self
-    {
+    public func responseSwiftyJSON(options: NSJSONReadingOptions = .AllowFragments, completionHandler: Response<JSON, NSError> -> Void) -> Self {
         return response(
             queue: dispatch_get_global_queue(QOS_CLASS_UTILITY, 0),
-            responseSerializer: Request.SwiftyJSONResponseSerializer(options: options),
+            responseSerializer: Request.SwiftyJSONResponseSerializer(options),
             completionHandler: completionHandler
         )
     }

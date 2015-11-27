@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ShowSettingsTableViewController : UITableViewController {
+class ShowSettingsTableViewController: UITableViewController {
 
     var podcast: Podcast?
 

@@ -6,6 +6,12 @@
 //  Copyright © 2015 Fabler. All rights reserved.
 //
 
+// swiftlint:disable variable_name
+
+let PodcastDirectory = "podcasts"
+
+// swiftlint:enable variable_name
+
 import RealmSwift
 import Alamofire
 
@@ -16,8 +22,6 @@ import Alamofire
     case DownloadComplete = 3
     case DeleteOnNextDownload = 4
 }
-
-let PodcastDirectory = "podcasts"
 
 public class DownloadManager {
 
@@ -59,7 +63,7 @@ public class DownloadManager {
         let service = EpisodeService()
 
         for podcast in podcasts {
-            service.getEpisodesForPodcast(podcast.id, queue: self.queue, completion: self.calculateDownloadsForEpisodes)
+            service.getEpisodesForPodcast(podcast.podcastId, queue: self.queue, completion: self.calculateDownloadsForEpisodes)
         }
     }
 
@@ -73,7 +77,7 @@ public class DownloadManager {
         let root = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!.URLByAppendingPathComponent(PodcastDirectory, isDirectory: true)
 
         let podcast = service.readPodcast(episodes.first!.podcastId, completion: nil)!
-        let filteredEpisodes = episodes.sort({ $0.pubdate.compare($1.pubdate) == NSComparisonResult.OrderedAscending })[0...(podcast.downloadAmount - 1)]
+        let filteredEpisodes = episodes.sort({ $0.pubdate.compare($1.pubdate) == NSComparisonResult.OrderedDescending })[0...(podcast.downloadAmount - 1)]
 
         for episode in filteredEpisodes {
             var error: NSError?
@@ -81,9 +85,9 @@ public class DownloadManager {
 
             let url = NSURL(string: episode.link)!
             let ext = url.pathExtension!
-            let file = root.URLByAppendingPathComponent(String(format: "%d.%s", episode.id, ext))
+            let file = root.URLByAppendingPathComponent(String(format: "%d.%s", episode.episodeId, ext))
 
-            let persistedTask = realm.objects(DownloadTask).filter("objectId == %d", episode.id).first
+            let persistedTask = realm.objects(DownloadTask).filter("objectId == %d", episode.episodeId).first
 
             if persistedTask != nil {
                 try! realm.write {
@@ -107,7 +111,7 @@ public class DownloadManager {
                 task.sessionIdentifier = self.identifier
                 task.taskIdentifier = request.task.taskIdentifier
                 task.localPath = file.path!
-                task.objectId = episode.id
+                task.objectId = episode.episodeId
 
                 try! realm.write {
                     realm.add(task, update: true)
@@ -157,15 +161,22 @@ public class DownloadManager {
             if let persistedTask = realm.objects(DownloadTask).filter("sessionIdentifier == %@ AND taskIdentifier == %d", sessionId, task.taskIdentifier).first {
                 let localURL = NSURL(fileURLWithPath: persistedTask.localPath)
 
+
                 do {
                     try NSFileManager.defaultManager().moveItemAtURL(url, toURL: localURL)
 
-                    if let episode = realm.objects(Episode).filter("id == %d", persistedTask.objectId).first {
+                    if let object = realm.dynamicObjectForPrimaryKey(persistedTask.objectType, key: persistedTask.objectId) {
+                        try realm.write {
+                            object["downloadStateRaw"] = DownloadStatus.DownloadComplete.rawValue
+                        }
+                    }
+
+                    /*if let episode = realm.objects(Episode).filter("id == %d", persistedTask.objectId).first {
                         try realm.write {
                             episode.downloadStateRaw = DownloadStatus.DownloadComplete.rawValue
                             realm.delete(persistedTask)
                         }
-                    }
+                    }*/
                 } catch {
                     print("failed to move file")
                 }

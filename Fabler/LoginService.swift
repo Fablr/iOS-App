@@ -6,8 +6,12 @@
 //  Copyright © 2015 Fabler. All rights reserved.
 //
 
+// swiftlint:disable variable_name
+
 public let CurrentUserDidChangeNotification = "com.Fabler.CurrentUserDidChange"
 public let TokenDidChangeNotification = "com.Fabler.TokenDidChange"
+
+// swiftlint:enable variable_name
 
 import FBSDKLoginKit
 import Alamofire
@@ -31,7 +35,7 @@ class LoginService {
                     switch response.result {
                     case .Success(let data):
                         if let token = data.valueForKeyPath("access_token") as? String {
-                            FablerClient.Router.OAuthToken = token
+                            FablerClient.Router.token = token
                             NSNotificationCenter.defaultCenter().postNotificationName(TokenDidChangeNotification, object: self)
                             self.getCurrentUser()
                         }
@@ -77,7 +81,7 @@ class LoginService {
         let realm = try! Realm()
 
         if let id = data["id"].int {
-            user.id = id
+            user.userId = id
         }
 
         if let userName = data["username"].string {
@@ -117,7 +121,7 @@ class LoginService {
                 }
             }
         }
-        
+
         return users
     }
 }

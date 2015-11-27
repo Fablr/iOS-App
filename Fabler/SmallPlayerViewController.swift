@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class SmallPlayerViewController : UIViewController {
+class SmallPlayerViewController: UIViewController {
 
     // MARK: - SmallPlayerViewController members
 
@@ -33,7 +33,7 @@ class SmallPlayerViewController : UIViewController {
             }
         }
     }
-    
+
     // MARK: - UIViewController functions
 
     override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
@@ -59,11 +59,15 @@ class SmallPlayerViewController : UIViewController {
     // MARK: - SmallPlayerViewController functions
 
     func barTapped() {
-        if var view = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController {
+        guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
+            return
+        }
+
+        if var view = delegate.window?.rootViewController {
             //
             // This will loop until we get to the most recently displayed view controller.
             //
-            while ((view.presentedViewController) != nil) {
+            while (view.presentedViewController) != nil {
                 view = view.presentedViewController!
             }
 
@@ -74,7 +78,11 @@ class SmallPlayerViewController : UIViewController {
     }
 
     func updateOutlets() {
-        self.player = (UIApplication.sharedApplication().delegate as! AppDelegate).player
+        guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
+            return
+        }
+
+        self.player = delegate.player
 
         if let player = self.player {
             titleLabel?.text = player.episode?.title

@@ -9,7 +9,7 @@
 import UIKit
 import FBSDKLoginKit
 
-class YouViewController : UIViewController, FBSDKLoginButtonDelegate {
+class YouViewController: UIViewController, FBSDKLoginButtonDelegate {
 
     // MARK: - IBOutlets
 
@@ -21,7 +21,7 @@ class YouViewController : UIViewController, FBSDKLoginButtonDelegate {
 
     // MARK: - YouViewController members
 
-    private var user:User?
+    private var user: User?
 
     // MARK: - YouViewController functions
 
