@@ -21,8 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.loginService = LoginService()
         self.player = FablerPlayer()
-        // Uncomment once DownloadManger is stable.
-        //self.downloader = DownloadManager(identifier: "com.Fabler.Fabler.background")
+        self.downloader = DownloadManager(identifier: "com.Fabler.Fabler.background")
 
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }

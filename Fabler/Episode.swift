@@ -8,7 +8,13 @@
 
 import RealmSwift
 
-final class Episode: Object {
+final class Episode: DownloadObject {
+
+    // swiftlint:disable variable_name
+
+    static let PodcastDirectory = "podcasts"
+
+    // swiftlint:enable variable_name
 
     // MARK: - Episode members
 
@@ -28,26 +34,15 @@ final class Episode: Object {
 
     dynamic var saved: Bool = false
 
-    // MARK: - Local tracking members
-
-    dynamic var downloadStateRaw: Int = 0
-    dynamic var localPath: String = ""
-
     // MARK: - Realm methods
 
     override static func primaryKey() -> String? {
         return "episodeId"
     }
 
-    // MARK: - Computed properties
+    // MARK: - DownloadObject methods
 
-    var downloadState: DownloadStatus {
-        get {
-            if let state = DownloadStatus(rawValue: self.downloadStateRaw) {
-                return state
-            }
-
-            return DownloadStatus.NotStarted
-        }
+    override func primaryKeyValue() -> Int {
+        return self.episodeId
     }
 }

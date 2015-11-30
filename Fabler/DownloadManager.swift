@@ -6,30 +6,82 @@
 //  Copyright © 2015 Fabler. All rights reserved.
 //
 
-// swiftlint:disable variable_name
-
-let PodcastDirectory = "podcasts"
-
-// swiftlint:enable variable_name
-
 import RealmSwift
 import Alamofire
 
-@objc enum DownloadStatus: Int {
+// MARK: - DownloadManager Enums
+
+enum DownloadManagerError: ErrorType {
+    case ObjectDidNotInheritFromDownloadObject
+    case ObjectDoesNotHavePrimaryKey
+    case ObjectAlreadyDownloading
+    case ObjectHasInvalidServerURL
+    case ObjectDownloadHasNotStarted
+}
+
+enum DownloadStatus: Int {
     case NotStarted = 0
     case DownloadStarted = 1
     case DownloadPaused = 2
     case DownloadComplete = 3
-    case DeleteOnNextDownload = 4
 }
+
+// MARK: - PersistedTask
+
+final class PersistedTask: Object {
+
+    // MARK: - Members
+
+    dynamic var sessionIdentifier: String = ""
+    dynamic var taskIdentifier: Int = 0
+    dynamic var objectKey: Int = 0
+    dynamic var objectType: String = ""
+}
+
+// MARK: - DownloadObject
+
+class DownloadObject: Object {
+
+    // MARK: - Members
+
+    dynamic var downloadStateRaw: Int = 0
+    dynamic var readBytes: Int = 0
+    dynamic var totalBytes: Int = 0
+    dynamic var expectedBytes: Int = 0
+    dynamic var localPath: String = ""
+    dynamic var serverPath: String = ""
+
+    // MARK: - Computed properties
+
+    var downloadState: DownloadStatus {
+        get {
+            if let state = DownloadStatus(rawValue: self.downloadStateRaw) {
+                return state
+            }
+
+            return DownloadStatus.NotStarted
+        }
+    }
+
+    // MARK: - Methods
+
+    func primaryKeyValue() -> Int? {
+        preconditionFailure("This method must be overriden to support DownloadObject.")
+    }
+}
+
+// MARK: - DownloadManager
 
 public class DownloadManager {
 
+    // MARK: - Members
+
     private let manager: Alamofire.Manager
-    private let queue = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL)
     private var backgroundCompletionHandler: (() -> Void)?
 
     public let identifier: String
+
+    // MARK: - Methods
 
     init(identifier: String) {
         self.identifier = identifier
@@ -39,19 +91,6 @@ public class DownloadManager {
 
         self.manager.delegate.downloadTaskDidFinishDownloadingToURL = self.downloadTaskDidFinishDownloadingToURL
         self.manager.delegate.downloadTaskDidWriteData = self.downloadTaskDidWriteData
-
-        //
-        // Only kickoff Auto-download sequence if we get a valid token back from the server and we are not running in the background.
-        //
-        if UIApplication.sharedApplication().applicationState != UIApplicationState.Background {
-            let notificationCenter = NSNotificationCenter.defaultCenter()
-            let mainQueue = NSOperationQueue.mainQueue()
-
-            notificationCenter.addObserverForName(TokenDidChangeNotification, object: nil, queue: mainQueue) { _ in
-                let service = PodcastService()
-                service.readSubscribedPodcasts(self.queue, completion: self.readSubscribedPodcastEpisodes)
-            }
-        }
     }
 
     public func setBackgroundCompletionHandler(handler: () -> Void) {
@@ -59,142 +98,137 @@ public class DownloadManager {
         self.manager.backgroundCompletionHandler = self.backgroundCompletionHandler
     }
 
-    func readSubscribedPodcastEpisodes(podcasts: [Podcast]) {
-        let service = EpisodeService()
+    func initiateDownload(object: Object) throws {
+        let realm = try Realm()
 
-        for podcast in podcasts {
-            service.getEpisodesForPodcast(podcast.podcastId, queue: self.queue, completion: self.calculateDownloadsForEpisodes)
+        guard let download = object as? DownloadObject else {
+            throw DownloadManagerError.ObjectDidNotInheritFromDownloadObject
+        }
+
+        guard let objectKey = download.primaryKeyValue() else {
+            throw DownloadManagerError.ObjectDoesNotHavePrimaryKey
+        }
+
+        let objectType = object.className
+
+        let persistedTask = realm.objects(PersistedTask).filter("objectType == %@ AND objectKey == %d", objectType, objectKey).first
+
+        guard persistedTask != nil else {
+            try realm.write {
+                object.setValue(DownloadStatus.DownloadStarted.rawValue, forKey: "downloadStateRaw")
+            }
+
+            throw DownloadManagerError.ObjectAlreadyDownloading
+        }
+
+        if let url = NSURL(string: download.serverPath) {
+            let localURL = NSURL(fileURLWithPath: download.localPath)
+            let mutableURLRequest = NSMutableURLRequest(URL: url)
+            mutableURLRequest.HTTPMethod = Alamofire.Method.GET.rawValue
+            let request = self.manager.download(mutableURLRequest, destination: {temporaryURL, response in return localURL})
+
+            let persistedTask = PersistedTask()
+            persistedTask.sessionIdentifier = self.identifier
+            persistedTask.taskIdentifier = request.task.taskIdentifier
+            persistedTask.objectType = objectType
+            persistedTask.objectKey = objectKey
+
+            try realm.write {
+                realm.add(persistedTask, update: true)
+                object.setValue(DownloadStatus.DownloadStarted.rawValue, forKey: "downloadStateRaw")
+            }
+        } else {
+            throw DownloadManagerError.ObjectHasInvalidServerURL
         }
     }
 
-    func calculateDownloadsForEpisodes(episodes: [Episode]) {
-        guard episodes.count != 0 else {
-            return
+    func pauseDownload(object: Object) throws {
+        let realm = try Realm()
+
+        guard let download = object as? DownloadObject else {
+            throw DownloadManagerError.ObjectDidNotInheritFromDownloadObject
         }
 
-        let service = PodcastService()
-        let manager = NSFileManager()
-        let root = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!.URLByAppendingPathComponent(PodcastDirectory, isDirectory: true)
+        guard let objectKey = download.primaryKeyValue() else {
+            throw DownloadManagerError.ObjectDoesNotHavePrimaryKey
+        }
 
-        let podcast = service.readPodcast(episodes.first!.podcastId, completion: nil)!
-        let filteredEpisodes = episodes.sort({ $0.pubdate.compare($1.pubdate) == NSComparisonResult.OrderedDescending })[0...(podcast.downloadAmount - 1)]
+        let objectType = object.className
 
-        for episode in filteredEpisodes {
-            var error: NSError?
-            let realm = try! Realm()
+        guard let _ = realm.objects(PersistedTask).filter("objectType == %@ AND objectKey == %d", objectType, objectKey).first else {
+            throw DownloadManagerError.ObjectDownloadHasNotStarted
+        }
 
-            let url = NSURL(string: episode.link)!
-            let ext = url.pathExtension!
-            let file = root.URLByAppendingPathComponent(String(format: "%d.%s", episode.episodeId, ext))
+        // get task
 
-            let persistedTask = realm.objects(DownloadTask).filter("objectId == %d", episode.episodeId).first
+        // cancel task
 
-            if persistedTask != nil {
-                try! realm.write {
-                    episode.downloadStateRaw = DownloadStatus.DownloadStarted.rawValue
-                }
+        // write data out to file
 
-                continue
-            }
-
-            if episode.completed && !episode.saved {
-                try! realm.write {
-                    episode.downloadStateRaw = DownloadStatus.DeleteOnNextDownload.rawValue
-                }
-            }
-
-            switch episode.downloadState {
-            case .NotStarted:
-                let request = self.manager.download(Alamofire.Method.GET, url.path!, destination: {temporaryURL, response in return file})
-
-                let task = DownloadTask()
-                task.sessionIdentifier = self.identifier
-                task.taskIdentifier = request.task.taskIdentifier
-                task.localPath = file.path!
-                task.objectId = episode.episodeId
-
-                try! realm.write {
-                    realm.add(task, update: true)
-                    episode.downloadStateRaw = DownloadStatus.DownloadStarted.rawValue
-                }
-            case .DownloadStarted:
-                //
-                // Download is in progress.
-                //
-                break
-            case .DownloadPaused:
-                //
-                // Do nothing, allow user to restart download.
-                //
-                break
-            case .DownloadComplete:
-                if !(file.checkResourceIsReachableAndReturnError(&error)) {
-                    try! realm.write {
-                        episode.downloadStateRaw = DownloadStatus.NotStarted.rawValue
-                    }
-                }
-                break
-            case .DeleteOnNextDownload:
-                if !(file.checkResourceIsReachableAndReturnError(&error)) {
-                    try! realm.write {
-                        episode.downloadStateRaw = DownloadStatus.NotStarted.rawValue
-                    }
-                } else {
-                    do {
-                        try manager.removeItemAtURL(file)
-                        try realm.write {
-                            episode.downloadStateRaw = DownloadStatus.NotStarted.rawValue
-                        }
-                    } catch {
-                        print("failed to remove file")
-                    }
-                }
-                break
-            }
+        try realm.write {
+            object.setValue(DownloadStatus.DownloadPaused.rawValue, forKey: "downloadStateRaw")
         }
     }
 
-    func downloadTaskDidFinishDownloadingToURL(session: NSURLSession, task: NSURLSessionDownloadTask, url: NSURL) {
-        let realm = try! Realm()
+    func resumeDownload(object: Object) throws {
+        let realm = try Realm()
 
-        if let sessionId = session.configuration.identifier {
-            if let persistedTask = realm.objects(DownloadTask).filter("sessionIdentifier == %@ AND taskIdentifier == %d", sessionId, task.taskIdentifier).first {
-                let localURL = NSURL(fileURLWithPath: persistedTask.localPath)
+        // get data
 
+        // resume download with data
 
-                do {
-                    try NSFileManager.defaultManager().moveItemAtURL(url, toURL: localURL)
+        // create persisted task
 
-                    if let object = realm.dynamicObjectForPrimaryKey(persistedTask.objectType, key: persistedTask.objectId) {
-                        try realm.write {
-                            object["downloadStateRaw"] = DownloadStatus.DownloadComplete.rawValue
+        try realm.write {
+            object.setValue(DownloadStatus.DownloadStarted.rawValue, forKey: "downloadStateRaw")
+        }
+    }
+
+    // MARK: - Private Methods
+
+    private func downloadTaskDidFinishDownloadingToURL(session: NSURLSession, task: NSURLSessionDownloadTask, url: NSURL) {
+        do {
+            let realm = try Realm()
+
+            if let sessionId = session.configuration.identifier {
+                if let persistedTask = realm.objects(PersistedTask).filter("sessionIdentifier == %@ AND taskIdentifier == %d", sessionId, task.taskIdentifier).first {
+                    if let object = realm.dynamicObjectForPrimaryKey(persistedTask.objectType, key: persistedTask.objectKey) {
+                        do {
+                            let localURL = NSURL(fileURLWithPath: object.valueForKey("localPath") as! String)
+                            try NSFileManager.defaultManager().moveItemAtURL(url, toURL: localURL)
+                        } catch {
+                            try realm.write {
+                                object.setValue(url.path, forKey: "localPath")
+                            }
                         }
-                    }
 
-                    /*if let episode = realm.objects(Episode).filter("id == %d", persistedTask.objectId).first {
                         try realm.write {
-                            episode.downloadStateRaw = DownloadStatus.DownloadComplete.rawValue
+                            object.setValue(DownloadStatus.DownloadComplete.rawValue, forKey: "downloadStateRaw")
                             realm.delete(persistedTask)
                         }
-                    }*/
-                } catch {
-                    print("failed to move file")
+                    }
                 }
             }
+        } catch {
+            fatalError("Realm is unavailable.")
         }
     }
 
-    func downloadTaskDidWriteData (session: NSURLSession, task: NSURLSessionDownloadTask, read: Int64, totalRead: Int64, expected: Int64) {
-        let realm = try! Realm()
+    private func downloadTaskDidWriteData (session: NSURLSession, task: NSURLSessionDownloadTask, read: Int64, totalRead: Int64, expected: Int64) {
+        do {
+            let realm = try Realm()
 
-        if let sessionId = session.configuration.identifier {
-            let persistedTask = realm.objects(DownloadTask).filter("sessionIdentifier == %@ AND taskIdentifier == %d", sessionId, task.taskIdentifier).first
-
-            try! realm.write {
-                persistedTask?.readBytes = read
-                persistedTask?.totalBytes = totalRead
-                persistedTask?.expectedBytes = expected
+            if let sessionId = session.configuration.identifier, let persistedTask = realm.objects(PersistedTask).filter("sessionIdentifier == %@ AND taskIdentifier == %d", sessionId, task.taskIdentifier).first {
+                if let object = realm.dynamicObjectForPrimaryKey(persistedTask.objectType, key: persistedTask.objectKey) {
+                    try realm.write {
+                        object.setValue(Int(read), forKey: "readBytes")
+                        object.setValue(Int(totalRead), forKey: "totalBytes")
+                        object.setValue(Int(expected), forKey: "expectedBytes")
+                    }
+                }
             }
+        } catch {
+            fatalError("Realm is unavailable.")
         }
     }
 }
