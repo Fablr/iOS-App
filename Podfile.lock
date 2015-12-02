@@ -1,5 +1,7 @@
 PODS:
   - Alamofire (3.1.0)
+  - AlamofireImage (2.1.1):
+    - Alamofire (~> 3.1)
   - Bolts (1.4.0):
     - Bolts/AppLinks (= 1.4.0)
     - Bolts/Tasks (= 1.4.0)
@@ -26,6 +28,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 3.1.0)
+  - AlamofireImage (~> 2.1.1)
   - FBSDKCoreKit (~> 4.7.0)
   - FBSDKLoginKit (~> 4.7.0.1)
   - RealmSwift (~> 0.96.2)
@@ -33,6 +36,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: 415bd7f56197722978759078486689f7ef913dce
+  AlamofireImage: 31f7c4e9f516183e0ef2d2da18318de28a4628b8
   Bolts: 0e9bce58b9b9f5e8a7a4d47b16d2fabec289072b
   FBSDKCoreKit: eb580bfc2040ad44f4c0b4f4d0befb1d35bce59c
   FBSDKLoginKit: 028c5a205990441123764609fe795e65027c447f

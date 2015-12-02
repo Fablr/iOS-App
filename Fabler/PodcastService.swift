@@ -194,6 +194,10 @@ class PodcastService {
             podcast.category = category
         }
 
+        if let image = data["image"].string {
+            podcast.image = image
+        }
+
         try! realm.write {
             realm.add(podcast, update: true)
         }

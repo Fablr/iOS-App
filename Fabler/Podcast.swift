@@ -21,6 +21,7 @@ final class Podcast: Object, Equatable {
     dynamic var publisherId: Int = 0
     dynamic var summary: String = ""
     dynamic var category: String = ""
+    dynamic var image: String = ""
 
     // MARK: - Setting members
 

@@ -9,6 +9,7 @@ target 'Fabler' do
   pod 'Alamofire', '~>3.1.0'
   pod 'SwiftyJSON', '~>2.3.1'
   pod 'RealmSwift', '~>0.96.2'
+  pod 'AlamofireImage', '~>2.1.1'
 end
 
 target 'FablerTests' do
