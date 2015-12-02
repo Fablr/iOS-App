@@ -89,6 +89,11 @@ class LargePlayerViewController: UIViewController {
         playbackSlider?.maximumValue = 0.0
         playbackSlider?.minimumValue = 0.0
 
+        if let podcast = self.player?.podcast, let url = NSURL(string: podcast.image) {
+            let placeholder = UIImage()
+            self.artImage?.af_setImageWithURL(url, placeholderImage: placeholder)
+        }
+
         super.viewDidLoad()
     }
 

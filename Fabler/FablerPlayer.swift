@@ -28,6 +28,7 @@ class FablerPlayer: NSObject {
     var serviceTimer: NSTimer?
 
     var episode: Episode?
+    var podcast: Podcast?
 
     // MARK: - FablerPlayer functions
 
@@ -79,6 +80,9 @@ class FablerPlayer: NSObject {
         }
 
         self.episode = episode
+
+        let service = PodcastService()
+        self.podcast = service.readPodcast(episode.podcastId, completion: nil)
 
         self.insertCurrentEpisode()
         setPlaybackTo(Float(episode.mark - 1))
