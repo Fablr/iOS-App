@@ -140,11 +140,15 @@ class PodcastService {
         .request(FablerClient.Router.SubscribeToPodcast(podcast: podcast.podcastId, subscribe: subscribe))
         .validate(statusCode: 200..<202)
         .responseJSON { response in
+            let responseRealm = try! Realm()
             switch response.result {
             case .Success:
                 dispatch_async(queue, {completion(result: true)})
             case .Failure(let error):
                 print(error)
+                try! responseRealm.write {
+                    podcast.subscribed = !subscribe
+                }
                 dispatch_async(queue, {completion(result: false)})
             }
         }

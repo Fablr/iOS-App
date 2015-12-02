@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class DiscoveryViewController: UICollectionViewController {
 
@@ -86,7 +87,10 @@ class DiscoveryViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
 
         if let cell = cell as? ShowCell {
-            cell.titleLabel?.text = podcasts?[indexPath.row].title
+            if let path = podcasts?[indexPath.row].image, let url = NSURL(string: path) {
+                let placeholder = UIImage(named: "logo-launch")
+                cell.tileImage?.af_setImageWithURL(url, placeholderImage: placeholder)
+            }
         }
 
         return cell

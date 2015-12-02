@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class CollectionTableViewController: UITableViewController {
 
@@ -85,8 +86,12 @@ class CollectionTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
 
         if let cell = cell as? ShowTableViewCell, let podcast = podcasts?[indexPath.row] {
-            cell.postTitleLabel?.text = podcast.title
-            cell.authorLabel?.text = podcast.author
+            cell.titleLabel?.text = podcast.title
+
+            if let url = NSURL(string: podcast.image) {
+                let placeholder = UIImage(named: "logo-launch")
+                cell.tileImage?.af_setImageWithURL(url, placeholderImage: placeholder)
+            }
         }
 
         return cell

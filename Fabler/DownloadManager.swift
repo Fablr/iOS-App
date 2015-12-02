@@ -192,9 +192,9 @@ public class DownloadManager {
 
             if let sessionId = session.configuration.identifier {
                 if let persistedTask = realm.objects(PersistedTask).filter("sessionIdentifier == %@ AND taskIdentifier == %d", sessionId, task.taskIdentifier).first {
-                    if let object = realm.dynamicObjectForPrimaryKey(persistedTask.objectType, key: persistedTask.objectKey) {
+                    if let object = realm.dynamicObjectForPrimaryKey(persistedTask.objectType, key: persistedTask.objectKey), let urlString = object.valueForKey("localPath") as? String {
                         do {
-                            let localURL = NSURL(fileURLWithPath: object.valueForKey("localPath") as! String)
+                            let localURL = NSURL(fileURLWithPath: urlString)
                             try NSFileManager.defaultManager().moveItemAtURL(url, toURL: localURL)
                         } catch {
                             try realm.write {

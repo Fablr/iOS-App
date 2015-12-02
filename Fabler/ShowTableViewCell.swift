@@ -12,10 +12,8 @@ class ShowTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var postImageView: UIImageView?
-    @IBOutlet weak var authorImageView: UIImageView?
-    @IBOutlet weak var postTitleLabel: UILabel?
-    @IBOutlet weak var authorLabel: UILabel?
+    @IBOutlet weak var tileImage: UIImageView?
+    @IBOutlet weak var titleLabel: UILabel?
 
     // MARK: - UITableViewCell functions
 

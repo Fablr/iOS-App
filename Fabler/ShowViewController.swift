@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class ShowViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -36,9 +37,7 @@ class ShowViewController: UIViewController, UITableViewDelegate, UITableViewData
 
             service.subscribeToPodcast(podcast, subscribe: subscribed, completion: { [weak self] (result) in
                 if let controller = self {
-                    if result {
-                        controller.podcast?.subscribed = subscribed
-                    } else {
+                    if !result {
                         controller.subscribeButton?.setTitle(!subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
                     }
                 }
@@ -70,6 +69,11 @@ class ShowViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = true
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+
+        if let path = podcast?.image, let url = NSURL(string: path) {
+            let placeholder = UIImage(named: "logo-launch")
+            self.imageView?.af_setImageWithURL(url, placeholderImage: placeholder)
+        }
 
         let service = EpisodeService()
         self.episodes = service.getEpisodesForPodcast(podcast!.podcastId, completion: { [weak self] (episodes) in
