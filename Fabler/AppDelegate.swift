@@ -6,9 +6,15 @@
 //  Copyright © 2015 Fabler. All rights reserved.
 //
 
+// swiftlint:disable variable_name
+
+let Log = XCGLogger.defaultInstance()
+
+// swiftlint:enable variable_name
+
 import UIKit
-import CoreData
 import FBSDKCoreKit
+import XCGLogger
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -10,6 +10,7 @@ target 'Fabler' do
   pod 'SwiftyJSON', '~>2.3.1'
   pod 'RealmSwift', '~>0.96.2'
   pod 'AlamofireImage', '~>2.1.1'
+  pod 'XCGLogger', '~>3.1.1'
 end
 
 target 'FablerTests' do
