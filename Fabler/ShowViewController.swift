@@ -19,12 +19,30 @@ class ShowViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var settingsButton: UIButton?
     @IBOutlet weak var imageView: UIImageView?
 
-    // MARK: - ShowTableViewController members
+    // MARK: - ShowViewController members
 
     var podcast: Podcast?
     var episodes: [Episode]?
 
-    var header: UIView?
+    var refreshControl: UIRefreshControl?
+
+    // MARK: - ShowViewController functions
+
+    func refreshData(sender: AnyObject) {
+        let service = EpisodeService()
+        self.episodes = service.getEpisodesForPodcast(podcast!.podcastId, completion: { [weak self] (episodes) in
+            if let controller = self {
+                controller.episodes = episodes
+                controller.showTableView?.reloadData()
+
+                if let refresher = controller.refreshControl {
+                    if refresher.refreshing {
+                        refresher.endRefreshing()
+                    }
+                }
+            }
+        })
+    }
 
     // MARK: - IBActions
 
@@ -58,6 +76,7 @@ class ShowViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
 
         super.viewDidLoad()
+
         self.showLabel?.text = podcast?.title
 
         self.showTableView?.delegate = self
@@ -75,19 +94,20 @@ class ShowViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.imageView?.af_setImageWithURL(url, placeholderImage: placeholder)
         }
 
-        let service = EpisodeService()
-        self.episodes = service.getEpisodesForPodcast(podcast!.podcastId, completion: { [weak self] (episodes) in
-            if let controller = self {
-                controller.episodes = episodes
-                controller.showTableView?.reloadData()
-            }
-        })
-
         if !(podcast!.subscribed) {
             self.settingsButton?.hidden = true
             if let button = self.settingsButton {
                 button.removeConstraints(button.constraints)
             }
+        }
+
+        self.refreshControl = UIRefreshControl()
+        if let refresher = self.refreshControl {
+            refresher.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+            refresher.addTarget(self, action: "refreshData:", forControlEvents: UIControlEvents.ValueChanged)
+            refresher.backgroundColor = UIColor.orangeColor()
+            refresher.tintColor = UIColor.whiteColor()
+            self.showTableView?.addSubview(refresher)
         }
 
         self.subscribeButton?.setTitle(self.podcast!.subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
@@ -100,6 +120,9 @@ class ShowViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = true
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+
+        self.refreshData(self)
+        self.refreshControl?.beginRefreshing()
     }
 
     override func didReceiveMemoryWarning() {
@@ -140,7 +163,27 @@ class ShowViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - UITableViewDataSource functions
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        var count: Int = 0
+
+        if let episodes = self.episodes {
+            if episodes.count > 0 {
+                count = 1
+                self.showTableView?.backgroundView = nil
+            }
+        }
+
+        if count == 0 {
+            let frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
+            let label = UILabel(frame: frame)
+
+            label.text = "No episodes for this podcast."
+            label.textAlignment = NSTextAlignment.Center
+
+            self.showTableView?.backgroundView = label
+            self.showTableView?.separatorStyle = UITableViewCellSeparatorStyle.None
+        }
+
+        return count
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

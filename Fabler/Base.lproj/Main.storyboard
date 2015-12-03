@@ -79,7 +79,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="115" id="m7N-Q8-5h6" customClass="ShowTableViewCell" customModule="Fabler" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="86" width="600" height="115"/>
+                                <rect key="frame" x="0.0" y="66" width="600" height="115"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m7N-Q8-5h6" id="uxv-3b-FYp">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="115"/>
@@ -134,6 +134,7 @@
                     <connections>
                         <outlet property="menuButton" destination="bvR-yD-ToH" id="Rui-eS-C5i"/>
                         <segue destination="jst-pM-nUU" kind="show" identifier="displayShowSegue" id="kHA-Fl-Fsz"/>
+                        <segue destination="sE8-Cy-yWP" kind="show" identifier="displayDiscoverySegue" id="Y9H-zW-Zfi"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wHq-4Y-pqk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -604,7 +605,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discovery" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="it0-69-JpN">
                                                     <rect key="frame" x="23" y="8" width="554" height="33"/>
                                                     <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="27"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -632,7 +633,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Shows" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gh3-5S-TMf">
                                                     <rect key="frame" x="23" y="8" width="554" height="33"/>
                                                     <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="27"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -879,7 +880,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="You" id="K8K-cf-Lb4">
-                        <barButtonItem key="leftBarButtonItem" image="menu" id="OAz-pa-Onn"/>
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="OAz-pa-Onn">
+                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="firstNameLabel" destination="WUo-Ej-fQq" id="f19-z3-UFb"/>
@@ -894,10 +897,10 @@
             </objects>
             <point key="canvasLocation" x="-588" y="930"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Fabler Navigation Controller-->
         <scene sceneID="1l2-ZH-yYZ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Mp-X0-yx1" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Mp-X0-yx1" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="J1E-Rk-Zcb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -920,7 +923,8 @@
         <image name="menu" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tWZ-CD-OTO"/>
+        <segue reference="foL-zu-uHU"/>
         <segue reference="kHA-Fl-Fsz"/>
+        <segue reference="mUc-WM-FVw"/>
     </inferredMetricsTieBreakers>
 </document>

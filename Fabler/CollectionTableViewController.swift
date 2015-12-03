@@ -19,6 +19,28 @@ class CollectionTableViewController: UITableViewController {
 
     var podcasts: [Podcast]?
 
+    // MARK: - CollectionTableViewController functions
+
+    func refreshData(sender: AnyObject) {
+        let service = PodcastService()
+        self.podcasts = service.readSubscribedPodcasts { [weak self] (podcasts) in
+            if let controller = self {
+                controller.podcasts = podcasts
+                controller.tableView.reloadData()
+
+                if let refresher = controller.refreshControl {
+                    if refresher.refreshing {
+                        refresher.endRefreshing()
+                    }
+                }
+            }
+        }
+    }
+
+    func discoverButtonPressed(sender: AnyObject) {
+        performSegueWithIdentifier("displayDiscoverySegue", sender: self)
+    }
+
     // MARK: - UIViewController functions
 
     override func viewDidLoad() {
@@ -30,19 +52,26 @@ class CollectionTableViewController: UITableViewController {
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
 
-        let service = PodcastService()
-        self.podcasts = service.readSubscribedPodcasts { podcasts in
-            self.podcasts = podcasts
-            self.tableView.reloadData()
+        self.refreshControl = UIRefreshControl()
+        if let refresher = self.refreshControl {
+            refresher.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+            refresher.addTarget(self, action: "refreshData:", forControlEvents: UIControlEvents.ValueChanged)
+            refresher.backgroundColor = UIColor.orangeColor()
+            refresher.tintColor = UIColor.whiteColor()
+            self.tableView.addSubview(refresher)
         }
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.tintColor = UIColor.orangeColor()
+
+        self.refreshData(self)
+        self.refreshControl?.beginRefreshing()
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,7 +100,29 @@ class CollectionTableViewController: UITableViewController {
     // MARK: - UITableViewDataSource functions
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        var count: Int = 0
+
+        if let podcasts = self.podcasts {
+            if podcasts.count > 0 {
+                count = 1
+                self.tableView.backgroundView = nil
+            }
+        }
+
+        if count == 0 {
+            let frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
+            let button = UIButton(type: UIButtonType.System) as UIButton
+
+            button.tintColor = UIColor.orangeColor()
+            button.setTitle("Click here to discover podcasts.", forState: .Normal)
+            button.frame = frame
+            button.addTarget(self, action: "discoverButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
+
+            self.tableView.backgroundView = button
+            self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        }
+
+        return count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

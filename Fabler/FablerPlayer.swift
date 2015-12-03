@@ -125,7 +125,7 @@ class FablerPlayer: NSObject {
 
     func pausePlayback() {
         guard self.playing else {
-            Log.warning("Episode is already playing.")
+            Log.warning("Episode is already paused.")
             return
         }
 
@@ -143,7 +143,7 @@ class FablerPlayer: NSObject {
 
     func playPlayback() {
         guard !self.playing else {
-            Log.warning("Episode is already paused.")
+            Log.warning("Episode is already playing.")
             return
         }
 
@@ -165,7 +165,7 @@ class FablerPlayer: NSObject {
         }
 
         audioPlayer.seekToTime(CMTime(seconds: Double(seconds), preferredTimescale: 10))
-        audioPlayer.play()
+        self.playPlayback()
     }
 
     func getCurrentDuration() -> Float {
