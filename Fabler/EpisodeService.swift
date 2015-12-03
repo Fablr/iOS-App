@@ -20,7 +20,6 @@ class EpisodeService {
     // MARK: - EpisodeService API functions
 
     func getEpisodesForPodcast(podcastId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Episode]) -> Void)?) -> [Episode] {
-
         if let completion = completion {
             let request = Alamofire
             .request(FablerClient.Router.ReadEpisodesForPodcast(podcast: podcastId))
@@ -30,30 +29,42 @@ class EpisodeService {
                 case .Success(let json):
                     self.serializeEpisodeCollection(json)
                 case .Failure(let error):
-                    print(error)
+                    Log.error("Episodes request failed with \(error).")
                 }
 
                 dispatch_async(queue, {completion(result: self.getEpisodesForPodcastFromRealm(podcastId))})
             }
 
-            debugPrint(request)
+            Log.debug("Read episodes request: \(request)")
         }
 
         return self.getEpisodesForPodcastFromRealm(podcastId)
     }
 
     private func getEpisodesForPodcastFromRealm(podcastId: Int) -> [Episode] {
-        let realm = try! Realm()
+        var episodes: [Episode] = []
 
-        return Array(realm.objects(Episode).filter("podcastId == %d", podcastId))
+        do {
+            let realm = try Realm()
+
+            episodes = Array(realm.objects(Episode).filter("podcastId == %d", podcastId))
+        } catch {
+            Log.severe("Realm read failed.")
+        }
+
+        return episodes
     }
 
     func setMarkForEpisode(episode: Episode, mark: NSTimeInterval, completed: Bool) {
-        let realm = try! Realm()
+        do {
+            let realm = try Realm()
 
-        try! realm.write {
-            episode.completed = completed
-            episode.mark = mark
+            try realm.write {
+                episode.completed = completed
+                episode.mark = mark
+            }
+        } catch {
+            Log.severe("Realm write failed.")
         }
 
         let request = Alamofire
@@ -64,18 +75,17 @@ class EpisodeService {
             case .Success:
                 break
             case .Failure(let error):
-                print(error)
+                Log.error("Episode mark request failed with \(error).")
             }
         }
 
-        debugPrint(request)
+        Log.debug("Episode mark request: \(request)")
     }
 
     // MARK: - EpisodeService serialize functions
 
     private func serializeEpisodeObject(data: JSON) -> Episode? {
         let episode = Episode()
-        let realm = try! Realm()
 
         if let id = data["id"].int {
             episode.episodeId = id
@@ -121,8 +131,14 @@ class EpisodeService {
             episode.completed = completed
         }
 
-        try! realm.write {
-            realm.add(episode, update: true)
+        do {
+            let realm = try Realm()
+
+            try realm.write {
+                realm.add(episode, update: true)
+            }
+        } catch {
+            Log.severe("Realm write failed.")
         }
 
         return episode

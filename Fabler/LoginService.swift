@@ -27,6 +27,8 @@ class LoginService {
         let mainQueue = NSOperationQueue.mainQueue()
 
         notificationCenter.addObserverForName(FBSDKAccessTokenDidChangeNotification, object: nil, queue: mainQueue) { _ in
+            Log.info("Facebook token updated.")
+
             if let facebookToken = FBSDKAccessToken.currentAccessToken() {
                 let request = Alamofire
                 .request(FablerClient.Router.FacebookLogin(token: facebookToken.tokenString))
@@ -40,11 +42,13 @@ class LoginService {
                             self.getCurrentUser()
                         }
                     case .Failure(let error):
-                        print(error)
+                        Log.error("Login error occured: \(error).")
                     }
                 }
 
-                debugPrint(request)
+                Log.debug("Login request: \(request)")
+            } else {
+                Log.warning("No current Facebook token.")
             }
         }
     }
@@ -61,24 +65,17 @@ class LoginService {
                 self.serializeUserObject(json)
                 NSNotificationCenter.defaultCenter().postNotificationName(CurrentUserDidChangeNotification, object: self)
             case .Failure(let error):
-                print(error)
+                Log.error("User request error occured: \(error).")
             }
         }
 
-        debugPrint(request)
-    }
-
-    // MARK: - TokenListenerDelegate functions
-
-    func tokenDidChange(token: String) {
-
+        Log.debug("Current user request: \(request)")
     }
 
     // MARK: - UserService serialize functions
 
     private func serializeUserObject(data: JSON) -> User? {
         let user = User()
-        let realm = try! Realm()
 
         if let id = data["id"].int {
             user.userId = id
@@ -104,8 +101,14 @@ class LoginService {
             user.currentUser = currentUser
         }
 
-        try! realm.write {
-            realm.add(user, update: true)
+        do {
+            let realm = try Realm()
+
+            try realm.write {
+                realm.add(user, update: true)
+            }
+        } catch {
+            Log.severe("Realm write failed.")
         }
 
         return user

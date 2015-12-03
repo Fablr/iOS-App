@@ -169,6 +169,7 @@ extension String {
                 result = Double((hours * 60 * 60) + (minutes * 60) + seconds)
             }
         default:
+            Log.warning("String \(self) was unable to be parsed into NSTimeInterval.")
             break
         }
 

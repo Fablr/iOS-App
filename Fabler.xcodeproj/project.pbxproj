@@ -615,6 +615,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Fabler/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Fabler.Fabler;
 				PRODUCT_NAME = Fabler;
 				PROVISIONING_PROFILE = "";

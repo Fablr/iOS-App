@@ -75,6 +75,8 @@ class FablerPlayer: NSObject {
 
     func startPlayback(episode: Episode) {
         guard self.episode != episode else {
+            Log.info("Starting playback for existing episode.")
+
             self.playPlayback()
             return
         }
@@ -116,11 +118,14 @@ class FablerPlayer: NSObject {
             }
 
             audioPlayer.insertItem(item, afterItem: nil)
+        } else {
+            Log.warning("No episode currently set.")
         }
     }
 
     func pausePlayback() {
         guard self.playing else {
+            Log.warning("Episode is already playing.")
             return
         }
 
@@ -138,6 +143,7 @@ class FablerPlayer: NSObject {
 
     func playPlayback() {
         guard !self.playing else {
+            Log.warning("Episode is already paused.")
             return
         }
 
@@ -152,6 +158,8 @@ class FablerPlayer: NSObject {
     }
 
     func setPlaybackTo(seconds: Float) {
+        Log.info("Setting playback to \(seconds) seconds.")
+
         if audioPlayer.currentItem == nil {
             self.insertCurrentEpisode()
         }
@@ -181,6 +189,7 @@ class FablerPlayer: NSObject {
         let mainQueue = NSOperationQueue.mainQueue()
 
         notificationCenter.addObserverForName(PlayerStartPlayback, object: nil, queue: mainQueue) { _ in
+            Log.info("Notifying that playback has started.")
             completion()
         }
     }
