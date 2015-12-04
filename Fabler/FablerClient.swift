@@ -21,14 +21,16 @@ struct FablerClient {
         static let baseURLString = "http://api.fablersite-dev.elasticbeanstalk.com"
         static var token: String?
 
-        case FacebookLogin(token:String)
+        case FacebookLogin(token: String)
         case ReadPodcasts()
-        case ReadPodcast(podcast:Int)
+        case ReadPodcast(podcast: Int)
         case ReadSubscribedPodcasts()
-        case ReadEpisodesForPodcast(podcast:Int)
-        case SubscribeToPodcast(podcast:Int, subscribe:Bool)
+        case ReadEpisodesForPodcast(podcast: Int)
+        case SubscribeToPodcast(podcast: Int, subscribe: Bool)
         case ReadCurrentUser()
-        case UpdateEpisodeMark(episode:Int, mark:NSTimeInterval, completed:Bool)
+        case UpdateEpisodeMark(episode: Int, mark: NSTimeInterval, completed: Bool)
+        case ReadCommentsForEpisode(episode: Int)
+        case AddCommentForEpisode(episode: Int, comment: String, parent: Int?)
 
         var method: Alamofire.Method {
             switch self {
@@ -47,6 +49,10 @@ struct FablerClient {
             case .ReadCurrentUser:
                 return .GET
             case .UpdateEpisodeMark:
+                return .POST
+            case .ReadCommentsForEpisode:
+                return .GET
+            case .AddCommentForEpisode:
                 return .POST
             }
         }
@@ -69,6 +75,10 @@ struct FablerClient {
                 return "/users/current/"
             case .UpdateEpisodeMark:
                 return "/episodereceipt/"
+            case .ReadCommentsForEpisode(let episode):
+                return "/episode/\(episode)/comments/"
+            case .AddCommentForEpisode(let episode, _, _):
+                return "/episode/\(episode)/comments/"
             }
         }
 
@@ -83,17 +93,23 @@ struct FablerClient {
 
             switch self {
             case .FacebookLogin(let token):
-                let parameters = ["access_token": token]
+                let parameters: [String: AnyObject] = ["access_token": token]
                 return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
             case .ReadEpisodesForPodcast(let podcast):
-                let parameters = ["podcast": podcast]
+                let parameters: [String: AnyObject] = ["podcast": podcast]
                 return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
             case .SubscribeToPodcast(let podcast, let subscribe):
-                let parameters = ["podcast": podcast, "active": subscribe]
-                return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters as? [String : AnyObject]).0
+                let parameters: [String: AnyObject] = ["podcast": podcast, "active": subscribe]
+                return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
             case .UpdateEpisodeMark(let episode, let mark, let completed):
-                let parameters = ["episode": episode, "mark": mark.toString(), "completed": completed]
-                return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters as? [String : AnyObject]).0
+                let parameters: [String: AnyObject] = ["episode": episode, "mark": mark.toString(), "completed": completed]
+                return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+            case .AddCommentForEpisode(_, let comment, let parent):
+                var parameters: [String: AnyObject] = ["comment": comment]
+                if parent != nil {
+                    parameters["parent"] = parent!
+                }
+                return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
             default:
                 return mutableURLRequest
             }

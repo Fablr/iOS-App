@@ -131,7 +131,7 @@ class ShowViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "displayEpisodeSegue" {
-            if let controller = segue.destinationViewController as? EpisodeViewController, let episode = sender as? Episode {
+            if let controller = segue.destinationViewController as? EpisodeTableViewController, let episode = sender as? Episode {
                 controller.episode = episode
             }
         } else if segue.identifier == "displaySettingsSegue" {

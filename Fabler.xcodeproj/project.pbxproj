@@ -11,7 +11,7 @@
 		450B76761BE9CC270033C0B6 /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76751BE9CC270033C0B6 /* Episode.swift */; };
 		450B76781BE9DAA90033C0B6 /* EpisodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76771BE9DAA90033C0B6 /* EpisodeService.swift */; };
 		450B767A1BECA7610033C0B6 /* EpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76791BECA7610033C0B6 /* EpisodeTableViewCell.swift */; };
-		450B767C1BECABB30033C0B6 /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B767B1BECABB30033C0B6 /* EpisodeViewController.swift */; };
+		450B767C1BECABB30033C0B6 /* EpisodeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B767B1BECABB30033C0B6 /* EpisodeTableViewController.swift */; };
 		450B767E1BEF49120033C0B6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B767D1BEF49120033C0B6 /* User.swift */; };
 		450B76801BEF567D0033C0B6 /* BackpaneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B767F1BEF567D0033C0B6 /* BackpaneViewController.swift */; };
 		4538B57D1BF55C3800039DF1 /* SmallPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */; };
@@ -19,6 +19,10 @@
 		45505F711BFB1EF600481291 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45505F701BFB1EF600481291 /* DownloadManager.swift */; };
 		456BB5C91BF5B4A600D59C47 /* FablerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */; };
 		456BB5CB1BF5CD3E00D59C47 /* FablerPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */; };
+		4578890A1C10C108007D3600 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457889091C10C108007D3600 /* Comment.swift */; };
+		4578890C1C10FF09007D3600 /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578890B1C10FF09007D3600 /* CommentService.swift */; };
+		4578890E1C1153E4007D3600 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578890D1C1153E4007D3600 /* CommentTableViewCell.swift */; };
+		457889101C115464007D3600 /* CommentHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578890F1C115464007D3600 /* CommentHeaderTableViewCell.swift */; };
 		457E51E31BE864170079845E /* ShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E51E21BE864170079845E /* ShowCell.swift */; };
 		4588CF2C1BDB46E40080E13D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4588CF2B1BDB46E40080E13D /* LoginViewController.swift */; };
 		45B51D0B1BE495E700F289F7 /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B51D0A1BE495E700F289F7 /* Podcast.swift */; };
@@ -59,7 +63,7 @@
 		450B76751BE9CC270033C0B6 /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		450B76771BE9DAA90033C0B6 /* EpisodeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeService.swift; sourceTree = "<group>"; };
 		450B76791BECA7610033C0B6 /* EpisodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeTableViewCell.swift; sourceTree = "<group>"; };
-		450B767B1BECABB30033C0B6 /* EpisodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
+		450B767B1BECABB30033C0B6 /* EpisodeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeTableViewController.swift; sourceTree = "<group>"; };
 		450B767D1BEF49120033C0B6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		450B767F1BEF567D0033C0B6 /* BackpaneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackpaneViewController.swift; sourceTree = "<group>"; };
 		4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPlayer.xib; sourceTree = "<group>"; };
@@ -67,6 +71,10 @@
 		45505F701BFB1EF600481291 /* DownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerNavigationController.swift; sourceTree = "<group>"; };
 		456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerPlayer.swift; sourceTree = "<group>"; };
+		457889091C10C108007D3600 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		4578890B1C10FF09007D3600 /* CommentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
+		4578890D1C1153E4007D3600 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		4578890F1C115464007D3600 /* CommentHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		457E51E21BE864170079845E /* ShowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCell.swift; sourceTree = "<group>"; };
 		4588CF2B1BDB46E40080E13D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		45B51D0A1BE495E700F289F7 /* Podcast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
@@ -140,6 +148,7 @@
 				45B51D0A1BE495E700F289F7 /* Podcast.swift */,
 				450B76751BE9CC270033C0B6 /* Episode.swift */,
 				450B767D1BEF49120033C0B6 /* User.swift */,
+				457889091C10C108007D3600 /* Comment.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -150,6 +159,7 @@
 				45BF1C651BE31EF600665402 /* LoginService.swift */,
 				45BF1C671BE4921900665402 /* PodcastService.swift */,
 				450B76771BE9DAA90033C0B6 /* EpisodeService.swift */,
+				4578890B1C10FF09007D3600 /* CommentService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -166,11 +176,13 @@
 				F491E7541A7F7E010026528E /* DiscoveryViewController.swift */,
 				450B76731BE983670033C0B6 /* ShowViewController.swift */,
 				45E2E1371BFEBAEF00219098 /* ShowSettingsTableViewController.swift */,
-				450B767B1BECABB30033C0B6 /* EpisodeViewController.swift */,
 				F4702A171A7F351C00E30A3C /* MenuTableViewController.swift */,
+				450B767B1BECABB30033C0B6 /* EpisodeTableViewController.swift */,
 				F491E7491A7F4B300026528E /* CollectionTableViewController.swift */,
 				450B76791BECA7610033C0B6 /* EpisodeTableViewCell.swift */,
 				F491E74B1A7F4C630026528E /* ShowTableViewCell.swift */,
+				4578890D1C1153E4007D3600 /* CommentTableViewCell.swift */,
+				4578890F1C115464007D3600 /* CommentHeaderTableViewCell.swift */,
 				457E51E21BE864170079845E /* ShowCell.swift */,
 			);
 			name = Controllers;
@@ -456,7 +468,7 @@
 			files = (
 				4588CF2C1BDB46E40080E13D /* LoginViewController.swift in Sources */,
 				450B76761BE9CC270033C0B6 /* Episode.swift in Sources */,
-				450B767C1BECABB30033C0B6 /* EpisodeViewController.swift in Sources */,
+				450B767C1BECABB30033C0B6 /* EpisodeTableViewController.swift in Sources */,
 				45BF1C681BE4921900665402 /* PodcastService.swift in Sources */,
 				45E5367E1BE1F980009E3F10 /* FablerClient.swift in Sources */,
 				4538B5801BF55E1800039DF1 /* SmallPlayerViewController.swift in Sources */,
@@ -466,6 +478,7 @@
 				450B767E1BEF49120033C0B6 /* User.swift in Sources */,
 				F4702A181A7F351C00E30A3C /* MenuTableViewController.swift in Sources */,
 				45B51D0B1BE495E700F289F7 /* Podcast.swift in Sources */,
+				457889101C115464007D3600 /* CommentHeaderTableViewCell.swift in Sources */,
 				456BB5C91BF5B4A600D59C47 /* FablerNavigationController.swift in Sources */,
 				456BB5CB1BF5CD3E00D59C47 /* FablerPlayer.swift in Sources */,
 				45FBA25A1BF5E7FE00DD8D14 /* LargePlayerViewController.swift in Sources */,
@@ -474,12 +487,15 @@
 				F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */,
 				450B76801BEF567D0033C0B6 /* BackpaneViewController.swift in Sources */,
 				45BF1C661BE31EF600665402 /* LoginService.swift in Sources */,
+				4578890E1C1153E4007D3600 /* CommentTableViewCell.swift in Sources */,
 				F491E74C1A7F4C630026528E /* ShowTableViewCell.swift in Sources */,
 				457E51E31BE864170079845E /* ShowCell.swift in Sources */,
 				F491E74A1A7F4B300026528E /* CollectionTableViewController.swift in Sources */,
 				45E536751BDF025F009E3F10 /* YouViewController.swift in Sources */,
 				450B76781BE9DAA90033C0B6 /* EpisodeService.swift in Sources */,
+				4578890A1C10C108007D3600 /* Comment.swift in Sources */,
 				F491E7551A7F7E010026528E /* DiscoveryViewController.swift in Sources */,
+				4578890C1C10FF09007D3600 /* CommentService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
