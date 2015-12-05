@@ -19,6 +19,8 @@ class FablerNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.setToolbarHidden(true, animated: true)
+
         guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
             return
         }
@@ -26,14 +28,14 @@ class FablerNavigationController: UINavigationController {
         if let player = delegate.player {
             if player.started {
                 self.playerAdded = true
-                self.view.addSubview(player.smallPlayer.view)
+                self.setToolbarHidden(false, animated: true)
             }
 
             player.registerPlaybackStarted { [weak self] in
                 if let controller = self {
                     if !controller.playerAdded {
                         controller.playerAdded = true
-                        controller.view.addSubview(player.smallPlayer.view)
+                        controller.setToolbarHidden(false, animated: true)
                     }
                 }
             }

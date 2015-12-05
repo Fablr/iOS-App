@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Keyboardy
 
-class EpisodeTableViewController: UITableViewController {
+class EpisodeTableViewController: UITableViewController, KeyboardStateDelegate, UITextFieldDelegate {
 
     // MARK: - IBOutlets
 
@@ -19,7 +20,10 @@ class EpisodeTableViewController: UITableViewController {
     // MARK: - EpisodeTableViewController members
 
     var episode: Episode?
-    var comments: [Comment]?
+    var comments: [Comment] = []
+
+    var showTextField: Bool = false
+    var currentTextField: UITextField?
 
     // MARK: - EpisodeTableViewController functions
 
@@ -42,10 +46,10 @@ class EpisodeTableViewController: UITableViewController {
         }
     }
 
-    func rootReplyButtonPressed(sender: AnyObject) {
+    func addMessage(message: String, parent: Int?) {
         if let episode = self.episode {
             let service = CommentService()
-            service.addCommentForEpisode(episode.episodeId, comment: "This is a test.", parentCommentId: nil, completion: { [weak self] (result) in
+            service.addCommentForEpisode(episode.episodeId, comment: message, parentCommentId: parent, completion: { [weak self] (result) in
                 if let controller = self {
                     if result {
                         controller.refreshData(controller)
@@ -60,6 +64,37 @@ class EpisodeTableViewController: UITableViewController {
         }
     }
 
+    func rootReplyButtonPressed(sender: AnyObject) {
+        self.displayKeyboard(self)
+    }
+
+    func displayKeyboard(sender: AnyObject) {
+        guard self.showTextField == false else {
+            return
+        }
+
+        self.showTextField = true
+        self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
+
+        self.currentTextField?.text = ""
+        self.currentTextField?.becomeFirstResponder()
+
+        self.tableView.bounces = false
+    }
+
+    func dismissKeyboard(sender: AnyObject) {
+        if self.showTextField, let textField = self.currentTextField {
+            textField.resignFirstResponder()
+
+            textField.text = ""
+
+            self.showTextField = false
+            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
+
+            self.tableView.bounces = true
+        }
+    }
+
     // MARK: - UIViewController functions
 
     override func viewDidLoad() {
@@ -70,12 +105,17 @@ class EpisodeTableViewController: UITableViewController {
 
         super.viewDidLoad()
 
+        //
+        // Static labels setup
+        //
         self.navigationItem.title = episode!.title
-
         self.titleLabel?.text = episode!.title
         self.subtitleLabel?.text = episode!.subtitle
         self.descriptionLabel?.text = episode!.episodeDescription
 
+        //
+        // RefreshControl setup
+        //
         self.refreshControl = UIRefreshControl()
         if let refresher = self.refreshControl {
             refresher.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
@@ -84,18 +124,39 @@ class EpisodeTableViewController: UITableViewController {
             refresher.tintColor = UIColor.whiteColor()
             self.tableView.addSubview(refresher)
         }
+
+        //
+        // Dismiss Gesture Recognizer setup
+        //
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard:")
+        view.addGestureRecognizer(tap)
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
+        // Create global style class and move this in there
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.tintColor = UIColor.orangeColor()
 
+        //
+        // Refresh data
+        //
         self.refreshData(self)
         self.refreshControl?.beginRefreshing()
+
+        //
+        // Setup Keyboard
+        //
+        registerForKeyboardNotifications(self)
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        unregisterFromKeyboardNotifications()
     }
 
     override func didReceiveMemoryWarning() {
@@ -107,14 +168,15 @@ class EpisodeTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         var count: Int = 0
 
-        if let comments = self.comments {
-            if comments.count > 0 {
-                count = 1
-                self.tableView.backgroundView = nil
-                self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
-            }
+        if self.comments.count > 0 {
+            count = 1
+            self.tableView.backgroundView = nil
+            self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
         }
 
+        //
+        // Display empty view message
+        //
         if count == 0 {
             let frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
             let label = UILabel(frame: frame)
@@ -130,11 +192,7 @@ class EpisodeTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard self.comments != nil else {
-            return 0
-        }
-
-        return self.comments!.count
+        return self.comments.count
     }
 
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -146,26 +204,82 @@ class EpisodeTableViewController: UITableViewController {
         return UIView()
     }
 
+    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if self.showTextField, let cell = tableView.dequeueReusableCellWithIdentifier("TextFieldCell") as? TextFieldTableViewCell {
+            self.currentTextField = cell.textField
+            return cell.contentView
+        }
+
+        self.currentTextField = nil
+        return nil
+    }
+
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        let height: CGFloat
+
+        //
+        // Only show footers if keyboard is showing.
+        //
+        if self.showTextField {
+            height = 40.0
+        } else {
+            height = 0.0
+        }
+
+        return height
+    }
+
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("RowCell", forIndexPath: indexPath)
 
-        if let cell = cell as? CommentTableViewCell, let comment = comments?[indexPath.row] {
+        if let cell = cell as? CommentTableViewCell {
+            let comment = comments[indexPath.row]
+
+            let localTimeZone = NSTimeZone.localTimeZone()
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.timeZone = localTimeZone
+            dateFormatter.dateFormat = "dd/MM/yyyy 'at' HH:mm"
+            let date = dateFormatter.stringFromDate(comment.submitDate)
+
             cell.bodyLabel?.text = comment.comment
-            cell.subLabel?.text = "by \(comment.userName) on \(comment.submitDate)"
+            cell.subLabel?.text = "by \(comment.userName) on \(date)"
 
-            if comment.parentId != nil {
-                let constraints = cell.contentView.constraints
-
-                for constraint in constraints {
-                    if constraint.identifier == "CommentIndent" {
-                        constraint.constant += 40
-                    }
-                }
-
-                cell.backgroundColor = UIColor(red: 250.0/255.0, green: 250.0/255.0, blue: 250.0/255.0, alpha: 1.0)
-            }
+            comment.parentId == nil ? cell.styleCellAsParent() : cell.styleCellAsChild()
         }
 
         return cell
+    }
+
+    // MARK: - KeyboardStateDelegate functions
+
+    func keyboardWillTransition(state: KeyboardState) {
+    }
+
+    func keyboardTransitionAnimation(state: KeyboardState) {
+        //
+        // Minimize the toolbar for soft-keyboard
+        //
+        switch state {
+        case .ActiveWithHeight(_):
+            self.navigationController?.setToolbarHidden(true, animated: false)
+        case .Hidden:
+            self.navigationController?.setToolbarHidden(false, animated: false)
+            break
+        }
+    }
+
+    func keyboardDidTransition(state: KeyboardState) {
+    }
+
+    // MARK: - UITextFieldDelegate functions
+
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if let message = textField.text {
+            self.addMessage(message, parent: nil)
+        }
+
+        self.dismissKeyboard(self)
+
+        return true
     }
 }

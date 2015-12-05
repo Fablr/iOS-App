@@ -446,7 +446,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fNN-SX-JYh">
-                                <rect key="frame" x="0.0" y="210" width="600" height="390"/>
+                                <rect key="frame" x="0.0" y="210" width="600" height="346"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -667,7 +667,7 @@
         <!--Fabler Navigation Controller-->
         <scene sceneID="a23-LC-1XJ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dXH-rC-dKS" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="dXH-rC-dKS" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WmJ-Ml-X7j">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -675,6 +675,11 @@
                         <animations/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="src-7n-Kz6" customClass="FablerToolBarController" customModule="Fabler" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </toolbar>
                     <connections>
                         <segue destination="RaP-X2-i0v" kind="relationship" relationship="rootViewController" id="bET-4Z-Oxi"/>
                     </connections>
@@ -809,7 +814,7 @@
                                             <rect key="frame" x="13" y="11" width="574" height="25"/>
                                             <animations/>
                                             <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <state key="normal" title="Reply"/>
+                                            <state key="normal" title="Comment"/>
                                         </button>
                                     </subviews>
                                     <animations/>
@@ -874,7 +879,40 @@
                                 <animations/>
                                 <connections>
                                     <outlet property="bodyLabel" destination="V9o-mJ-Y0f" id="qt1-2o-iWE"/>
+                                    <outlet property="commentIndent" destination="lUH-2U-kyE" id="uta-4n-cpF"/>
                                     <outlet property="subLabel" destination="zup-aD-vAR" id="BYp-zD-Kbs"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextFieldCell" rowHeight="55" id="5Fv-Mf-8np" customClass="TextFieldTableViewCell" customModule="Fabler" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="341" width="600" height="55"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5Fv-Mf-8np" id="1q4-9x-Vez">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="54"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="sBp-w6-rZc">
+                                            <rect key="frame" x="3" y="3" width="594" height="48"/>
+                                            <animations/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes" spellCheckingType="yes" returnKeyType="send"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="RcM-xg-fv6" id="IN7-j0-k4z"/>
+                                            </connections>
+                                        </textField>
+                                    </subviews>
+                                    <animations/>
+                                    <color key="backgroundColor" red="0.63529411764705879" green="0.65490196078431373" blue="0.68627450980392157" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstItem="sBp-w6-rZc" firstAttribute="leading" secondItem="1q4-9x-Vez" secondAttribute="leadingMargin" constant="-5" id="YkZ-D7-aJy"/>
+                                        <constraint firstItem="sBp-w6-rZc" firstAttribute="top" secondItem="1q4-9x-Vez" secondAttribute="topMargin" constant="-5" id="hG1-n9-nXE"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="sBp-w6-rZc" secondAttribute="bottom" constant="-5" id="rYg-Rt-5D2"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="sBp-w6-rZc" secondAttribute="trailing" constant="-5" id="w89-X2-3Rl"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <animations/>
+                                <connections>
+                                    <outlet property="textField" destination="sBp-w6-rZc" id="HHg-Ls-StZ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -896,7 +934,7 @@
         <!--Fabler Navigation Controller-->
         <scene sceneID="UtP-zp-P1I">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0J7-Hk-VFu" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="0J7-Hk-VFu" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="nxz-TN-o7k">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -904,6 +942,11 @@
                         <animations/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Tz2-dv-1yl" customClass="FablerToolBarController" customModule="Fabler" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </toolbar>
                     <connections>
                         <segue destination="sE8-Cy-yWP" kind="relationship" relationship="rootViewController" id="mUc-WM-FVw"/>
                     </connections>
@@ -925,7 +968,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zh3-ak-4sy" customClass="FBSDKLoginButton">
-                                <rect key="frame" x="45" y="464" width="510" height="111"/>
+                                <rect key="frame" x="45" y="420" width="510" height="111"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -987,7 +1030,7 @@
         <!--Fabler Navigation Controller-->
         <scene sceneID="1l2-ZH-yYZ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Mp-X0-yx1" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="4Mp-X0-yx1" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="J1E-Rk-Zcb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -995,6 +1038,11 @@
                         <animations/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="ZKC-nH-SCt" customClass="FablerToolBarController" customModule="Fabler" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </toolbar>
                     <connections>
                         <segue destination="TX9-Ex-k35" kind="relationship" relationship="rootViewController" id="ikw-nQ-ENp"/>
                     </connections>
