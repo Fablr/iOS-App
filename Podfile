@@ -11,7 +11,7 @@ target 'Fabler' do
   pod 'RealmSwift', '~>0.96.2'
   pod 'AlamofireImage', '~>2.1.1'
   pod 'XCGLogger', '~>3.1.1'
-  pod 'Keyboardy', '~>0.1.1'
+  pod 'SlackTextViewController', '~>1.7.2'
 end
 
 target 'FablerTests' do

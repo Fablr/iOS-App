@@ -12,7 +12,7 @@ class CommentTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var bodyLabel: UILabel?
+    @IBOutlet weak var commentLabel: UILabel?
     @IBOutlet weak var subLabel: UILabel?
     @IBOutlet weak var commentIndent: NSLayoutConstraint?
 
@@ -27,12 +27,12 @@ class CommentTableViewCell: UITableViewCell {
     }
 
     func styleCellAsParent() {
-        self.commentIndent?.constant = 5
+        self.commentIndent?.constant = 2
         self.backgroundColor = UIColor.whiteColor()
     }
 
     func styleCellAsChild() {
-        self.commentIndent?.constant = 45
+        self.commentIndent?.constant = 42
         self.backgroundColor = UIColor(red: 250.0/255.0, green: 250.0/255.0, blue: 250.0/255.0, alpha: 1.0)
     }
 }

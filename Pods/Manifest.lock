@@ -19,12 +19,12 @@ PODS:
     - FBSDKCoreKit/arc
   - FBSDKLoginKit (4.7.0.1):
     - FBSDKCoreKit
-  - Keyboardy (0.1.1)
   - Realm (0.96.2):
     - Realm/Headers (= 0.96.2)
   - Realm/Headers (0.96.2)
   - RealmSwift (0.96.2):
     - Realm (= 0.96.2)
+  - SlackTextViewController (1.7.2)
   - SwiftyJSON (2.3.1)
   - XCGLogger (3.1.1)
 
@@ -33,8 +33,8 @@ DEPENDENCIES:
   - AlamofireImage (~> 2.1.1)
   - FBSDKCoreKit (~> 4.7.0)
   - FBSDKLoginKit (~> 4.7.0.1)
-  - Keyboardy (~> 0.1.1)
   - RealmSwift (~> 0.96.2)
+  - SlackTextViewController (~> 1.7.2)
   - SwiftyJSON (~> 2.3.1)
   - XCGLogger (~> 3.1.1)
 
@@ -44,9 +44,9 @@ SPEC CHECKSUMS:
   Bolts: 0e9bce58b9b9f5e8a7a4d47b16d2fabec289072b
   FBSDKCoreKit: eb580bfc2040ad44f4c0b4f4d0befb1d35bce59c
   FBSDKLoginKit: 028c5a205990441123764609fe795e65027c447f
-  Keyboardy: 73ce93cedc45f60ef21a463bc713893772034ea3
   Realm: 3ce8448151c571e90b85002d984d7f93f54fc8a3
   RealmSwift: 485599fe54e35461c4a0daa7d01d8fbf11424873
+  SlackTextViewController: 1f4e8f68c156ef93de73fd422db2b8d5d5b0f4e7
   SwiftyJSON: 592b53bee5ef3dd9b3bebc6b9cb7ee35426ae8c3
   XCGLogger: e111a313f609432394c3ae378d99511634fd2e3c
 

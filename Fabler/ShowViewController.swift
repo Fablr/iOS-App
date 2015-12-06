@@ -194,7 +194,6 @@ class ShowViewController: UIViewController, UITableViewDelegate, UITableViewData
         return episodes!.count
     }
 
-
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
 
@@ -203,5 +202,17 @@ class ShowViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
 
         return cell
+    }
+
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let detailAction = UITableViewRowAction(style: .Normal, title: "Details" , handler: { [weak self] (action: UITableViewRowAction, indexPath: NSIndexPath) in
+            if let controller = self, let episode = controller.episodes?[indexPath.row] {
+                controller.performSegueWithIdentifier("displayEpisodeSegue", sender: episode)
+            }
+        })
+
+        detailAction.backgroundColor = UIColor.orangeColor()
+
+        return [detailAction]
     }
 }

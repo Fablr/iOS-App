@@ -12,7 +12,7 @@ class CommentHeaderTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var replyButton: UIButton?
+    @IBOutlet weak var commentButton: UIButton!
 
     // MARK: - UITableViewCell functions
 

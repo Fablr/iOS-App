@@ -96,7 +96,7 @@
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-            <point key="canvasLocation" x="780" y="211"/>
+            <point key="canvasLocation" x="765" y="159"/>
         </view>
     </objects>
     <resources>

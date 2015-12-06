@@ -14,6 +14,18 @@ class FablerNavigationController: UINavigationController {
 
     var playerAdded: Bool = false
 
+    // MARK: - FablerNavigationController functions
+
+    func displaySmallPlayer() {
+        if playerAdded {
+            self.setToolbarHidden(false, animated: true)
+        }
+    }
+
+    func dismissSmallPlayer() {
+        self.setToolbarHidden(true, animated: true)
+    }
+
     // MARK: - UIViewController functions
 
     override func viewDidLoad() {

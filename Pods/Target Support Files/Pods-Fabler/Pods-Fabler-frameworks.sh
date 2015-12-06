@@ -89,9 +89,9 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Fabler/Bolts.framework"
   install_framework "Pods-Fabler/FBSDKCoreKit.framework"
   install_framework "Pods-Fabler/FBSDKLoginKit.framework"
-  install_framework "Pods-Fabler/Keyboardy.framework"
   install_framework "Pods-Fabler/Realm.framework"
   install_framework "Pods-Fabler/RealmSwift.framework"
+  install_framework "Pods-Fabler/SlackTextViewController.framework"
   install_framework "Pods-Fabler/SwiftyJSON.framework"
   install_framework "Pods-Fabler/XCGLogger.framework"
 fi
@@ -101,9 +101,9 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Fabler/Bolts.framework"
   install_framework "Pods-Fabler/FBSDKCoreKit.framework"
   install_framework "Pods-Fabler/FBSDKLoginKit.framework"
-  install_framework "Pods-Fabler/Keyboardy.framework"
   install_framework "Pods-Fabler/Realm.framework"
   install_framework "Pods-Fabler/RealmSwift.framework"
+  install_framework "Pods-Fabler/SlackTextViewController.framework"
   install_framework "Pods-Fabler/SwiftyJSON.framework"
   install_framework "Pods-Fabler/XCGLogger.framework"
 fi
