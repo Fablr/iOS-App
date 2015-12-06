@@ -14,16 +14,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="126"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Okn-NU-qx9">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-30" translatesAutoresizingMaskIntoConstraints="NO" id="Okn-NU-qx9">
                         <rect key="frame" x="10" y="10" width="394" height="106"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4tg-A0-kGF">
-                                <rect key="frame" x="0.0" y="0.0" width="394" height="81"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="This is a comment." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1vQ-c0-Aoe">
+                                <rect key="frame" x="0.0" y="0.0" width="394" height="111"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
+                            </textView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V0G-Sa-vvq">
                                 <rect key="frame" x="0.0" y="81" width="394" height="25"/>
                                 <subviews>
@@ -55,7 +55,7 @@
             <animations/>
             <connections>
                 <outlet property="commentIndent" destination="5nq-yX-HQp" id="7CV-2j-LLL"/>
-                <outlet property="commentLabel" destination="4tg-A0-kGF" id="nSM-TY-uYf"/>
+                <outlet property="commentTextView" destination="1vQ-c0-Aoe" id="KgG-DB-bq2"/>
                 <outlet property="subLabel" destination="3J5-je-7Dr" id="JFw-rK-cCx"/>
             </connections>
             <point key="canvasLocation" x="791" y="526.5"/>

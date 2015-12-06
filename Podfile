@@ -11,7 +11,8 @@ target 'Fabler' do
   pod 'RealmSwift', '~>0.96.2'
   pod 'AlamofireImage', '~>2.1.1'
   pod 'XCGLogger', '~>3.1.1'
-  pod 'SlackTextViewController', '~>1.7.2'
+  pod 'SlackTextViewController', :git => 'https://github.com/slackhq/SlackTextViewController.git', :tag => 'v1.8'
+  pod 'MMMarkdown', '~>0.5.1'
 end
 
 target 'FablerTests' do

@@ -22,6 +22,7 @@
                     </button>
                 </subviews>
                 <animations/>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="kh3-It-InO" firstAttribute="top" secondItem="Sg5-6H-scH" secondAttribute="topMargin" constant="2" id="9Wp-yz-WYf"/>
                     <constraint firstItem="kh3-It-InO" firstAttribute="leading" secondItem="Sg5-6H-scH" secondAttribute="leadingMargin" constant="2" id="gIV-Yo-GEr"/>

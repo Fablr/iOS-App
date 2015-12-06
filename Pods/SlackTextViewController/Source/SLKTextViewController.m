@@ -56,9 +56,6 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 // The current keyboard status (hidden, showing, etc.)
 @property (nonatomic) SLKKeyboardStatus keyboardStatus;
 
-// YES if a new word has been typed recently
-@property (nonatomic) BOOL newWordInserted;
-
 // YES if the view controller did appear and everything is finished configurating. This allows blocking some layout animations among other things.
 @property (nonatomic, getter=isViewVisible) BOOL viewVisible;
 
@@ -164,6 +161,9 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     self.keyboardPanningEnabled = YES;
     self.shouldClearTextAtRightButtonPress = YES;
     self.shouldScrollToBottomAfterKeyboardShows = NO;
+    
+    self.automaticallyAdjustsScrollViewInsets = YES;
+    self.extendedLayoutIncludesOpaqueBars = YES;
 }
 
 
@@ -193,7 +193,7 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     // Invalidates this flag when the view appears
     self.textView.didNotResignFirstResponder = NO;
     
-    // Helps laying out subviews with recently added constraints.
+    // Forces laying out the recently added subviews and update their constraints
     [self.view layoutIfNeeded];
     
     [UIView performWithoutAnimation:^{
@@ -530,7 +530,6 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     _inverted = inverted;
     
     self.scrollViewProxy.transform = inverted ? CGAffineTransformMake(1, 0, 0, -1, 0, 0) : CGAffineTransformIdentity;
-    self.automaticallyAdjustsScrollViewInsets = inverted ? NO : YES;
 }
 
 - (BOOL)slk_updateKeyboardStatus:(SLKKeyboardStatus)status
@@ -574,13 +573,9 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 
 - (void)dismissKeyboard:(BOOL)animated
 {
-    if (![self.textView isFirstResponder]) {
-        
-        // Dismisses the keyboard from any first responder in the window.
-        if (self.keyboardHC.constant > 0) {
-            [self.view.window endEditing:NO];
-        }
-        return;
+    // Dismisses the keyboard from any first responder in the window.
+    if (![self.textView isFirstResponder] && self.keyboardHC.constant > 0) {
+        [self.view.window endEditing:NO];
     }
     
     if (!animated) {
@@ -794,14 +789,33 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 
 - (void)willRequestUndo
 {
+    NSString *title = NSLocalizedString(@"Undo Typing", nil);
+    NSString *acceptTitle = NSLocalizedString(@"Undo", nil);
+    NSString *cancelTitle = NSLocalizedString(@"Cancel", nil);
+    
+#ifdef __IPHONE_8_0
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:acceptTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        // Clears the text but doesn't clear the undo manager
+        if (self.shakeToClearEnabled) {
+            [self.textView slk_clearText:NO];
+        }
+    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:cancelTitle style:UIAlertActionStyleCancel handler:NULL]];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+#else
     UIAlertView *alert = [UIAlertView new];
-    [alert setTitle:NSLocalizedString(@"Undo Typing", nil)];
-    [alert addButtonWithTitle:NSLocalizedString(@"Undo", nil)];
-    [alert addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
+    [alert setTitle:title];
+    [alert addButtonWithTitle:acceptTitle];
+    [alert addButtonWithTitle:cancelTitle];
     [alert setCancelButtonIndex:1];
     [alert setTag:kSLKAlertViewClearTextTag];
     [alert setDelegate:self];
     [alert show];
+#endif
 }
 
 - (void)setTextInputbarHidden:(BOOL)hidden
@@ -1085,38 +1099,6 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     [[NSNotificationCenter defaultCenter] postNotificationName:name object:self.textView userInfo:userInfo];
 }
 
-- (BOOL)slk_scrollToTopIfNeeded
-{
-    if (!self.scrollViewProxy.scrollsToTop || self.keyboardStatus == SLKKeyboardStatusWillShow) {
-        return NO;
-    }
-    
-    if (self.isInverted) {
-        [self.scrollViewProxy slk_scrollToTopAnimated:YES];
-        return NO;
-    }
-    else {
-        return YES;
-    }
-}
-
-- (BOOL)slk_scrollToBottomIfNeeded
-{
-    // Scrolls to bottom only if the keyboard is about to show.
-    if (!self.shouldScrollToBottomAfterKeyboardShows || self.keyboardStatus != SLKKeyboardStatusWillShow) {
-        return NO;
-    }
-    
-    if (self.isInverted) {
-        [self.scrollViewProxy slk_scrollToTopAnimated:YES];
-    }
-    else {
-        [self.scrollViewProxy slk_scrollToBottomAnimated:YES];
-    }
-    
-    return YES;
-}
-
 - (void)slk_enableTypingSuggestionIfNeeded
 {
     if (![self.textView isFirstResponder]) {
@@ -1208,21 +1190,20 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 
 - (void)slk_adjustContentConfigurationIfNeeded
 {
+    UIEdgeInsets contentInset = self.scrollViewProxy.contentInset;
+
     // When inverted, we need to substract the top bars height (generally status bar + navigation bar's) to align the top of the
     // scrollView correctly to its top edge.
     if (self.inverted) {
-        UIEdgeInsets contentInset = self.scrollViewProxy.contentInset;
         contentInset.bottom = [self slk_topBarsHeight];
-        
-        self.scrollViewProxy.contentInset = contentInset;
-        self.scrollViewProxy.scrollIndicatorInsets = contentInset;
+        contentInset.top = contentInset.bottom > 0.0 ? 0.0 : contentInset.top;
+    }
+    else {
+        contentInset.bottom = 0.0;
     }
     
-    // Substracts the bottom edge rect if present. This fixes the text input layout when using inside of a view controller container
-    // such as a UITabBarController or a custom container.
-    if (((self.edgesForExtendedLayout & UIRectEdgeBottom) > 0)) {
-        self.edgesForExtendedLayout = self.edgesForExtendedLayout & ~UIRectEdgeBottom;
-    }
+    self.scrollViewProxy.contentInset = contentInset;
+    self.scrollViewProxy.scrollIndicatorInsets = contentInset;
 }
 
 - (void)slk_prepareForInterfaceTransitionWithDuration:(NSTimeInterval)duration
@@ -1301,17 +1282,24 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     
     // Skips this it's not the expected textView and shouldn't force adjustment of the text input bar.
     // This will also dismiss the text input bar if it's visible, and exit auto-completion mode if enabled.
-    if (![self.textView isFirstResponder] && ![self forceTextInputbarAdjustmentForResponder:[UIResponder slk_currentFirstResponder]]) {
-        return [self slk_dismissTextInputbarIfNeeded];
+    if (![self.textView isFirstResponder]) {
+        // Detect the current first responder. If there is no first responder, we should just ignore these notifications.
+        UIResponder *currentResponder = [UIResponder slk_currentFirstResponder];
+        
+        if (!currentResponder) {
+            return;
+        }
+        else if (![self forceTextInputbarAdjustmentForResponder:currentResponder]) {
+            return [self slk_dismissTextInputbarIfNeeded];
+        }
     }
     
-    NSInteger curve = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue];
-    NSTimeInterval duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    
-    CGRect beginFrame = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-    CGRect endFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    
     SLKKeyboardStatus status = [self slk_keyboardStatusForNotification:notification];
+    
+    // Skips if it's the current status
+    if (self.keyboardStatus == status) {
+        return;
+    }
     
     // Programatically stops scrolling before updating the view constraints (to avoid scrolling glitch).
     if (status == SLKKeyboardStatusWillShow) {
@@ -1333,8 +1321,22 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
         [self slk_postKeyboarStatusNotification:notification];
     }
     
+    NSInteger curve = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue];
+    NSTimeInterval duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    CGRect beginFrame = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    CGRect endFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
     void (^animations)() = ^void() {
-        [self slk_scrollToBottomIfNeeded];
+        // Scrolls to bottom only if the keyboard is about to show.
+        if (self.shouldScrollToBottomAfterKeyboardShows && self.keyboardStatus == SLKKeyboardStatusWillShow) {
+            if (self.isInverted) {
+                [self.scrollViewProxy slk_scrollToTopAnimated:YES];
+            }
+            else {
+                [self.scrollViewProxy slk_scrollToBottomAnimated:YES];
+            }
+        }
     };
     
     // Begin and end frames are the same when the keyboard is shown during navigation controller's push animation.
@@ -1372,7 +1374,8 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     
     SLKKeyboardStatus status = [self slk_keyboardStatusForNotification:notification];
     
-    if (status == SLKKeyboardStatusDidHide) {
+    // Skips if it's the current status
+    if (self.keyboardStatus == status) {
         return;
     }
     
@@ -1740,12 +1743,18 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 - (NSString *)slk_keyForPersistency
 {
     NSString *key = [self keyForTextCaching];
+    if (key == nil) {
+        return nil;
+    }
     return [NSString stringWithFormat:@"%@.%@", SLKTextViewControllerDomain, key];
 }
 
 - (void)slk_reloadTextView
 {
     NSString *key = [self slk_keyForPersistency];
+    if (key == nil) {
+        return;
+    }
     NSString *cachedText = [[NSUserDefaults standardUserDefaults] objectForKey:key];
     
     if (self.textView.text.length == 0 || cachedText.length > 0) {
@@ -1829,16 +1838,16 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
         return;
     }
     
-    NSAssert([aClass isSubclassOfClass:[UIView class]], @"The registered class is invalid, it must be a subclass for UIView.");
+    NSAssert([aClass isSubclassOfClass:[UIView class]], @"The registered class is invalid, it must be a subclass of UIView.");
     self.typingIndicatorViewClass = aClass;
 }
 
 
-#pragma mark - UITextViewDelegate Methods
+#pragma mark - SLKTextViewDelegate Methods
 
 - (BOOL)textView:(SLKTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    self.newWordInserted = ([text rangeOfCharacterFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].location != NSNotFound);
+    BOOL newWordInserted = ([text rangeOfCharacterFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].location != NSNotFound);
     
     // It should not change if auto-completion is active and trying to replace with an auto-correction suggested text.
     if (self.isAutoCompleting && text.length > 1) {
@@ -1846,12 +1855,74 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     }
     
     // Records text for undo for every new word
-    if (self.newWordInserted) {
-        [self.textView slk_prepareForUndo:@"Word Change"];
+    if (newWordInserted) {
+        [textView slk_prepareForUndo:@"Word Change"];
     }
     
-    if ([text isEqualToString:@"\n"]) {
-        //Detected break. Should insert new line break manually.
+    // Detects double spacebar tapping, to replace the default "." insert with a formatting symbol, if needed.
+    if (textView.autoCompleteFormatting && range.location > 0 && [text length] > 0 &&
+        [[NSCharacterSet whitespaceCharacterSet] characterIsMember:[text characterAtIndex:0]] &&
+        [[NSCharacterSet whitespaceCharacterSet] characterIsMember:[textView.text characterAtIndex:range.location - 1]]) {
+        
+        BOOL shouldChange = YES;
+        
+        NSRange wordRange = range;
+        wordRange.location -= 2; // minus the white space added with the double space bar tapping
+        
+        NSArray *symbols = textView.registeredSymbols;
+        
+        NSMutableCharacterSet *invalidCharacters = [NSMutableCharacterSet new];
+        [invalidCharacters formUnionWithCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        [invalidCharacters formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
+        [invalidCharacters removeCharactersInString:[symbols componentsJoinedByString:@""]];
+        
+        for (NSString *symbol in symbols) {
+            
+            // Detects the closest registered symbol to the caret, from right to left
+            NSRange searchRange = NSMakeRange(0, wordRange.location);
+            NSRange prefixRange = [textView.text rangeOfString:symbol options:NSBackwardsSearch range:searchRange];
+            
+            if (prefixRange.location == NSNotFound) {
+                continue;
+            }
+            
+            NSRange nextCharRange = NSMakeRange(prefixRange.location+1, 1);
+            NSString *charAfterSymbol = [textView.text substringWithRange:nextCharRange];
+            
+            if (prefixRange.location != NSNotFound && ![invalidCharacters characterIsMember:[charAfterSymbol characterAtIndex:0]]) {
+                
+                if ([self textView:textView shouldInsertSuffixForFormattingWithSymbol:symbol prefixRange:prefixRange]) {
+                    
+                    NSRange suffixRange;
+                    [textView slk_wordAtRange:wordRange rangeInText:&suffixRange];
+                    
+                    // Skip if the detected word already has a suffix
+                    if ([[textView.text substringWithRange:suffixRange] hasSuffix:symbol]) {
+                        continue;
+                    }
+                    
+                    suffixRange.location += suffixRange.length;
+                    suffixRange.length = 0;
+                    
+                    NSString *lastCharacter = [textView.text substringWithRange:NSMakeRange(suffixRange.location, 1)];
+                    
+                    // Checks if the last character was a line break, so we append the symbol in the next line too
+                    if ([[NSCharacterSet newlineCharacterSet] characterIsMember:[lastCharacter characterAtIndex:0]]) {
+                        suffixRange.location += 1;
+                    }
+                    
+                    [textView slk_insertText:symbol inRange:suffixRange];
+                    shouldChange = NO;
+                    
+                    break; // exit
+                }
+            }
+        }
+        
+        return shouldChange;
+    }
+    else if ([text isEqualToString:@"\n"]) {
+        //Detected break. Should insert new line break programatically instead.
         [textView slk_insertNewLineBreak];
         
         return NO;
@@ -1872,6 +1943,29 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 - (void)textViewDidChangeSelection:(SLKTextView *)textView
 {
     // Keep to avoid unnecessary crashes. Was meant to be overriden in subclass while calling super.
+}
+
+- (BOOL)textView:(SLKTextView *)textView shouldOfferFormattingForSymbol:(NSString *)symbol
+{
+    return YES;
+}
+
+- (BOOL)textView:(SLKTextView *)textView shouldInsertSuffixForFormattingWithSymbol:(NSString *)symbol prefixRange:(NSRange)prefixRange
+{
+    if (prefixRange.location > 0) {
+        NSRange previousCharRange = NSMakeRange(prefixRange.location-1, 1);
+        NSString *previousCharacter = [self.textView.text substringWithRange:previousCharRange];
+        
+        // Only insert a suffix if the character before the prefix was a whitespace or a line break
+        if ([previousCharacter rangeOfCharacterFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].location != NSNotFound) {
+            return YES;
+        }
+        else {
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 
@@ -1905,7 +1999,17 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
 {
-    return [self slk_scrollToTopIfNeeded];
+    if (!self.scrollViewProxy.scrollsToTop || self.keyboardStatus == SLKKeyboardStatusWillShow) {
+        return NO;
+    }
+    
+    if (self.isInverted) {
+        [self.scrollViewProxy slk_scrollToBottomAnimated:YES];
+        return NO;
+    }
+    else {
+        return YES;
+    }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
@@ -1953,8 +2057,12 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (alertView.tag == kSLKAlertViewClearTextTag && self.shakeToClearEnabled && buttonIndex != [alertView cancelButtonIndex] ) {
-        // Clears the text but doesn't clear the undo manager
+    if (alertView.tag != kSLKAlertViewClearTextTag || buttonIndex == [alertView cancelButtonIndex] ) {
+        return;
+    }
+    
+    // Clears the text but doesn't clear the undo manager
+    if (self.shakeToClearEnabled) {
         [self.textView slk_clearText:NO];
     }
 }
@@ -1970,7 +2078,7 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
                             @"textInputbar": self.textInputbar,
                             };
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView(0@750)][autoCompletionView(0@750)][typingIndicatorView(0)]-0@999-[textInputbar(==0)]-0-|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView(0@750)][autoCompletionView(0@750)][typingIndicatorView(0)]-0@999-[textInputbar(0)]-0-|" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[autoCompletionView]|" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[typingIndicatorView]|" options:0 metrics:nil views:views]];

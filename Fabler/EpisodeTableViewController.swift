@@ -117,6 +117,9 @@ class EpisodeTableViewController: SLKTextViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 50.0
 
+        self.tableView.allowsSelection = false
+        self.tableView.allowsMultipleSelection = false
+
         //
         // SLKTextViewController setup
         //
@@ -134,6 +137,10 @@ class EpisodeTableViewController: SLKTextViewController {
 
         self.textView.placeholder = "Add a comment."
         self.textView.placeholderColor = UIColor.lightGrayColor()
+
+        self.textView.registerMarkdownFormattingSymbol("**", withTitle: "Bold")
+        self.textView.registerMarkdownFormattingSymbol("_", withTitle: "Italics")
+        self.textView.registerMarkdownFormattingSymbol("~~", withTitle: "Strike")
 
         self.singleTapGesture.addTarget(self, action: "userTapped:")
         self.setTextInputbarHidden(true, animated: false)
@@ -221,18 +228,7 @@ class EpisodeTableViewController: SLKTextViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath)
 
         if let cell = cell as? CommentTableViewCell {
-            let comment = comments[indexPath.row]
-
-            let localTimeZone = NSTimeZone.localTimeZone()
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.timeZone = localTimeZone
-            dateFormatter.dateFormat = "dd/MM/yyyy 'at' HH:mm"
-            let date = dateFormatter.stringFromDate(comment.submitDate)
-
-            cell.commentLabel?.text = comment.comment
-            cell.subLabel?.text = "by \(comment.userName) on \(date)"
-
-            comment.parentId == nil ? cell.styleCellAsParent() : cell.styleCellAsChild()
+            cell.setComment(comments[indexPath.row])
         }
 
         return cell
