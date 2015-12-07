@@ -30,7 +30,7 @@ class LoginService {
             Log.info("Facebook token updated.")
 
             if let facebookToken = FBSDKAccessToken.currentAccessToken() {
-                let request = Alamofire
+                _ = Alamofire
                 .request(FablerClient.Router.FacebookLogin(token: facebookToken.tokenString))
                 .validate()
                 .responseJSON { response in
@@ -46,7 +46,7 @@ class LoginService {
                     }
                 }
 
-                Log.debug("Login request: \(request)")
+                Log.debug("Login request made.")
             } else {
                 Log.warning("No current Facebook token.")
             }

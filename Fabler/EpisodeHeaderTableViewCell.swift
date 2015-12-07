@@ -1,19 +1,18 @@
 //
-//  ShowTableViewCell.swift
+//  EpisodeHeaderTableViewCell.swift
 //  Fabler
 //
-//  Created by Christopher Day on 10/28/15.
+//  Created by Christopher Day on 12/6/15.
 //  Copyright © 2015 Fabler. All rights reserved.
 //
 
 import UIKit
 
-class ShowTableViewCell: UITableViewCell {
+class EpisodeHeaderTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var tileImage: UIImageView?
-    @IBOutlet weak var titleLabel: UILabel?
+    @IBOutlet weak var segmentedControl: UISegmentedControl?
 
     // MARK: - UITableViewCell functions
 

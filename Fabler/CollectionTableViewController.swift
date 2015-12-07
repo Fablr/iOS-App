@@ -79,8 +79,8 @@ class CollectionTableViewController: UITableViewController {
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "displayShowSegue" {
-            if let controller = segue.destinationViewController as? ShowViewController, let podcast = sender as? Podcast {
+        if segue.identifier == "displayPodcastSegue" {
+            if let controller = segue.destinationViewController as? PodcastTableViewController, let podcast = sender as? Podcast {
                 controller.podcast = podcast
             }
         }
@@ -94,7 +94,7 @@ class CollectionTableViewController: UITableViewController {
             return
         }
 
-        performSegueWithIdentifier("displayShowSegue", sender: podcasts![indexPath.row])
+        performSegueWithIdentifier("displayPodcastSegue", sender: podcasts![indexPath.row])
     }
 
     // MARK: - UITableViewDataSource functions
@@ -136,7 +136,7 @@ class CollectionTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
 
-        if let cell = cell as? ShowTableViewCell, let podcast = podcasts?[indexPath.row] {
+        if let cell = cell as? PodcastTableViewCell, let podcast = podcasts?[indexPath.row] {
             cell.titleLabel?.text = podcast.title
 
             if let url = NSURL(string: podcast.image) {

@@ -31,6 +31,8 @@ struct FablerClient {
         case UpdateEpisodeMark(episode: Int, mark: NSTimeInterval, completed: Bool)
         case ReadCommentsForEpisode(episode: Int)
         case AddCommentForEpisode(episode: Int, comment: String, parent: Int?)
+        case ReadCommentsForPodcast(podcast: Int)
+        case AddCommentForPodcast(podcast: Int, comment: String, parent: Int?)
 
         var method: Alamofire.Method {
             switch self {
@@ -53,6 +55,10 @@ struct FablerClient {
             case .ReadCommentsForEpisode:
                 return .GET
             case .AddCommentForEpisode:
+                return .POST
+            case .ReadCommentsForPodcast:
+                return .GET
+            case .AddCommentForPodcast:
                 return .POST
             }
         }
@@ -79,6 +85,10 @@ struct FablerClient {
                 return "/episode/\(episode)/comments/"
             case .AddCommentForEpisode(let episode, _, _):
                 return "/episode/\(episode)/comments/"
+            case .ReadCommentsForPodcast(let podcast):
+                return "/podcast/\(podcast)/comments/"
+            case .AddCommentForPodcast(let podcast, _, _):
+                return "/podcast/\(podcast)/comments/"
             }
         }
 
@@ -105,6 +115,12 @@ struct FablerClient {
                 let parameters: [String: AnyObject] = ["episode": episode, "mark": mark.toString(), "completed": completed]
                 return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
             case .AddCommentForEpisode(_, let comment, let parent):
+                var parameters: [String: AnyObject] = ["comment": comment]
+                if parent != nil {
+                    parameters["parent"] = parent!
+                }
+                return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+            case .AddCommentForPodcast(_, let comment, let parent):
                 var parameters: [String: AnyObject] = ["comment": comment]
                 if parent != nil {
                     parameters["parent"] = parent!

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ShowCell: UICollectionViewCell {
+class PodcastCell: UICollectionViewCell {
 
     // MARK: - IBOutlets
 

@@ -146,7 +146,7 @@ class EpisodeTableViewController: SLKTextViewController {
         self.setTextInputbarHidden(true, animated: false)
 
         //
-        // Static labels setup
+        // Static element setup
         //
         self.navigationItem.title = episode!.title
         self.headerController?.descriptionLabel?.text = episode!.episodeDescription
@@ -228,7 +228,7 @@ class EpisodeTableViewController: SLKTextViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath)
 
         if let cell = cell as? CommentTableViewCell {
-            cell.setComment(comments[indexPath.row])
+            cell.setCommentInstance(comments[indexPath.row])
         }
 
         return cell

@@ -9,7 +9,7 @@
 import UIKit
 import AlamofireImage
 
-class DiscoveryViewController: UICollectionViewController {
+class DiscoveryCollectionViewController: UICollectionViewController {
 
     // MARK: - IBOutlets
 
@@ -51,8 +51,8 @@ class DiscoveryViewController: UICollectionViewController {
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "displayShowSegue" {
-            if let controller = segue.destinationViewController as? ShowViewController, let podcast = sender as? Podcast {
+        if segue.identifier == "displayPodcastSegue" {
+            if let controller = segue.destinationViewController as? PodcastTableViewController, let podcast = sender as? Podcast {
                 controller.podcast = podcast
             }
         }
@@ -66,7 +66,7 @@ class DiscoveryViewController: UICollectionViewController {
             return
         }
 
-        performSegueWithIdentifier("displayShowSegue", sender: podcasts![indexPath.row])
+        performSegueWithIdentifier("displayPodcastSegue", sender: podcasts![indexPath.row])
     }
 
     // MARK: - UICollectionViewDataSource functions
@@ -86,7 +86,7 @@ class DiscoveryViewController: UICollectionViewController {
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
 
-        if let cell = cell as? ShowCell {
+        if let cell = cell as? PodcastCell {
             if let path = podcasts?[indexPath.row].image, let url = NSURL(string: path) {
                 let placeholder = UIImage(named: "logo-launch")
                 cell.tileImage?.af_setImageWithURL(url, placeholderImage: placeholder)

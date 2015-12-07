@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PodcastHeaderViewController" customModule="Fabler" customModuleProvider="target">
+            <connections>
+                <outlet property="settingsButton" destination="ctr-2x-TNp" id="JRY-PP-enX"/>
+                <outlet property="subscribeButton" destination="Cv4-KD-uIY" id="qfo-Dg-2dD"/>
+                <outlet property="titleImage" destination="MRn-HR-kz5" id="O4b-Im-qvL"/>
+                <outlet property="titleLabel" destination="U66-0Q-wW8" id="kKE-oq-Dcw"/>
+                <outlet property="view" destination="b3w-GQ-U6M" id="iZK-kc-VAk"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="b3w-GQ-U6M">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K6r-Fj-wwN">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="SAg-bn-nxO">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-launch" translatesAutoresizingMaskIntoConstraints="NO" id="MRn-HR-kz5">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
+                                    <animations/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="100" id="rjA-Vv-25J"/>
+                                    </constraints>
+                                </imageView>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="BH0-hc-QQd">
+                                    <rect key="frame" x="0.0" y="100" width="600" height="100"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9e-gR-7FV">
+                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="100"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" id="HVe-PB-urP"/>
+                                            </constraints>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U66-0Q-wW8">
+                                            <rect key="frame" x="10" y="0.0" width="370" height="100"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cv4-KD-uIY">
+                                            <rect key="frame" x="390" y="0.0" width="100" height="100"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="100" id="b5y-tj-bUD"/>
+                                            </constraints>
+                                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal" title="Subscribe"/>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ctr-2x-TNp">
+                                            <rect key="frame" x="500" y="0.0" width="100" height="100"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="100" id="1W0-SO-yIX"/>
+                                            </constraints>
+                                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal" title="Settings"/>
+                                        </button>
+                                    </subviews>
+                                    <animations/>
+                                </stackView>
+                            </subviews>
+                            <animations/>
+                        </stackView>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="SAg-bn-nxO" firstAttribute="leading" secondItem="K6r-Fj-wwN" secondAttribute="leading" id="AyI-AP-huB"/>
+                        <constraint firstAttribute="bottom" secondItem="SAg-bn-nxO" secondAttribute="bottom" id="UhJ-Sl-Kwh"/>
+                        <constraint firstAttribute="trailing" secondItem="SAg-bn-nxO" secondAttribute="trailing" id="mIM-1z-XfX"/>
+                        <constraint firstItem="SAg-bn-nxO" firstAttribute="top" secondItem="K6r-Fj-wwN" secondAttribute="top" id="opW-NT-Cna"/>
+                        <constraint firstAttribute="height" constant="200" id="v74-qN-8ei"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <animations/>
+            <constraints>
+                <constraint firstItem="K6r-Fj-wwN" firstAttribute="top" secondItem="b3w-GQ-U6M" secondAttribute="top" id="HKP-Uy-buO"/>
+                <constraint firstItem="K6r-Fj-wwN" firstAttribute="leading" secondItem="b3w-GQ-U6M" secondAttribute="leading" id="djo-z9-IuW"/>
+                <constraint firstAttribute="trailing" secondItem="K6r-Fj-wwN" secondAttribute="trailing" id="mkX-BG-dzH"/>
+            </constraints>
+            <point key="canvasLocation" x="747" y="573"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="logo-launch" width="550" height="197"/>
+    </resources>
+</document>

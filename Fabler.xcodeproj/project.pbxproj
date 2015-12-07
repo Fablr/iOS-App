@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		450B76741BE983670033C0B6 /* ShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76731BE983670033C0B6 /* ShowViewController.swift */; };
+		450B76741BE983670033C0B6 /* PodcastTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76731BE983670033C0B6 /* PodcastTableViewController.swift */; };
 		450B76761BE9CC270033C0B6 /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76751BE9CC270033C0B6 /* Episode.swift */; };
 		450B76781BE9DAA90033C0B6 /* EpisodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76771BE9DAA90033C0B6 /* EpisodeService.swift */; };
 		450B767A1BECA7610033C0B6 /* EpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B76791BECA7610033C0B6 /* EpisodeTableViewCell.swift */; };
@@ -28,12 +28,17 @@
 		4578890E1C1153E4007D3600 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578890D1C1153E4007D3600 /* CommentTableViewCell.swift */; };
 		457889101C115464007D3600 /* CommentHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578890F1C115464007D3600 /* CommentHeaderTableViewCell.swift */; };
 		457889121C12482A007D3600 /* FablerToolBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457889111C12482A007D3600 /* FablerToolBarController.swift */; };
-		457E51E31BE864170079845E /* ShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E51E21BE864170079845E /* ShowCell.swift */; };
+		457E51E31BE864170079845E /* PodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E51E21BE864170079845E /* PodcastCell.swift */; };
 		4588CF2C1BDB46E40080E13D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4588CF2B1BDB46E40080E13D /* LoginViewController.swift */; };
 		45B51D0B1BE495E700F289F7 /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B51D0A1BE495E700F289F7 /* Podcast.swift */; };
 		45BF1C661BE31EF600665402 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF1C651BE31EF600665402 /* LoginService.swift */; };
 		45BF1C681BE4921900665402 /* PodcastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF1C671BE4921900665402 /* PodcastService.swift */; };
-		45E2E1381BFEBAEF00219098 /* ShowSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2E1371BFEBAEF00219098 /* ShowSettingsTableViewController.swift */; };
+		45BFCC191C154299007D31C8 /* EpisodeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45BFCC181C154299007D31C8 /* EpisodeCell.xib */; };
+		45BFCC1B1C154718007D31C8 /* EpisodeHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45BFCC1A1C154718007D31C8 /* EpisodeHeaderCell.xib */; };
+		45BFCC1D1C154F4C007D31C8 /* PodcastHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45BFCC1C1C154F4C007D31C8 /* PodcastHeader.xib */; };
+		45BFCC1F1C1559A3007D31C8 /* EpisodeHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BFCC1E1C1559A3007D31C8 /* EpisodeHeaderTableViewCell.swift */; };
+		45BFCC211C155C2A007D31C8 /* PodcastHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BFCC201C155C2A007D31C8 /* PodcastHeaderViewController.swift */; };
+		45E2E1381BFEBAEF00219098 /* PodcastSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2E1371BFEBAEF00219098 /* PodcastSettingsTableViewController.swift */; };
 		45E536751BDF025F009E3F10 /* YouViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E536741BDF025F009E3F10 /* YouViewController.swift */; };
 		45E536781BDF06E0009E3F10 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45E536761BDF06E0009E3F10 /* Main.storyboard */; };
 		45E5367E1BE1F980009E3F10 /* FablerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5367D1BE1F980009E3F10 /* FablerClient.swift */; };
@@ -46,8 +51,8 @@
 		F4702A0C1A7F27DC00E30A3C /* FablerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4702A0B1A7F27DC00E30A3C /* FablerTests.swift */; };
 		F4702A181A7F351C00E30A3C /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4702A171A7F351C00E30A3C /* MenuTableViewController.swift */; };
 		F491E74A1A7F4B300026528E /* CollectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7491A7F4B300026528E /* CollectionTableViewController.swift */; };
-		F491E74C1A7F4C630026528E /* ShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E74B1A7F4C630026528E /* ShowTableViewCell.swift */; };
-		F491E7551A7F7E010026528E /* DiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7541A7F7E010026528E /* DiscoveryViewController.swift */; };
+		F491E74C1A7F4C630026528E /* PodcastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E74B1A7F4C630026528E /* PodcastTableViewCell.swift */; };
+		F491E7551A7F7E010026528E /* DiscoveryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7541A7F7E010026528E /* DiscoveryCollectionViewController.swift */; };
 		F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D750171BD38F0C009E1003 /* SWRevealViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -64,7 +69,7 @@
 /* Begin PBXFileReference section */
 		0FC93F29D694A1CBEDC5F5BA /* Pods_Fabler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Fabler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13FDB02D974B5D5C39CBB968 /* Pods-Fabler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fabler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fabler/Pods-Fabler.debug.xcconfig"; sourceTree = "<group>"; };
-		450B76731BE983670033C0B6 /* ShowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowViewController.swift; sourceTree = "<group>"; };
+		450B76731BE983670033C0B6 /* PodcastTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastTableViewController.swift; sourceTree = "<group>"; };
 		450B76751BE9CC270033C0B6 /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		450B76771BE9DAA90033C0B6 /* EpisodeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeService.swift; sourceTree = "<group>"; };
 		450B76791BECA7610033C0B6 /* EpisodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeTableViewCell.swift; sourceTree = "<group>"; };
@@ -85,12 +90,17 @@
 		4578890D1C1153E4007D3600 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		4578890F1C115464007D3600 /* CommentHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		457889111C12482A007D3600 /* FablerToolBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerToolBarController.swift; sourceTree = "<group>"; };
-		457E51E21BE864170079845E /* ShowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCell.swift; sourceTree = "<group>"; };
+		457E51E21BE864170079845E /* PodcastCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCell.swift; sourceTree = "<group>"; };
 		4588CF2B1BDB46E40080E13D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		45B51D0A1BE495E700F289F7 /* Podcast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
 		45BF1C651BE31EF600665402 /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		45BF1C671BE4921900665402 /* PodcastService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastService.swift; sourceTree = "<group>"; };
-		45E2E1371BFEBAEF00219098 /* ShowSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowSettingsTableViewController.swift; sourceTree = "<group>"; };
+		45BFCC181C154299007D31C8 /* EpisodeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EpisodeCell.xib; sourceTree = "<group>"; };
+		45BFCC1A1C154718007D31C8 /* EpisodeHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EpisodeHeaderCell.xib; sourceTree = "<group>"; };
+		45BFCC1C1C154F4C007D31C8 /* PodcastHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PodcastHeader.xib; sourceTree = "<group>"; };
+		45BFCC1E1C1559A3007D31C8 /* EpisodeHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		45BFCC201C155C2A007D31C8 /* PodcastHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastHeaderViewController.swift; sourceTree = "<group>"; };
+		45E2E1371BFEBAEF00219098 /* PodcastSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastSettingsTableViewController.swift; sourceTree = "<group>"; };
 		45E536741BDF025F009E3F10 /* YouViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YouViewController.swift; sourceTree = "<group>"; };
 		45E536771BDF06E0009E3F10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		45E5367D1BE1F980009E3F10 /* FablerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerClient.swift; sourceTree = "<group>"; };
@@ -107,8 +117,8 @@
 		F4702A0B1A7F27DC00E30A3C /* FablerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FablerTests.swift; sourceTree = "<group>"; };
 		F4702A171A7F351C00E30A3C /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		F491E7491A7F4B300026528E /* CollectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionTableViewController.swift; sourceTree = "<group>"; };
-		F491E74B1A7F4C630026528E /* ShowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowTableViewCell.swift; sourceTree = "<group>"; };
-		F491E7541A7F7E010026528E /* DiscoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryViewController.swift; sourceTree = "<group>"; };
+		F491E74B1A7F4C630026528E /* PodcastTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastTableViewCell.swift; sourceTree = "<group>"; };
+		F491E7541A7F7E010026528E /* DiscoveryCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryCollectionViewController.swift; sourceTree = "<group>"; };
 		F4D750151BD38F0C009E1003 /* Fabler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Fabler-Bridging-Header.h"; sourceTree = "<group>"; };
 		F4D750161BD38F0C009E1003 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		F4D750171BD38F0C009E1003 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
@@ -140,9 +150,12 @@
 				45E536761BDF06E0009E3F10 /* Main.storyboard */,
 				4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */,
 				45FBA2571BF5E7E900DD8D14 /* LargePlayer.xib */,
-				4576FBFF1C13ACC900381A28 /* CommentCell.xib */,
-				4576FC011C13B20300381A28 /* CommentHeaderCell.xib */,
+				45BFCC1C1C154F4C007D31C8 /* PodcastHeader.xib */,
+				45BFCC1A1C154718007D31C8 /* EpisodeHeaderCell.xib */,
+				45BFCC181C154299007D31C8 /* EpisodeCell.xib */,
 				4576FC031C13CF0000381A28 /* EpisodeHeader.xib */,
+				4576FC011C13B20300381A28 /* CommentHeaderCell.xib */,
+				4576FBFF1C13ACC900381A28 /* CommentCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -182,23 +195,25 @@
 			children = (
 				456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */,
 				457889111C12482A007D3600 /* FablerToolBarController.swift */,
-				450B767F1BEF567D0033C0B6 /* BackpaneViewController.swift */,
 				4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */,
 				45FBA2591BF5E7FE00DD8D14 /* LargePlayerViewController.swift */,
-				4576FC051C13D74000381A28 /* EpisodeHeaderViewController.swift */,
+				450B767F1BEF567D0033C0B6 /* BackpaneViewController.swift */,
+				F4702A171A7F351C00E30A3C /* MenuTableViewController.swift */,
 				4588CF2B1BDB46E40080E13D /* LoginViewController.swift */,
 				45E536741BDF025F009E3F10 /* YouViewController.swift */,
-				F491E7541A7F7E010026528E /* DiscoveryViewController.swift */,
-				450B76731BE983670033C0B6 /* ShowViewController.swift */,
-				45E2E1371BFEBAEF00219098 /* ShowSettingsTableViewController.swift */,
-				F4702A171A7F351C00E30A3C /* MenuTableViewController.swift */,
-				450B767B1BECABB30033C0B6 /* EpisodeTableViewController.swift */,
+				F491E7541A7F7E010026528E /* DiscoveryCollectionViewController.swift */,
+				457E51E21BE864170079845E /* PodcastCell.swift */,
 				F491E7491A7F4B300026528E /* CollectionTableViewController.swift */,
+				F491E74B1A7F4C630026528E /* PodcastTableViewCell.swift */,
+				450B76731BE983670033C0B6 /* PodcastTableViewController.swift */,
+				45BFCC201C155C2A007D31C8 /* PodcastHeaderViewController.swift */,
+				45BFCC1E1C1559A3007D31C8 /* EpisodeHeaderTableViewCell.swift */,
 				450B76791BECA7610033C0B6 /* EpisodeTableViewCell.swift */,
-				F491E74B1A7F4C630026528E /* ShowTableViewCell.swift */,
-				4578890D1C1153E4007D3600 /* CommentTableViewCell.swift */,
+				45E2E1371BFEBAEF00219098 /* PodcastSettingsTableViewController.swift */,
+				450B767B1BECABB30033C0B6 /* EpisodeTableViewController.swift */,
+				4576FC051C13D74000381A28 /* EpisodeHeaderViewController.swift */,
 				4578890F1C115464007D3600 /* CommentHeaderTableViewCell.swift */,
-				457E51E21BE864170079845E /* ShowCell.swift */,
+				4578890D1C1153E4007D3600 /* CommentTableViewCell.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -383,11 +398,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45BFCC1B1C154718007D31C8 /* EpisodeHeaderCell.xib in Resources */,
+				45BFCC1D1C154F4C007D31C8 /* PodcastHeader.xib in Resources */,
 				4576FC021C13B20300381A28 /* CommentHeaderCell.xib in Resources */,
 				45E536781BDF06E0009E3F10 /* Main.storyboard in Resources */,
 				F4702A001A7F27DC00E30A3C /* LaunchScreen.xib in Resources */,
 				4538B57D1BF55C3800039DF1 /* SmallPlayer.xib in Resources */,
 				4576FC041C13CF0000381A28 /* EpisodeHeader.xib in Resources */,
+				45BFCC191C154299007D31C8 /* EpisodeCell.xib in Resources */,
 				4576FC001C13ACC900381A28 /* CommentCell.xib in Resources */,
 				45FBA2581BF5E7E900DD8D14 /* LargePlayer.xib in Resources */,
 				F47029FD1A7F27DB00E30A3C /* Images.xcassets in Resources */,
@@ -493,7 +511,7 @@
 				45505F711BFB1EF600481291 /* DownloadManager.swift in Sources */,
 				4576FC061C13D74000381A28 /* EpisodeHeaderViewController.swift in Sources */,
 				F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */,
-				450B76741BE983670033C0B6 /* ShowViewController.swift in Sources */,
+				450B76741BE983670033C0B6 /* PodcastTableViewController.swift in Sources */,
 				457889121C12482A007D3600 /* FablerToolBarController.swift in Sources */,
 				450B767E1BEF49120033C0B6 /* User.swift in Sources */,
 				F4702A181A7F351C00E30A3C /* MenuTableViewController.swift in Sources */,
@@ -502,19 +520,21 @@
 				456BB5C91BF5B4A600D59C47 /* FablerNavigationController.swift in Sources */,
 				456BB5CB1BF5CD3E00D59C47 /* FablerPlayer.swift in Sources */,
 				45FBA25A1BF5E7FE00DD8D14 /* LargePlayerViewController.swift in Sources */,
-				45E2E1381BFEBAEF00219098 /* ShowSettingsTableViewController.swift in Sources */,
+				45BFCC211C155C2A007D31C8 /* PodcastHeaderViewController.swift in Sources */,
+				45E2E1381BFEBAEF00219098 /* PodcastSettingsTableViewController.swift in Sources */,
 				450B767A1BECA7610033C0B6 /* EpisodeTableViewCell.swift in Sources */,
 				F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */,
 				450B76801BEF567D0033C0B6 /* BackpaneViewController.swift in Sources */,
 				45BF1C661BE31EF600665402 /* LoginService.swift in Sources */,
 				4578890E1C1153E4007D3600 /* CommentTableViewCell.swift in Sources */,
-				F491E74C1A7F4C630026528E /* ShowTableViewCell.swift in Sources */,
-				457E51E31BE864170079845E /* ShowCell.swift in Sources */,
+				F491E74C1A7F4C630026528E /* PodcastTableViewCell.swift in Sources */,
+				457E51E31BE864170079845E /* PodcastCell.swift in Sources */,
+				45BFCC1F1C1559A3007D31C8 /* EpisodeHeaderTableViewCell.swift in Sources */,
 				F491E74A1A7F4B300026528E /* CollectionTableViewController.swift in Sources */,
 				45E536751BDF025F009E3F10 /* YouViewController.swift in Sources */,
 				450B76781BE9DAA90033C0B6 /* EpisodeService.swift in Sources */,
 				4578890A1C10C108007D3600 /* Comment.swift in Sources */,
-				F491E7551A7F7E010026528E /* DiscoveryViewController.swift in Sources */,
+				F491E7551A7F7E010026528E /* DiscoveryCollectionViewController.swift in Sources */,
 				4578890C1C10FF09007D3600 /* CommentService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -31,7 +31,7 @@ class CommentTableViewCell: UITableViewCell {
 
     // MARK: - CommentTableViewCell functions
 
-    func setComment(comment: Comment) {
+    func setCommentInstance(comment: Comment) {
         self.comment = comment
 
         if let comment = self.comment {

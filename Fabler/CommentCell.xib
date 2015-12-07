@@ -7,25 +7,25 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="127" id="twQ-4p-qMY" customClass="CommentTableViewCell" customModule="Fabler" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="127"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="134" id="twQ-4p-qMY" customClass="CommentTableViewCell" customModule="Fabler" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="134"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="twQ-4p-qMY" id="YfL-6r-5dL">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="126"/>
+                <rect key="frame" x="0.0" y="0.0" width="414" height="133"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-30" translatesAutoresizingMaskIntoConstraints="NO" id="Okn-NU-qx9">
-                        <rect key="frame" x="10" y="10" width="394" height="106"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-25" translatesAutoresizingMaskIntoConstraints="NO" id="Okn-NU-qx9">
+                        <rect key="frame" x="10" y="10" width="394" height="113"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="This is a comment." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1vQ-c0-Aoe">
-                                <rect key="frame" x="0.0" y="0.0" width="394" height="111"/>
+                                <rect key="frame" x="0.0" y="0.0" width="394" height="113"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
                             </textView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V0G-Sa-vvq">
-                                <rect key="frame" x="0.0" y="81" width="394" height="25"/>
+                                <rect key="frame" x="0.0" y="88" width="394" height="25"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3J5-je-7Dr">
                                         <rect key="frame" x="0.0" y="0.0" width="394" height="25"/>
@@ -58,7 +58,7 @@
                 <outlet property="commentTextView" destination="1vQ-c0-Aoe" id="KgG-DB-bq2"/>
                 <outlet property="subLabel" destination="3J5-je-7Dr" id="JFw-rK-cCx"/>
             </connections>
-            <point key="canvasLocation" x="791" y="526.5"/>
+            <point key="canvasLocation" x="791" y="530"/>
         </tableViewCell>
     </objects>
 </document>
