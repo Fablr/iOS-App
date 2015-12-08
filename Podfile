@@ -8,7 +8,7 @@ target 'Fabler' do
   pod 'FBSDKCoreKit', '~>4.7.0'
   pod 'Alamofire', '~>3.1.0'
   pod 'SwiftyJSON', '~>2.3.1'
-  pod 'RealmSwift', '~>0.96.2'
+  pod 'RealmSwift', '~>0.96.3'
   pod 'AlamofireImage', '~>2.1.1'
   pod 'XCGLogger', '~>3.1.1'
   pod 'SlackTextViewController', :git => 'https://github.com/slackhq/SlackTextViewController.git', :tag => 'v1.8'

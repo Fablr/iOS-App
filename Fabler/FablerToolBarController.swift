@@ -9,13 +9,14 @@
 import UIKit
 
 class FablerToolBarController: UIToolbar {
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+
+    // MARK: - FablerToolBarController members
 
     var item: UIBarButtonItem?
     var flexItemLeft: UIBarButtonItem?
     var flexItemRight: UIBarButtonItem?
+
+    // MARK: - UIToolbar functions
 
     override func setItems(items: [UIBarButtonItem]?, animated: Bool) {
         guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
@@ -39,5 +40,9 @@ class FablerToolBarController: UIToolbar {
 
             super.setItems([self.flexItemLeft!, self.item!, self.flexItemRight!], animated: false)
         }
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
 }

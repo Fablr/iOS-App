@@ -1,5 +1,5 @@
 //
-//  EpisodeViewController.swift
+//  EpisodeTableViewController.swift
 //  Fabler
 //
 //  Created by Christopher Day on 11/6/15.

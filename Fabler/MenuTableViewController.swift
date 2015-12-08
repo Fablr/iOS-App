@@ -1,5 +1,5 @@
 //
-//  MenuController.swift
+//  MenuTableViewController.swift
 //  Fabler
 //
 //  Created by Christopher Day on 10/28/15.

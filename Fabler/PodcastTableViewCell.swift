@@ -1,5 +1,5 @@
 //
-//  ShowTableViewCell.swift
+//  PodcastTableViewCell.swift
 //  Fabler
 //
 //  Created by Christopher Day on 10/28/15.

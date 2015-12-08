@@ -1,5 +1,5 @@
 //
-//  ShowViewController.swift
+//  PodcastTableViewController.swift
 //  Fabler
 //
 //  Created by Christopher Day on 11/3/15.
@@ -324,10 +324,9 @@ class PodcastTableViewController: SLKTextViewController {
         if let refresher = self.refreshControl {
             refresher.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
             refresher.addTarget(self, action: "refreshData:", forControlEvents: UIControlEvents.ValueChanged)
-            refresher.backgroundColor = UIColor.orangeColor()
+            refresher.backgroundColor = UIColor.clearColor()
             refresher.tintColor = UIColor.whiteColor()
-            // FIXME
-            //self.tableView.addSubview(refresher)
+            self.tableView.addSubview(refresher)
         }
     }
     // swiftlint:enable function_body_length

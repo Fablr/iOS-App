@@ -1,5 +1,5 @@
 //
-//  ShowSettingsViewController.swift
+//  PodcastSettingsViewController.swift
 //  Fabler
 //
 //  Created by Christopher Day on 11/19/15.
