@@ -135,8 +135,7 @@ class CollectionTableViewController: UITableViewController {
             cell.titleLabel?.text = podcast.title
 
             if let url = NSURL(string: podcast.image) {
-                let placeholder = UIImage(named: "logo-launch")
-                cell.tileImage?.af_setImageWithURL(url, placeholderImage: placeholder)
+                cell.tileImage?.af_setImageWithURL(url, placeholderImage: nil)
             }
         }
 

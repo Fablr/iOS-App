@@ -59,6 +59,10 @@ class EpisodeTableViewController: SLKTextViewController {
     }
 
     func commentButtonPressed(sender: AnyObject) {
+        if let navigationController = self.navigationController as? FablerNavigationController {
+            navigationController.dismissSmallPlayer()
+        }
+
         self.setTextInputbarHidden(false, animated: true)
         self.textView.becomeFirstResponder()
     }
@@ -74,6 +78,10 @@ class EpisodeTableViewController: SLKTextViewController {
     }
 
     override func didPressLeftButton(sender: AnyObject!) {
+        if let navigationController = self.navigationController as? FablerNavigationController {
+            navigationController.displaySmallPlayer()
+        }
+
         self.setTextInputbarHidden(true, animated: true)
     }
 
@@ -83,6 +91,11 @@ class EpisodeTableViewController: SLKTextViewController {
         }
 
         super.didPressRightButton(sender)
+
+        if let navigationController = self.navigationController as? FablerNavigationController {
+            navigationController.displaySmallPlayer()
+        }
+
         self.setTextInputbarHidden(true, animated: true)
     }
 

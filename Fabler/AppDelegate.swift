@@ -42,7 +42,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.player = FablerPlayer()
         self.downloader = DownloadManager(identifier: "com.Fabler.Fabler.background")
 
-        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        let result = FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+
+        let viewController: UIViewController
+        if FBSDKAccessToken.currentAccessToken() == nil {
+            viewController = storyboard.instantiateViewControllerWithIdentifier("login")
+        } else {
+            viewController = storyboard.instantiateViewControllerWithIdentifier("start")
+        }
+
+        self.window?.rootViewController = viewController;
+        self.window?.makeKeyAndVisible()
+
+        return result
     }
 
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
