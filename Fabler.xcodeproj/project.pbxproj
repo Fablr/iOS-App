@@ -35,9 +35,7 @@
 		45BF1C681BE4921900665402 /* PodcastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF1C671BE4921900665402 /* PodcastService.swift */; };
 		45BFCC191C154299007D31C8 /* EpisodeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45BFCC181C154299007D31C8 /* EpisodeCell.xib */; };
 		45BFCC1B1C154718007D31C8 /* EpisodeHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45BFCC1A1C154718007D31C8 /* EpisodeHeaderCell.xib */; };
-		45BFCC1D1C154F4C007D31C8 /* PodcastHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45BFCC1C1C154F4C007D31C8 /* PodcastHeader.xib */; };
 		45BFCC1F1C1559A3007D31C8 /* EpisodeHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BFCC1E1C1559A3007D31C8 /* EpisodeHeaderTableViewCell.swift */; };
-		45BFCC211C155C2A007D31C8 /* PodcastHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BFCC201C155C2A007D31C8 /* PodcastHeaderViewController.swift */; };
 		45E2E1381BFEBAEF00219098 /* PodcastSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2E1371BFEBAEF00219098 /* PodcastSettingsTableViewController.swift */; };
 		45E536751BDF025F009E3F10 /* YouViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E536741BDF025F009E3F10 /* YouViewController.swift */; };
 		45E536781BDF06E0009E3F10 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45E536761BDF06E0009E3F10 /* Main.storyboard */; };
@@ -97,9 +95,7 @@
 		45BF1C671BE4921900665402 /* PodcastService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastService.swift; sourceTree = "<group>"; };
 		45BFCC181C154299007D31C8 /* EpisodeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EpisodeCell.xib; sourceTree = "<group>"; };
 		45BFCC1A1C154718007D31C8 /* EpisodeHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EpisodeHeaderCell.xib; sourceTree = "<group>"; };
-		45BFCC1C1C154F4C007D31C8 /* PodcastHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PodcastHeader.xib; sourceTree = "<group>"; };
 		45BFCC1E1C1559A3007D31C8 /* EpisodeHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeHeaderTableViewCell.swift; sourceTree = "<group>"; };
-		45BFCC201C155C2A007D31C8 /* PodcastHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastHeaderViewController.swift; sourceTree = "<group>"; };
 		45E2E1371BFEBAEF00219098 /* PodcastSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastSettingsTableViewController.swift; sourceTree = "<group>"; };
 		45E536741BDF025F009E3F10 /* YouViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YouViewController.swift; sourceTree = "<group>"; };
 		45E536771BDF06E0009E3F10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -150,7 +146,6 @@
 				45E536761BDF06E0009E3F10 /* Main.storyboard */,
 				4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */,
 				45FBA2571BF5E7E900DD8D14 /* LargePlayer.xib */,
-				45BFCC1C1C154F4C007D31C8 /* PodcastHeader.xib */,
 				45BFCC1A1C154718007D31C8 /* EpisodeHeaderCell.xib */,
 				45BFCC181C154299007D31C8 /* EpisodeCell.xib */,
 				4576FC031C13CF0000381A28 /* EpisodeHeader.xib */,
@@ -206,7 +201,6 @@
 				F491E7491A7F4B300026528E /* CollectionTableViewController.swift */,
 				F491E74B1A7F4C630026528E /* PodcastTableViewCell.swift */,
 				450B76731BE983670033C0B6 /* PodcastTableViewController.swift */,
-				45BFCC201C155C2A007D31C8 /* PodcastHeaderViewController.swift */,
 				45BFCC1E1C1559A3007D31C8 /* EpisodeHeaderTableViewCell.swift */,
 				450B76791BECA7610033C0B6 /* EpisodeTableViewCell.swift */,
 				45E2E1371BFEBAEF00219098 /* PodcastSettingsTableViewController.swift */,
@@ -399,7 +393,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				45BFCC1B1C154718007D31C8 /* EpisodeHeaderCell.xib in Resources */,
-				45BFCC1D1C154F4C007D31C8 /* PodcastHeader.xib in Resources */,
 				4576FC021C13B20300381A28 /* CommentHeaderCell.xib in Resources */,
 				45E536781BDF06E0009E3F10 /* Main.storyboard in Resources */,
 				F4702A001A7F27DC00E30A3C /* LaunchScreen.xib in Resources */,
@@ -520,7 +513,6 @@
 				456BB5C91BF5B4A600D59C47 /* FablerNavigationController.swift in Sources */,
 				456BB5CB1BF5CD3E00D59C47 /* FablerPlayer.swift in Sources */,
 				45FBA25A1BF5E7FE00DD8D14 /* LargePlayerViewController.swift in Sources */,
-				45BFCC211C155C2A007D31C8 /* PodcastHeaderViewController.swift in Sources */,
 				45E2E1381BFEBAEF00219098 /* PodcastSettingsTableViewController.swift in Sources */,
 				450B767A1BECA7610033C0B6 /* EpisodeTableViewCell.swift in Sources */,
 				F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */,
@@ -668,6 +660,8 @@
 					"$(PROJECT_DIR)/Fabler",
 					"$(PROJECT_DIR)",
 				);
+				IBC_WARNINGS = NO;
+				IBSC_WARNINGS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Fabler/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -693,6 +687,8 @@
 					"$(PROJECT_DIR)/Fabler",
 					"$(PROJECT_DIR)",
 				);
+				IBC_WARNINGS = NO;
+				IBSC_WARNINGS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Fabler/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

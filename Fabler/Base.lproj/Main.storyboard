@@ -379,7 +379,7 @@
                         <viewControllerLayoutGuide type="top" id="Zq3-B9-HFd"/>
                         <viewControllerLayoutGuide type="bottom" id="PLb-nK-UFU"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="oyf-yG-gEE">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="oyf-yG-gEE">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>

@@ -12,17 +12,31 @@ import SlackTextViewController
 
 class PodcastTableViewController: SLKTextViewController {
 
-    // MARK: - PodcastViewController members
+    // MARK: - PodcastTableViewController data members
 
     var podcast: Podcast?
     var episodes: [Episode] = []
     var filteredEpisodes: [Episode] = []
     var comments: [Comment] = []
 
+    // MARK: - PodcastTableViewController ui members
+
     var refreshControl: UIRefreshControl?
-    var headerController: PodcastHeaderViewController?
+    var headerImage: UIImageView?
+    var titleLabel: UILabel?
+    var settingsButton: UIButton?
+    var subscribeButton: UIButton?
+    var settingsButtonWidth: NSLayoutConstraint?
 
     var currentSegment: Int = 0
+
+    // MARK: - PodcastTableViewController magic members
+
+    let headerHeight: CGFloat = 130.0
+    let subHeaderHeight: CGFloat = 70.0
+    var headerSwitchOffset: CGFloat = 0.0
+    var barAnimationComplete: Bool = false
+    var barIsCollapsed: Bool = false
 
     // MARK: - PodcastTableViewController functions
 
@@ -93,15 +107,35 @@ class PodcastTableViewController: SLKTextViewController {
             let service = PodcastService()
             let subscribed = !(podcast.subscribed)
 
-            self.headerController?.subscribeButton?.setTitle(subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
+            self.updateSubscribeButton(subscribed)
 
             service.subscribeToPodcast(podcast, subscribe: subscribed, completion: { [weak self] (result) in
                 if let controller = self {
                     if !result {
-                        controller.headerController?.subscribeButton?.setTitle(!subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
+                        controller.updateSubscribeButton(!subscribed)
                     }
                 }
             })
+        }
+    }
+
+    func updateSubscribeButton(override: Bool?) {
+        if let override = override {
+            if override {
+                self.subscribeButton?.setTitle("Unsubscribe", forState: .Normal)
+                self.settingsButtonWidth?.constant = 70.0
+            } else {
+                self.subscribeButton?.setTitle("Subscribe", forState: .Normal)
+                self.settingsButtonWidth?.constant = 0.0
+            }
+        } else if let podcast = self.podcast {
+            if podcast.subscribed {
+                self.subscribeButton?.setTitle("Unsubscribe", forState: .Normal)
+                self.settingsButtonWidth?.constant = 70.0
+            } else {
+                self.subscribeButton?.setTitle("Subscribe", forState: .Normal)
+                self.settingsButtonWidth?.constant = 0.0
+            }
         }
     }
 
@@ -165,6 +199,7 @@ class PodcastTableViewController: SLKTextViewController {
 
     // MARK: - UIViewController functions
 
+    // swiftlint:disable function_body_length
     override func viewDidLoad() {
         guard podcast != nil else {
             print("expected a podcast initiated via previous controller")
@@ -174,22 +209,58 @@ class PodcastTableViewController: SLKTextViewController {
         super.viewDidLoad()
 
         //
-        // Register Nibs for reuse
-        //
-        self.tableView.registerNib(UINib(nibName: "EpisodeCell", bundle: nil), forCellReuseIdentifier: "EpisodeCell")
-        self.tableView.registerNib(UINib(nibName: "EpisodeHeaderCell", bundle: nil), forCellReuseIdentifier: "EpisodeHeaderCell")
-        self.tableView.registerNib(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
-
-        //
         // TableView setup
         //
-        self.headerController = PodcastHeaderViewController(nibName: "PodcastHeader", bundle: nil)
-        self.tableView.tableHeaderView = self.headerController?.view
+        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
+        let navBarHeight: CGFloat
+        if let navigationController = self.navigationController {
+            navBarHeight = navigationController.navigationBar.frame.size.height
+        } else {
+            navBarHeight = 0.0
+        }
 
-        if let header = self.headerController {
-            var frame = header.view.frame
-            frame.size = CGSizeMake(header.view.frame.size.width, 200.0)
-            header.view.frame = frame
+        self.headerSwitchOffset = self.headerHeight - (statusBarHeight + navBarHeight) - statusBarHeight - navBarHeight
+
+        let initialImage = UIImage(named: "logo-launch")
+        self.headerImage = UIImageView(image: initialImage)
+        self.headerImage?.translatesAutoresizingMaskIntoConstraints = false
+        self.headerImage?.contentMode = .ScaleAspectFill
+        self.headerImage?.clipsToBounds = true
+
+        let header = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.headerHeight - (statusBarHeight + navBarHeight) + self.subHeaderHeight))
+
+        let sub = self.createSubHeader()
+        sub.translatesAutoresizingMaskIntoConstraints = false
+
+        if let image = self.headerImage {
+            header.addSubview(image)
+            header.insertSubview(sub, belowSubview: image)
+
+            self.tableView.tableHeaderView = header
+
+            let views = ["super": self.view, "tableView": self.tableView, "image": image, "sub": sub]
+            let metrics = ["headerHeight": (self.headerHeight - (statusBarHeight + navBarHeight)), "minHeaderHeight": (statusBarHeight + navBarHeight), "subHeaderHeight": self.subHeaderHeight]
+
+            var format = "V:[image(>=minHeaderHeight)]-(subHeaderHeight@750)-|"
+            var constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: metrics, views: views)
+            self.view.addConstraints(constraint)
+
+            format = "V:|-(headerHeight)-[sub(subHeaderHeight)]"
+            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: metrics, views: views)
+            self.view.addConstraints(constraint)
+
+            format = "|-0-[image]-0-|"
+            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: metrics, views: views)
+            self.view.addConstraints(constraint)
+
+            format = "|-0-[sub]-0-|"
+            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: metrics, views: views)
+            self.view.addConstraints(constraint)
+        }
+
+        if let image = self.headerImage {
+            let magic = NSLayoutConstraint(item: image, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1.0, constant: 0.0)
+            self.view.addConstraint(magic)
         }
 
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -197,8 +268,14 @@ class PodcastTableViewController: SLKTextViewController {
 
         self.tableView.allowsMultipleSelection = false
 
-        self.automaticallyAdjustsScrollViewInsets = false
-        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        self.automaticallyAdjustsScrollViewInsets = true
+
+        //
+        // Register Nibs for reuse
+        //
+        self.tableView.registerNib(UINib(nibName: "EpisodeCell", bundle: nil), forCellReuseIdentifier: "EpisodeCell")
+        self.tableView.registerNib(UINib(nibName: "EpisodeHeaderCell", bundle: nil), forCellReuseIdentifier: "EpisodeHeaderCell")
+        self.tableView.registerNib(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
 
         //
         // SLKTextViewController setup
@@ -228,24 +305,17 @@ class PodcastTableViewController: SLKTextViewController {
         //
         // Static element setup
         //
-        self.headerController?.titleLabel?.text = podcast?.title
+        self.titleLabel?.text = podcast?.title
 
         if let path = podcast?.image, let url = NSURL(string: path) {
             let placeholder = UIImage(named: "logo-launch")
-            self.headerController?.titleImage?.af_setImageWithURL(url, placeholderImage: placeholder)
+            self.headerImage?.af_setImageWithURL(url, placeholderImage: placeholder)
         }
 
-        if !(podcast!.subscribed) {
-            self.headerController?.settingsButton?.hidden = true
-            if let button = self.headerController?.settingsButton {
-                button.removeConstraints(button.constraints)
-            }
-        } else {
-            self.headerController?.settingsButton?.addTarget(self, action: "settingsButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
-        }
+        self.settingsButton?.addTarget(self, action: "settingsButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
 
-        self.headerController?.subscribeButton?.setTitle(self.podcast!.subscribed ? "Unsubscribe" : "Subscribe", forState: .Normal)
-        self.headerController?.subscribeButton?.addTarget(self, action: "subscribeButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.updateSubscribeButton(nil)
+        self.subscribeButton?.addTarget(self, action: "subscribeButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
 
         //
         // RefreshControl setup
@@ -256,17 +326,26 @@ class PodcastTableViewController: SLKTextViewController {
             refresher.addTarget(self, action: "refreshData:", forControlEvents: UIControlEvents.ValueChanged)
             refresher.backgroundColor = UIColor.orangeColor()
             refresher.tintColor = UIColor.whiteColor()
-            self.tableView.addSubview(refresher)
+            // FIXME
+            //self.tableView.addSubview(refresher)
         }
     }
+    // swiftlint:enable function_body_length
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
+        //
+        // Setup navigation bar
+        //
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = true
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        self.navigationController?.navigationBar.clipsToBounds = true
+
+        self.switchToExpandedHeader()
 
         //
         // Refresh data
@@ -274,6 +353,19 @@ class PodcastTableViewController: SLKTextViewController {
         self.refreshEpisodeData(self)
         self.refreshCommentData(self)
         self.refreshControl?.beginRefreshing()
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        //
+        // Reset navigation var
+        //
+        self.navigationController?.navigationBar.clipsToBounds = false
+
+        if let navigationController = self.navigationController as? FablerNavigationController {
+            navigationController.setDefaultNavigationBar()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -497,5 +589,111 @@ class PodcastTableViewController: SLKTextViewController {
 
     func commentsEditActions(indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         return nil
+    }
+
+    // MARK: - PodcastTableViewController magic functions
+
+    func createSubHeader() -> UIView {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        self.titleLabel = UILabel()
+        self.titleLabel?.translatesAutoresizingMaskIntoConstraints = false
+        self.titleLabel?.numberOfLines = 1
+        self.titleLabel?.font = UIFont.systemFontOfSize(18.0)
+        self.titleLabel?.lineBreakMode = NSLineBreakMode.ByTruncatingTail
+        self.titleLabel?.text = "Title"
+
+        self.subscribeButton = UIButton(type: UIButtonType.System)
+        self.subscribeButton?.translatesAutoresizingMaskIntoConstraints = false
+        self.subscribeButton?.tintColor = UIColor.orangeColor()
+        self.subscribeButton?.setTitle("Subscribe", forState: .Normal)
+
+        self.settingsButton = UIButton(type: UIButtonType.System)
+        self.settingsButton?.translatesAutoresizingMaskIntoConstraints = false
+        self.settingsButton?.tintColor = UIColor.orangeColor()
+        self.settingsButton?.setTitle("Settings", forState: .Normal)
+
+        if let title = self.titleLabel, let subscribe = self.subscribeButton, let settings = self.settingsButton {
+            view.addSubview(title)
+            view.addSubview(subscribe)
+            view.addSubview(settings)
+
+            let views = ["title": title, "subscribe": subscribe, "settings": settings]
+
+            var format = "V:|-0-[title]-0-|"
+            var constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: nil, views: views)
+            view.addConstraints(constraint)
+
+            format = "V:|-0-[subscribe]-0-|"
+            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: nil, views: views)
+            view.addConstraints(constraint)
+
+            format = "V:|-0-[settings]-0-|"
+            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: nil, views: views)
+            view.addConstraints(constraint)
+
+            format = "|-5-[title]"
+            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: nil, views: views)
+            view.addConstraints(constraint)
+
+            format = "[subscribe][settings]|"
+            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: nil, views: views)
+            view.addConstraints(constraint)
+
+            format = "[title]-(0@900)-[subscribe]"
+            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: nil, views: views)
+            view.addConstraints(constraint)
+
+            var widthConstraint = NSLayoutConstraint(item: subscribe, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 90.0)
+            view.addConstraint(widthConstraint)
+
+            widthConstraint = NSLayoutConstraint(item: settings, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 70.0)
+            self.settingsButtonWidth = widthConstraint
+            view.addConstraint(widthConstraint)
+        }
+
+        return view
+    }
+
+    func switchToExpandedHeader() {
+        self.navigationItem.title = ""
+
+        self.barAnimationComplete = false
+    }
+
+    func switchToMinifiedHeader() {
+        self.barAnimationComplete = false
+
+        self.navigationItem.title = self.podcast?.title
+    }
+
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        super.scrollViewDidScroll(scrollView)
+
+        let y = scrollView.contentOffset.y
+
+        if y > self.headerSwitchOffset && !self.barIsCollapsed {
+            self.switchToMinifiedHeader()
+            self.barIsCollapsed = true
+        } else if y < self.headerSwitchOffset && self.barIsCollapsed {
+            self.switchToExpandedHeader()
+            self.barIsCollapsed = false
+        }
+
+        if y > (self.headerSwitchOffset) && y <= (self.headerSwitchOffset + 40) {
+            let delta = 40 - (y - self.headerSwitchOffset)
+            self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(delta, forBarMetrics: UIBarMetrics.Default)
+
+            // blur stuff
+        }
+
+        if !self.barAnimationComplete && y > (self.headerSwitchOffset + 40) {
+            self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0.0, forBarMetrics: UIBarMetrics.Default)
+
+            // blur stuff
+
+            self.barAnimationComplete = true
+        }
     }
 }

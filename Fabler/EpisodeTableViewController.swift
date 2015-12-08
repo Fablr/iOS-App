@@ -167,12 +167,6 @@ class EpisodeTableViewController: SLKTextViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
-        // Create global style class and move this in there
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.translucent = false
-        self.navigationController?.navigationBar.tintColor = UIColor.orangeColor()
-
         //
         // Refresh data
         //

@@ -17,7 +17,7 @@
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-25" translatesAutoresizingMaskIntoConstraints="NO" id="Okn-NU-qx9">
                         <rect key="frame" x="10" y="10" width="394" height="113"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="This is a comment." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1vQ-c0-Aoe">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="This is a comment." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1vQ-c0-Aoe">
                                 <rect key="frame" x="0.0" y="0.0" width="394" height="113"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>

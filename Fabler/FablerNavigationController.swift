@@ -26,10 +26,21 @@ class FablerNavigationController: UINavigationController {
         self.setToolbarHidden(true, animated: true)
     }
 
+    func setDefaultNavigationBar() {
+        self.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationBar.shadowImage = UIImage()
+        self.navigationBar.translucent = false
+        self.navigationBar.tintColor = UIColor.orangeColor()
+        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orangeColor()]
+        self.navigationBar.setTitleVerticalPositionAdjustment(0.0, forBarMetrics: UIBarMetrics.Default)
+    }
+
     // MARK: - UIViewController functions
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.setDefaultNavigationBar()
 
         self.setToolbarHidden(true, animated: true)
 

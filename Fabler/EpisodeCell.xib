@@ -39,6 +39,7 @@
                     </stackView>
                 </subviews>
                 <animations/>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="BHN-fV-fcS" firstAttribute="leading" secondItem="sI9-AA-JDb" secondAttribute="leadingMargin" id="5zd-2F-V9o"/>
                     <constraint firstItem="BHN-fV-fcS" firstAttribute="top" secondItem="sI9-AA-JDb" secondAttribute="topMargin" id="RcY-M2-pWs"/>

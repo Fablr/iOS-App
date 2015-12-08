@@ -75,7 +75,7 @@ class CommentService {
 
                 dispatch_async(queue, {completion(result: comments)})
         }
-        
+
         Log.debug("Episode comments request: \(request)")
     }
 
