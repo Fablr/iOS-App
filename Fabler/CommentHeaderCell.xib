@@ -17,7 +17,7 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kh3-It-InO">
                         <rect key="frame" x="10" y="10" width="394" height="29"/>
                         <animations/>
-                        <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                         <state key="normal" title="Comment"/>
                     </button>
                 </subviews>

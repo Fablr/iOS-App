@@ -61,7 +61,7 @@
                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="nzd-t6-cgf">
                                     <rect key="frame" x="48" y="0.0" width="484" height="51"/>
                                     <animations/>
-                                    <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                     <connections>
                                         <action selector="playbackSliderChanged:" destination="-1" eventType="valueChanged" id="orr-OR-jJD"/>
                                     </connections>
@@ -88,7 +88,7 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A8D-GR-3Ho">
                                     <rect key="frame" x="0.0" y="0.0" width="93" height="225"/>
                                     <animations/>
-                                    <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                     <state key="normal" image="rewind">
                                         <attributedString key="attributedTitle"/>
                                     </state>
@@ -99,7 +99,7 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Keb-kZ-4rN">
                                     <rect key="frame" x="103" y="0.0" width="94" height="225"/>
                                     <animations/>
-                                    <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                     <state key="normal" image="play"/>
                                     <connections>
                                         <action selector="playButtonPressed:" destination="-1" eventType="touchUpInside" id="4Ff-yR-1Bh"/>
@@ -108,7 +108,7 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ndf-Cf-xee">
                                     <rect key="frame" x="207" y="0.0" width="93" height="225"/>
                                     <animations/>
-                                    <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                     <state key="normal" image="forward">
                                         <attributedString key="attributedTitle"/>
                                     </state>
@@ -129,7 +129,7 @@
                                 <constraint firstAttribute="height" constant="50" id="jzN-8O-Z82"/>
                                 <constraint firstAttribute="width" constant="300" id="tXD-np-LUE"/>
                             </constraints>
-                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                             <state key="normal" title="Close"/>
                             <connections>
                                 <action selector="doneButtonPressed:" destination="-1" eventType="touchUpInside" id="Vsu-PD-1Fu"/>

@@ -142,9 +142,9 @@ class EpisodeTableViewController: SLKTextViewController {
         self.inverted = false
 
         self.leftButton.setImage(UIImage(named: "delete"), forState: UIControlState.Normal)
-        self.leftButton.tintColor = UIColor.orangeColor()
+        self.leftButton.tintColor = UIColor.fablerOrangeColor()
         self.rightButton.setTitle("Send", forState: UIControlState.Normal)
-        self.rightButton.tintColor = UIColor.orangeColor()
+        self.rightButton.tintColor = UIColor.fablerOrangeColor()
 
         self.textInputbar.autoHideRightButton = true
 
@@ -171,7 +171,7 @@ class EpisodeTableViewController: SLKTextViewController {
         if let refresher = self.refreshControl {
             refresher.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
             refresher.addTarget(self, action: "refreshData:", forControlEvents: UIControlEvents.ValueChanged)
-            refresher.backgroundColor = UIColor.orangeColor()
+            refresher.backgroundColor = UIColor.fablerOrangeColor()
             refresher.tintColor = UIColor.whiteColor()
             self.tableView.addSubview(refresher)
         }

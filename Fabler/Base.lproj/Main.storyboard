@@ -129,7 +129,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Your Shows" id="ovY-ud-e84">
                         <barButtonItem key="leftBarButtonItem" image="menu" id="bvR-yD-ToH">
-                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -172,7 +172,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="80" id="r4P-2p-g3O"/>
                                             </constraints>
-                                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                             <state key="normal" title="Close"/>
                                             <connections>
                                                 <action selector="topCloseButtonPressed:" destination="o7K-TQ-3w4" eventType="touchUpInside" id="5qT-ob-z1a"/>
@@ -198,7 +198,7 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aAU-xR-8aW">
                                     <rect key="frame" x="10" y="0.0" width="580" height="44"/>
                                     <animations/>
-                                    <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                     <state key="normal" title="Close"/>
                                     <connections>
                                         <action selector="bottomCloseButtonPressed:" destination="o7K-TQ-3w4" eventType="touchUpInside" id="cY0-09-HaX"/>
@@ -240,8 +240,8 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="28" id="rGP-Xj-fRw"/>
                                                             </constraints>
-                                                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <color key="onTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="onTintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                                             <connections>
                                                                 <action selector="downloadSwitchChanged:" destination="o7K-TQ-3w4" eventType="valueChanged" id="SSU-dx-He1"/>
                                                             </connections>
@@ -286,8 +286,8 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="28" id="PO1-gf-hNL"/>
                                                             </constraints>
-                                                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <color key="onTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="onTintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                                             <connections>
                                                                 <action selector="notificationSwitchChanged:" destination="o7K-TQ-3w4" eventType="valueChanged" id="zRH-qI-xwC"/>
                                                             </connections>
@@ -329,7 +329,7 @@
                                                         <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="3" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="bMX-vn-WVv">
                                                             <rect key="frame" x="470" y="0.0" width="94" height="29"/>
                                                             <animations/>
-                                                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                                             <connections>
                                                                 <action selector="amountStepperChanged:" destination="o7K-TQ-3w4" eventType="valueChanged" id="yhz-z4-8oD"/>
                                                             </connections>
@@ -440,7 +440,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jIg-j1-TCs">
                                         <rect key="frame" x="0.0" y="120" width="33" height="30"/>
                                         <animations/>
-                                        <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="User"/>
                                         <connections>
                                             <segue destination="4Mp-X0-yx1" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="iJD-ff-uLz"/>
@@ -637,7 +637,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Discovery" id="cfc-BV-ZDE">
                         <barButtonItem key="leftBarButtonItem" image="menu" id="okk-0h-9oo">
-                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -760,7 +760,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="You" id="K8K-cf-Lb4">
                         <barButtonItem key="leftBarButtonItem" image="menu" id="OAz-pa-Onn">
-                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -808,7 +808,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tWZ-CD-OTO"/>
-        <segue reference="fqu-mq-g5G"/>
         <segue reference="Y9H-zW-Zfi"/>
+        <segue reference="nsB-VR-E4f"/>
     </inferredMetricsTieBreakers>
 </document>

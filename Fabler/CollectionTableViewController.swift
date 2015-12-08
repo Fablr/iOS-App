@@ -56,7 +56,7 @@ class CollectionTableViewController: UITableViewController {
         if let refresher = self.refreshControl {
             refresher.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
             refresher.addTarget(self, action: "refreshData:", forControlEvents: UIControlEvents.ValueChanged)
-            refresher.backgroundColor = UIColor.orangeColor()
+            refresher.backgroundColor = UIColor.fablerOrangeColor()
             refresher.tintColor = UIColor.whiteColor()
             self.tableView.addSubview(refresher)
         }
@@ -108,7 +108,7 @@ class CollectionTableViewController: UITableViewController {
             let frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
             let button = UIButton(type: UIButtonType.System) as UIButton
 
-            button.tintColor = UIColor.orangeColor()
+            button.tintColor = UIColor.fablerOrangeColor()
             button.setTitle("Click here to discover podcasts.", forState: .Normal)
             button.frame = frame
             button.addTarget(self, action: "discoverButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)

@@ -22,7 +22,7 @@
                             <segment title="All"/>
                             <segment title="Comments"/>
                         </segments>
-                        <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                     </segmentedControl>
                 </subviews>
                 <animations/>

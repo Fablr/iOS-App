@@ -42,7 +42,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="20" id="BYj-Yf-QQ1"/>
                                             </constraints>
-                                            <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                             <state key="normal" image="play"/>
                                             <connections>
                                                 <action selector="playButtonPressed:" destination="-1" eventType="touchUpInside" id="vNB-uk-hlK"/>
@@ -53,7 +53,7 @@
                                             <animations/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                            <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
                                     </subviews>

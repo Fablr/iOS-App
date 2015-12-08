@@ -286,9 +286,9 @@ class PodcastTableViewController: SLKTextViewController {
         self.inverted = false
 
         self.leftButton.setImage(UIImage(named: "delete"), forState: UIControlState.Normal)
-        self.leftButton.tintColor = UIColor.orangeColor()
+        self.leftButton.tintColor = UIColor.fablerOrangeColor()
         self.rightButton.setTitle("Send", forState: UIControlState.Normal)
-        self.rightButton.tintColor = UIColor.orangeColor()
+        self.rightButton.tintColor = UIColor.fablerOrangeColor()
 
         self.textInputbar.autoHideRightButton = true
 
@@ -538,7 +538,7 @@ class PodcastTableViewController: SLKTextViewController {
             }
         })
 
-        detailAction.backgroundColor = UIColor.orangeColor()
+        detailAction.backgroundColor = UIColor.fablerOrangeColor()
 
         return [detailAction]
     }
@@ -605,12 +605,12 @@ class PodcastTableViewController: SLKTextViewController {
 
         self.subscribeButton = UIButton(type: UIButtonType.System)
         self.subscribeButton?.translatesAutoresizingMaskIntoConstraints = false
-        self.subscribeButton?.tintColor = UIColor.orangeColor()
+        self.subscribeButton?.tintColor = UIColor.fablerOrangeColor()
         self.subscribeButton?.setTitle("Subscribe", forState: .Normal)
 
         self.settingsButton = UIButton(type: UIButtonType.System)
         self.settingsButton?.translatesAutoresizingMaskIntoConstraints = false
-        self.settingsButton?.tintColor = UIColor.orangeColor()
+        self.settingsButton?.tintColor = UIColor.fablerOrangeColor()
         self.settingsButton?.setTitle("Settings", forState: .Normal)
 
         if let title = self.titleLabel, let subscribe = self.subscribeButton, let settings = self.settingsButton {
