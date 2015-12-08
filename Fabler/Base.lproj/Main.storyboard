@@ -79,7 +79,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="115" id="m7N-Q8-5h6" customClass="PodcastTableViewCell" customModule="Fabler" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="66" width="600" height="115"/>
+                                <rect key="frame" x="0.0" y="22" width="600" height="115"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m7N-Q8-5h6" id="uxv-3b-FYp">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="115"/>
@@ -386,6 +386,7 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <segue destination="JHt-FC-ojy" kind="show" identifier="displayEpisodeSegue" id="mCF-CB-51q"/>
                         <segue destination="o7K-TQ-3w4" kind="presentation" identifier="displaySettingsSegue" modalPresentationStyle="overCurrentContext" id="cPw-0h-Nnv"/>
@@ -490,7 +491,7 @@
             <objects>
                 <tableViewController id="c8U-hf-vWv" customClass="MenuTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="none" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" id="haP-s8-5Sh">
-                        <rect key="frame" x="0.0" y="0.0" width="550" height="360"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -499,13 +500,13 @@
                             <tableViewSection id="uba-LA-EjJ">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="fyu-8k-lj0">
-                                        <rect key="frame" x="0.0" y="0.0" width="550" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fyu-8k-lj0" id="T53-k8-WHP">
-                                            <rect key="frame" x="0.0" y="0.0" width="550" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discovery" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="it0-69-JpN">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Discovery" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="it0-69-JpN">
                                                     <rect key="frame" x="23" y="8" width="554" height="33"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="27"/>
@@ -527,13 +528,13 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ndk-jA-avy">
-                                        <rect key="frame" x="0.0" y="50" width="550" height="50"/>
+                                        <rect key="frame" x="0.0" y="50" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ndk-jA-avy" id="2Mc-1j-0ud">
-                                            <rect key="frame" x="0.0" y="0.0" width="550" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Shows" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gh3-5S-TMf">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Your Shows" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gh3-5S-TMf">
                                                     <rect key="frame" x="23" y="8" width="554" height="33"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="27"/>
@@ -608,7 +609,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ShowCell" id="9gj-lg-n5F" customClass="PodcastCell" customModule="Fabler" customModuleProvider="target">
-                                <rect key="frame" x="10" y="54" width="175" height="175"/>
+                                <rect key="frame" x="10" y="10" width="175" height="175"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="175" height="175"/>
@@ -685,7 +686,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zh3-ak-4sy" customClass="FBSDKLoginButton">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zh3-ak-4sy" customClass="FBSDKLoginButton">
                                 <rect key="frame" x="45" y="420" width="510" height="111"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -696,7 +697,7 @@
                                     <outlet property="delegate" destination="TX9-Ex-k35" id="tST-eH-bnG"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m5c-da-KOd">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m5c-da-KOd">
                                 <rect key="frame" x="40" y="84" width="520" height="316"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WUo-Ej-fQq">

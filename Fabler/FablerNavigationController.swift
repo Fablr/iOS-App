@@ -14,6 +14,8 @@ class FablerNavigationController: UINavigationController {
 
     var playerAdded: Bool = false
 
+    var currentStatusBarStyle: UIStatusBarStyle = .LightContent
+
     // MARK: - FablerNavigationController functions
 
     func displaySmallPlayer() {
@@ -27,12 +29,14 @@ class FablerNavigationController: UINavigationController {
     }
 
     func setDefaultNavigationBar() {
+        self.navigationBar.barStyle = UIBarStyle.Default
         self.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.translucent = false
         self.navigationBar.tintColor = UIColor.fablerOrangeColor()
         self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.fablerOrangeColor()]
         self.navigationBar.setTitleVerticalPositionAdjustment(0.0, forBarMetrics: UIBarMetrics.Default)
+        self.currentStatusBarStyle = .Default
     }
 
     // MARK: - UIViewController functions

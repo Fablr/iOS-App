@@ -337,6 +337,7 @@ class PodcastTableViewController: SLKTextViewController {
         //
         // Setup navigation bar
         //
+        self.navigationController?.navigationBar.barStyle = .Black
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = true
@@ -381,6 +382,10 @@ class PodcastTableViewController: SLKTextViewController {
                 controller.podcast = podcast
             }
         }
+    }
+
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
     }
 
     // MARK: - UITableViewController functions
