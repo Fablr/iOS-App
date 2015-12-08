@@ -27,7 +27,7 @@ class PodcastService {
                 podcast.notify = allowNotifications
             }
         } catch {
-            Log.severe("Realm write failed.")
+            Log.error("Realm write failed.")
         }
     }
 
@@ -39,7 +39,7 @@ class PodcastService {
                 podcast.download = allowAutoDownload
             }
         } catch {
-            Log.severe("Realm write failed.")
+            Log.error("Realm write failed.")
         }
     }
 
@@ -51,7 +51,7 @@ class PodcastService {
                 podcast.downloadAmount = amount
             }
         } catch {
-            Log.severe("Realm write failed.")
+            Log.error("Realm write failed.")
         }
     }
 
@@ -85,7 +85,7 @@ class PodcastService {
 
             podcast = realm.objects(Podcast).filter("podcastId == %d", podcastId).first
         } catch {
-            Log.severe("Realm read failed.")
+            Log.error("Realm read failed.")
         }
 
         return podcast
@@ -121,7 +121,7 @@ class PodcastService {
 
             podcasts = Array(realm.objects(Podcast))
         } catch {
-            Log.severe("Realm read failed.")
+            Log.error("Realm read failed.")
         }
 
         return podcasts
@@ -159,7 +159,7 @@ class PodcastService {
 
             podcasts = Array(realm.objects(Podcast).filter("subscribed == YES"))
         } catch {
-            Log.severe("Realm read failed.")
+            Log.error("Realm read failed.")
         }
 
         return podcasts
@@ -173,7 +173,7 @@ class PodcastService {
                 podcast.subscribed = subscribe
             }
         } catch {
-            Log.severe("Realm write failed.")
+            Log.error("Realm write failed.")
         }
 
         let request = Alamofire
@@ -193,7 +193,7 @@ class PodcastService {
                         podcast.subscribed = !subscribe
                     }
                 } catch {
-                    Log.severe("Realm write failed.")
+                    Log.error("Realm write failed.")
                 }
 
                 dispatch_async(queue, {completion(result: false)})
@@ -255,7 +255,7 @@ class PodcastService {
                 realm.add(podcast, update: true)
             }
         } catch {
-            Log.severe("Realm write failed.")
+            Log.error("Realm write failed.")
         }
 
         return podcast
@@ -289,7 +289,7 @@ class PodcastService {
                 }
             }
         } catch {
-            Log.severe("Realm write failed.")
+            Log.error("Realm write failed.")
         }
     }
 }

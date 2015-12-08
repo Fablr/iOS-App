@@ -108,7 +108,7 @@ class LoginService {
                 realm.add(user, update: true)
             }
         } catch {
-            Log.severe("Realm write failed.")
+            Log.error("Realm write failed.")
         }
 
         return user

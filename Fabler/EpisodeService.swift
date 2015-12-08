@@ -49,7 +49,7 @@ class EpisodeService {
 
             episodes = Array(realm.objects(Episode).filter("podcastId == %d", podcastId))
         } catch {
-            Log.severe("Realm read failed.")
+            Log.error("Realm read failed.")
         }
 
         return episodes
@@ -64,7 +64,7 @@ class EpisodeService {
                 episode.mark = mark
             }
         } catch {
-            Log.severe("Realm write failed.")
+            Log.error("Realm write failed.")
         }
 
         let request = Alamofire
@@ -138,7 +138,7 @@ class EpisodeService {
                 realm.add(episode, update: true)
             }
         } catch {
-            Log.severe("Realm write failed.")
+            Log.error("Realm write failed.")
         }
 
         return episode

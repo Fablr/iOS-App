@@ -8,18 +8,15 @@
 
 // swiftlint:disable variable_name
 
-let Log: XCGLogger = {
-    let log = XCGLogger.defaultInstance()
-#if DEBUG
-    log.setup(.Debug, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil, fileLogLevel: .Debug)
-#else
-    log.setup(.Severe, showThreadName: true, showLogLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil)
-#endif
-
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = "MM/dd/yyyy hh:mma"
-    dateFormatter.locale = NSLocale.currentLocale()
-    log.dateFormatter = dateFormatter
+let Log: SwiftyBeaver.Type = {
+    let log = SwiftyBeaver.self
+    #if DEBUG
+        let console = ConsoleDestination()
+        console.detailOutput = true
+        console.dateFormat = "MM/dd/yyyy hh:mma"
+        log.addDestination(console)
+    #else
+    #endif
 
     return log
 }()
@@ -28,7 +25,7 @@ let Log: XCGLogger = {
 
 import UIKit
 import FBSDKCoreKit
-import XCGLogger
+import SwiftyBeaver
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
