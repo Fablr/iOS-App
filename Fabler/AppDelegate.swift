@@ -12,6 +12,7 @@ let Log: SwiftyBeaver.Type = {
     let log = SwiftyBeaver.self
     #if DEBUG
         let console = ConsoleDestination()
+        console.minLevel = .Debug
         console.detailOutput = true
         console.dateFormat = "MM/dd/yyyy hh:mma"
         log.addDestination(console)
@@ -26,6 +27,7 @@ let Log: SwiftyBeaver.Type = {
 import UIKit
 import FBSDKCoreKit
 import SwiftyBeaver
+import AlamofireImage
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -34,13 +36,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var loginService: LoginService?
     var player: FablerPlayer?
     var downloader: DownloadManager?
+    var imageDownloader: ImageDownloader?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Log.info("Application did finish launching.")
 
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        let queue = NSOperationQueue.mainQueue()
+
+        notificationCenter.addObserverForName(TokenDidChangeNotification, object: nil, queue: queue) { [weak self] (_) in
+            if let app = self {
+                app.fillCaches()
+            }
+        }
+
         self.loginService = LoginService()
         self.player = FablerPlayer()
         self.downloader = DownloadManager(identifier: "com.Fabler.Fabler.background")
+        self.imageDownloader = ImageDownloader(downloadPrioritization: .LIFO)
 
         let result = FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
 
@@ -67,5 +80,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: () -> Void) {
         self.downloader?.setBackgroundCompletionHandler(completionHandler)
+    }
+
+    func fillCaches() {
+        Log.info("Attempting pre-fetch and fill caches.")
+
+        //
+        // Fill image cache for subscribed podcasts
+        //
+        let podcastService = PodcastService()
+        podcastService.readSubscribedPodcasts(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), completion: { [weak self] (podcasts) in
+            Log.info("Caching subscribed podcast images.")
+
+            if let downloader = self?.imageDownloader, let cache = downloader.imageCache {
+                for podcast in podcasts {
+                    if let _ = cache.imageWithIdentifier("\(podcast.podcastId)-header-blurred") {
+                        continue
+                    }
+
+                    let id = podcast.podcastId
+
+                    if let url = NSURL(string: podcast.image) {
+                        let request = NSURLRequest(URL: url)
+
+                        downloader.downloadImage(URLRequest: request, completion: { (response) in
+                            if let image = response.result.value {
+                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] in
+                                    if let blurred = image.af_imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {
+                                        Log.info("Cached image at '\(id)-header-blurred'.")
+                                        self?.imageDownloader?.imageCache?.addImage(blurred, withIdentifier: "\(id)-header-blurred")
+                                    }
+                                })
+                            }
+                        })
+                    }
+                }
+            }
+        })
+        // END
     }
 }

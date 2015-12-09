@@ -19,6 +19,8 @@ class CollectionTableViewController: UITableViewController {
 
     var podcasts: [Podcast]?
 
+    var downloader: ImageDownloader?
+
     // MARK: - CollectionTableViewController functions
 
     func refreshData(sender: AnyObject) {
@@ -45,6 +47,10 @@ class CollectionTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate, let downloader = delegate.imageDownloader {
+            self.downloader = downloader
+        }
 
         if revealViewController() != nil {
             self.menuButton?.target = revealViewController()
@@ -135,6 +141,7 @@ class CollectionTableViewController: UITableViewController {
             cell.titleLabel?.text = podcast.title
 
             if let url = NSURL(string: podcast.image) {
+                cell.tileImage?.af_imageDownloader = self.downloader
                 cell.tileImage?.af_setImageWithURL(url, placeholderImage: nil)
             }
         }

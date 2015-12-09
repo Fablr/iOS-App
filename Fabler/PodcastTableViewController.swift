@@ -23,12 +23,15 @@ class PodcastTableViewController: SLKTextViewController {
 
     var refreshControl: UIRefreshControl?
     var headerImage: UIImageView?
+    var blurredHeaderImage: UIImageView?
     var titleLabel: UILabel?
     var settingsButton: UIButton?
     var subscribeButton: UIButton?
     var settingsButtonWidth: NSLayoutConstraint?
 
     var currentSegment: Int = 0
+
+    var downloader: ImageDownloader?
 
     // MARK: - PodcastTableViewController magic members
 
@@ -221,28 +224,39 @@ class PodcastTableViewController: SLKTextViewController {
 
         self.headerSwitchOffset = self.headerHeight - (statusBarHeight + navBarHeight) - statusBarHeight - navBarHeight
 
-        let initialImage = UIImage(named: "logo-launch")
-        self.headerImage = UIImageView(image: initialImage)
+        self.headerImage = UIImageView()
+        self.blurredHeaderImage?.backgroundColor = UIColor(red: 250.0/255.0, green: 250.0/255.0, blue: 250.0/255.0, alpha: 1.0)
         self.headerImage?.translatesAutoresizingMaskIntoConstraints = false
         self.headerImage?.contentMode = .ScaleAspectFill
         self.headerImage?.clipsToBounds = true
+
+        self.blurredHeaderImage = UIImageView()
+        self.blurredHeaderImage?.backgroundColor = UIColor(red: 250.0/255.0, green: 250.0/255.0, blue: 250.0/255.0, alpha: 1.0)
+        self.blurredHeaderImage?.translatesAutoresizingMaskIntoConstraints = false
+        self.blurredHeaderImage?.contentMode = .ScaleAspectFill
+        self.blurredHeaderImage?.clipsToBounds = true
 
         let header = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.headerHeight - (statusBarHeight + navBarHeight) + self.subHeaderHeight))
 
         let sub = self.createSubHeader()
         sub.translatesAutoresizingMaskIntoConstraints = false
 
-        if let image = self.headerImage {
+        if let image = self.headerImage, let blurredImage = self.blurredHeaderImage {
             header.addSubview(image)
-            header.insertSubview(sub, belowSubview: image)
+            header.insertSubview(blurredImage, belowSubview: image)
+            header.insertSubview(sub, belowSubview: blurredImage)
 
             self.tableView.tableHeaderView = header
 
-            let views = ["super": self.view, "tableView": self.tableView, "image": image, "sub": sub]
+            let views = ["super": self.view, "tableView": self.tableView, "image": image, "blurredImage": blurredImage, "sub": sub]
             let metrics = ["headerHeight": (self.headerHeight - (statusBarHeight + navBarHeight)), "minHeaderHeight": (statusBarHeight + navBarHeight), "subHeaderHeight": self.subHeaderHeight]
 
             var format = "V:[image(>=minHeaderHeight)]-(subHeaderHeight@750)-|"
             var constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: metrics, views: views)
+            self.view.addConstraints(constraint)
+
+            format = "V:[blurredImage(>=minHeaderHeight)]-(subHeaderHeight@750)-|"
+            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: metrics, views: views)
             self.view.addConstraints(constraint)
 
             format = "V:|-(headerHeight)-[sub(subHeaderHeight)]"
@@ -253,13 +267,18 @@ class PodcastTableViewController: SLKTextViewController {
             constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: metrics, views: views)
             self.view.addConstraints(constraint)
 
+            format = "|-0-[blurredImage]-0-|"
+            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: metrics, views: views)
+            self.view.addConstraints(constraint)
+
             format = "|-0-[sub]-0-|"
             constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: metrics, views: views)
             self.view.addConstraints(constraint)
-        }
 
-        if let image = self.headerImage {
-            let magic = NSLayoutConstraint(item: image, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1.0, constant: 0.0)
+            var magic = NSLayoutConstraint(item: image, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1.0, constant: 0.0)
+            self.view.addConstraint(magic)
+
+            magic = NSLayoutConstraint(item: blurredImage, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1.0, constant: 0.0)
             self.view.addConstraint(magic)
         }
 
@@ -307,9 +326,39 @@ class PodcastTableViewController: SLKTextViewController {
         //
         self.titleLabel?.text = podcast?.title
 
-        if let path = podcast?.image, let url = NSURL(string: path) {
-            let placeholder = UIImage(named: "logo-launch")
-            self.headerImage?.af_setImageWithURL(url, placeholderImage: placeholder)
+        if let path = podcast?.image, let url = NSURL(string: path), let delegate = UIApplication.sharedApplication().delegate as? AppDelegate, let downloader = delegate.imageDownloader {
+            self.downloader = downloader
+
+            let request = NSURLRequest(URL: url)
+
+            downloader.downloadImage(URLRequest: request, completion: { [weak self] (response) in
+                if let controller = self, let image = response.result.value, let cache = self?.downloader?.imageCache, let podcast = self?.podcast {
+                    let id = podcast.podcastId
+
+                    if let blurred = cache.imageWithIdentifier("\(id)-header-blurred") {
+                        controller.blurredHeaderImage?.image = blurred
+                        controller.headerImage?.image = image
+                    } else {
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                            Log.debug("Attempting to blur image.")
+
+                            if let blurred = image.af_imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {
+                                Log.debug("Caching blurred header image.")
+                                self?.downloader?.imageCache?.addImage(blurred, withIdentifier: "\(id)-header-blurred")
+
+                                dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                                    Log.debug("Setting blurred header image.")
+
+                                    if let controller = self {
+                                        controller.blurredHeaderImage?.image = blurred
+                                        controller.headerImage?.image = image
+                                    }
+                                })
+                            }
+                        })
+                    }
+                }
+            })
         }
 
         self.settingsButton?.addTarget(self, action: "settingsButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -344,8 +393,9 @@ class PodcastTableViewController: SLKTextViewController {
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.navigationController?.navigationBar.clipsToBounds = true
+        self.navigationItem.title = ""
 
-        self.switchToExpandedHeader()
+        self.barAnimationComplete = false
 
         //
         // Refresh data
@@ -660,42 +710,40 @@ class PodcastTableViewController: SLKTextViewController {
         return view
     }
 
-    func switchToExpandedHeader() {
-        self.navigationItem.title = ""
-
-        self.barAnimationComplete = false
-    }
-
-    func switchToMinifiedHeader() {
-        self.barAnimationComplete = false
-
-        self.navigationItem.title = self.podcast?.title
-    }
-
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         super.scrollViewDidScroll(scrollView)
 
         let y = scrollView.contentOffset.y
 
         if y > self.headerSwitchOffset && !self.barIsCollapsed {
-            self.switchToMinifiedHeader()
+            self.barAnimationComplete = false
+            self.navigationItem.title = self.podcast?.title
             self.barIsCollapsed = true
         } else if y < self.headerSwitchOffset && self.barIsCollapsed {
-            self.switchToExpandedHeader()
+            self.navigationItem.title = ""
+            self.barAnimationComplete = false
             self.barIsCollapsed = false
         }
 
         if y > (self.headerSwitchOffset) && y <= (self.headerSwitchOffset + 40) {
             let delta = 40 - (y - self.headerSwitchOffset)
+
+            Log.verbose("Delta at \(delta).")
+
             self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(delta, forBarMetrics: UIBarMetrics.Default)
 
-            // blur stuff
+            if let image = self.headerImage, let _ = self.blurredHeaderImage?.image {
+                let alpha = (1.0 - (1.0 * ((40.0 - delta) / 40.0)))
+                image.alpha = alpha
+            }
         }
 
         if !self.barAnimationComplete && y > (self.headerSwitchOffset + 40) {
             self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0.0, forBarMetrics: UIBarMetrics.Default)
 
-            // blur stuff
+            if let image = self.headerImage, let _ = self.blurredHeaderImage?.image {
+                image.alpha = 0.0
+            }
 
             self.barAnimationComplete = true
         }

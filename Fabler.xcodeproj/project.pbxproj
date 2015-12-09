@@ -18,6 +18,7 @@
 		4538B57D1BF55C3800039DF1 /* SmallPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */; };
 		4538B5801BF55E1800039DF1 /* SmallPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */; };
 		45505F711BFB1EF600481291 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45505F701BFB1EF600481291 /* DownloadManager.swift */; };
+		45633A681C17BB3B00E6023A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45633A671C17BB3B00E6023A /* CoreGraphics.framework */; };
 		456BB5C91BF5B4A600D59C47 /* FablerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */; };
 		456BB5CB1BF5CD3E00D59C47 /* FablerPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */; };
 		4576FC001C13ACC900381A28 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4576FBFF1C13ACC900381A28 /* CommentCell.xib */; };
@@ -79,6 +80,7 @@
 		4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPlayer.xib; sourceTree = "<group>"; };
 		4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallPlayerViewController.swift; sourceTree = "<group>"; };
 		45505F701BFB1EF600481291 /* DownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
+		45633A671C17BB3B00E6023A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerNavigationController.swift; sourceTree = "<group>"; };
 		456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerPlayer.swift; sourceTree = "<group>"; };
 		4576FBFF1C13ACC900381A28 /* CommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentCell.xib; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45633A681C17BB3B00E6023A /* CoreGraphics.framework in Frameworks */,
 				C777D4C75928ACC892324CE5 /* Pods_Fabler.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -160,6 +163,7 @@
 		4588CF221BDB2A3C0080E13D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				45633A671C17BB3B00E6023A /* CoreGraphics.framework */,
 				0FC93F29D694A1CBEDC5F5BA /* Pods_Fabler.framework */,
 			);
 			name = Frameworks;
