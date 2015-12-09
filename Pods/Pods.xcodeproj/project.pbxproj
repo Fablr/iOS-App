@@ -107,6 +107,7 @@
 		2C6B54A1533A2CB269B5AA2EA7EFFAF8 /* FBSDKBridgeAPIProtocolWebV1.m in Sources */ = {isa = PBXBuildFile; fileRef = 968B2693A0998B05AAC60454B80950F5 /* FBSDKBridgeAPIProtocolWebV1.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		2D15864A1214C7298EE0D8C20C7B5CF6 /* RLMSwiftBridgingHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = 354249E569748345E072D8E1DA2506CF /* RLMSwiftBridgingHeader.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		2D553AB5B0F7C14DA79E63C601C4B4CE /* RealmSwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 829D75825F04CEA6C00AA37154203142 /* RealmSwift-dummy.m */; };
+		2DFB6DEB4CB168FA65755968D9298389 /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F81B97C3A4853E16F82A55D9AF9B67 /* ConsoleDestination.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		2F2C5CE6ECDB1CC85166ADBFFBFC3E70 /* FBSDKLoginConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = C2A793B03943F06AD7516C9B8E862F2D /* FBSDKLoginConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2F579B335AD8FEEAC20D82405369F2A8 /* MMDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 46CBBDA929B4655371AFE5C7629D44D4 /* MMDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2F784BC5627E31996FBD561C6FD0F051 /* BFAppLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A24F9629F9D8323146B67052DFE6912 /* BFAppLink.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -148,7 +149,6 @@
 		3D706DB48B03FAF2DD4AD0DD09D905BC /* realm_nmmintrin.h in Headers */ = {isa = PBXBuildFile; fileRef = A1626E81846750E6F753D5E7E08DCADA /* realm_nmmintrin.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		3D9B5BFA203A37C9776C29240A66DBF6 /* FBSDKMutableCopying.h in Headers */ = {isa = PBXBuildFile; fileRef = BF80B3A388DC39574B07BDD181D8B9CB /* FBSDKMutableCopying.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3DDBD184B7EA38276E2EE23159DA8634 /* FBSDKGraphRequestConnection+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = D3357144B9CEA5B4D8F9866D453D98AA /* FBSDKGraphRequestConnection+Internal.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		3DDC8A54B5CC2480491619FBA8620109 /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D23D763CFEC43AA5283F5BB00BA9B1 /* BaseDestination.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		3F0475D1525CBBFA5EF78C4A01C876CC /* FBSDKBridgeAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E87084BD43BA607FEC17EDB18B985B /* FBSDKBridgeAPIResponse.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		3F67C90D4AE255FC2B5DF75C927D0178 /* FBSDKLoginCompletion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3059046537A35903A58354FE3A778603 /* FBSDKLoginCompletion.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		3F749741CD651E518C80FDBE83F1BEBE /* FBSDKLogo.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F5A427A449A05138894D54CB11CEF02 /* FBSDKLogo.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -178,10 +178,10 @@
 		4DEC03E2685026D8E664DBD93755B754 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86B9D2C92DBD96290BEBD95D275A92E /* Optional.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		4F9E06249C6C97626C09B1FFC8C91FE1 /* FBSDKIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = A567D5EA24D243964D4BA0A392FAB572 /* FBSDKIcon.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		4FAB7B06CCA8B4D5D1ADDFC8426987E6 /* column_linkbase.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 0A1B1773F3EBEAB029AD5B3E28CC5A98 /* column_linkbase.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
+		5014E6197269FDD90AAA13ECC6E48E47 /* FileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD6B3008C6520C91A432CD46369E801 /* FileDestination.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		5029B6FFEDCD5D3A9B72F56474314F50 /* commit_log.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 79B7DB69F5D0E79BA727E233A5A58A7F /* commit_log.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		5046E21FD29BE71E33718484CF2A30B2 /* FBSDKDialogConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1670BFECA44B1890DF9E3C52A104F177 /* FBSDKDialogConfiguration.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		50718128E348081960D0A0C227688DFB /* _FBSDKTemporaryErrorRecoveryAttempter.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E0C9DBE08E50373AFD67EABB923C42 /* _FBSDKTemporaryErrorRecoveryAttempter.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		5158DBA4E691A8C0D9D4DC5C24FC1DF1 /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = F565FE8976903D4808E35F21D8B64522 /* ConsoleDestination.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		51BEE212B6CCE7386D575928E984824A /* FBSDKGraphRequestBody.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DCAEDEFC3C6AF05864B959B1E5B9A5 /* FBSDKGraphRequestBody.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		5216D051FF885B139B60CB37082296E8 /* FBSDKAppEventsState.h in Headers */ = {isa = PBXBuildFile; fileRef = E05056D1F8E78E8795CD103228532615 /* FBSDKAppEventsState.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		52211B57601C5239A72E49472AD73177 /* FBSDKLoginKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8217BDDB01C045DC244DD4FA3DF73C27 /* FBSDKLoginKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -223,7 +223,7 @@
 		62F788FFCFB92D219240728A7C784866 /* handover_defs.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5C7326B67762B0E461965193B43587F7 /* handover_defs.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		6338E0DB815D1359FF73C9AF99510913 /* FBSDKProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = EB4C7F4E531B90BB591D582D186C747C /* FBSDKProfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		644CC6854A5B00492D4854D93C1C42AE /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C8FF191857BC5194C506A9A74D5350 /* ImageDownloader.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		646A176DF58BFF015A9933CB3B777255 /* SwiftyBeaver-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B3B827781EE9D6740F975B7BE4EE9944 /* SwiftyBeaver-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		646A176DF58BFF015A9933CB3B777255 /* SwiftyBeaver-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 234FBA88C24AB977E47CD801AA64437A /* SwiftyBeaver-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		64BFB241461ECF7E649B4EC5305AB152 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A38E0C95E8E28966A8861A1253C16 /* Image.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		652733054F7EDB7661102E090395FD95 /* query.hpp in Headers */ = {isa = PBXBuildFile; fileRef = C93D601382CE14AE2121F6E4799DC5AC /* query.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		657CDBBF1DFBBF345C698111824E0AFB /* thread.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1FA1FDAD504D095F26E14D160999400B /* thread.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -249,13 +249,14 @@
 		70A436F547363FD658F2DA07D9C757F6 /* exceptions.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BA23D7C91824F3AEFF8C310584962DF1 /* exceptions.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		715A9DA81DAC6C824330AD357B1EC68B /* FBSDKContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA9A82BA44928EAA3D501493D5FC469 /* FBSDKContainerViewController.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		71AEFB7E65DA49ED5BDC1C4E1DF6E7A9 /* FBSDKAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 102D604577024C842B047C8DA0761AB6 /* FBSDKAccessToken.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		7219E49A681A8402F53FC6DFF73629AC /* SwiftyBeaver-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A605CEFFC4BC65C1E7197C93A5E8BE52 /* SwiftyBeaver-dummy.m */; };
+		7219E49A681A8402F53FC6DFF73629AC /* SwiftyBeaver-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B2420726C902BCD1C1380BF589F24466 /* SwiftyBeaver-dummy.m */; };
 		727C1F9CC48470FB9FDB29BD1DD0A12B /* Bolts-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F61AF75D099A3310A6E3BD7255963C64 /* Bolts-dummy.m */; };
 		72CBA14BF1168A579766147160BAC08E /* FBSDKLoginError.m in Sources */ = {isa = PBXBuildFile; fileRef = 66179A4F2E58FA28907C978753A668E6 /* FBSDKLoginError.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		72FBCAC211A6789FB046D6C5F2F19161 /* FBSDKTimeSpentData.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B66243503991DA3E49E4E510CC25D95 /* FBSDKTimeSpentData.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		739888A86A4BE523DB1F7496ED335FFF /* FBSDKAccessTokenCacheV3_21.h in Headers */ = {isa = PBXBuildFile; fileRef = B70B79B5C832A65CE0882DE3C32B99EE /* FBSDKAccessTokenCacheV3_21.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		74B3059E22F0E65C794DB21614A28223 /* FBSDKAppEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = E78FA090BCC52ECBBD3EFB2D56B2041A /* FBSDKAppEvents.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		7574BADB64AAF488B4823DC32C9DB6D2 /* FBSDKAccessTokenCaching.h in Headers */ = {isa = PBXBuildFile; fileRef = 520156565965E994FFD540DA8DA31123 /* FBSDKAccessTokenCaching.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		759EA9DF0336CF3CE037CEFDA8E362F5 /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED564C361CFD62B293B3F77C2058A4CA /* BaseDestination.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		75CFEF5EFC1430F6666A49E1B7428AE3 /* RLMSchema_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B50F51C5CAAB22F5DFDBE703AEB98DB9 /* RLMSchema_Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		761C29D6D71660990C383452CF24F1B1 /* BFMeasurementEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDCEF3D2EBEBAD18C389C62A7352743 /* BFMeasurementEvent.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		76FE4EB512A05D20AAE20EB9234DBD28 /* object_store.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC28B6C43987FA379F3A436E8C600EAF /* object_store.cpp */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"0.96.3\"' -D__ASSERTMACROS__ -w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -398,11 +399,11 @@
 		BFD3FC361E14F917477F2C9BC527E037 /* FBSDKErrorRecoveryConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = F29A9285DCC04BB109ED85B2C2069A65 /* FBSDKErrorRecoveryConfiguration.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		C046DCBB36EF2F1118E1DE49B23B20A8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 429A38AFE27DBBCE8F60E3D1ED7F9204 /* Foundation.framework */; };
 		C18DB686480CFA67FE70E9BAEA0160E7 /* RLMObjectSchema.h in Headers */ = {isa = PBXBuildFile; fileRef = D81967E5DF111EB15846E01F62BA9CCA /* RLMObjectSchema.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C2437CED34A2D8C45B1C747B5C6BE071 /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B0230B68A3780F16F05D8DEFAE0CB4 /* SwiftyBeaver.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		C2A0B9B1293A9925C7DB07684A35634E /* FBSDKColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8265E8DA390FCA7CA826155D7699F47A /* FBSDKColor.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		C2A22D5B5C09830396653E4163F4FE4D /* BFAppLink_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = BB56EA376D7673A66CC07B7BD780C9E7 /* BFAppLink_Internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2F59C558ADA69BA168375ADCCE02707 /* FBSDKAppEventsState.m in Sources */ = {isa = PBXBuildFile; fileRef = 533E952FFC57D1CF57425976043CA72D /* FBSDKAppEventsState.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		C3F355874ADCD1621D7EAEA705CC082B /* FBSDKPaymentObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 21444F4D9938CF0D6B14DCDAC149689E /* FBSDKPaymentObserver.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		C49E34FC6B11A2004976DCF164E68B8C /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D845F911A14A52EC7C0E7E190B0C2B5 /* SwiftyBeaver.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		C4FB9BD94BE66DBD67FC2F799355A5C4 /* FBSDKGraphRequestPiggybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E9993E3C4114FDBA933242554DBA973C /* FBSDKGraphRequestPiggybackManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		C5240B15D5D11C69D59A5FBF1953E1EF /* BFAppLinkReturnToRefererView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9484D5496A0B494023ED4F55CF376948 /* BFAppLinkReturnToRefererView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		C534BC615711588F415F2DCBF4383F57 /* FBSDKAppEventsStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5503638D18BCEC9795B2C3AABBB9C8 /* FBSDKAppEventsStateManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -438,7 +439,6 @@
 		D0B4F89FAEF2934B8A893E8C2E70D3F1 /* BFURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AA2BB4A353DB0A65B4E03E8E288AF5B /* BFURL.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		D2EE8B67FCA489A42E480EEE07117284 /* FBSDKInternalUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 7787EA8B9AB8A8803B1A6CB480A05332 /* FBSDKInternalUtility.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D2F1CD89F0E80A5639D68962AC2E9865 /* MMParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3DA94797686825C9D5A7FC3469E86B /* MMParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D3B2723342F0C5426F1448839345166B /* FileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948DB9948E4C495285BBBF1008266954 /* FileDestination.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		D3CA3169F319B5AD72DF85DEB6348BD2 /* FBSDKGraphRequestPiggybackManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7DB9E397F3174740B9AEFD38A2788480 /* FBSDKGraphRequestPiggybackManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D4FADCEB72E8C3CF24ED0F6C37912B81 /* FBSDKTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EAB942DDB74598574D746EE436633BC /* FBSDKTooltipView.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		D53D57068A26530966399EA8E6DF3776 /* array.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 34A46A10922744D4888997AC635D032A /* array.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -704,6 +704,7 @@
 		21F7855FEF65FAA9B02CE23E559D46B5 /* output_stream.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = output_stream.hpp; path = include/realm/impl/output_stream.hpp; sourceTree = "<group>"; };
 		22C6C6BB9B004B2DA13CF476BBF308B2 /* RLMUpdateChecker.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = RLMUpdateChecker.mm; path = Realm/RLMUpdateChecker.mm; sourceTree = "<group>"; };
 		23003AF71CE49066D80DDF28A27F2D70 /* Pods-Fabler-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Fabler-frameworks.sh"; sourceTree = "<group>"; };
+		234FBA88C24AB977E47CD801AA64437A /* SwiftyBeaver-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyBeaver-umbrella.h"; sourceTree = "<group>"; };
 		23A2404C6D10DC1782383C587EA5AE99 /* RealmSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RealmSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23C016144C3E2DE307BD43E76F482D79 /* FBSDKLoginTooltipView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKLoginTooltipView.h; path = FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginTooltipView.h; sourceTree = "<group>"; };
 		2401EC8DDCD34D4091A4336A219CCF63 /* column_backlink.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = column_backlink.hpp; path = include/realm/column_backlink.hpp; sourceTree = "<group>"; };
@@ -771,6 +772,7 @@
 		3F1AA0E99C794AA485D5EED7214E00C9 /* SlackTextViewController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SlackTextViewController.xcconfig; sourceTree = "<group>"; };
 		3FC2EDC2C244524130D844B72479017B /* RLMOptionalBase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMOptionalBase.h; path = include/realm/RLMOptionalBase.h; sourceTree = "<group>"; };
 		4053F66325792713254DE72635D0FEE8 /* FBSDKServerConfigurationManager+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKServerConfigurationManager+Internal.h"; path = "FBSDKCoreKit/FBSDKCoreKit/Internal/ServerConfiguration/FBSDKServerConfigurationManager+Internal.h"; sourceTree = "<group>"; };
+		40DD46EBC41EB6A0535E6C79635506D8 /* SwiftyBeaver.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyBeaver.xcconfig; sourceTree = "<group>"; };
 		41A779CE8284A6CD8B2CD632F88616EF /* Download.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Download.swift; path = Source/Download.swift; sourceTree = "<group>"; };
 		4229D932695E021E2304B8D878855D05 /* RLMArrayLinkView.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = RLMArrayLinkView.mm; path = Realm/RLMArrayLinkView.mm; sourceTree = "<group>"; };
 		429A38AFE27DBBCE8F60E3D1ED7F9204 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -800,6 +802,7 @@
 		4CEB91CC41B4FD1F01D4F821E80E5A72 /* FBSDKAppLinkUtility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAppLinkUtility.h; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKAppLinkUtility.h; sourceTree = "<group>"; };
 		4CEC36555FC192E9182EC5DD69C5495B /* RLMObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMObject.h; path = include/realm/RLMObject.h; sourceTree = "<group>"; };
 		4D349DD74A2D902AEBE1DD44422A02C0 /* AlamofireImage-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AlamofireImage-prefix.pch"; sourceTree = "<group>"; };
+		4D845F911A14A52EC7C0E7E190B0C2B5 /* SwiftyBeaver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyBeaver.swift; path = sources/SwiftyBeaver.swift; sourceTree = "<group>"; };
 		4DD35B7BE2F7788361CB0D797804977C /* UIView+SLKAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+SLKAdditions.m"; path = "Source/UIView+SLKAdditions.m"; sourceTree = "<group>"; };
 		4F2B71B5DA8C0AD2116098409CC95E35 /* replication.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = replication.hpp; path = include/realm/replication.hpp; sourceTree = "<group>"; };
 		4F823A48401783A42CC63B3B8CE4E48A /* FBSDKWebDialog.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKWebDialog.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/WebDialog/FBSDKWebDialog.h; sourceTree = "<group>"; };
@@ -906,6 +909,7 @@
 		7E5F717B26E3A34E4C2DA5F098C9D8CD /* FBSDKProfile+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKProfile+Internal.h"; path = "FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKProfile+Internal.h"; sourceTree = "<group>"; };
 		7EB964C7F71B74EAF7F0A1A881A56B87 /* RLMSchema.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = RLMSchema.mm; path = Realm/RLMSchema.mm; sourceTree = "<group>"; };
 		7EBBFC07A8EF54E753EA1D51EA967D64 /* FBSDKGraphRequestConnection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKGraphRequestConnection.m; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKGraphRequestConnection.m; sourceTree = "<group>"; };
+		7F1C9102069381CAB40A31CD05C5672E /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F51BBDDC788F1D833502516BAF5DF16 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F92757BB446CDC71DF9E77DAC55A96D /* Pods-Fabler-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Fabler-umbrella.h"; sourceTree = "<group>"; };
 		7F9812D392E81680AEB33A42B5C75933 /* type_traits.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = type_traits.hpp; path = include/realm/util/type_traits.hpp; sourceTree = "<group>"; };
@@ -919,7 +923,6 @@
 		829D75825F04CEA6C00AA37154203142 /* RealmSwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "RealmSwift-dummy.m"; sourceTree = "<group>"; };
 		835C37E57E03265EDEE68E273A68B8C1 /* RLMSwiftSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMSwiftSupport.h; path = include/realm/RLMSwiftSupport.h; sourceTree = "<group>"; };
 		83C7938B5761BB07567403AD5BFA352A /* SortDescriptor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SortDescriptor.swift; path = RealmSwift/SortDescriptor.swift; sourceTree = "<group>"; };
-		845127DA0C33DF80A30434C43273392A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		86122603E15D6C8E9C6BF548A6772B17 /* SlackTextViewController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SlackTextViewController-prefix.pch"; sourceTree = "<group>"; };
 		863D3DA6AAE102A18C00D5D485CA4A14 /* RLMObjectBase_Dynamic.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMObjectBase_Dynamic.h; path = include/realm/RLMObjectBase_Dynamic.h; sourceTree = "<group>"; };
 		86FD6ABFA2E21E4D5ACED3EF56E3ECEA /* FBSDKAppEventsDeviceInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKAppEventsDeviceInfo.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/FBSDKAppEventsDeviceInfo.m; sourceTree = "<group>"; };
@@ -943,7 +946,6 @@
 		92D301E9DD764AF9B703B6090CBCDD4B /* BFTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BFTask.m; path = Bolts/Common/BFTask.m; sourceTree = "<group>"; };
 		94430032810395F71EF787DB17A7A40E /* Alamofire.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Alamofire.xcconfig; sourceTree = "<group>"; };
 		9484D5496A0B494023ED4F55CF376948 /* BFAppLinkReturnToRefererView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BFAppLinkReturnToRefererView.m; path = Bolts/iOS/BFAppLinkReturnToRefererView.m; sourceTree = "<group>"; };
-		948DB9948E4C495285BBBF1008266954 /* FileDestination.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FileDestination.swift; path = SwiftyBeaver/Destinations/FileDestination.swift; sourceTree = "<group>"; };
 		94D44416B02CB0A52A7A9B7F5B3C83A1 /* Bolts.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Bolts.m; path = Bolts/Common/Bolts.m; sourceTree = "<group>"; };
 		95F4BBDCA0FCD3C8830CE1639ABE828A /* MMParser.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MMParser.m; path = Source/MMParser.m; sourceTree = "<group>"; };
 		9635989FD7AE44CEA103C9375DEB2CBE /* Realm-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Realm-dummy.m"; sourceTree = "<group>"; };
@@ -955,7 +957,6 @@
 		98956CF0BAA449FF7E29976CBA2251AE /* object_schema.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = object_schema.hpp; path = include/realm/object_schema.hpp; sourceTree = "<group>"; };
 		98E04216D2302AB9EE7AC5F08EA4936D /* BFURL_Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BFURL_Internal.h; path = Bolts/iOS/BFURL_Internal.h; sourceTree = "<group>"; };
 		98E4047113B9D4EECD1E9266E3547AC9 /* column_type.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = column_type.hpp; path = include/realm/column_type.hpp; sourceTree = "<group>"; };
-		9938EEB10D04DB848897347301DD0A60 /* SwiftyBeaver-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyBeaver-prefix.pch"; sourceTree = "<group>"; };
 		99B665E085A4BC8AC68412D3173810DF /* realm.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = realm.hpp; path = include/realm.hpp; sourceTree = "<group>"; };
 		9A136ADF095CD0A28A8F1A871DF6AC8D /* FBSDKServerConfiguration+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKServerConfiguration+Internal.h"; path = "FBSDKCoreKit/FBSDKCoreKit/Internal/ServerConfiguration/FBSDKServerConfiguration+Internal.h"; sourceTree = "<group>"; };
 		9A5881A6AD51ED45988DFBA9ED3E1DAB /* FBSDKDynamicFrameworkLoader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKDynamicFrameworkLoader.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKDynamicFrameworkLoader.h; sourceTree = "<group>"; };
@@ -976,7 +977,6 @@
 		A2FACBE84B9387DBDCC5DBC2E441132E /* FBSDKWebDialog.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKWebDialog.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/WebDialog/FBSDKWebDialog.m; sourceTree = "<group>"; };
 		A47F828A1102F07532D6C2D3FA0B3FD4 /* FBSDKSettings.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKSettings.m; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKSettings.m; sourceTree = "<group>"; };
 		A567D5EA24D243964D4BA0A392FAB572 /* FBSDKIcon.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKIcon.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/UI/FBSDKIcon.m; sourceTree = "<group>"; };
-		A605CEFFC4BC65C1E7197C93A5E8BE52 /* SwiftyBeaver-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyBeaver-dummy.m"; sourceTree = "<group>"; };
 		A620245072305B41A6465D4FAA2C9C52 /* owned_data.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = owned_data.hpp; path = include/realm/owned_data.hpp; sourceTree = "<group>"; };
 		A680054A9541ECB30FC48E6A0CC7FE87 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6A1006A35F08027697AD2241C31A052 /* MMSpanParser.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MMSpanParser.m; path = Source/MMSpanParser.m; sourceTree = "<group>"; };
@@ -990,6 +990,7 @@
 		AA92F5B1B8C7A67E7E722834BFCAAA9B /* sequential_getter.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = sequential_getter.hpp; path = include/realm/impl/sequential_getter.hpp; sourceTree = "<group>"; };
 		AAA3F692559AE22E11D1371546258B91 /* misc_errors.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = misc_errors.hpp; path = include/realm/util/misc_errors.hpp; sourceTree = "<group>"; };
 		AABD8CF9CD46A22E5A7DF5FB92DDBF83 /* Upload.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Upload.swift; path = Source/Upload.swift; sourceTree = "<group>"; };
+		AAD6B3008C6520C91A432CD46369E801 /* FileDestination.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FileDestination.swift; path = sources/FileDestination.swift; sourceTree = "<group>"; };
 		AD2112ABB22DC36841B3B73DD6770A4F /* FBSDKSettings.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKSettings.h; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKSettings.h; sourceTree = "<group>"; };
 		AD3FBE9F5DD74768698F7D0CC9C296AE /* Realm.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Realm.swift; path = RealmSwift/Realm.swift; sourceTree = "<group>"; };
 		AECAE907A166D705732AAB744BD50076 /* FBSDKGraphRequestDataAttachment.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKGraphRequestDataAttachment.m; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKGraphRequestDataAttachment.m; sourceTree = "<group>"; };
@@ -1000,18 +1001,17 @@
 		B10F150D6527D3FBBEEFAB100C678573 /* object_store_exceptions.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = object_store_exceptions.hpp; path = include/realm/object_store_exceptions.hpp; sourceTree = "<group>"; };
 		B1317E47765FDC1166887C14CA358BCC /* Pods-Fabler.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Fabler.modulemap"; sourceTree = "<group>"; };
 		B1F2421EA354B244CD92713E39D3543D /* FBSDKDialogConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKDialogConfiguration.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/ServerConfiguration/FBSDKDialogConfiguration.h; sourceTree = "<group>"; };
+		B2420726C902BCD1C1380BF589F24466 /* SwiftyBeaver-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyBeaver-dummy.m"; sourceTree = "<group>"; };
 		B2ACB525A529FE7AB939A3E9529866A6 /* BFMeasurementEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BFMeasurementEvent.h; path = Bolts/iOS/BFMeasurementEvent.h; sourceTree = "<group>"; };
 		B337AC4EAC99F6348ED6146D58ADD230 /* BFAppLinkTarget.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BFAppLinkTarget.h; path = Bolts/iOS/BFAppLinkTarget.h; sourceTree = "<group>"; };
 		B343133376319C6E7C62F3EF08F81A7D /* RLMRealmConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMRealmConfiguration.h; path = include/realm/RLMRealmConfiguration.h; sourceTree = "<group>"; };
 		B3906AD801C506BFDA109747D81DC7D2 /* array_string_long.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = array_string_long.hpp; path = include/realm/array_string_long.hpp; sourceTree = "<group>"; };
 		B39FBE51CBFCC669CE8BCB1B78E21BFE /* SwiftyJSON.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SwiftyJSON.modulemap; sourceTree = "<group>"; };
-		B3B827781EE9D6740F975B7BE4EE9944 /* SwiftyBeaver-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyBeaver-umbrella.h"; sourceTree = "<group>"; };
 		B3F031D04DAD02BD9ACF51BF7692D626 /* FBSDKAudioResourceLoader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAudioResourceLoader.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKAudioResourceLoader.h; sourceTree = "<group>"; };
 		B417C95509F53FDA2823E3D0E24A64B7 /* Bolts.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Bolts.modulemap; sourceTree = "<group>"; };
 		B45C45B0AEC144455FA658FBE4D60895 /* Result.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Result.swift; path = Source/Result.swift; sourceTree = "<group>"; };
 		B4D0F77FB5F7931EB5314959398FA189 /* property.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = property.hpp; path = include/realm/property.hpp; sourceTree = "<group>"; };
 		B4E082D0D133571B8F351BC6B5641DCA /* FBSDKProfilePictureView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKProfilePictureView.h; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKProfilePictureView.h; sourceTree = "<group>"; };
-		B4F10A89D808481EEEBD950902FE436E /* SwiftyBeaver.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SwiftyBeaver.modulemap; sourceTree = "<group>"; };
 		B50F51C5CAAB22F5DFDBE703AEB98DB9 /* RLMSchema_Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMSchema_Private.h; path = include/realm/RLMSchema_Private.h; sourceTree = "<group>"; };
 		B70B79B5C832A65CE0882DE3C32B99EE /* FBSDKAccessTokenCacheV3_21.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAccessTokenCacheV3_21.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/TokenCaching/FBSDKAccessTokenCacheV3_21.h; sourceTree = "<group>"; };
 		B76FA8A82ADC8E53A0E8500AC019BE22 /* RLMListBase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMListBase.h; path = include/realm/RLMListBase.h; sourceTree = "<group>"; };
@@ -1047,7 +1047,6 @@
 		C46C7E1B4AC4EB0B9EBE33FD5E36D8DF /* bptree.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = bptree.hpp; path = include/realm/bptree.hpp; sourceTree = "<group>"; };
 		C498E9A5B9D6E120229AF5BDDAEF9BAD /* RLMObject.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = RLMObject.mm; path = Realm/RLMObject.mm; sourceTree = "<group>"; };
 		C5618BA68E94F33155C3BB3BC7F14CC0 /* Alamofire-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Alamofire-umbrella.h"; sourceTree = "<group>"; };
-		C5BC0F466240365E03951E58DE61C963 /* SwiftyBeaver.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyBeaver.xcconfig; sourceTree = "<group>"; };
 		C6676009FD7DDC2218B32761624FCDA6 /* platform_specific_condvar.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = platform_specific_condvar.hpp; path = include/realm/util/platform_specific_condvar.hpp; sourceTree = "<group>"; };
 		C66CC5C05192837D4300ED4F878D5944 /* MMGenerator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MMGenerator.m; path = Source/MMGenerator.m; sourceTree = "<group>"; };
 		C68103A910F30C5891B3A68172AC11D6 /* SLKTextViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SLKTextViewController.m; path = Source/SLKTextViewController.m; sourceTree = "<group>"; };
@@ -1099,7 +1098,6 @@
 		D81967E5DF111EB15846E01F62BA9CCA /* RLMObjectSchema.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMObjectSchema.h; path = include/realm/RLMObjectSchema.h; sourceTree = "<group>"; };
 		D8C476192C8E4DCD6BA765229073A820 /* FBSDKProfilePictureView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKProfilePictureView.m; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKProfilePictureView.m; sourceTree = "<group>"; };
 		D8DD3A60ECB7E64D9B29EC7F84198069 /* RLMObjectStore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMObjectStore.h; path = include/realm/RLMObjectStore.h; sourceTree = "<group>"; };
-		D9B0230B68A3780F16F05D8DEFAE0CB4 /* SwiftyBeaver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyBeaver.swift; path = SwiftyBeaver/SwiftyBeaver.swift; sourceTree = "<group>"; };
 		D9B5EB27C338FE577A7D55466ECE9E27 /* RealmCollectionType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RealmCollectionType.swift; path = RealmSwift/RealmCollectionType.swift; sourceTree = "<group>"; };
 		DA9B713C40DED364526DB8AB31ABFD88 /* AlamofireImage-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AlamofireImage-dummy.m"; sourceTree = "<group>"; };
 		DAA25D940063699CCFC192C5E7BA35E7 /* FBSDKButton+Subclass.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKButton+Subclass.h"; path = "FBSDKCoreKit/FBSDKCoreKit/Internal/UI/FBSDKButton+Subclass.h"; sourceTree = "<group>"; };
@@ -1155,10 +1153,12 @@
 		EBB86705158E7941E9A76165D157B2A0 /* array_blob.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = array_blob.hpp; path = include/realm/array_blob.hpp; sourceTree = "<group>"; };
 		EBE87BB06A1C8313FD0CBC92321A0987 /* RLMDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMDefines.h; path = include/realm/RLMDefines.h; sourceTree = "<group>"; };
 		ECAF19EB08559A82638FCA99F363BA93 /* object_store_exceptions.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = object_store_exceptions.cpp; path = Realm/ObjectStore/object_store_exceptions.cpp; sourceTree = "<group>"; };
+		ED564C361CFD62B293B3F77C2058A4CA /* BaseDestination.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BaseDestination.swift; path = sources/BaseDestination.swift; sourceTree = "<group>"; };
 		EDB4F9A885F8D9268B7990424654A720 /* Alamofire-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Alamofire-dummy.m"; sourceTree = "<group>"; };
 		EEA56A5F7AE46AE2986F65B68D818C96 /* FBSDKProfile.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKProfile.m; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKProfile.m; sourceTree = "<group>"; };
 		EF6CC261AD963C7D8D79446E25708289 /* column_string_enum.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = column_string_enum.hpp; path = include/realm/column_string_enum.hpp; sourceTree = "<group>"; };
 		EF866EDB14B577F0742DBC09459C549D /* FBSDKConstants.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKConstants.m; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKConstants.m; sourceTree = "<group>"; };
+		EFDD7E5210F5190C58572336809B050C /* SwiftyBeaver.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SwiftyBeaver.modulemap; sourceTree = "<group>"; };
 		F0494D067E0FA77E9E40BC7868B8DC34 /* safe_int_ops.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = safe_int_ops.hpp; path = include/realm/util/safe_int_ops.hpp; sourceTree = "<group>"; };
 		F1C36FFDBE3D7EE20B98A4E9BAAEFF8D /* SLKTextInputbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SLKTextInputbar.m; path = Source/SLKTextInputbar.m; sourceTree = "<group>"; };
 		F29A9285DCC04BB109ED85B2C2069A65 /* FBSDKErrorRecoveryConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKErrorRecoveryConfiguration.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/ServerConfiguration/FBSDKErrorRecoveryConfiguration.h; sourceTree = "<group>"; };
@@ -1169,8 +1169,6 @@
 		F4EF5880377F4D3F094907CC41117E55 /* BFAppLinkReturnToRefererController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BFAppLinkReturnToRefererController.m; path = Bolts/iOS/BFAppLinkReturnToRefererController.m; sourceTree = "<group>"; };
 		F50B26BB87301E1B89154C5C76A815E7 /* RLMAnalytics.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = RLMAnalytics.mm; path = Realm/RLMAnalytics.mm; sourceTree = "<group>"; };
 		F5502A12779F41ED27EEE8FD599B2B0C /* RLMProperty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMProperty.h; path = include/realm/RLMProperty.h; sourceTree = "<group>"; };
-		F565FE8976903D4808E35F21D8B64522 /* ConsoleDestination.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConsoleDestination.swift; path = SwiftyBeaver/Destinations/ConsoleDestination.swift; sourceTree = "<group>"; };
-		F5D23D763CFEC43AA5283F5BB00BA9B1 /* BaseDestination.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BaseDestination.swift; path = SwiftyBeaver/Destinations/BaseDestination.swift; sourceTree = "<group>"; };
 		F5F54E1B6C0DD41074AC622336276971 /* FBSDKBridgeAPIProtocolWebV2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKBridgeAPIProtocolWebV2.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/BridgeAPI/ProtocolVersions/FBSDKBridgeAPIProtocolWebV2.h; sourceTree = "<group>"; };
 		F61AF75D099A3310A6E3BD7255963C64 /* Bolts-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Bolts-dummy.m"; sourceTree = "<group>"; };
 		F65FDF26E40A45EE3B0482B2FBC51019 /* FBSDKURLOpening.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKURLOpening.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/BridgeAPI/FBSDKURLOpening.h; sourceTree = "<group>"; };
@@ -1178,6 +1176,7 @@
 		F6ABCC1EB6855097162D8B9520097E9F /* Realm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Realm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6C05FF0622BDFE698F262DCD59A5AD6 /* FBSDKServerConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKServerConfiguration.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/ServerConfiguration/FBSDKServerConfiguration.h; sourceTree = "<group>"; };
 		F6CA54C31F96DA4F58CEB6D704C9FF5C /* Pods-Fabler-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Fabler-dummy.m"; sourceTree = "<group>"; };
+		F6F81B97C3A4853E16F82A55D9AF9B67 /* ConsoleDestination.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConsoleDestination.swift; path = sources/ConsoleDestination.swift; sourceTree = "<group>"; };
 		F6FA90F3F3DB3E2B695600A5119949B3 /* Pods-Fabler-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Fabler-acknowledgements.markdown"; sourceTree = "<group>"; };
 		F7868A93B2073802D922B6970312F60F /* RLMArray_Private.hpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.h; name = RLMArray_Private.hpp; path = include/realm/RLMArray_Private.hpp; sourceTree = "<group>"; };
 		F80841E4DAE115575657EE2A07DC2CA2 /* AlamofireImage-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AlamofireImage-umbrella.h"; sourceTree = "<group>"; };
@@ -1199,6 +1198,7 @@
 		FEA60A4D591DB3961EA9A16B5FED3162 /* RLMObservation.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = RLMObservation.mm; path = Realm/RLMObservation.mm; sourceTree = "<group>"; };
 		FF61AE1672B42B3D5CD126B6C6D831B5 /* FBSDKMaleSilhouetteIcon.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKMaleSilhouetteIcon.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/UI/FBSDKMaleSilhouetteIcon.h; sourceTree = "<group>"; };
 		FF7E0F1BA75AA36861EDCE4E9BDB6B00 /* MMDocument_Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MMDocument_Private.h; path = Source/MMDocument_Private.h; sourceTree = "<group>"; };
+		FFF939FE1FBEB17A038843154D6B03AC /* SwiftyBeaver-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyBeaver-prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1398,20 +1398,6 @@
 				429A38AFE27DBBCE8F60E3D1ED7F9204 /* Foundation.framework */,
 			);
 			name = iOS;
-			sourceTree = "<group>";
-		};
-		294720717AA9FC37C5FC1693970A6012 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				845127DA0C33DF80A30434C43273392A /* Info.plist */,
-				B4F10A89D808481EEEBD950902FE436E /* SwiftyBeaver.modulemap */,
-				C5BC0F466240365E03951E58DE61C963 /* SwiftyBeaver.xcconfig */,
-				A605CEFFC4BC65C1E7197C93A5E8BE52 /* SwiftyBeaver-dummy.m */,
-				9938EEB10D04DB848897347301DD0A60 /* SwiftyBeaver-prefix.pch */,
-				B3B827781EE9D6740F975B7BE4EE9944 /* SwiftyBeaver-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/SwiftyBeaver";
 			sourceTree = "<group>";
 		};
 		2C7E3480FE5624EB95E53A4EC846E349 /* AppLinks */ = {
@@ -1853,14 +1839,14 @@
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
-		633DAEEE5F9207CC9DB043CFF90B8015 /* SwiftyBeaver */ = {
+		63CAF35420E035B6FFA3E004D1E9FB2B /* SwiftyBeaver */ = {
 			isa = PBXGroup;
 			children = (
-				F5D23D763CFEC43AA5283F5BB00BA9B1 /* BaseDestination.swift */,
-				F565FE8976903D4808E35F21D8B64522 /* ConsoleDestination.swift */,
-				948DB9948E4C495285BBBF1008266954 /* FileDestination.swift */,
-				D9B0230B68A3780F16F05D8DEFAE0CB4 /* SwiftyBeaver.swift */,
-				294720717AA9FC37C5FC1693970A6012 /* Support Files */,
+				ED564C361CFD62B293B3F77C2058A4CA /* BaseDestination.swift */,
+				F6F81B97C3A4853E16F82A55D9AF9B67 /* ConsoleDestination.swift */,
+				AAD6B3008C6520C91A432CD46369E801 /* FileDestination.swift */,
+				4D845F911A14A52EC7C0E7E190B0C2B5 /* SwiftyBeaver.swift */,
+				A479B4320E1211AB0E2F47BB26BDAACA /* Support Files */,
 			);
 			path = SwiftyBeaver;
 			sourceTree = "<group>";
@@ -2019,6 +2005,20 @@
 			name = Tasks;
 			sourceTree = "<group>";
 		};
+		A479B4320E1211AB0E2F47BB26BDAACA /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				7F1C9102069381CAB40A31CD05C5672E /* Info.plist */,
+				EFDD7E5210F5190C58572336809B050C /* SwiftyBeaver.modulemap */,
+				40DD46EBC41EB6A0535E6C79635506D8 /* SwiftyBeaver.xcconfig */,
+				B2420726C902BCD1C1380BF589F24466 /* SwiftyBeaver-dummy.m */,
+				FFF939FE1FBEB17A038843154D6B03AC /* SwiftyBeaver-prefix.pch */,
+				234FBA88C24AB977E47CD801AA64437A /* SwiftyBeaver-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SwiftyBeaver";
+			sourceTree = "<group>";
+		};
 		AA070437EFF25138AC6B6125270FA5ED /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -2143,7 +2143,7 @@
 				82392F126B7B8FF3C5F571BB7471DCE0 /* Realm */,
 				0E719283038573F110C84FA32105C88B /* RealmSwift */,
 				4796A213E89B89811A54CA017783EB45 /* SlackTextViewController */,
-				633DAEEE5F9207CC9DB043CFF90B8015 /* SwiftyBeaver */,
+				63CAF35420E035B6FFA3E004D1E9FB2B /* SwiftyBeaver */,
 				F37F565703E5AD3F5FF9512D3B3F8DB5 /* SwiftyJSON */,
 			);
 			name = Pods;
@@ -2904,11 +2904,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3DDC8A54B5CC2480491619FBA8620109 /* BaseDestination.swift in Sources */,
-				5158DBA4E691A8C0D9D4DC5C24FC1DF1 /* ConsoleDestination.swift in Sources */,
-				D3B2723342F0C5426F1448839345166B /* FileDestination.swift in Sources */,
+				759EA9DF0336CF3CE037CEFDA8E362F5 /* BaseDestination.swift in Sources */,
+				2DFB6DEB4CB168FA65755968D9298389 /* ConsoleDestination.swift in Sources */,
+				5014E6197269FDD90AAA13ECC6E48E47 /* FileDestination.swift in Sources */,
 				7219E49A681A8402F53FC6DFF73629AC /* SwiftyBeaver-dummy.m in Sources */,
-				C2437CED34A2D8C45B1C747B5C6BE071 /* SwiftyBeaver.swift in Sources */,
+				C49E34FC6B11A2004976DCF164E68B8C /* SwiftyBeaver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3422,7 +3422,7 @@
 		};
 		711CF8370FE2F9AC220A0AE3EB52037C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C5BC0F466240365E03951E58DE61C963 /* SwiftyBeaver.xcconfig */;
+			baseConfigurationReference = 40DD46EBC41EB6A0535E6C79635506D8 /* SwiftyBeaver.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -3649,7 +3649,7 @@
 		};
 		A2959EB95755AFC655FCBF69ADBAB6A8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C5BC0F466240365E03951E58DE61C963 /* SwiftyBeaver.xcconfig */;
+			baseConfigurationReference = 40DD46EBC41EB6A0535E6C79635506D8 /* SwiftyBeaver.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;

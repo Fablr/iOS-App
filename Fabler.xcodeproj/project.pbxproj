@@ -147,17 +147,17 @@
 		4538B57E1BF55C6F00039DF1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4576FBFF1C13ACC900381A28 /* CommentCell.xib */,
+				4576FC011C13B20300381A28 /* CommentHeaderCell.xib */,
+				45BFCC181C154299007D31C8 /* EpisodeCell.xib */,
+				4576FC031C13CF0000381A28 /* EpisodeHeader.xib */,
+				45BFCC1A1C154718007D31C8 /* EpisodeHeaderCell.xib */,
+				45FBA2571BF5E7E900DD8D14 /* LargePlayer.xib */,
 				F47029FE1A7F27DB00E30A3C /* LaunchScreen.xib */,
 				45E536761BDF06E0009E3F10 /* Main.storyboard */,
 				4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */,
-				45FBA2571BF5E7E900DD8D14 /* LargePlayer.xib */,
-				45BFCC1A1C154718007D31C8 /* EpisodeHeaderCell.xib */,
-				45BFCC181C154299007D31C8 /* EpisodeCell.xib */,
-				4576FC031C13CF0000381A28 /* EpisodeHeader.xib */,
-				4576FC011C13B20300381A28 /* CommentHeaderCell.xib */,
-				4576FBFF1C13ACC900381A28 /* CommentCell.xib */,
 			);
-			name = Views;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		4588CF221BDB2A3C0080E13D /* Frameworks */ = {
@@ -172,50 +172,50 @@
 		45B51D091BE495D500F289F7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				45B51D0A1BE495E700F289F7 /* Podcast.swift */,
-				450B76751BE9CC270033C0B6 /* Episode.swift */,
-				450B767D1BEF49120033C0B6 /* User.swift */,
 				457889091C10C108007D3600 /* Comment.swift */,
+				450B76751BE9CC270033C0B6 /* Episode.swift */,
+				45B51D0A1BE495E700F289F7 /* Podcast.swift */,
+				450B767D1BEF49120033C0B6 /* User.swift */,
 			);
-			name = Models;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		45BF1C641BE31EE500665402 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				4578890B1C10FF09007D3600 /* CommentService.swift */,
+				450B76771BE9DAA90033C0B6 /* EpisodeService.swift */,
 				45BF1C651BE31EF600665402 /* LoginService.swift */,
 				45BF1C671BE4921900665402 /* PodcastService.swift */,
-				450B76771BE9DAA90033C0B6 /* EpisodeService.swift */,
-				4578890B1C10FF09007D3600 /* CommentService.swift */,
 			);
-			name = Services;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		45E5367A1BE173EB009E3F10 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */,
-				457889111C12482A007D3600 /* FablerToolBarController.swift */,
-				4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */,
-				45FBA2591BF5E7FE00DD8D14 /* LargePlayerViewController.swift */,
 				450B767F1BEF567D0033C0B6 /* BackpaneViewController.swift */,
-				F4702A171A7F351C00E30A3C /* MenuTableViewController.swift */,
-				4588CF2B1BDB46E40080E13D /* LoginViewController.swift */,
-				45E536741BDF025F009E3F10 /* YouViewController.swift */,
-				F491E7541A7F7E010026528E /* DiscoveryCollectionViewController.swift */,
-				457E51E21BE864170079845E /* PodcastCell.swift */,
 				F491E7491A7F4B300026528E /* CollectionTableViewController.swift */,
-				F491E74B1A7F4C630026528E /* PodcastTableViewCell.swift */,
-				450B76731BE983670033C0B6 /* PodcastTableViewController.swift */,
-				45BFCC1E1C1559A3007D31C8 /* EpisodeHeaderTableViewCell.swift */,
-				450B76791BECA7610033C0B6 /* EpisodeTableViewCell.swift */,
-				45E2E1371BFEBAEF00219098 /* PodcastSettingsTableViewController.swift */,
-				450B767B1BECABB30033C0B6 /* EpisodeTableViewController.swift */,
-				4576FC051C13D74000381A28 /* EpisodeHeaderViewController.swift */,
 				4578890F1C115464007D3600 /* CommentHeaderTableViewCell.swift */,
 				4578890D1C1153E4007D3600 /* CommentTableViewCell.swift */,
+				F491E7541A7F7E010026528E /* DiscoveryCollectionViewController.swift */,
+				45BFCC1E1C1559A3007D31C8 /* EpisodeHeaderTableViewCell.swift */,
+				4576FC051C13D74000381A28 /* EpisodeHeaderViewController.swift */,
+				450B76791BECA7610033C0B6 /* EpisodeTableViewCell.swift */,
+				450B767B1BECABB30033C0B6 /* EpisodeTableViewController.swift */,
+				456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */,
+				457889111C12482A007D3600 /* FablerToolBarController.swift */,
+				45FBA2591BF5E7FE00DD8D14 /* LargePlayerViewController.swift */,
+				4588CF2B1BDB46E40080E13D /* LoginViewController.swift */,
+				F4702A171A7F351C00E30A3C /* MenuTableViewController.swift */,
+				457E51E21BE864170079845E /* PodcastCell.swift */,
+				45E2E1371BFEBAEF00219098 /* PodcastSettingsTableViewController.swift */,
+				F491E74B1A7F4C630026528E /* PodcastTableViewCell.swift */,
+				450B76731BE983670033C0B6 /* PodcastTableViewController.swift */,
+				4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */,
+				45E536741BDF025F009E3F10 /* YouViewController.swift */,
 			);
-			name = Controllers;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		8ABCB3973AE274F3A6620CD0 /* Pods */ = {
@@ -230,11 +230,11 @@
 		F47029E71A7F27DB00E30A3C = {
 			isa = PBXGroup;
 			children = (
-				4588CF221BDB2A3C0080E13D /* Frameworks */,
 				F47029F21A7F27DB00E30A3C /* Fabler */,
-				F47029F11A7F27DB00E30A3C /* Products */,
-				8ABCB3973AE274F3A6620CD0 /* Pods */,
 				F4702A081A7F27DC00E30A3C /* FablerTests */,
+				4588CF221BDB2A3C0080E13D /* Frameworks */,
+				8ABCB3973AE274F3A6620CD0 /* Pods */,
+				F47029F11A7F27DB00E30A3C /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -250,17 +250,17 @@
 		F47029F21A7F27DB00E30A3C /* Fabler */ = {
 			isa = PBXGroup;
 			children = (
+				45E5367A1BE173EB009E3F10 /* Controllers */,
+				45B51D091BE495D500F289F7 /* Models */,
+				F4D750141BD38E56009E1003 /* SWRevealViewController */,
+				45BF1C641BE31EE500665402 /* Services */,
+				F47029F31A7F27DB00E30A3C /* Supporting Files */,
+				4538B57E1BF55C6F00039DF1 /* Views */,
 				F47029F51A7F27DB00E30A3C /* AppDelegate.swift */,
+				45505F701BFB1EF600481291 /* DownloadManager.swift */,
 				45E5367D1BE1F980009E3F10 /* FablerClient.swift */,
 				456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */,
 				4501BB9A1C177F330021171C /* FablerUI.swift */,
-				45505F701BFB1EF600481291 /* DownloadManager.swift */,
-				4538B57E1BF55C6F00039DF1 /* Views */,
-				45B51D091BE495D500F289F7 /* Models */,
-				45BF1C641BE31EE500665402 /* Services */,
-				45E5367A1BE173EB009E3F10 /* Controllers */,
-				F47029F31A7F27DB00E30A3C /* Supporting Files */,
-				F4D750141BD38E56009E1003 /* SWRevealViewController */,
 				F47029FC1A7F27DB00E30A3C /* Images.xcassets */,
 			);
 			path = Fabler;
@@ -271,34 +271,34 @@
 			children = (
 				F47029F41A7F27DB00E30A3C /* Info.plist */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		F4702A081A7F27DC00E30A3C /* FablerTests */ = {
 			isa = PBXGroup;
 			children = (
-				F4702A0B1A7F27DC00E30A3C /* FablerTests.swift */,
 				F4702A091A7F27DC00E30A3C /* Supporting Files */,
+				F4702A0B1A7F27DC00E30A3C /* FablerTests.swift */,
 			);
 			path = FablerTests;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 		F4702A091A7F27DC00E30A3C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
 				F4702A0A1A7F27DC00E30A3C /* Info.plist */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		F4D750141BD38E56009E1003 /* SWRevealViewController */ = {
 			isa = PBXGroup;
 			children = (
+				F4D750151BD38F0C009E1003 /* Fabler-Bridging-Header.h */,
 				F4D750161BD38F0C009E1003 /* SWRevealViewController.h */,
 				F4D750171BD38F0C009E1003 /* SWRevealViewController.m */,
-				F4D750151BD38F0C009E1003 /* Fabler-Bridging-Header.h */,
 			);
-			name = SWRevealViewController;
+			path = SWRevealViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -564,6 +564,7 @@
 				45E536771BDF06E0009E3F10 /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		F47029FE1A7F27DB00E30A3C /* LaunchScreen.xib */ = {
@@ -572,6 +573,7 @@
 				F47029FF1A7F27DB00E30A3C /* Base */,
 			);
 			name = LaunchScreen.xib;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -670,14 +672,14 @@
 				);
 				IBC_WARNINGS = NO;
 				IBSC_WARNINGS = NO;
-				INFOPLIST_FILE = "$(SRCROOT)/Fabler/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Fabler/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Fabler.Fabler;
 				PRODUCT_NAME = Fabler;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Fabler/Fabler-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Fabler/SWRevealViewController/Fabler-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -697,13 +699,13 @@
 				);
 				IBC_WARNINGS = NO;
 				IBSC_WARNINGS = NO;
-				INFOPLIST_FILE = "$(SRCROOT)/Fabler/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Fabler/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Fabler.Fabler;
 				PRODUCT_NAME = Fabler;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Fabler/Fabler-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Fabler/SWRevealViewController/Fabler-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -719,7 +721,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = FablerTests/Info.plist;
+				INFOPLIST_FILE = "FablerTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Fabler.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Fabler;
@@ -735,7 +737,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = FablerTests/Info.plist;
+				INFOPLIST_FILE = "FablerTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Fabler.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Fabler;

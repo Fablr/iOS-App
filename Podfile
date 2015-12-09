@@ -12,7 +12,7 @@ target 'Fabler' do
   pod 'AlamofireImage', '~>2.1.1'
   pod 'SlackTextViewController', :git => 'https://github.com/slackhq/SlackTextViewController.git', :tag => 'v1.8'
   pod 'MMMarkdown', '~>0.5.1'
-  pod 'SwiftyBeaver', '~>0.2.2'
+  pod 'SwiftyBeaver', '~>0.2.3'
 end
 
 target 'FablerTests' do
