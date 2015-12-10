@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CollapsibleUITableViewCellDelegate {
+    func setCollapseState(cell: UITableViewCell, collapsed: Bool)
+}
+
 // swiftlint:disable nesting
 
 class CommentTableViewCell: UITableViewCell {
@@ -23,12 +27,20 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var commentTextView: UITextView?
     @IBOutlet weak var subLabel: UILabel?
     @IBOutlet weak var commentIndent: NSLayoutConstraint?
+    @IBOutlet weak var subBar: UIView?
+    @IBOutlet weak var subBarHeight: NSLayoutConstraint?
 
     // MARK: - CommentTableViewCell members
 
     var comment: Comment?
+    var barCollapsed: Bool = true
+    var delegate: CollapsibleUITableViewCellDelegate?
 
     // MARK: - CommentTableViewCell functions
+
+    func barTapped() {
+        self.delegate?.setCollapseState(self, collapsed: !self.barCollapsed)
+    }
 
     func setCommentInstance(comment: Comment) {
         self.comment = comment
@@ -48,6 +60,18 @@ class CommentTableViewCell: UITableViewCell {
                 self.commentTextView?.text = comment.comment
             }
             self.commentTextView?.sizeToFit()
+
+            if self.barCollapsed {
+                self.subBar?.hidden = true
+                self.subBarHeight?.constant = 0.0
+            } else {
+                self.subBar?.hidden = false
+                self.subBarHeight?.constant = 25.0
+            }
+
+            let tapRec = UITapGestureRecognizer()
+            tapRec.addTarget(self, action: "barTapped")
+            self.contentView.addGestureRecognizer(tapRec)
 
             self.subLabel?.text = "by \(comment.userName) on \(date)"
         }

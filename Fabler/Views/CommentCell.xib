@@ -17,14 +17,14 @@
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Okn-NU-qx9">
                         <rect key="frame" x="10" y="10" width="394" height="113"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="This is a comment." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1vQ-c0-Aoe">
-                                <rect key="frame" x="0.0" y="0.0" width="394" height="88"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="This is a comment." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1vQ-c0-Aoe">
+                                <rect key="frame" x="0.0" y="0.0" width="394" height="63"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3J5-je-7Dr">
-                                <rect key="frame" x="0.0" y="88" width="394" height="25"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3J5-je-7Dr">
+                                <rect key="frame" x="0.0" y="63" width="394" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="Kkz-1E-ERn"/>
                                 </constraints>
@@ -32,6 +32,13 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="62I-ax-ijL">
+                                <rect key="frame" x="0.0" y="88" width="394" height="25"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="bOf-bs-vGS"/>
+                                </constraints>
+                            </view>
                         </subviews>
                     </stackView>
                 </subviews>
@@ -45,6 +52,8 @@
             <connections>
                 <outlet property="commentIndent" destination="5nq-yX-HQp" id="7CV-2j-LLL"/>
                 <outlet property="commentTextView" destination="1vQ-c0-Aoe" id="KgG-DB-bq2"/>
+                <outlet property="subBar" destination="62I-ax-ijL" id="eqz-0L-DmP"/>
+                <outlet property="subBarHeight" destination="bOf-bs-vGS" id="xti-Vj-CUB"/>
                 <outlet property="subLabel" destination="3J5-je-7Dr" id="JFw-rK-cCx"/>
             </connections>
             <point key="canvasLocation" x="791" y="530"/>

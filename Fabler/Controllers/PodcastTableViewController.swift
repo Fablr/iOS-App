@@ -10,7 +10,7 @@ import UIKit
 import AlamofireImage
 import SlackTextViewController
 
-class PodcastTableViewController: SLKTextViewController {
+class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate {
 
     // MARK: - PodcastTableViewController data members
 
@@ -40,6 +40,11 @@ class PodcastTableViewController: SLKTextViewController {
     var headerSwitchOffset: CGFloat = 0.0
     var barAnimationComplete: Bool = false
     var barIsCollapsed: Bool = false
+
+    // MARK: - CollapsibleUITableViewCellDelegate members
+
+    var indexPath: NSIndexPath?
+    var collapsed: Bool?
 
     // MARK: - PodcastTableViewController functions
 
@@ -283,7 +288,7 @@ class PodcastTableViewController: SLKTextViewController {
         }
 
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 50.0
+        self.tableView.estimatedRowHeight = 120.0
 
         self.tableView.allowsMultipleSelection = false
 
@@ -635,6 +640,16 @@ class PodcastTableViewController: SLKTextViewController {
         let comment = comments[indexPath.row]
 
         if let cell = cell as? CommentTableViewCell {
+            cell.delegate = self
+
+            if let collapseIndexPath = self.indexPath, let collapsed = self.collapsed {
+                if collapseIndexPath == indexPath {
+                    cell.barCollapsed = collapsed
+                    self.indexPath = nil
+                    self.collapsed = nil
+                }
+            }
+
             cell.setCommentInstance(comment)
         }
 
@@ -746,6 +761,19 @@ class PodcastTableViewController: SLKTextViewController {
             }
 
             self.barAnimationComplete = true
+        }
+    }
+
+    // MARK: - CollapsibleUITableViewCellDelegate functions
+
+    func setCollapseState(cell: UITableViewCell, collapsed: Bool) {
+        if let indexPath = self.tableView.indexPathForCell(cell) {
+            self.indexPath = indexPath
+            self.collapsed = collapsed
+
+            self.tableView.beginUpdates()
+            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            self.tableView.endUpdates()
         }
     }
 }

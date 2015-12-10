@@ -9,7 +9,7 @@
 import UIKit
 import SlackTextViewController
 
-class EpisodeTableViewController: SLKTextViewController {
+class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate {
 
     // MARK: - EpisodeTableViewController members
 
@@ -18,6 +18,11 @@ class EpisodeTableViewController: SLKTextViewController {
 
     var refreshControl: UIRefreshControl?
     var headerController: EpisodeHeaderViewController?
+
+    // MARK: - CollapsibleUITableViewCellDelegate members
+
+    var indexPath: NSIndexPath?
+    var collapsed: Bool?
 
     // MARK: - EpisodeTableViewController functions
 
@@ -128,7 +133,7 @@ class EpisodeTableViewController: SLKTextViewController {
         }
 
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 50.0
+        self.tableView.estimatedRowHeight = 120.0
 
         self.tableView.allowsSelection = false
         self.tableView.allowsMultipleSelection = false
@@ -235,9 +240,32 @@ class EpisodeTableViewController: SLKTextViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath)
 
         if let cell = cell as? CommentTableViewCell {
+            cell.delegate = self
+
+            if let collapseIndexPath = self.indexPath, let collapsed = self.collapsed {
+                if collapseIndexPath == indexPath {
+                    cell.barCollapsed = collapsed
+                    self.indexPath = nil
+                    self.collapsed = nil
+                }
+            }
+
             cell.setCommentInstance(comments[indexPath.row])
         }
 
         return cell
+    }
+
+    // MARK: - CollapsibleUITableViewCellDelegate functions
+
+    func setCollapseState(cell: UITableViewCell, collapsed: Bool) {
+        if let indexPath = self.tableView.indexPathForCell(cell) {
+            self.indexPath = indexPath
+            self.collapsed = collapsed
+
+            self.tableView.beginUpdates()
+            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            self.tableView.endUpdates()
+        }
     }
 }
