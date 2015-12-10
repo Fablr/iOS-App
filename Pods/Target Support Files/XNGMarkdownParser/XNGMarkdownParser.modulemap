@@ -1,0 +1,6 @@
+framework module XNGMarkdownParser {
+  umbrella header "XNGMarkdownParser-umbrella.h"
+
+  export *
+  module * { export * }
+}

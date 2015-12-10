@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -14,37 +14,27 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="133"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-25" translatesAutoresizingMaskIntoConstraints="NO" id="Okn-NU-qx9">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Okn-NU-qx9">
                         <rect key="frame" x="10" y="10" width="394" height="113"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="This is a comment." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1vQ-c0-Aoe">
-                                <rect key="frame" x="0.0" y="0.0" width="394" height="113"/>
-                                <animations/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="This is a comment." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1vQ-c0-Aoe">
+                                <rect key="frame" x="0.0" y="0.0" width="394" height="88"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
                             </textView>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V0G-Sa-vvq">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3J5-je-7Dr">
                                 <rect key="frame" x="0.0" y="88" width="394" height="25"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3J5-je-7Dr">
-                                        <rect key="frame" x="0.0" y="0.0" width="394" height="25"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="RGV-Gh-5N4"/>
+                                    <constraint firstAttribute="height" constant="25" id="Kkz-1E-ERn"/>
                                 </constraints>
-                            </stackView>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <animations/>
                     </stackView>
                 </subviews>
-                <animations/>
                 <constraints>
                     <constraint firstItem="Okn-NU-qx9" firstAttribute="top" secondItem="YfL-6r-5dL" secondAttribute="topMargin" constant="2" id="0k3-sa-3dJ"/>
                     <constraint firstItem="Okn-NU-qx9" firstAttribute="leading" secondItem="YfL-6r-5dL" secondAttribute="leadingMargin" constant="2" id="5nq-yX-HQp"/>
@@ -52,7 +42,6 @@
                     <constraint firstAttribute="trailingMargin" secondItem="Okn-NU-qx9" secondAttribute="trailing" constant="2" id="gXZ-bS-I5T"/>
                 </constraints>
             </tableViewCellContentView>
-            <animations/>
             <connections>
                 <outlet property="commentIndent" destination="5nq-yX-HQp" id="7CV-2j-LLL"/>
                 <outlet property="commentTextView" destination="1vQ-c0-Aoe" id="KgG-DB-bq2"/>

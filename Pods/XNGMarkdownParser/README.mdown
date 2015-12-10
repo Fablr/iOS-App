@@ -1,0 +1,97 @@
+# XNGMarkdownParser - A Markdown NSAttributedString Parser
+
+[![Build Status](http://img.shields.io/travis/xing/XNGMarkdownParser/master.svg?style=flat)](https://travis-ci.org/xing/XNGMarkdownParser)
+[![Coverage Status](http://img.shields.io/coveralls/xing/XNGMarkdownParser/master.svg?style=flat)](https://coveralls.io/r/xing/XNGMarkdownParser)
+[![Dependency Status](https://www.versioneye.com/objective-c/xngmarkdownparser/badge.svg)](https://www.versioneye.com/objective-c/xngmarkdownparser)
+![CocoaPods Version](http://img.shields.io/cocoapods/v/XNGMarkdownParser.svg?style=flat)
+![CocoaPods License](http://img.shields.io/cocoapods/l/XNGMarkdownParser.svg?style=flat)
+![CocoaPods Platform](http://img.shields.io/cocoapods/p/XNGMarkdownParser.svg?style=flat)
+
+This is a Markdown => NSAttributedString parser built on top of a flex parser. It takes an NSString
+and returns an NSAttributedString with markdown tags replaced by CoreText formatting attributes.
+
+This project is a fork of NSAttributedMarkdownParser by NimbusKit: https://github.com/NimbusKit/markdown
+
+## Adding it to your Project
+
+### Using cocoapods
+
+Add `pod 'XNGMarkdownParser'` to your Podfile and do a `pod install`.
+
+### Manual
+
+1. Drag all of the files from the src/ directory into your project.
+2. Import XNGMarkdownParser.h in your project.
+3. Create an instance of the parser object and pass it the string you wish to parse.
+4. Plug the resulting NSAttributedString into your favorite NSAttributedString label implementation (like an UITextView)
+
+## Supported Features
+
+    *italics*
+    **bold**
+    ***bold italic***
+    ~~strikethrough~~
+    
+    # Header 1
+    ## Header 2
+    ### Header 3
+    #### Header 4
+    ##### Header 5
+    ###### Header 6
+    
+    Header 1
+    ========
+
+    Header 2
+    --------
+    
+    http://google.com urls
+    [Text] (http://google.com "alt text") urls
+
+## Extended Features
+
+* UTF-8 support
+* Vastly improved speed
+* Extended formatting for paragraphs
+* Support different link fonts
+* Tests and example project
+* Support for CocoaPods
+
+## Examples
+
+###Simplest example
+
+```objc
+XNGMarkdownParser *parser = [[XNGMarkdownParser alloc] init];
+NSAttributedString *string = [parser attributedStringFromMarkdownString:@"This is __rad__."];
+```
+
+### Further text customization
+
+```objc
+// this parser initializes only once and customizes fonts, line height and link color
++ (XNGMarkdownParser *)titleMarkdownParser {
+    static dispatch_once_t onceToken;
+    static XNGMarkdownParser *parser;
+    dispatch_once(&onceToken, ^{
+        parser = [[XNGMarkdownParser alloc] init];
+ 
+        parser.paragraphFont = [UIFont xng_14Font];
+        parser.boldFontName = [UIFont xng_14Font].fontName;
+        parser.linkFontName = [UIFont xng_14Font].fontName;
+ 
+        const CGFloat lineHeight = 18;
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.minimumLineHeight = lineHeight;
+        parser.topAttributes = @{
+            NSParagraphStyleAttributeName: paragraphStyle,
+            NSForegroundColorAttributeName: self.textColor
+        };
+    });
+ 
+    return parser;
+}
+```
+
+See the included Example project and the tests to check for further options.
+

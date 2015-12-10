@@ -89,12 +89,12 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Fabler/Bolts.framework"
   install_framework "Pods-Fabler/FBSDKCoreKit.framework"
   install_framework "Pods-Fabler/FBSDKLoginKit.framework"
-  install_framework "Pods-Fabler/MMMarkdown.framework"
   install_framework "Pods-Fabler/Realm.framework"
   install_framework "Pods-Fabler/RealmSwift.framework"
   install_framework "Pods-Fabler/SlackTextViewController.framework"
   install_framework "Pods-Fabler/SwiftyBeaver.framework"
   install_framework "Pods-Fabler/SwiftyJSON.framework"
+  install_framework "Pods-Fabler/XNGMarkdownParser.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Fabler/Alamofire.framework"
@@ -102,10 +102,10 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Fabler/Bolts.framework"
   install_framework "Pods-Fabler/FBSDKCoreKit.framework"
   install_framework "Pods-Fabler/FBSDKLoginKit.framework"
-  install_framework "Pods-Fabler/MMMarkdown.framework"
   install_framework "Pods-Fabler/Realm.framework"
   install_framework "Pods-Fabler/RealmSwift.framework"
   install_framework "Pods-Fabler/SlackTextViewController.framework"
   install_framework "Pods-Fabler/SwiftyBeaver.framework"
   install_framework "Pods-Fabler/SwiftyJSON.framework"
+  install_framework "Pods-Fabler/XNGMarkdownParser.framework"
 fi
