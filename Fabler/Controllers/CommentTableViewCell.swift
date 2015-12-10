@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MMMarkdown
 
 // swiftlint:disable nesting
 
@@ -43,17 +42,9 @@ class CommentTableViewCell: UITableViewCell {
             dateFormatter.dateFormat = "dd/MM/yyyy 'at' HH:mm"
             let date = dateFormatter.stringFromDate(comment.submitDate)
 
-            do {
-                let html = try MMMarkdown.HTMLStringWithMarkdown(comment.comment, extensions: MMMarkdownExtensions.GitHubFlavored)
-                let styledHTML = "<html><head><style>body {font-family: Helvetica Neue; font-size: 15;}</style></head><body>\(html)</body></html>"
-
-                if let data = styledHTML.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true) {
-                    let attributed = try NSMutableAttributedString(data: data, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
-                    self.commentTextView?.attributedText = attributed
-                } else {
-                    throw TextConversionError.DataConversionFailed
-                }
-            } catch {
+            if let formattedComment = comment.formattedComment {
+                self.commentTextView?.attributedText = formattedComment
+            } else {
                 self.commentTextView?.text = comment.comment
             }
             self.commentTextView?.sizeToFit()

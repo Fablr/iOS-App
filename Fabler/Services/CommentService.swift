@@ -8,6 +8,7 @@
 
 import Alamofire
 import SwiftyJSON
+import MMMarkdown
 
 class CommentService {
 
@@ -120,6 +121,17 @@ class CommentService {
 
         if let commentBody = data["comment"].string {
             comment.comment = commentBody
+
+            do {
+                let html = try MMMarkdown.HTMLStringWithMarkdown(comment.comment, extensions: MMMarkdownExtensions.GitHubFlavored)
+                let styledHTML = "<html><head><style>body {font-family: Helvetica Neue; font-size: 15;}</style></head><body>\(html)</body></html>"
+
+                if let data = styledHTML.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true) {
+                    comment.formattedComment = try NSMutableAttributedString(data: data, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
+                }
+            } catch {
+                Log.warning("Unable to create attributed comment.")
+            }
         }
 
         if let submitDate = (data["submit_date"].string)?.toNSDate() {

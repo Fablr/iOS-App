@@ -14,6 +14,7 @@ final class Comment {
     var userName: String = ""
     var userId: Int = 0
     var comment: String = ""
+    var formattedComment: NSAttributedString?
     var submitDate: NSDate = NSDate()
     var editDate: NSDate?
     var voteCount: Int = 1
