@@ -28,7 +28,6 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var subLabel: UILabel?
     @IBOutlet weak var commentIndent: NSLayoutConstraint?
     @IBOutlet weak var subBar: UIView?
-    @IBOutlet weak var subBarHeight: NSLayoutConstraint?
 
     // MARK: - CommentTableViewCell members
 
@@ -39,6 +38,8 @@ class CommentTableViewCell: UITableViewCell {
     // MARK: - CommentTableViewCell functions
 
     func barTapped() {
+        Log.verbose("User tapped comment.")
+
         self.delegate?.setCollapseState(self, collapsed: !self.barCollapsed)
     }
 
@@ -63,10 +64,8 @@ class CommentTableViewCell: UITableViewCell {
 
             if self.barCollapsed {
                 self.subBar?.hidden = true
-                self.subBarHeight?.constant = 0.0
             } else {
                 self.subBar?.hidden = false
-                self.subBarHeight?.constant = 25.0
             }
 
             let tapRec = UITapGestureRecognizer()

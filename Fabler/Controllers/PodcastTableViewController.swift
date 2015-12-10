@@ -648,6 +648,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
                     self.indexPath = nil
                     self.collapsed = nil
                 }
+            } else {
+                cell.barCollapsed = true
             }
 
             cell.setCommentInstance(comment)

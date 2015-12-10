@@ -237,17 +237,23 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        Log.verbose("Building cell.")
+
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath)
 
         if let cell = cell as? CommentTableViewCell {
             cell.delegate = self
 
             if let collapseIndexPath = self.indexPath, let collapsed = self.collapsed {
-                if collapseIndexPath == indexPath {
+                if collapseIndexPath.row == indexPath.row {
                     cell.barCollapsed = collapsed
+
+                    Log.verbose("Resetting indexPath.")
                     self.indexPath = nil
                     self.collapsed = nil
                 }
+            } else {
+                cell.barCollapsed = true
             }
 
             cell.setCommentInstance(comments[indexPath.row])
@@ -260,6 +266,8 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     func setCollapseState(cell: UITableViewCell, collapsed: Bool) {
         if let indexPath = self.tableView.indexPathForCell(cell) {
+            Log.verbose("Setting index path to \(indexPath).")
+
             self.indexPath = indexPath
             self.collapsed = collapsed
 

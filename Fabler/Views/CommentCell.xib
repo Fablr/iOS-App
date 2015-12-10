@@ -53,7 +53,6 @@
                 <outlet property="commentIndent" destination="5nq-yX-HQp" id="7CV-2j-LLL"/>
                 <outlet property="commentTextView" destination="1vQ-c0-Aoe" id="KgG-DB-bq2"/>
                 <outlet property="subBar" destination="62I-ax-ijL" id="eqz-0L-DmP"/>
-                <outlet property="subBarHeight" destination="bOf-bs-vGS" id="xti-Vj-CUB"/>
                 <outlet property="subLabel" destination="3J5-je-7Dr" id="JFw-rK-cCx"/>
             </connections>
             <point key="canvasLocation" x="791" y="530"/>
