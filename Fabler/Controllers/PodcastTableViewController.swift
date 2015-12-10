@@ -225,13 +225,13 @@ class PodcastTableViewController: SLKTextViewController {
         self.headerSwitchOffset = self.headerHeight - (statusBarHeight + navBarHeight) - statusBarHeight - navBarHeight
 
         self.headerImage = UIImageView()
-        self.blurredHeaderImage?.backgroundColor = UIColor(red: 250.0/255.0, green: 250.0/255.0, blue: 250.0/255.0, alpha: 1.0)
+        self.blurredHeaderImage?.backgroundColor = UIColor(red: 225.0/255.0, green: 225.0/255.0, blue: 225.0/255.0, alpha: 1.0)
         self.headerImage?.translatesAutoresizingMaskIntoConstraints = false
         self.headerImage?.contentMode = .ScaleAspectFill
         self.headerImage?.clipsToBounds = true
 
         self.blurredHeaderImage = UIImageView()
-        self.blurredHeaderImage?.backgroundColor = UIColor(red: 250.0/255.0, green: 250.0/255.0, blue: 250.0/255.0, alpha: 1.0)
+        self.blurredHeaderImage?.backgroundColor = UIColor(red: 225.0/255.0, green: 225.0/255.0, blue: 225.0/255.0, alpha: 1.0)
         self.blurredHeaderImage?.translatesAutoresizingMaskIntoConstraints = false
         self.blurredHeaderImage?.contentMode = .ScaleAspectFill
         self.blurredHeaderImage?.clipsToBounds = true
