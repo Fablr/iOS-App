@@ -8,11 +8,11 @@
 
 import UIKit
 
-class CommentHeaderTableViewCell: UITableViewCell {
+class CommentFooterTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var commentButton: UIButton!
+    @IBOutlet weak var commentButton: UIButton?
 
     // MARK: - UITableViewCell functions
 

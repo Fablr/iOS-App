@@ -10,7 +10,7 @@ import UIKit
 import AlamofireImage
 import SlackTextViewController
 
-class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate {
+class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate {
 
     // MARK: - PodcastTableViewController data members
 
@@ -45,6 +45,10 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     var indexPath: NSIndexPath?
     var collapsed: Bool?
+
+    // MARK: - RepliesToCommentDelegate members
+
+    var replyComment: Comment?
 
     // MARK: - PodcastTableViewController functions
 
@@ -127,6 +131,11 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
     }
 
+    func commentButtonPressed(sender: AnyObject) {
+        self.replyComment = nil
+        self.didRequestKeyboard()
+    }
+
     func updateSubscribeButton(override: Bool?) {
         if let override = override {
             if override {
@@ -152,7 +161,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     func userTapped(sender: AnyObject) {
-        self.setTextInputbarHidden(true, animated: true)
+        self.didDismissKeyboard()
     }
 
     func addMessage(message: String, parent: Int?) {
@@ -188,21 +197,50 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     // MARK: - SLKTextViewController functions
 
+    func didDismissKeyboard() {
+        if let navigationController = self.navigationController as? FablerNavigationController {
+            navigationController.displaySmallPlayer()
+        }
+
+        self.replyComment = nil
+        self.setTextInputbarHidden(true, animated: true)
+    }
+
+    func didRequestKeyboard() {
+        if let navigationController = self.navigationController as? FablerNavigationController {
+            navigationController.dismissSmallPlayer()
+        }
+
+        self.setTextInputbarHidden(false, animated: true)
+        self.textView.becomeFirstResponder()
+    }
+
     override class func tableViewStyleForCoder(decoder: NSCoder) -> UITableViewStyle {
         return UITableViewStyle.Plain;
     }
 
     override func didPressLeftButton(sender: AnyObject!) {
-        self.setTextInputbarHidden(true, animated: true)
+        self.didDismissKeyboard()
     }
 
     override func didPressRightButton(sender: AnyObject!) {
         if let message = self.textView.text.copy() as? String {
-            self.addMessage(message, parent: nil)
+            let parent: Int?
+            if let replyComment = self.replyComment {
+                if replyComment.parentId == nil {
+                    parent = replyComment.commentId
+                } else {
+                    parent = replyComment.parentId
+                }
+            } else {
+                parent = nil
+            }
+
+            self.addMessage(message, parent: parent)
         }
 
         super.didPressRightButton(sender)
-        self.setTextInputbarHidden(true, animated: true)
+        self.didDismissKeyboard()
     }
 
     // MARK: - UIViewController functions
@@ -300,6 +338,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.tableView.registerNib(UINib(nibName: "EpisodeCell", bundle: nil), forCellReuseIdentifier: "EpisodeCell")
         self.tableView.registerNib(UINib(nibName: "EpisodeHeaderCell", bundle: nil), forCellReuseIdentifier: "EpisodeHeaderCell")
         self.tableView.registerNib(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
+        self.tableView.registerNib(UINib(nibName: "CommentFooterCell", bundle: nil), forCellReuseIdentifier: "CommentFooterCell")
 
         //
         // SLKTextViewController setup
@@ -541,6 +580,28 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         return result
     }
 
+    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if let cell = tableView.dequeueReusableCellWithIdentifier("CommentFooterCell") as? CommentFooterTableViewCell {
+            cell.commentButton?.addTarget(self, action: "commentButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
+            return cell.contentView
+        }
+
+        return UIView()
+    }
+
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        let result: CGFloat
+
+        switch self.currentSegment {
+        case 2:
+            result = 40.0
+        default:
+            result = 0.0
+        }
+
+        return result
+    }
+
     // MARK: - PodcastTableViewController episode table functions
 
     func setupTableForEpisodes() {
@@ -640,7 +701,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         let comment = comments[indexPath.row]
 
         if let cell = cell as? CommentTableViewCell {
-            cell.delegate = self
+            cell.collapseDelegate = self
+            cell.replyDelegate = self
 
             if let collapseIndexPath = self.indexPath, let collapsed = self.collapsed {
                 if collapseIndexPath == indexPath {
@@ -777,5 +839,12 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             self.tableView.endUpdates()
         }
+    }
+
+    // MARK: - RepliesToCommentDelegate
+
+    func replyToComment(comment: Comment?) {
+        self.replyComment = comment
+        self.didRequestKeyboard()
     }
 }

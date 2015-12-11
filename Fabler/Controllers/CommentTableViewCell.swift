@@ -12,15 +12,16 @@ protocol CollapsibleUITableViewCellDelegate {
     func setCollapseState(cell: UITableViewCell, collapsed: Bool)
 }
 
-// swiftlint:disable nesting
+protocol RepliesToCommentDelegate {
+    func replyToComment(comment: Comment?)
+}
+
+enum TextConversionError: ErrorType {
+    case DataConversionFailed
+}
+
 
 class CommentTableViewCell: UITableViewCell {
-
-    // MARK: - Enums
-
-    private enum TextConversionError: ErrorType {
-        case DataConversionFailed
-    }
 
     // MARK: - IBOutlets
 
@@ -38,7 +39,9 @@ class CommentTableViewCell: UITableViewCell {
     // MARK: - IBActions
 
     @IBAction func replyButtonPressed(sender: AnyObject) {
-        Log.debug("Reply button pressed.")
+        if let comment = self.comment {
+            self.replyDelegate?.replyToComment(comment)
+        }
     }
 
     @IBAction func upButtonPressed(sender: AnyObject) {
@@ -47,15 +50,15 @@ class CommentTableViewCell: UITableViewCell {
 
             switch comment.userVote {
             case 1:
-                service.voteOnComment(comment.commentId, vote: CommentService.Vote.None, completion: self.voteDidFinish)
+                service.voteOnComment(comment.commentId, vote: Vote.None, completion: self.voteDidFinish)
                 comment.userVote = 0
                 comment.voteCount--
             case -1:
-                service.voteOnComment(comment.commentId, vote: CommentService.Vote.Up, completion: self.voteDidFinish)
+                service.voteOnComment(comment.commentId, vote: Vote.Up, completion: self.voteDidFinish)
                 comment.userVote = 1
                 comment.voteCount += 2
             case 0:
-                service.voteOnComment(comment.commentId, vote: CommentService.Vote.Up, completion: self.voteDidFinish)
+                service.voteOnComment(comment.commentId, vote: Vote.Up, completion: self.voteDidFinish)
                 comment.userVote = 1
                 comment.voteCount++
             default:
@@ -72,15 +75,15 @@ class CommentTableViewCell: UITableViewCell {
 
             switch comment.userVote {
             case 1:
-                service.voteOnComment(comment.commentId, vote: CommentService.Vote.Down, completion: self.voteDidFinish)
+                service.voteOnComment(comment.commentId, vote: Vote.Down, completion: self.voteDidFinish)
                 comment.userVote = -1
                 comment.voteCount -= 2
             case -1:
-                service.voteOnComment(comment.commentId, vote: CommentService.Vote.None, completion: self.voteDidFinish)
+                service.voteOnComment(comment.commentId, vote: Vote.None, completion: self.voteDidFinish)
                 comment.userVote = 0
                 comment.voteCount++
             case 0:
-                service.voteOnComment(comment.commentId, vote: CommentService.Vote.Down, completion: self.voteDidFinish)
+                service.voteOnComment(comment.commentId, vote: Vote.Down, completion: self.voteDidFinish)
                 comment.userVote = -1
                 comment.voteCount--
             default:
@@ -99,13 +102,15 @@ class CommentTableViewCell: UITableViewCell {
 
     var comment: Comment?
     var barCollapsed: Bool = true
-    var delegate: CollapsibleUITableViewCellDelegate?
+
+    var collapseDelegate: CollapsibleUITableViewCellDelegate?
+    var replyDelegate: RepliesToCommentDelegate?
 
     // MARK: - CommentTableViewCell functions
 
     func barTapped() {
         Log.verbose("User tapped comment.")
-        self.delegate?.setCollapseState(self, collapsed: !self.barCollapsed)
+        self.collapseDelegate?.setCollapseState(self, collapsed: !self.barCollapsed)
     }
 
     func voteDidUpdate() {

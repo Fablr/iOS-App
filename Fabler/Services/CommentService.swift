@@ -10,13 +10,17 @@ import Alamofire
 import SwiftyJSON
 import XNGMarkdownParser
 
-class CommentService {
+// swiftlint:disable type_name
 
-    enum Vote: Int {
-        case Down = -1
-        case None = 0
-        case Up = 1
-    }
+enum Vote: Int {
+    case Down = -1
+    case None = 0
+    case Up = 1
+}
+
+// swiftlint:enable type_name
+
+class CommentService {
 
     // MARK: - CommentService functions
 
@@ -84,7 +88,6 @@ class CommentService {
         }
 
         Log.debug("Episode comments request: \(request)")
-        debugPrint(request)
     }
 
     func addCommentForPodcast(podcastId: Int, comment: String, parentCommentId: Int?, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
@@ -152,17 +155,6 @@ class CommentService {
             let parser = XNGMarkdownParser()
             parser.paragraphFont = UIFont(name: "Helvetica Neue", size: 15.0)
             comment.formattedComment = parser.attributedStringFromMarkdownString(comment.comment)
-
-            /*do {
-                let html = try MMMarkdown.HTMLStringWithMarkdown(comment.comment, extensions: MMMarkdownExtensions.GitHubFlavored)
-                let styledHTML = "<html><head><style>body {font-family: Helvetica Neue; font-size: 15;}</style></head><body>\(html)</body></html>"
-
-                if let data = styledHTML.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true) {
-                    comment.formattedComment = try NSMutableAttributedString(data: data, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
-                }
-            } catch {
-                Log.warning("Unable to create attributed comment.")
-            }*/
         }
 
         if let submitDate = (data["submit_date"].string)?.toNSDate() {

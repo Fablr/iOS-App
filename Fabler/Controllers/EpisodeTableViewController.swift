@@ -9,7 +9,7 @@
 import UIKit
 import SlackTextViewController
 
-class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate {
+class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate {
 
     // MARK: - EpisodeTableViewController members
 
@@ -23,6 +23,10 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     var indexPath: NSIndexPath?
     var collapsed: Bool?
+
+    // MARK: - RepliesToCommentDelegate members
+
+    var replyComment: Comment?
 
     // MARK: - EpisodeTableViewController functions
 
@@ -64,6 +68,26 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     func commentButtonPressed(sender: AnyObject) {
+        self.replyComment = nil
+        self.didRequestKeyboard()
+    }
+
+    func userTapped(sender: AnyObject) {
+        self.didDismissKeyboard()
+    }
+
+    // MARK: - SLKTextViewController functions
+
+    func didDismissKeyboard() {
+        if let navigationController = self.navigationController as? FablerNavigationController {
+            navigationController.displaySmallPlayer()
+        }
+
+        self.replyComment = nil
+        self.setTextInputbarHidden(true, animated: true)
+    }
+
+    func didRequestKeyboard() {
         if let navigationController = self.navigationController as? FablerNavigationController {
             navigationController.dismissSmallPlayer()
         }
@@ -72,36 +96,32 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.textView.becomeFirstResponder()
     }
 
-    func userTapped(sender: AnyObject) {
-        self.setTextInputbarHidden(true, animated: true)
-    }
-
-    // MARK: - SLKTextViewController functions
-
     override class func tableViewStyleForCoder(decoder: NSCoder) -> UITableViewStyle {
         return UITableViewStyle.Plain;
     }
 
     override func didPressLeftButton(sender: AnyObject!) {
-        if let navigationController = self.navigationController as? FablerNavigationController {
-            navigationController.displaySmallPlayer()
-        }
-
-        self.setTextInputbarHidden(true, animated: true)
+        self.didDismissKeyboard()
     }
 
     override func didPressRightButton(sender: AnyObject!) {
         if let message = self.textView.text.copy() as? String {
-            self.addMessage(message, parent: nil)
+            let parent: Int?
+            if let replyComment = self.replyComment {
+                if replyComment.parentId == nil {
+                    parent = replyComment.commentId
+                } else {
+                    parent = replyComment.parentId
+                }
+            } else {
+                parent = nil
+            }
+
+            self.addMessage(message, parent: parent)
         }
 
         super.didPressRightButton(sender)
-
-        if let navigationController = self.navigationController as? FablerNavigationController {
-            navigationController.displaySmallPlayer()
-        }
-
-        self.setTextInputbarHidden(true, animated: true)
+        self.didDismissKeyboard()
     }
 
     // MARK: - UIViewController functions
@@ -118,7 +138,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         // Register Nibs for reuse
         //
         self.tableView.registerNib(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
-        self.tableView.registerNib(UINib(nibName: "CommentHeaderCell", bundle: nil), forCellReuseIdentifier: "CommentHeaderCell")
+        self.tableView.registerNib(UINib(nibName: "CommentFooterCell", bundle: nil), forCellReuseIdentifier: "CommentFooterCell")
 
         //
         // TableView setup
@@ -137,6 +157,8 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
         self.tableView.allowsSelection = false
         self.tableView.allowsMultipleSelection = false
+
+        self.edgesForExtendedLayout = UIRectEdge.None
 
         //
         // SLKTextViewController setup
@@ -223,8 +245,8 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         return self.comments.count
     }
 
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let cell = tableView.dequeueReusableCellWithIdentifier("CommentHeaderCell") as? CommentHeaderTableViewCell {
+    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if let cell = tableView.dequeueReusableCellWithIdentifier("CommentFooterCell") as? CommentFooterTableViewCell {
             cell.commentButton?.addTarget(self, action: "commentButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
             return cell.contentView
         }
@@ -232,7 +254,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         return UIView()
     }
 
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 40.0
     }
 
@@ -242,7 +264,8 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath)
 
         if let cell = cell as? CommentTableViewCell {
-            cell.delegate = self
+            cell.replyDelegate = self
+            cell.collapseDelegate = self
 
             if let collapseIndexPath = self.indexPath, let collapsed = self.collapsed {
                 if collapseIndexPath.row == indexPath.row {
@@ -275,5 +298,12 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
             self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             self.tableView.endUpdates()
         }
+    }
+
+    // MARK: - RepliesToCommentDelegate
+
+    func replyToComment(comment: Comment?) {
+        self.replyComment = comment
+        self.didRequestKeyboard()
     }
 }
