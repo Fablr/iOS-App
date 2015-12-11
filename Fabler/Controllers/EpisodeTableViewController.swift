@@ -138,7 +138,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         // Register Nibs for reuse
         //
         self.tableView.registerNib(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
-        self.tableView.registerNib(UINib(nibName: "CommentFooterCell", bundle: nil), forCellReuseIdentifier: "CommentFooterCell")
+        self.tableView.registerNib(UINib(nibName: "CommentSectionFooter", bundle: nil), forHeaderFooterViewReuseIdentifier: "CommentSectionFooter")
 
         //
         // TableView setup
@@ -218,7 +218,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         super.didReceiveMemoryWarning()
     }
 
-    // MARK: - UITableViewDataSource functions
+    // MARK: - UITableView functions
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if self.comments.count > 0 {
@@ -246,9 +246,9 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if let cell = tableView.dequeueReusableCellWithIdentifier("CommentFooterCell") as? CommentFooterTableViewCell {
-            cell.commentButton?.addTarget(self, action: "commentButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
-            return cell.contentView
+        if let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("CommentSectionFooter") as? CommentSectionFooterView {
+            view.delegate = self
+            return view
         }
 
         return UIView()
@@ -289,7 +289,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     func setCollapseState(cell: UITableViewCell, collapsed: Bool) {
         if let indexPath = self.tableView.indexPathForCell(cell) {
-            Log.verbose("Setting index path to \( indexPath).")
+            Log.verbose("Setting index path to \(indexPath).")
 
             self.indexPath = indexPath
             self.collapsed = collapsed
@@ -300,7 +300,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
     }
 
-    // MARK: - RepliesToCommentDelegate
+    // MARK: - RepliesToCommentDelegate functions
 
     func replyToComment(comment: Comment?) {
         self.replyComment = comment

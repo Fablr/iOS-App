@@ -10,7 +10,7 @@ import UIKit
 import AlamofireImage
 import SlackTextViewController
 
-class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate {
+class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate, ChangesBasedOnSegment {
 
     // MARK: - PodcastTableViewController data members
 
@@ -28,8 +28,6 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     var settingsButton: UIButton?
     var subscribeButton: UIButton?
     var settingsButtonWidth: NSLayoutConstraint?
-
-    var currentSegment: Int = 0
 
     var downloader: ImageDownloader?
 
@@ -49,6 +47,10 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     // MARK: - RepliesToCommentDelegate members
 
     var replyComment: Comment?
+
+    // MARK: - ChangesBasedOnSegment members
+
+    var currentSegment: Int = 0
 
     // MARK: - PodcastTableViewController functions
 
@@ -179,19 +181,6 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
                     }
                 }
             })
-        }
-    }
-
-    func segmentSelectionChanged(sender: UISegmentedControl) {
-        let refresh: Bool = (sender.selectedSegmentIndex != self.currentSegment)
-
-        self.currentSegment = sender.selectedSegmentIndex
-
-        if refresh {
-            self.refreshData(self)
-            self.refreshControl?.beginRefreshing()
-
-            self.tableView.reloadData()
         }
     }
 
@@ -330,15 +319,17 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
         self.tableView.allowsMultipleSelection = false
 
+        self.edgesForExtendedLayout = UIRectEdge.Top
+
         self.automaticallyAdjustsScrollViewInsets = true
 
         //
         // Register Nibs for reuse
         //
         self.tableView.registerNib(UINib(nibName: "EpisodeCell", bundle: nil), forCellReuseIdentifier: "EpisodeCell")
-        self.tableView.registerNib(UINib(nibName: "EpisodeHeaderCell", bundle: nil), forCellReuseIdentifier: "EpisodeHeaderCell")
         self.tableView.registerNib(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
-        self.tableView.registerNib(UINib(nibName: "CommentFooterCell", bundle: nil), forCellReuseIdentifier: "CommentFooterCell")
+        self.tableView.registerNib(UINib(nibName: "EpisodeSectionHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "EpisodeSectionHeader")
+        self.tableView.registerNib(UINib(nibName: "CommentSectionFooter", bundle: nil), forHeaderFooterViewReuseIdentifier: "CommentSectionFooter")
 
         //
         // SLKTextViewController setup
@@ -478,18 +469,14 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
     }
 
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
-    }
-
     // MARK: - UITableViewController functions
 
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let cell = tableView.dequeueReusableCellWithIdentifier("EpisodeHeaderCell") as? EpisodeHeaderTableViewCell {
-            cell.segmentedControl?.addTarget(self, action: "segmentSelectionChanged:", forControlEvents: UIControlEvents.ValueChanged)
-            cell.segmentedControl?.selectedSegmentIndex = self.currentSegment
+        if let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("EpisodeSectionHeader") as? EpisodeSectionHeaderView {
+            view.delegate = self
+            view.segmentControl?.selectedSegmentIndex = self.currentSegment
 
-            return cell.contentView
+            return view
         }
 
         return UIView()
@@ -581,9 +568,9 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if let cell = tableView.dequeueReusableCellWithIdentifier("CommentFooterCell") as? CommentFooterTableViewCell {
-            cell.commentButton?.addTarget(self, action: "commentButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
-            return cell.contentView
+        if let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("CommentSectionFooter") as? CommentSectionFooterView {
+            view.delegate = self
+            return view
         }
 
         return UIView()
@@ -841,10 +828,25 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
     }
 
-    // MARK: - RepliesToCommentDelegate
+    // MARK: - RepliesToCommentDelegate functions
 
     func replyToComment(comment: Comment?) {
         self.replyComment = comment
         self.didRequestKeyboard()
+    }
+
+    // MARK: - ChangesBasedOnSegment functions
+
+    func segmentDidChangeTo(index: Int) {
+        let refresh: Bool = (index != self.currentSegment)
+
+        self.currentSegment = index
+
+        if refresh {
+            self.refreshData(self)
+            self.refreshControl?.beginRefreshing()
+
+            self.tableView.reloadData()
+        }
     }
 }
