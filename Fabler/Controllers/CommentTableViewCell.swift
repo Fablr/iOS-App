@@ -25,9 +25,75 @@ class CommentTableViewCell: UITableViewCell {
     // MARK: - IBOutlets
 
     @IBOutlet weak var commentTextView: UITextView?
+    @IBOutlet weak var voteLabel: UILabel?
     @IBOutlet weak var subLabel: UILabel?
-    @IBOutlet weak var commentIndent: NSLayoutConstraint?
     @IBOutlet weak var subBar: UIView?
+    @IBOutlet weak var replyButton: UIButton?
+    @IBOutlet weak var upButton: UIButton?
+    @IBOutlet weak var downButton: UIButton?
+    @IBOutlet weak var moreButton: UIButton?
+
+    @IBOutlet weak var commentIndent: NSLayoutConstraint?
+
+    // MARK: - IBActions
+
+    @IBAction func replyButtonPressed(sender: AnyObject) {
+        Log.debug("Reply button pressed.")
+    }
+
+    @IBAction func upButtonPressed(sender: AnyObject) {
+        if let comment = self.comment {
+            let service = CommentService()
+
+            switch comment.userVote {
+            case 1:
+                service.voteOnComment(comment.commentId, vote: CommentService.Vote.None, completion: self.voteDidFinish)
+                comment.userVote = 0
+                comment.voteCount--
+            case -1:
+                service.voteOnComment(comment.commentId, vote: CommentService.Vote.Up, completion: self.voteDidFinish)
+                comment.userVote = 1
+                comment.voteCount += 2
+            case 0:
+                service.voteOnComment(comment.commentId, vote: CommentService.Vote.Up, completion: self.voteDidFinish)
+                comment.userVote = 1
+                comment.voteCount++
+            default:
+                Log.warning("Invalid user vote value.")
+            }
+
+            self.voteDidUpdate()
+        }
+    }
+
+    @IBAction func downButtonPressed(sender: AnyObject) {
+        if let comment = self.comment {
+            let service = CommentService()
+
+            switch comment.userVote {
+            case 1:
+                service.voteOnComment(comment.commentId, vote: CommentService.Vote.Down, completion: self.voteDidFinish)
+                comment.userVote = -1
+                comment.voteCount -= 2
+            case -1:
+                service.voteOnComment(comment.commentId, vote: CommentService.Vote.None, completion: self.voteDidFinish)
+                comment.userVote = 0
+                comment.voteCount++
+            case 0:
+                service.voteOnComment(comment.commentId, vote: CommentService.Vote.Down, completion: self.voteDidFinish)
+                comment.userVote = -1
+                comment.voteCount--
+            default:
+                Log.warning("Invalid user vote value.")
+            }
+
+            self.voteDidUpdate()
+        }
+    }
+
+    @IBAction func moreButtonPressed(sender: AnyObject) {
+        Log.debug("More button pressed.")
+    }
 
     // MARK: - CommentTableViewCell members
 
@@ -39,8 +105,29 @@ class CommentTableViewCell: UITableViewCell {
 
     func barTapped() {
         Log.verbose("User tapped comment.")
-
         self.delegate?.setCollapseState(self, collapsed: !self.barCollapsed)
+    }
+
+    func voteDidUpdate() {
+        if let comment = self.comment {
+            switch comment.userVote {
+            case -1:
+                self.downButton?.tintColor = UIColor.washedOutFablerOrangeColor()
+                self.upButton?.tintColor = UIColor.fablerOrangeColor()
+            case 1:
+                self.downButton?.tintColor = UIColor.fablerOrangeColor()
+                self.upButton?.tintColor = UIColor.washedOutFablerOrangeColor()
+            default:
+                self.downButton?.tintColor = UIColor.fablerOrangeColor()
+                self.upButton?.tintColor = UIColor.fablerOrangeColor()
+            }
+
+            self.voteLabel?.text = "\(comment.voteCount)"
+        }
+    }
+
+    func voteDidFinish(result: Bool) {
+        Log.debug("Vote did finish.")
     }
 
     func setCommentInstance(comment: Comment) {
@@ -54,13 +141,13 @@ class CommentTableViewCell: UITableViewCell {
             dateFormatter.timeZone = localTimeZone
             dateFormatter.dateFormat = "dd/MM/yyyy 'at' HH:mm"
             let date = dateFormatter.stringFromDate(comment.submitDate)
+            self.subLabel?.text = "by \(comment.userName) on \(date)"
 
             if let formattedComment = comment.formattedComment {
                 self.commentTextView?.attributedText = formattedComment
             } else {
                 self.commentTextView?.text = comment.comment
             }
-            self.commentTextView?.sizeToFit()
 
             if self.barCollapsed {
                 self.subBar?.hidden = true
@@ -68,11 +155,11 @@ class CommentTableViewCell: UITableViewCell {
                 self.subBar?.hidden = false
             }
 
+            self.voteDidUpdate()
+
             let tapRec = UITapGestureRecognizer()
             tapRec.addTarget(self, action: "barTapped")
             self.contentView.addGestureRecognizer(tapRec)
-
-            self.subLabel?.text = "by \(comment.userName) on \(date)"
         }
     }
 

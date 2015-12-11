@@ -266,7 +266,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     func setCollapseState(cell: UITableViewCell, collapsed: Bool) {
         if let indexPath = self.tableView.indexPathForCell(cell) {
-            Log.verbose("Setting index path to \(indexPath).")
+            Log.verbose("Setting index path to \( indexPath).")
 
             self.indexPath = indexPath
             self.collapsed = collapsed

@@ -12,6 +12,12 @@ import XNGMarkdownParser
 
 class CommentService {
 
+    enum Vote: Int {
+        case Down = -1
+        case None = 0
+        case Up = 1
+    }
+
     // MARK: - CommentService functions
 
     init() {
@@ -78,6 +84,7 @@ class CommentService {
         }
 
         Log.debug("Episode comments request: \(request)")
+        debugPrint(request)
     }
 
     func addCommentForPodcast(podcastId: Int, comment: String, parentCommentId: Int?, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
@@ -99,7 +106,27 @@ class CommentService {
         }
 
         Log.debug("Adding comment request: \(request)")
-        debugPrint(request)
+    }
+
+    func voteOnComment(commentId: Int, vote: Vote, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+        let request = Alamofire
+        .request(FablerClient.Router.VoteComment(comment: commentId, vote: vote.rawValue))
+        .validate()
+        .responseSwiftyJSON { response in
+            let result: Bool
+
+            switch response.result {
+            case .Success:
+                result = true
+            case .Failure(let error):
+                result = false
+                Log.error("Vote failed with \(error).")
+            }
+
+            dispatch_async(queue, {completion(result: result)})
+        }
+
+        Log.debug("Voting comment request: \(request)")
     }
 
     // MARK: - CommentService serialize functions

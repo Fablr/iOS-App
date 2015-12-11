@@ -33,6 +33,7 @@ struct FablerClient {
         case AddCommentForEpisode(episode: Int, comment: String, parent: Int?)
         case ReadCommentsForPodcast(podcast: Int)
         case AddCommentForPodcast(podcast: Int, comment: String, parent: Int?)
+        case VoteComment(comment: Int, vote: Int)
 
         var method: Alamofire.Method {
             switch self {
@@ -59,6 +60,8 @@ struct FablerClient {
             case .ReadCommentsForPodcast:
                 return .GET
             case .AddCommentForPodcast:
+                return .POST
+            case .VoteComment:
                 return .POST
             }
         }
@@ -89,6 +92,8 @@ struct FablerClient {
                 return "/podcast/\(podcast)/comments/"
             case .AddCommentForPodcast(let podcast, _, _):
                 return "/podcast/\(podcast)/comments/"
+            case .VoteComment:
+                return "/vote/"
             }
         }
 
@@ -125,6 +130,9 @@ struct FablerClient {
                 if parent != nil {
                     parameters["parent"] = parent!
                 }
+                return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+            case .VoteComment(let comment, let vote):
+                let parameters: [String: AnyObject] = ["comment": comment, "value": vote]
                 return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
             default:
                 return mutableURLRequest

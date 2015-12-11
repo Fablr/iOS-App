@@ -15,47 +15,134 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Okn-NU-qx9">
-                        <rect key="frame" x="10" y="10" width="394" height="113"/>
+                        <rect key="frame" x="8" y="8" width="398" height="117"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="This is a comment." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1vQ-c0-Aoe">
-                                <rect key="frame" x="0.0" y="0.0" width="394" height="63"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
-                            </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3J5-je-7Dr">
-                                <rect key="frame" x="0.0" y="63" width="394" height="25"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pcd-DF-tuq">
+                                <rect key="frame" x="0.0" y="0.0" width="398" height="92"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ts4-Jy-EmY">
+                                        <rect key="frame" x="0.0" y="0.0" width="398" height="92"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="This is a comment." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1vQ-c0-Aoe">
+                                                <rect key="frame" x="0.0" y="0.0" width="398" height="67"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
+                                            </textView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="vIE-wO-Lu8">
+                                                <rect key="frame" x="0.0" y="67" width="398" height="25"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3J5-je-7Dr">
+                                                        <rect key="frame" x="0.0" y="0.0" width="348" height="25"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
+                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7wF-vr-mZn">
+                                                        <rect key="frame" x="348" y="0.0" width="50" height="25"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="PfG-0Z-0oG"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
+                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="4NN-iz-O12"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="Kkz-1E-ERn"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ts4-Jy-EmY" secondAttribute="trailing" id="HWW-Ru-16v"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ts4-Jy-EmY" secondAttribute="bottom" id="IwK-Bz-sxz"/>
+                                    <constraint firstItem="Ts4-Jy-EmY" firstAttribute="leading" secondItem="pcd-DF-tuq" secondAttribute="leading" id="wYI-Fs-kXo"/>
+                                    <constraint firstItem="Ts4-Jy-EmY" firstAttribute="top" secondItem="pcd-DF-tuq" secondAttribute="top" id="xcT-dP-zp0"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="62I-ax-ijL">
-                                <rect key="frame" x="0.0" y="88" width="394" height="25"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="92" width="398" height="25"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Fbl-Uj-Ztd">
+                                        <rect key="frame" x="0.0" y="0.0" width="398" height="25"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hdm-zG-tX1">
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="25"/>
+                                                <accessibility key="accessibilityConfiguration" hint="Press to reply" label="Reply"/>
+                                                <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal" image="reply"/>
+                                                <connections>
+                                                    <action selector="replyButtonPressed:" destination="twQ-4p-qMY" eventType="touchUpInside" id="NuL-MQ-bJr"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wa8-9g-MC4">
+                                                <rect key="frame" x="100" y="0.0" width="99" height="25"/>
+                                                <accessibility key="accessibilityConfiguration" hint="Press to up vote" label="Up vote"/>
+                                                <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal" image="upvote"/>
+                                                <connections>
+                                                    <action selector="upButtonPressed:" destination="twQ-4p-qMY" eventType="touchUpInside" id="WY8-5z-t9x"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="neG-mv-8uV">
+                                                <rect key="frame" x="199" y="0.0" width="100" height="25"/>
+                                                <accessibility key="accessibilityConfiguration" hint="Press to down vote" label="Down vote"/>
+                                                <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal" image="downvote"/>
+                                                <connections>
+                                                    <action selector="downButtonPressed:" destination="twQ-4p-qMY" eventType="touchUpInside" id="N1F-c0-IGJ"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YPg-s6-VUM">
+                                                <rect key="frame" x="299" y="0.0" width="99" height="25"/>
+                                                <accessibility key="accessibilityConfiguration" hint="Press to see more options" label="More options"/>
+                                                <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal" image="ellipsis"/>
+                                                <connections>
+                                                    <action selector="moreButtonPressed:" destination="twQ-4p-qMY" eventType="touchUpInside" id="Eq8-sW-xDo"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Fbl-Uj-Ztd" secondAttribute="bottom" id="7Ae-uF-pWG"/>
+                                    <constraint firstItem="Fbl-Uj-Ztd" firstAttribute="leading" secondItem="62I-ax-ijL" secondAttribute="leading" id="Oc3-9z-WC7"/>
+                                    <constraint firstAttribute="trailing" secondItem="Fbl-Uj-Ztd" secondAttribute="trailing" id="ZVJ-Ge-hhx"/>
                                     <constraint firstAttribute="height" constant="25" id="bOf-bs-vGS"/>
+                                    <constraint firstItem="Fbl-Uj-Ztd" firstAttribute="top" secondItem="62I-ax-ijL" secondAttribute="top" id="cUK-Ep-6EP"/>
                                 </constraints>
                             </view>
                         </subviews>
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Okn-NU-qx9" firstAttribute="top" secondItem="YfL-6r-5dL" secondAttribute="topMargin" constant="2" id="0k3-sa-3dJ"/>
-                    <constraint firstItem="Okn-NU-qx9" firstAttribute="leading" secondItem="YfL-6r-5dL" secondAttribute="leadingMargin" constant="2" id="5nq-yX-HQp"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Okn-NU-qx9" secondAttribute="bottom" constant="2" id="fD4-CG-h3i"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Okn-NU-qx9" secondAttribute="trailing" constant="2" id="gXZ-bS-I5T"/>
+                    <constraint firstItem="Okn-NU-qx9" firstAttribute="top" secondItem="YfL-6r-5dL" secondAttribute="topMargin" id="0k3-sa-3dJ"/>
+                    <constraint firstItem="Okn-NU-qx9" firstAttribute="leading" secondItem="YfL-6r-5dL" secondAttribute="leadingMargin" id="5nq-yX-HQp"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Okn-NU-qx9" secondAttribute="bottom" id="fD4-CG-h3i"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Okn-NU-qx9" secondAttribute="trailing" id="gXZ-bS-I5T"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="commentIndent" destination="5nq-yX-HQp" id="7CV-2j-LLL"/>
+                <outlet property="commentIndent" destination="wYI-Fs-kXo" id="U5l-Om-GAY"/>
                 <outlet property="commentTextView" destination="1vQ-c0-Aoe" id="KgG-DB-bq2"/>
+                <outlet property="downButton" destination="neG-mv-8uV" id="KdB-P4-6Lg"/>
+                <outlet property="moreButton" destination="YPg-s6-VUM" id="0wa-CO-l7c"/>
+                <outlet property="replyButton" destination="hdm-zG-tX1" id="ipF-ba-WHt"/>
                 <outlet property="subBar" destination="62I-ax-ijL" id="eqz-0L-DmP"/>
                 <outlet property="subLabel" destination="3J5-je-7Dr" id="JFw-rK-cCx"/>
+                <outlet property="upButton" destination="Wa8-9g-MC4" id="UuE-Jn-8q1"/>
+                <outlet property="voteLabel" destination="7wF-vr-mZn" id="7zD-Ci-ZNY"/>
             </connections>
             <point key="canvasLocation" x="791" y="530"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="downvote" width="25" height="25"/>
+        <image name="ellipsis" width="25" height="25"/>
+        <image name="reply" width="25" height="25"/>
+        <image name="upvote" width="25" height="25"/>
+    </resources>
 </document>
