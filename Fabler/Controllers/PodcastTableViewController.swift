@@ -162,10 +162,6 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         performSegueWithIdentifier("displaySettingsSegue", sender: self.podcast)
     }
 
-    func userTapped(sender: AnyObject) {
-        self.didDismissKeyboard()
-    }
-
     func addMessage(message: String, parent: Int?) {
         if let podcast = self.podcast {
             let service = CommentService()
@@ -353,7 +349,6 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.textView.registerMarkdownFormattingSymbol("_", withTitle: "Italics")
         self.textView.registerMarkdownFormattingSymbol("~~", withTitle: "Strike")
 
-        self.singleTapGesture.addTarget(self, action: "userTapped:")
         self.setTextInputbarHidden(true, animated: false)
 
         //
@@ -442,6 +437,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+
+        self.didDismissKeyboard()
 
         //
         // Reset navigation var
@@ -843,6 +840,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.currentSegment = index
 
         if refresh {
+            self.didDismissKeyboard()
             self.refreshData(self)
             self.refreshControl?.beginRefreshing()
 

@@ -72,10 +72,6 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.didRequestKeyboard()
     }
 
-    func userTapped(sender: AnyObject) {
-        self.didDismissKeyboard()
-    }
-
     // MARK: - SLKTextViewController functions
 
     func didDismissKeyboard() {
@@ -182,7 +178,6 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.textView.registerMarkdownFormattingSymbol("_", withTitle: "Italics")
         self.textView.registerMarkdownFormattingSymbol("~~", withTitle: "Strike")
 
-        self.singleTapGesture.addTarget(self, action: "userTapped:")
         self.setTextInputbarHidden(true, animated: false)
 
         //
@@ -212,6 +207,12 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         //
         self.refreshData(self)
         self.refreshControl?.beginRefreshing()
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        self.didDismissKeyboard()
     }
 
     override func didReceiveMemoryWarning() {
