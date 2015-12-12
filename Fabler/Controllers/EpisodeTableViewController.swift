@@ -34,7 +34,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         if let episode = self.episode {
             let service = CommentService()
 
-            service.getCommentsForEpisode(episode.episodeId, completion: { [weak self] (comments) in
+            service.getCommentsForEpisode(episode, completion: { [weak self] (comments) in
                 if let controller = self {
                     controller.comments = comments
                     controller.tableView.reloadData()
@@ -52,7 +52,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
     func addMessage(message: String, parent: Int?) {
         if let episode = self.episode {
             let service = CommentService()
-            service.addCommentForEpisode(episode.episodeId, comment: message, parentCommentId: parent, completion: { [weak self] (result) in
+            service.addCommentForEpisode(episode, comment: message, parentCommentId: parent, completion: { [weak self] (result) in
                 if let controller = self {
                     if result {
                         controller.refreshData(controller)

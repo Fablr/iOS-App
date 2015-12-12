@@ -19,10 +19,12 @@ class EpisodeService {
 
     // MARK: - EpisodeService API functions
 
-    func getEpisodesForPodcast(podcastId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Episode]) -> Void)?) -> [Episode] {
+    func getEpisodesForPodcast(podcast: Podcast, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Episode]) -> Void)?) -> [Episode] {
+        let id = podcast.podcastId
+
         if let completion = completion {
             let request = Alamofire
-            .request(FablerClient.Router.ReadEpisodesForPodcast(podcast: podcastId))
+            .request(FablerClient.Router.ReadEpisodesForPodcast(podcast: id))
             .validate()
             .responseSwiftyJSON { response in
                 switch response.result {
@@ -32,13 +34,13 @@ class EpisodeService {
                     Log.error("Episodes request failed with \(error).")
                 }
 
-                dispatch_async(queue, {completion(result: self.getEpisodesForPodcastFromRealm(podcastId))})
+                dispatch_async(queue, {completion(result: self.getEpisodesForPodcastFromRealm(id))})
             }
 
             Log.debug("Read episodes request: \(request)")
         }
 
-        return self.getEpisodesForPodcastFromRealm(podcastId)
+        return self.getEpisodesForPodcastFromRealm(id)
     }
 
     private func getEpisodesForPodcastFromRealm(podcastId: Int) -> [Episode] {

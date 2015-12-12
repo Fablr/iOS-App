@@ -50,15 +50,15 @@ class CommentTableViewCell: UITableViewCell {
 
             switch comment.userVote {
             case 1:
-                service.voteOnComment(comment.commentId, vote: Vote.None, completion: self.voteDidFinish)
+                service.voteOnComment(comment, vote: Vote.None, completion: self.voteDidFinish)
                 comment.userVote = 0
                 comment.voteCount--
             case -1:
-                service.voteOnComment(comment.commentId, vote: Vote.Up, completion: self.voteDidFinish)
+                service.voteOnComment(comment, vote: Vote.Up, completion: self.voteDidFinish)
                 comment.userVote = 1
                 comment.voteCount += 2
             case 0:
-                service.voteOnComment(comment.commentId, vote: Vote.Up, completion: self.voteDidFinish)
+                service.voteOnComment(comment, vote: Vote.Up, completion: self.voteDidFinish)
                 comment.userVote = 1
                 comment.voteCount++
             default:
@@ -75,15 +75,15 @@ class CommentTableViewCell: UITableViewCell {
 
             switch comment.userVote {
             case 1:
-                service.voteOnComment(comment.commentId, vote: Vote.Down, completion: self.voteDidFinish)
+                service.voteOnComment(comment, vote: Vote.Down, completion: self.voteDidFinish)
                 comment.userVote = -1
                 comment.voteCount -= 2
             case -1:
-                service.voteOnComment(comment.commentId, vote: Vote.None, completion: self.voteDidFinish)
+                service.voteOnComment(comment, vote: Vote.None, completion: self.voteDidFinish)
                 comment.userVote = 0
                 comment.voteCount++
             case 0:
-                service.voteOnComment(comment.commentId, vote: Vote.Down, completion: self.voteDidFinish)
+                service.voteOnComment(comment, vote: Vote.Down, completion: self.voteDidFinish)
                 comment.userVote = -1
                 comment.voteCount--
             default:

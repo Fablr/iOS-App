@@ -9,6 +9,7 @@
 import Alamofire
 import SwiftyJSON
 import XNGMarkdownParser
+import SCLAlertView
 
 // swiftlint:disable type_name
 
@@ -29,9 +30,11 @@ class CommentService {
 
     // MARK: - CommentService API functions
 
-    func getCommentsForEpisode(episodeId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Comment]) -> Void) {
+    func getCommentsForEpisode(episode: Episode, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Comment]) -> Void) {
+        let id = episode.episodeId
+
         let request = Alamofire
-        .request(FablerClient.Router.ReadCommentsForEpisode(episode: episodeId))
+        .request(FablerClient.Router.ReadCommentsForEpisode(episode: id))
         .validate()
         .responseSwiftyJSON { response in
             var comments: [Comment] = []
@@ -49,9 +52,12 @@ class CommentService {
         Log.debug("Episode comments request: \(request)")
     }
 
-    func addCommentForEpisode(episodeId: Int, comment: String, parentCommentId: Int?, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    func addCommentForEpisode(episode: Episode, comment: String, parentCommentId: Int?, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+        let id = episode.episodeId
+        let title = episode.title
+
         let request = Alamofire
-        .request(FablerClient.Router.AddCommentForEpisode(episode: episodeId, comment: comment, parent: parentCommentId))
+        .request(FablerClient.Router.AddCommentForEpisode(episode: id, comment: comment, parent: parentCommentId))
         .validate()
         .responseSwiftyJSON { response in
             let result: Bool
@@ -62,6 +68,10 @@ class CommentService {
             case .Failure(let error):
                 result = false
                 Log.error("Adding comment failed with \(error).")
+
+                dispatch_async(dispatch_get_main_queue(), {
+                    SCLAlertView().showWarning("Warning", subTitle: "Unable to add comment to episode \(title).")
+                })
             }
 
             dispatch_async(queue, {completion(result: result)})
@@ -70,50 +80,62 @@ class CommentService {
         Log.debug("Adding comment request: \(request)")
     }
 
-    func getCommentsForPodcast(podcastId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Comment]) -> Void) {
+    func getCommentsForPodcast(podcast: Podcast, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Comment]) -> Void) {
+        let id = podcast.podcastId
+
         let request = Alamofire
-            .request(FablerClient.Router.ReadCommentsForPodcast(podcast: podcastId))
-            .validate()
-            .responseSwiftyJSON { response in
-                var comments: [Comment] = []
+        .request(FablerClient.Router.ReadCommentsForPodcast(podcast: id))
+        .validate()
+        .responseSwiftyJSON { response in
+            var comments: [Comment] = []
 
-                switch response.result {
-                case .Success(let json):
-                    comments = self.serializeCommentCollection(json)
-                case .Failure(let error):
-                    Log.error("Episode comments request failed with \(error).")
-                }
+            switch response.result {
+            case .Success(let json):
+                comments = self.serializeCommentCollection(json)
+            case .Failure(let error):
+                Log.error("Episode comments request failed with \(error).")
+            }
 
-                dispatch_async(queue, {completion(result: comments)})
+            dispatch_async(queue, {completion(result: comments)})
         }
 
         Log.debug("Episode comments request: \(request)")
     }
 
-    func addCommentForPodcast(podcastId: Int, comment: String, parentCommentId: Int?, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    func addCommentForPodcast(podcast: Podcast, comment: String, parentCommentId: Int?, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+        let id = podcast.podcastId
+        let title = podcast.title
+
         let request = Alamofire
-            .request(FablerClient.Router.AddCommentForPodcast(podcast: podcastId, comment: comment, parent: parentCommentId))
-            .validate()
-            .responseSwiftyJSON { response in
-                let result: Bool
+        .request(FablerClient.Router.AddCommentForPodcast(podcast: id, comment: comment, parent: parentCommentId))
+        .validate()
+        .responseSwiftyJSON { response in
+            let result: Bool
 
-                switch response.result {
-                case .Success:
-                    result = true
-                case .Failure(let error):
-                    result = false
-                    Log.error("Adding comment failed with \(error).")
-                }
+            switch response.result {
+            case .Success:
+                result = true
+            case .Failure(let error):
+                result = false
+                Log.error("Adding comment failed with \(error).")
 
-                dispatch_async(queue, {completion(result: result)})
+                dispatch_async(dispatch_get_main_queue(), {
+                    SCLAlertView().showWarning("Warning", subTitle: "Unable to add comment to podcast \(title).")
+                })
+            }
+
+            dispatch_async(queue, {completion(result: result)})
         }
 
         Log.debug("Adding comment request: \(request)")
     }
 
-    func voteOnComment(commentId: Int, vote: Vote, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    func voteOnComment(comment: Comment, vote: Vote, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+        let id = comment.commentId
+        let user = comment.userName
+
         let request = Alamofire
-        .request(FablerClient.Router.VoteComment(comment: commentId, vote: vote.rawValue))
+        .request(FablerClient.Router.VoteComment(comment: id, vote: vote.rawValue))
         .validate()
         .responseSwiftyJSON { response in
             let result: Bool
@@ -124,6 +146,10 @@ class CommentService {
             case .Failure(let error):
                 result = false
                 Log.error("Vote failed with \(error).")
+
+                dispatch_async(dispatch_get_main_queue(), {
+                    SCLAlertView().showWarning("Warning", subTitle: "Unable to vote on comment by \(user).")
+                })
             }
 
             dispatch_async(queue, {completion(result: result)})

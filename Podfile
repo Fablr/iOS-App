@@ -13,6 +13,7 @@ target 'Fabler' do
   pod 'SlackTextViewController', :git => 'https://github.com/slackhq/SlackTextViewController.git', :tag => 'v1.8'
   pod 'SwiftyBeaver', '~>0.3.0'
   pod 'XNGMarkdownParser', '~>0.3.2'
+  pod 'SCLAlertView', '~>0.4.3'
 end
 
 target 'FablerTests' do

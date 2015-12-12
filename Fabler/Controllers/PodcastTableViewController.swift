@@ -79,29 +79,31 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     func refreshEpisodeData(sender: AnyObject) {
-        let service = EpisodeService()
-        self.episodes = service.getEpisodesForPodcast(podcast!.podcastId, completion: { [weak self] (episodes) in
-            if let controller = self {
-                controller.episodes = episodes
-                controller.filterEpisodes()
-                controller.tableView?.reloadData()
+        if let podcast = self.podcast {
+            let service = EpisodeService()
+            self.episodes = service.getEpisodesForPodcast(podcast, completion: { [weak self] (episodes) in
+                if let controller = self {
+                    controller.episodes = episodes
+                    controller.filterEpisodes()
+                    controller.tableView?.reloadData()
 
-                if let refresher = controller.refreshControl {
-                    if refresher.refreshing {
-                        refresher.endRefreshing()
+                    if let refresher = controller.refreshControl {
+                        if refresher.refreshing {
+                            refresher.endRefreshing()
+                        }
                     }
                 }
-            }
-        })
+            })
 
-        self.filterEpisodes()
+            self.filterEpisodes()
+        }
     }
 
     func refreshCommentData(sender: AnyObject) {
         if let podcast = self.podcast {
             let service = CommentService()
 
-            service.getCommentsForPodcast(podcast.podcastId, completion: { [weak self] (comments) in
+            service.getCommentsForPodcast(podcast, completion: { [weak self] (comments) in
                 if let controller = self {
                     controller.comments = comments
                     controller.tableView.reloadData()
@@ -165,7 +167,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     func addMessage(message: String, parent: Int?) {
         if let podcast = self.podcast {
             let service = CommentService()
-            service.addCommentForPodcast(podcast.podcastId, comment: message, parentCommentId: parent, completion: { [weak self] (result) in
+            service.addCommentForPodcast(podcast, comment: message, parentCommentId: parent, completion: { [weak self] (result) in
                 if let controller = self {
                     if result {
                         controller.refreshCommentData(controller)

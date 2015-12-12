@@ -9,6 +9,7 @@
 import Alamofire
 import SwiftyJSON
 import RealmSwift
+import SCLAlertView
 
 class PodcastService {
 
@@ -55,7 +56,9 @@ class PodcastService {
         }
     }
 
-    func readPodcast(podcastId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Podcast?) -> Void)?) -> Podcast? {
+    func readPodcast(podcast: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Podcast?) -> Void)?) -> Podcast? {
+        let id = podcast
+
         if let completion = completion {
             let request = Alamofire
             .request(FablerClient.Router.ReadPodcasts())
@@ -68,13 +71,13 @@ class PodcastService {
                     Log.error("Podcast request failed with \(error).")
                 }
 
-                dispatch_async(queue, {completion(result: self.readPodcastFromRealm(podcastId))})
+                dispatch_async(queue, {completion(result: self.readPodcastFromRealm(id))})
             }
 
             Log.debug("Read podcast request: \(request)")
         }
 
-        return readPodcastFromRealm(podcastId)
+        return readPodcastFromRealm(id)
     }
 
     private func readPodcastFromRealm(podcastId: Int) -> Podcast? {
@@ -176,8 +179,11 @@ class PodcastService {
             Log.error("Realm write failed.")
         }
 
+        let id = podcast.podcastId
+        let title = podcast.title
+
         let request = Alamofire
-        .request(FablerClient.Router.SubscribeToPodcast(podcast: podcast.podcastId, subscribe: subscribe))
+        .request(FablerClient.Router.SubscribeToPodcast(podcast: id, subscribe: subscribe))
         .validate(statusCode: 200..<202)
         .responseJSON { response in
             switch response.result {
@@ -188,9 +194,16 @@ class PodcastService {
 
                 do {
                     let responseRealm = try Realm()
+                    if let responsePodcast = responseRealm.objectForPrimaryKey(Podcast.self, key: id) {
+                        let text = subscribe ? "subscribe" : "unsubscribe"
 
-                    try responseRealm.write {
-                        podcast.subscribed = !subscribe
+                        dispatch_async(dispatch_get_main_queue(), {
+                            SCLAlertView().showWarning("Warning", subTitle: "Was unable to \(text) to \(title).")
+                        })
+
+                        try responseRealm.write {
+                            responsePodcast.subscribed = !subscribe
+                        }
                     }
                 } catch {
                     Log.error("Realm write failed.")
