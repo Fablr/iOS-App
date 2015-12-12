@@ -25,7 +25,7 @@ PODS:
   - RealmSwift (0.96.3):
     - Realm (= 0.96.3)
   - SlackTextViewController (1.8)
-  - SwiftyBeaver (0.2.3)
+  - SwiftyBeaver (0.3.0)
   - SwiftyJSON (2.3.2)
   - XNGMarkdownParser (0.3.2)
 
@@ -37,7 +37,7 @@ DEPENDENCIES:
   - RealmSwift (~> 0.96.3)
   - SlackTextViewController (from `https://github.com/slackhq/SlackTextViewController.git`,
     tag `v1.8`)
-  - SwiftyBeaver (~> 0.2.3)
+  - SwiftyBeaver (~> 0.3.0)
   - SwiftyJSON (~> 2.3.2)
   - XNGMarkdownParser (~> 0.3.2)
 
@@ -60,7 +60,7 @@ SPEC CHECKSUMS:
   Realm: 145d3cdf78a03aee71bde5381ad7e542bd541720
   RealmSwift: aab84968aad662f61f36473d1aea019f63481505
   SlackTextViewController: 0300adee2931fdbe72488990336f0937dbed048e
-  SwiftyBeaver: 9157505e67a95be2bec80bf5692e906a7290d556
+  SwiftyBeaver: df7961d4ecb75521ed6a9af40dd3076af1635fdd
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   XNGMarkdownParser: aed98c14f0c0eb20064184ddf9bac26c482722b2
 

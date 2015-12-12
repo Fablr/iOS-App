@@ -9,6 +9,12 @@
 
 import Foundation
 
+struct MinLevelFilter {
+    var minLevel = SwiftyBeaver.Level.Verbose
+    var path = ""
+    var function = ""
+}
+
 public class BaseDestination: Hashable, Equatable {
     
     public var detailOutput = true
@@ -25,6 +31,7 @@ public class BaseDestination: Hashable, Equatable {
         public var Error = "ERROR"
     }
     
+    var minLevelFilters = [MinLevelFilter]()
     let formatter = NSDateFormatter()
 
     // For a colored log level word in a logged line
@@ -51,8 +58,13 @@ public class BaseDestination: Hashable, Equatable {
     init() {
         let uuid = NSUUID().UUIDString
         let queueLabel = "swiftybeaver-queue-" + uuid
-        //print("creating queue \(queueLabel)")
         queue = dispatch_queue_create(queueLabel, nil)
+    }
+    
+    /// overrule the destination’s minLevel for a given path and optional function
+    public func addMinLevelFilter(minLevel: SwiftyBeaver.Level, path: String, function:String = "") {
+        let filter = MinLevelFilter(minLevel: minLevel, path: path, function: function)
+        minLevelFilters.append(filter)
     }
     
     /// send / store the formatted log message to the destination
@@ -118,12 +130,37 @@ public class BaseDestination: Hashable, Equatable {
         // just use the file name of the path and remove suffix
         let file = path.componentsSeparatedByString("/").last!.componentsSeparatedByString(".").first!
         var str = ""
+        if dateString != "" {
+             str += "[\(dateString)] "
+        }
         if detailOutput {
-            str = "[\(dateString)] \(file).\(function):\(line) \(levelString): \(msg)"
+            str += "\(file).\(function):\(line) \(levelString): \(msg)"
         } else {
-            str = "[\(dateString)] \(levelString): \(msg)"
+            str += "\(levelString): \(msg)"
         }
         return str
+    }
+
+    /// checks if level is at least minLevel or if a minLevel filter for that path does exist
+    /// returns boolean and can be used to decide if a message should be logged or not
+    func shouldLevelBeLogged(level: SwiftyBeaver.Level, path: String, function: String) -> Bool {
+        var ok = false
+        // at first check the instance’s global minLevel property
+        if minLevel.rawValue <= level.rawValue {
+            ok = true
+        }
+        // now go through all minLevelFilters and see if there is a match
+        for filter in minLevelFilters {
+            // rangeOfString returns nil if both values are the same!
+            if filter.minLevel.rawValue <= level.rawValue {
+                if filter.path == "" || path == filter.path || path.rangeOfString(filter.path) != nil {
+                    if filter.function == "" || function == filter.function || function.rangeOfString(filter.function) != nil {
+                        ok = true
+                    }
+                }
+            }
+        }
+        return ok
     }
 }
 
