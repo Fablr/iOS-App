@@ -41,6 +41,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Log.info("Application did finish launching.")
 
+        self.downloader = DownloadManager(identifier: "com.Fabler.Fabler.background")
+
+        if application.applicationState == UIApplicationState.Background {
+            Log.debug("In background fetch mode.")
+
+            return true
+        }
+
         let notificationCenter = NSNotificationCenter.defaultCenter()
         let queue = NSOperationQueue.mainQueue()
 
@@ -52,7 +60,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         self.loginService = LoginService()
         self.player = FablerPlayer()
-        self.downloader = DownloadManager(identifier: "com.Fabler.Fabler.background")
         self.imageDownloader = ImageDownloader(downloadPrioritization: .LIFO)
 
         let result = FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
