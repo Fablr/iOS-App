@@ -34,31 +34,7 @@ class SmallPlayerViewController: UIViewController {
         }
     }
 
-    // MARK: - UIViewController functions
-
-    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        let tapRec = UITapGestureRecognizer()
-        tapRec.addTarget(self, action: "barTapped")
-        barView?.addGestureRecognizer(tapRec)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
-    // MARK: - SmallPlayerViewController functions
-
-    func barTapped() {
+    @IBAction func playerTapped(sender: AnyObject) {
         guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
             return
         }
@@ -76,6 +52,26 @@ class SmallPlayerViewController: UIViewController {
             }
         }
     }
+
+    // MARK: - UIViewController functions
+
+    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+
+    // MARK: - SmallPlayerViewController functions
 
     func updateOutlets() {
         guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
