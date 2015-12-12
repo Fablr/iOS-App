@@ -22,26 +22,36 @@ let Log: SwiftyBeaver.Type = {
     return log
 }()
 
+let ScratchRealmIdentifier = "fabler-scratch"
+
 // swiftlint:enable variable_name
 
 import UIKit
 import FBSDKCoreKit
 import SwiftyBeaver
 import AlamofireImage
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var loginService: LoginService?
+    var userService: UserService?
     var player: FablerPlayer?
     var downloader: DownloadManager?
     var imageDownloader: ImageDownloader?
+    var scratchRealm: Realm?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Log.info("Application did finish launching.")
 
         self.downloader = DownloadManager(identifier: "com.Fabler.Fabler.background")
+
+        do {
+            self.scratchRealm = try Realm(configuration: Realm.Configuration(inMemoryIdentifier: ScratchRealmIdentifier))
+        } catch {
+            Log.warning("Unable to create scratch Realm.")
+        }
 
         if application.applicationState == UIApplicationState.Background {
             Log.debug("In background fetch mode.")
@@ -58,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        self.loginService = LoginService()
+        self.userService = UserService()
         self.player = FablerPlayer()
         self.imageDownloader = ImageDownloader(downloadPrioritization: .LIFO)
 

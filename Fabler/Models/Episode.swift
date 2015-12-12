@@ -26,6 +26,7 @@ final class Episode: DownloadObject {
     dynamic var episodeDescription: String = ""
     dynamic var episodeId: Int = 0
     dynamic var link: String = ""
+    dynamic var podcast: Podcast?
     dynamic var podcastId: Int = 0
     dynamic var mark: NSTimeInterval = 0
     dynamic var completed: Bool = false

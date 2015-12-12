@@ -56,12 +56,10 @@ class PodcastService {
         }
     }
 
-    func readPodcast(podcast: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Podcast?) -> Void)?) -> Podcast? {
-        let id = podcast
-
+    func readPodcastFor(podcastId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Podcast?) -> Void)?) -> Podcast? {
         if let completion = completion {
             let request = Alamofire
-            .request(FablerClient.Router.ReadPodcasts())
+            .request(FablerClient.Router.ReadPodcast(podcast: podcastId))
             .validate()
             .responseSwiftyJSON { response in
                 switch response.result {
@@ -71,13 +69,13 @@ class PodcastService {
                     Log.error("Podcast request failed with \(error).")
                 }
 
-                dispatch_async(queue, {completion(result: self.readPodcastFromRealm(id))})
+                dispatch_async(queue, {completion(result: self.readPodcastFromRealm(podcastId))})
             }
 
             Log.debug("Read podcast request: \(request)")
         }
 
-        return readPodcastFromRealm(id)
+        return readPodcastFromRealm(podcastId)
     }
 
     private func readPodcastFromRealm(podcastId: Int) -> Podcast? {

@@ -34,6 +34,8 @@ struct FablerClient {
         case ReadCommentsForPodcast(podcast: Int)
         case AddCommentForPodcast(podcast: Int, comment: String, parent: Int?)
         case VoteComment(comment: Int, vote: Int)
+        case ReadUser(user: Int)
+        case ReadEpisode(episode: Int)
 
         var method: Alamofire.Method {
             switch self {
@@ -63,6 +65,10 @@ struct FablerClient {
                 return .POST
             case .VoteComment:
                 return .POST
+            case .ReadUser:
+                return .GET
+            case .ReadEpisode:
+                return .GET
             }
         }
 
@@ -94,6 +100,10 @@ struct FablerClient {
                 return "/podcast/\(podcast)/comments/"
             case .VoteComment:
                 return "/vote/"
+            case .ReadUser(let user):
+                return "/users/\(user)/"
+            case .ReadEpisode(let episode):
+                return "/episode/\(episode)/"
             }
         }
 

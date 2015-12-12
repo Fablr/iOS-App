@@ -1,5 +1,5 @@
 //
-//  LoginService.swift
+//  UserService.swift
 //  Fabler
 //
 //  Created by Christopher Day on 10/29/15.
@@ -18,9 +18,9 @@ import Alamofire
 import SwiftyJSON
 import RealmSwift
 
-class LoginService {
+class UserService {
 
-    // MARK: - LoginService functions
+    // MARK: - UserService functions
 
     init() {
         let notificationCenter = NSNotificationCenter.defaultCenter()
@@ -39,7 +39,7 @@ class LoginService {
                         if let token = data.valueForKeyPath("access_token") as? String {
                             FablerClient.Router.token = token
                             NSNotificationCenter.defaultCenter().postNotificationName(TokenDidChangeNotification, object: self)
-                            self.getCurrentUser()
+                            self.updateCurrentUser()
                         }
                     case .Failure(let error):
                         Log.error("Login error occured: \(error).")
@@ -53,9 +53,45 @@ class LoginService {
         }
     }
 
-    // MARK: - LoginService API functions
+    // MARK: - UserService API functions
 
-    func getCurrentUser() {
+    func getUserFor(userId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: User?) -> Void)?) -> User? {
+        if let completion = completion {
+            let request = Alamofire
+            .request(FablerClient.Router.ReadUser(user: userId))
+            .validate()
+            .responseSwiftyJSON { response in
+                switch response.result {
+                case .Success(let json):
+                    self.serializeUserObject(json)
+                case .Failure(let error):
+                    Log.error("User request failed with \(error).")
+                }
+
+                dispatch_async(queue, {completion(result: self.getUserFromRealm(userId))})
+            }
+
+            Log.debug("Read user request: \(request)")
+        }
+
+        return self.getUserFromRealm(userId)
+    }
+
+    private func getUserFromRealm(userId: Int) -> User? {
+        var user: User? = nil
+
+        do {
+            let realm = try Realm()
+
+            user = realm.objectForPrimaryKey(User.self, key: userId)
+        } catch {
+            Log.error("Realm read failed.")
+        }
+
+        return user
+    }
+
+    func updateCurrentUser() {
         let request = Alamofire
         .request(FablerClient.Router.ReadCurrentUser())
         .validate()

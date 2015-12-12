@@ -40,7 +40,15 @@ class CommentTableViewCell: UITableViewCell {
 
     @IBAction func replyButtonPressed(sender: AnyObject) {
         if let comment = self.comment {
-            self.replyDelegate?.replyToComment(comment)
+            let parent: Comment?
+
+            if comment.parent == nil {
+                parent = comment
+            } else {
+                parent = comment.parent
+            }
+
+            self.replyDelegate?.replyToComment(parent)
         }
     }
 
@@ -48,21 +56,20 @@ class CommentTableViewCell: UITableViewCell {
         if let comment = self.comment {
             let service = CommentService()
 
+            // CHRIS move this logic into service
             switch comment.userVote {
-            case 1:
+            case .Up:
                 service.voteOnComment(comment, vote: Vote.None, completion: self.voteDidFinish)
-                comment.userVote = 0
+                comment.userVoteRaw = Vote.None.rawValue
                 comment.voteCount--
-            case -1:
+            case .Down:
                 service.voteOnComment(comment, vote: Vote.Up, completion: self.voteDidFinish)
-                comment.userVote = 1
+                comment.userVoteRaw = Vote.Up.rawValue
                 comment.voteCount += 2
-            case 0:
+            case .None:
                 service.voteOnComment(comment, vote: Vote.Up, completion: self.voteDidFinish)
-                comment.userVote = 1
+                comment.userVoteRaw = Vote.Up.rawValue
                 comment.voteCount++
-            default:
-                Log.warning("Invalid user vote value.")
             }
 
             self.voteDidUpdate()
@@ -73,21 +80,20 @@ class CommentTableViewCell: UITableViewCell {
         if let comment = self.comment {
             let service = CommentService()
 
+            // CHRIS move this logic into service
             switch comment.userVote {
-            case 1:
+            case .Up:
                 service.voteOnComment(comment, vote: Vote.Down, completion: self.voteDidFinish)
-                comment.userVote = -1
+                comment.userVoteRaw = Vote.Down.rawValue
                 comment.voteCount -= 2
-            case -1:
+            case .Down:
                 service.voteOnComment(comment, vote: Vote.None, completion: self.voteDidFinish)
-                comment.userVote = 0
+                comment.userVoteRaw = Vote.None.rawValue
                 comment.voteCount++
-            case 0:
+            case .None:
                 service.voteOnComment(comment, vote: Vote.Down, completion: self.voteDidFinish)
-                comment.userVote = -1
+                comment.userVoteRaw = Vote.Down.rawValue
                 comment.voteCount--
-            default:
-                Log.warning("Invalid user vote value.")
             }
 
             self.voteDidUpdate()
@@ -116,10 +122,10 @@ class CommentTableViewCell: UITableViewCell {
     func voteDidUpdate() {
         if let comment = self.comment {
             switch comment.userVote {
-            case -1:
+            case .Down:
                 self.downButton?.tintColor = UIColor.washedOutFablerOrangeColor()
                 self.upButton?.tintColor = UIColor.fablerOrangeColor()
-            case 1:
+            case .Up:
                 self.downButton?.tintColor = UIColor.fablerOrangeColor()
                 self.upButton?.tintColor = UIColor.washedOutFablerOrangeColor()
             default:
@@ -139,7 +145,7 @@ class CommentTableViewCell: UITableViewCell {
         self.comment = comment
 
         if let comment = self.comment {
-            comment.parentId == nil ? self.styleCellAsParent() : self.styleCellAsChild()
+            comment.parent == nil ? self.styleCellAsParent() : self.styleCellAsChild()
 
             let localTimeZone = NSTimeZone.localTimeZone()
             let dateFormatter = NSDateFormatter()

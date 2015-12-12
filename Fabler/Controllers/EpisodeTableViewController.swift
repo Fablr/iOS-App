@@ -102,18 +102,8 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     override func didPressRightButton(sender: AnyObject!) {
         if let message = self.textView.text.copy() as? String {
-            let parent: Int?
-            if let replyComment = self.replyComment {
-                if replyComment.parentId == nil {
-                    parent = replyComment.commentId
-                } else {
-                    parent = replyComment.parentId
-                }
-            } else {
-                parent = nil
-            }
-
-            self.addMessage(message, parent: parent)
+            let id = self.replyComment?.commentId
+            self.addMessage(message, parent: id)
         }
 
         super.didPressRightButton(sender)

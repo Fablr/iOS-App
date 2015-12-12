@@ -8,18 +8,8 @@
 
 import Alamofire
 import SwiftyJSON
-import XNGMarkdownParser
 import SCLAlertView
-
-// swiftlint:disable type_name
-
-enum Vote: Int {
-    case Down = -1
-    case None = 0
-    case Up = 1
-}
-
-// swiftlint:enable type_name
+import RealmSwift
 
 class CommentService {
 
@@ -30,26 +20,47 @@ class CommentService {
 
     // MARK: - CommentService API functions
 
-    func getCommentsForEpisode(episode: Episode, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Comment]) -> Void) {
+    func getCommentsForEpisode(episode: Episode, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Comment]) -> Void) -> [Comment] {
+        guard let podcast = episode.podcast else {
+            return []
+        }
+
         let id = episode.episodeId
+        let podcastId = podcast.podcastId
 
         let request = Alamofire
         .request(FablerClient.Router.ReadCommentsForEpisode(episode: id))
         .validate()
         .responseSwiftyJSON { response in
-            var comments: [Comment] = []
-
             switch response.result {
             case .Success(let json):
-                comments = self.serializeCommentCollection(json)
+                self.serializeCommentCollection(json, episode: id, podcast: podcastId)
             case .Failure(let error):
                 Log.error("Episode comments request failed with \(error).")
             }
 
-            dispatch_async(queue, {completion(result: comments)})
+            dispatch_async(queue, {completion(result: self.getCommentsForEpisodeFromRealm(id))})
         }
 
         Log.debug("Episode comments request: \(request)")
+
+        return self.getCommentsForEpisodeFromRealm(id)
+    }
+
+    func getCommentsForEpisodeFromRealm(episode: Int) -> [Comment] {
+        var comments: [Comment] = []
+
+        do {
+            let realm = try self.scratchRealm()
+
+            comments = Array(realm.objects(Comment).filter("episode.episodeId == %d AND parent == nil", episode))
+
+            // CHRIS flatten children
+        } catch {
+            Log.error("Realm read failed.")
+        }
+
+        return comments
     }
 
     func addCommentForEpisode(episode: Episode, comment: String, parentCommentId: Int?, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
@@ -80,26 +91,42 @@ class CommentService {
         Log.debug("Adding comment request: \(request)")
     }
 
-    func getCommentsForPodcast(podcast: Podcast, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Comment]) -> Void) {
+    func getCommentsForPodcast(podcast: Podcast, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Comment]) -> Void) -> [Comment] {
         let id = podcast.podcastId
 
         let request = Alamofire
         .request(FablerClient.Router.ReadCommentsForPodcast(podcast: id))
         .validate()
         .responseSwiftyJSON { response in
-            var comments: [Comment] = []
-
             switch response.result {
             case .Success(let json):
-                comments = self.serializeCommentCollection(json)
+                self.serializeCommentCollection(json, episode: nil, podcast: id)
             case .Failure(let error):
                 Log.error("Episode comments request failed with \(error).")
             }
 
-            dispatch_async(queue, {completion(result: comments)})
+            dispatch_async(queue, {completion(result: self.getCommentsForPodcastFromRealm(id))})
         }
 
         Log.debug("Episode comments request: \(request)")
+
+        return self.getCommentsForPodcastFromRealm(id)
+    }
+
+    func getCommentsForPodcastFromRealm(podcast: Int) -> [Comment] {
+        var comments: [Comment] = []
+
+        do {
+            let realm = try self.scratchRealm()
+
+            comments = Array(realm.objects(Comment).filter("podcast.podcastId == %d AND episode == nil AND parent == nil", podcast))
+
+            // CHRIS flatten children
+        } catch {
+            Log.error("Realm read failed.")
+        }
+
+        return comments
     }
 
     func addCommentForPodcast(podcast: Podcast, comment: String, parentCommentId: Int?, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
@@ -160,63 +187,113 @@ class CommentService {
 
     // MARK: - CommentService serialize functions
 
-    private func serializeCommentObject(data: JSON) -> Comment? {
-        let comment = Comment()
+    private func serializeCommentObject(data: JSON, episode: Int?, podcast: Int?) -> Comment? {
+        var result: Comment?
 
-        if let id = data["id"].int {
-            comment.commentId = id
+        do {
+            let comment = Comment()
+            let realm = try self.scratchRealm()
+
+            if let id = data["id"].int {
+                comment.commentId = id
+            }
+
+            if let userName = data["user_name"].string {
+                comment.userName = userName
+            }
+
+            if let userId = data["user"].int {
+                let userService = UserService()
+                if let user = userService.getUserFor(userId, completion: nil) {
+                    var scratchUser: User?
+                    try realm.write {
+                        scratchUser = realm.create(User.self, value: user, update: true)
+                    }
+
+                    comment.user = scratchUser
+                }
+
+                comment.userId = userId
+            }
+
+            if let commentBody = data["comment"].string {
+                comment.comment = commentBody
+            }
+
+            if let submitDate = (data["submit_date"].string)?.toNSDate() {
+                comment.submitDate = submitDate
+            }
+
+            if let editDate = (data["edited_date"].string)?.toNSDate() {
+                comment.editDate = editDate
+            }
+
+            if let voteCount = data["net_vote"].int {
+                comment.voteCount = voteCount
+            }
+
+            if let userVote = data["user_vote"].int {
+                comment.userVoteRaw = userVote
+            }
+
+            if let parentId = data["parent"].int {
+                if let parent = realm.objectForPrimaryKey(Comment.self, key: parentId) {
+                    comment.parent = parent
+                }
+            }
+
+            if let episode = episode {
+                let episodeService = EpisodeService()
+                if let episodeObject = episodeService.getEpisodeFor(episode, completion: nil) {
+                    var scratchEpisode: Episode?
+                    try realm.write {
+                        scratchEpisode = realm.create(Episode.self, value: episodeObject, update: true)
+                    }
+
+                    comment.episode = scratchEpisode
+                }
+            }
+
+            if let podcast = podcast {
+                let podcastService = PodcastService()
+                if let podcastObject = podcastService.readPodcastFor(podcast, completion: nil) {
+                    var scratchPodcast: Podcast?
+                    try realm.write {
+                        scratchPodcast = realm.create(Podcast.self, value: podcastObject, update: true)
+                    }
+
+                    comment.podcast = scratchPodcast
+                }
+            }
+
+            try realm.write {
+                realm.add(comment, update: true)
+                comment.parent?.children.append(comment)
+            }
+
+            result = comment
+        } catch {
+            result = nil
         }
 
-        if let userName = data["user_name"].string {
-            comment.userName = userName
-        }
-
-        if let userId = data["user"].int {
-            comment.userId = userId
-        }
-
-        if let commentBody = data["comment"].string {
-            comment.comment = commentBody
-
-            let parser = XNGMarkdownParser()
-            parser.paragraphFont = UIFont(name: "Helvetica Neue", size: 15.0)
-            comment.formattedComment = parser.attributedStringFromMarkdownString(comment.comment)
-        }
-
-        if let submitDate = (data["submit_date"].string)?.toNSDate() {
-            comment.submitDate = submitDate
-        }
-
-        if let editDate = (data["edited_date"].string)?.toNSDate() {
-            comment.editDate = editDate
-        }
-
-        if let voteCount = data["net_vote"].int {
-            comment.voteCount = voteCount
-        }
-
-        if let userVote = data["user_vote"].int {
-            comment.userVote = userVote
-        }
-
-        if let parentId = data["parent"].int {
-            comment.parentId = parentId
-        }
-
-        return comment
+        return result
     }
 
-    private func serializeCommentCollection(data: JSON) -> [Comment] {
+    private func serializeCommentCollection(data: JSON, episode: Int?, podcast: Int?) -> [Comment] {
         var comments: [Comment] = []
 
         for (_, subJson):(String, JSON) in data {
             do {
-                if let comment = serializeCommentObject(subJson) {
+                if let comment = serializeCommentObject(subJson, episode: episode, podcast: podcast) {
                     comments.append(comment)
                 }
             }
         }
 
         return comments
+    }
+
+    private func scratchRealm() throws -> Realm {
+        return try Realm(configuration: Realm.Configuration(inMemoryIdentifier: ScratchRealmIdentifier))
     }
 }
