@@ -160,6 +160,19 @@ class CommentService {
     func voteOnComment(comment: Comment, vote: Vote, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         let id = comment.commentId
         let user = comment.userName
+        let initialVote = comment.userVote.rawValue
+
+        do {
+            let realm = try self.scratchRealm()
+
+            try realm.write {
+                comment.voteCount = (comment.voteCount - initialVote) + vote.rawValue
+                comment.userVoteRaw = vote.rawValue
+            }
+        } catch {
+            Log.error("Realm write failed.")
+        }
+
 
         let request = Alamofire
         .request(FablerClient.Router.VoteComment(comment: id, vote: vote.rawValue))
@@ -174,9 +187,21 @@ class CommentService {
                 result = false
                 Log.error("Vote failed with \(error).")
 
-                dispatch_async(dispatch_get_main_queue(), {
-                    SCLAlertView().showWarning("Warning", subTitle: "Unable to vote on comment by \(user).")
-                })
+                do {
+                    let responseRealm = try self.scratchRealm()
+                    if let responseComment = responseRealm.objectForPrimaryKey(Comment.self, key: id) {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            SCLAlertView().showWarning("Warning", subTitle: "Unable to vote on comment by \(user).")
+                        })
+
+                        try responseRealm.write {
+                            responseComment.voteCount = responseComment.voteCount - responseComment.userVoteRaw + initialVote
+                            responseComment.userVoteRaw = initialVote
+                        }
+                    }
+                } catch {
+                    Log.error("Realm write failed.")
+                }
             }
 
             dispatch_async(queue, {completion(result: result)})

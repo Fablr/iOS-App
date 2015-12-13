@@ -55,23 +55,15 @@ class CommentTableViewCell: UITableViewCell {
     @IBAction func upButtonPressed(sender: AnyObject) {
         if let comment = self.comment {
             let service = CommentService()
+            let vote: Vote
 
-            // CHRIS move this logic into service
-            switch comment.userVote {
-            case .Up:
-                service.voteOnComment(comment, vote: Vote.None, completion: self.voteDidFinish)
-                comment.userVoteRaw = Vote.None.rawValue
-                comment.voteCount--
-            case .Down:
-                service.voteOnComment(comment, vote: Vote.Up, completion: self.voteDidFinish)
-                comment.userVoteRaw = Vote.Up.rawValue
-                comment.voteCount += 2
-            case .None:
-                service.voteOnComment(comment, vote: Vote.Up, completion: self.voteDidFinish)
-                comment.userVoteRaw = Vote.Up.rawValue
-                comment.voteCount++
+            if comment.userVote == .Up {
+                vote = .None
+            } else {
+                vote = .Up
             }
 
+            service.voteOnComment(comment, vote: vote, completion: self.voteDidFinish)
             self.voteDidUpdate()
         }
     }
@@ -79,23 +71,15 @@ class CommentTableViewCell: UITableViewCell {
     @IBAction func downButtonPressed(sender: AnyObject) {
         if let comment = self.comment {
             let service = CommentService()
+            let vote: Vote
 
-            // CHRIS move this logic into service
-            switch comment.userVote {
-            case .Up:
-                service.voteOnComment(comment, vote: Vote.Down, completion: self.voteDidFinish)
-                comment.userVoteRaw = Vote.Down.rawValue
-                comment.voteCount -= 2
-            case .Down:
-                service.voteOnComment(comment, vote: Vote.None, completion: self.voteDidFinish)
-                comment.userVoteRaw = Vote.None.rawValue
-                comment.voteCount++
-            case .None:
-                service.voteOnComment(comment, vote: Vote.Down, completion: self.voteDidFinish)
-                comment.userVoteRaw = Vote.Down.rawValue
-                comment.voteCount--
+            if comment.userVote == .Down {
+                vote = .None
+            } else {
+                vote = .Down
             }
 
+            service.voteOnComment(comment, vote: vote, completion: self.voteDidFinish)
             self.voteDidUpdate()
         }
     }
