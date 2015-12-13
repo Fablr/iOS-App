@@ -69,16 +69,16 @@ class PodcastService {
                     Log.error("Podcast request failed with \(error).")
                 }
 
-                dispatch_async(queue, {completion(result: self.readPodcastFromRealm(podcastId))})
+                dispatch_async(queue, {completion(result: self.getPodcastFromRealm(podcastId))})
             }
 
             Log.debug("Read podcast request: \(request)")
         }
 
-        return readPodcastFromRealm(podcastId)
+        return getPodcastFromRealm(podcastId)
     }
 
-    private func readPodcastFromRealm(podcastId: Int) -> Podcast? {
+    private func getPodcastFromRealm(podcastId: Int) -> Podcast? {
         var podcast: Podcast? = nil
 
         do {
@@ -105,16 +105,16 @@ class PodcastService {
                     Log.error("Podcasts request failed with \(error).")
                 }
 
-                dispatch_async(queue, {completion(result: self.readAllPodcastsFromRealm())})
+                dispatch_async(queue, {completion(result: self.getAllPodcastsFromRealm())})
             }
 
             Log.debug("Read podcasts request: \(request)")
         }
 
-        return self.readAllPodcastsFromRealm()
+        return self.getAllPodcastsFromRealm()
     }
 
-    private func readAllPodcastsFromRealm() -> [Podcast] {
+    private func getAllPodcastsFromRealm() -> [Podcast] {
         var podcasts: [Podcast] = []
 
         do {
@@ -128,7 +128,7 @@ class PodcastService {
         return podcasts
     }
 
-    func readSubscribedPodcasts(queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Podcast]) -> Void)?) -> [Podcast] {
+    func getSubscribedPodcasts(queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Podcast]) -> Void)?) -> [Podcast] {
         if let completion = completion {
             let request = Alamofire
             .request(FablerClient.Router.ReadSubscribedPodcasts())
@@ -136,23 +136,23 @@ class PodcastService {
             .responseSwiftyJSON { response in
                 switch response.result {
                 case .Success(let json):
-                    let local_podcasts = self.readSubscribedPodcastsFromRealm()
+                    let local_podcasts = self.getSubscribedPodcastsFromRealm()
                     let server_podcasts = self.serializePodcastCollection(json)
                     self.updateUnsubscribedPodcasts(local_podcasts, server: server_podcasts)
                 case .Failure(let error):
                     Log.error("Subscribed podcasts request failed with \(error).")
                 }
 
-                dispatch_async(queue, {completion(result: self.readSubscribedPodcastsFromRealm())})
+                dispatch_async(queue, {completion(result: self.getSubscribedPodcastsFromRealm())})
             }
 
             Log.debug("Subscribed podcasts request: \(request)")
         }
 
-        return self.readSubscribedPodcastsFromRealm()
+        return self.getSubscribedPodcastsFromRealm()
     }
 
-    private func readSubscribedPodcastsFromRealm() -> [Podcast] {
+    private func getSubscribedPodcastsFromRealm() -> [Podcast] {
         var podcasts: [Podcast] = []
 
         do {

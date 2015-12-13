@@ -25,7 +25,7 @@ class CollectionTableViewController: UITableViewController {
 
     func refreshData(sender: AnyObject) {
         let service = PodcastService()
-        self.podcasts = service.readSubscribedPodcasts { [weak self] (podcasts) in
+        self.podcasts = service.getSubscribedPodcasts { [weak self] (podcasts) in
             if let controller = self {
                 controller.podcasts = podcasts
                 controller.tableView.reloadData()

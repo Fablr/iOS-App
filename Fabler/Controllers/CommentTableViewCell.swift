@@ -122,7 +122,9 @@ class CommentTableViewCell: UITableViewCell {
     }
 
     func voteDidFinish(result: Bool) {
-        Log.debug("Vote did finish.")
+        if !result {
+            self.voteDidUpdate()
+        }
     }
 
     func setCommentInstance(comment: Comment) {

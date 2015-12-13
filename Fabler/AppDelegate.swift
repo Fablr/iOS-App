@@ -106,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Fill image cache for subscribed podcasts
         //
         let podcastService = PodcastService()
-        podcastService.readSubscribedPodcasts(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), completion: { [weak self] (podcasts) in
+        podcastService.getSubscribedPodcasts(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), completion: { [weak self] (podcasts) in
             Log.info("Caching subscribed podcast images.")
 
             if let downloader = self?.imageDownloader, let cache = downloader.imageCache {
