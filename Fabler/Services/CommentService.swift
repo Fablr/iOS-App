@@ -53,9 +53,12 @@ class CommentService {
         do {
             let realm = try self.scratchRealm()
 
-            comments = Array(realm.objects(Comment).filter("episode.episodeId == %d AND parent == nil", episode))
+            let roots = Array(realm.objects(Comment).filter("episode.episodeId == %d AND parent == nil", episode))
 
-            // CHRIS flatten children
+            for root in roots {
+                comments.append(root)
+                comments.appendContentsOf(Array(root.children))
+            }
         } catch {
             Log.error("Realm read failed.")
         }
@@ -119,9 +122,12 @@ class CommentService {
         do {
             let realm = try self.scratchRealm()
 
-            comments = Array(realm.objects(Comment).filter("podcast.podcastId == %d AND episode == nil AND parent == nil", podcast))
+            let roots = Array(realm.objects(Comment).filter("podcast.podcastId == %d AND episode == nil AND parent == nil", podcast))
 
-            // CHRIS flatten children
+            for root in roots {
+                comments.append(root)
+                comments.appendContentsOf(Array(root.children))
+            }
         } catch {
             Log.error("Realm read failed.")
         }
