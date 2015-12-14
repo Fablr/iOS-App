@@ -32,7 +32,6 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="wkp-6r-TIM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="1v2-Eh-0RL"/>
                 <constraint firstItem="wkp-6r-TIM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="7p9-sX-g7E"/>
