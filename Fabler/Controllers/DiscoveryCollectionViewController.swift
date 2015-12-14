@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import AlamofireImage
+import Kingfisher
 
 class DiscoveryCollectionViewController: UICollectionViewController {
 
@@ -84,8 +84,7 @@ class DiscoveryCollectionViewController: UICollectionViewController {
 
         if let cell = cell as? PodcastCell {
             if let path = podcasts?[indexPath.row].image, let url = NSURL(string: path) {
-                let placeholder = UIImage(named: "logo-launch")
-                cell.tileImage?.af_setImageWithURL(url, placeholderImage: placeholder)
+                cell.tileImage?.kf_setImageWithURL(url, placeholderImage: nil)
             }
         }
 

@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Kingfisher
 
 class LargePlayerViewController: UIViewController {
 
@@ -91,7 +92,7 @@ class LargePlayerViewController: UIViewController {
 
         if let podcast = self.player?.podcast, let url = NSURL(string: podcast.image) {
             let placeholder = UIImage()
-            self.artImage?.af_setImageWithURL(url, placeholderImage: placeholder)
+            self.artImage?.kf_setImageWithURL(url, placeholderImage: placeholder)
         }
 
         super.viewDidLoad()

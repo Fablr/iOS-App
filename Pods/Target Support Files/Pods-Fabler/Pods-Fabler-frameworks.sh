@@ -85,10 +85,10 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Fabler/Alamofire.framework"
-  install_framework "Pods-Fabler/AlamofireImage.framework"
   install_framework "Pods-Fabler/Bolts.framework"
   install_framework "Pods-Fabler/FBSDKCoreKit.framework"
   install_framework "Pods-Fabler/FBSDKLoginKit.framework"
+  install_framework "Pods-Fabler/Kingfisher.framework"
   install_framework "Pods-Fabler/Realm.framework"
   install_framework "Pods-Fabler/RealmSwift.framework"
   install_framework "Pods-Fabler/SCLAlertView.framework"
@@ -99,10 +99,10 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Fabler/Alamofire.framework"
-  install_framework "Pods-Fabler/AlamofireImage.framework"
   install_framework "Pods-Fabler/Bolts.framework"
   install_framework "Pods-Fabler/FBSDKCoreKit.framework"
   install_framework "Pods-Fabler/FBSDKLoginKit.framework"
+  install_framework "Pods-Fabler/Kingfisher.framework"
   install_framework "Pods-Fabler/Realm.framework"
   install_framework "Pods-Fabler/RealmSwift.framework"
   install_framework "Pods-Fabler/SCLAlertView.framework"

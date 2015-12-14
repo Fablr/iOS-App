@@ -15,6 +15,7 @@
 		450B767C1BECABB30033C0B6 /* EpisodeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B767B1BECABB30033C0B6 /* EpisodeTableViewController.swift */; };
 		450B767E1BEF49120033C0B6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B767D1BEF49120033C0B6 /* User.swift */; };
 		450B76801BEF567D0033C0B6 /* BackpaneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B767F1BEF567D0033C0B6 /* BackpaneViewController.swift */; };
+		453382201C1EA11000EA9DEE /* FablerImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533821F1C1EA11000EA9DEE /* FablerImage.swift */; };
 		4538B57D1BF55C3800039DF1 /* SmallPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */; };
 		4538B5801BF55E1800039DF1 /* SmallPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */; };
 		45505F711BFB1EF600481291 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45505F701BFB1EF600481291 /* DownloadManager.swift */; };
@@ -77,6 +78,7 @@
 		450B767B1BECABB30033C0B6 /* EpisodeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeTableViewController.swift; sourceTree = "<group>"; };
 		450B767D1BEF49120033C0B6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		450B767F1BEF567D0033C0B6 /* BackpaneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackpaneViewController.swift; sourceTree = "<group>"; };
+		4533821F1C1EA11000EA9DEE /* FablerImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerImage.swift; sourceTree = "<group>"; };
 		4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPlayer.xib; sourceTree = "<group>"; };
 		4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallPlayerViewController.swift; sourceTree = "<group>"; };
 		45505F701BFB1EF600481291 /* DownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
@@ -231,7 +233,6 @@
 			isa = PBXGroup;
 			children = (
 				F47029F21A7F27DB00E30A3C /* Fabler */,
-				F4702A081A7F27DC00E30A3C /* FablerTests */,
 				4588CF221BDB2A3C0080E13D /* Frameworks */,
 				8ABCB3973AE274F3A6620CD0 /* Pods */,
 				F47029F11A7F27DB00E30A3C /* Products */,
@@ -260,8 +261,10 @@
 				45505F701BFB1EF600481291 /* DownloadManager.swift */,
 				45E5367D1BE1F980009E3F10 /* FablerClient.swift */,
 				456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */,
+				4533821F1C1EA11000EA9DEE /* FablerImage.swift */,
 				4501BB9A1C177F330021171C /* FablerUI.swift */,
 				F47029FC1A7F27DB00E30A3C /* Images.xcassets */,
+				F4702A081A7F27DC00E30A3C /* FablerTests */,
 			);
 			path = Fabler;
 			sourceTree = "<group>";
@@ -281,7 +284,7 @@
 				F4702A0B1A7F27DC00E30A3C /* FablerTests.swift */,
 			);
 			path = FablerTests;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		F4702A091A7F27DC00E30A3C /* Supporting Files */ = {
 			isa = PBXGroup;
@@ -510,6 +513,7 @@
 				4538B5801BF55E1800039DF1 /* SmallPlayerViewController.swift in Sources */,
 				45505F711BFB1EF600481291 /* DownloadManager.swift in Sources */,
 				4576FC061C13D74000381A28 /* EpisodeHeaderViewController.swift in Sources */,
+				453382201C1EA11000EA9DEE /* FablerImage.swift in Sources */,
 				F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */,
 				4501BB9B1C177F330021171C /* FablerUI.swift in Sources */,
 				450B76741BE983670033C0B6 /* PodcastTableViewController.swift in Sources */,

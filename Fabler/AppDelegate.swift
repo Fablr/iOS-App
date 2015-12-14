@@ -29,8 +29,8 @@ let ScratchRealmIdentifier = "fabler-scratch"
 import UIKit
 import FBSDKCoreKit
 import SwiftyBeaver
-import AlamofireImage
 import RealmSwift
+import Kingfisher
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -39,7 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var userService: UserService?
     var player: FablerPlayer?
     var downloader: DownloadManager?
-    var imageDownloader: ImageDownloader?
     var scratchRealm: Realm?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -70,7 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         self.userService = UserService()
         self.player = FablerPlayer()
-        self.imageDownloader = ImageDownloader(downloadPrioritization: .LIFO)
 
         let result = FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
 
@@ -106,31 +104,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Fill image cache for subscribed podcasts
         //
         let podcastService = PodcastService()
-        podcastService.getSubscribedPodcasts(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), completion: { [weak self] (podcasts) in
+        podcastService.getSubscribedPodcasts(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), completion: { (podcasts) in
             Log.info("Caching subscribed podcast images.")
 
-            if let downloader = self?.imageDownloader, let cache = downloader.imageCache {
-                for podcast in podcasts {
-                    if let _ = cache.imageWithIdentifier("\(podcast.podcastId)-header-blurred") {
-                        continue
-                    }
+            let downloader = KingfisherManager.sharedManager.downloader
+            let cache = KingfisherManager.sharedManager.cache
 
-                    let id = podcast.podcastId
+            for podcast in podcasts {
+                let id = podcast.podcastId
+                let key = "\(id)-header-blurred"
 
-                    if let url = NSURL(string: podcast.image) {
-                        let request = NSURLRequest(URL: url)
+                if let _ = cache.retrieveImageInDiskCacheForKey(key) {
+                    Log.debug("Skipping images for podcast \(id).")
+                    continue
+                }
 
-                        downloader.downloadImage(URLRequest: request, completion: { (response) in
-                            if let image = response.result.value {
-                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] in
-                                    if let blurred = image.af_imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {
-                                        Log.info("Cached image at '\(id)-header-blurred'.")
-                                        self?.imageDownloader?.imageCache?.addImage(blurred, withIdentifier: "\(id)-header-blurred")
-                                    }
-                                })
+                if let url = NSURL(string: podcast.image) {
+                    downloader.downloadImageWithURL(url, progressBlock: nil, completionHandler: { (image, error, imageURL, originalData) in
+                        if error == nil, let image = image {
+                            Log.info("Blurring image for '\(key)'")
+                            if let blurred = image.imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {
+                                Log.info("Cached image at '\(key)'.")
+                                cache.storeImage(blurred, forKey: key)
                             }
-                        })
-                    }
+                        }
+                    })
                 }
             }
         })

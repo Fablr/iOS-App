@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import AlamofireImage
 import SlackTextViewController
+import Kingfisher
 
 class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate, ChangesBasedOnSegment {
 
@@ -28,8 +28,6 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     var settingsButton: UIButton?
     var subscribeButton: UIButton?
     var settingsButtonWidth: NSLayoutConstraint?
-
-    var downloader: ImageDownloader?
 
     // MARK: - PodcastTableViewController magic members
 
@@ -348,25 +346,31 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         //
         self.titleLabel?.text = podcast?.title
 
-        if let path = podcast?.image, let url = NSURL(string: path), let delegate = UIApplication.sharedApplication().delegate as? AppDelegate, let downloader = delegate.imageDownloader {
-            self.downloader = downloader
+        if let podcast = self.podcast, let url = NSURL(string: podcast.image) {
+            let downloader = KingfisherManager.sharedManager.downloader
+            let cache = KingfisherManager.sharedManager.cache
 
-            let request = NSURLRequest(URL: url)
+            let id = podcast.podcastId
+            let key = "\(id)-header-blurred"
 
-            downloader.downloadImage(URLRequest: request, completion: { [weak self] (response) in
-                if let controller = self, let image = response.result.value, let cache = self?.downloader?.imageCache, let podcast = self?.podcast {
-                    let id = podcast.podcastId
+            downloader.downloadImageWithURL(url, progressBlock: nil, completionHandler: { [weak self] (image, error, imageURL, originalData) in
+                if error == nil, let image = image {
+                    if let blurred = cache.retrieveImageInDiskCacheForKey(key) {
+                        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                            Log.debug("Setting blurred header image.")
 
-                    if let blurred = cache.imageWithIdentifier("\(id)-header-blurred") {
-                        controller.blurredHeaderImage?.image = blurred
-                        controller.headerImage?.image = image
+                            if let controller = self {
+                                controller.blurredHeaderImage?.image = blurred
+                                controller.headerImage?.image = image
+                            }
+                        })
                     } else {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                             Log.debug("Attempting to blur image.")
 
-                            if let blurred = image.af_imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {
+                            if let blurred = image.imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {
                                 Log.debug("Caching blurred header image.")
-                                self?.downloader?.imageCache?.addImage(blurred, withIdentifier: "\(id)-header-blurred")
+                                cache.storeImage(blurred, forKey: key)
 
                                 dispatch_async(dispatch_get_main_queue(), { [weak self] in
                                     Log.debug("Setting blurred header image.")

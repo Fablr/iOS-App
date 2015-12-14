@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import AlamofireImage
+import Kingfisher
 
 class CollectionTableViewController: UITableViewController {
 
@@ -18,8 +18,6 @@ class CollectionTableViewController: UITableViewController {
     // MARK: - CollectionTableViewController members
 
     var podcasts: [Podcast]?
-
-    var downloader: ImageDownloader?
 
     // MARK: - CollectionTableViewController functions
 
@@ -47,10 +45,6 @@ class CollectionTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate, let downloader = delegate.imageDownloader {
-            self.downloader = downloader
-        }
 
         if revealViewController() != nil {
             self.menuButton?.target = revealViewController()
@@ -141,8 +135,7 @@ class CollectionTableViewController: UITableViewController {
             cell.titleLabel?.text = podcast.title
 
             if let url = NSURL(string: podcast.image) {
-                cell.tileImage?.af_imageDownloader = self.downloader
-                cell.tileImage?.af_setImageWithURL(url, placeholderImage: nil)
+                cell.tileImage?.kf_setImageWithURL(url, placeholderImage: nil)
             }
         }
 
