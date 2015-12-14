@@ -365,23 +365,21 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
                             }
                         })
                     } else {
-                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                            Log.debug("Attempting to blur image.")
+                        Log.debug("Attempting to blur image.")
 
-                            if let blurred = image.imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {
-                                Log.debug("Caching blurred header image.")
-                                cache.storeImage(blurred, forKey: key)
+                        if let blurred = image.imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {
+                            Log.debug("Caching blurred header image.")
+                            cache.storeImage(blurred, forKey: key)
 
-                                dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                                    Log.debug("Setting blurred header image.")
+                            dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                                Log.debug("Setting blurred header image.")
 
-                                    if let controller = self {
-                                        controller.blurredHeaderImage?.image = blurred
-                                        controller.headerImage?.image = image
-                                    }
-                                })
-                            }
-                        })
+                                if let controller = self {
+                                    controller.blurredHeaderImage?.image = blurred
+                                    controller.headerImage?.image = image
+                                }
+                            })
+                        }
                     }
                 }
             })
