@@ -179,7 +179,6 @@ class CommentService {
             Log.error("Realm write failed.")
         }
 
-
         let request = Alamofire
         .request(FablerClient.Router.VoteComment(comment: id, vote: vote.rawValue))
         .validate()
@@ -214,6 +213,44 @@ class CommentService {
         }
 
         Log.debug("Voting comment request: \(request)")
+    }
+
+    func deleteComment(comment: Comment, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+        let id = comment.commentId
+
+        let request = Alamofire
+        .request(FablerClient.Router.DeleteComment(comment: id))
+        .validate()
+        .response { request, response, data, error in
+            let result: Bool
+
+            if error == nil {
+                result = true
+
+                do {
+                    let responseRealm = try self.scratchRealm()
+                    if let responseComment = responseRealm.objectForPrimaryKey(Comment.self, key: id) {
+                        try responseRealm.write {
+                            responseComment.comment = "[Removed]"
+                        }
+                    }
+                } catch {
+                    Log.error("Realm write failed.")
+                }
+            } else {
+                result = false
+                Log.error("Delete failed with \(error).")
+
+                dispatch_async(dispatch_get_main_queue(), {
+                    SCLAlertView().showWarning("Warning", subTitle: "Unable to delete comment.")
+                })
+            }
+
+            dispatch_async(queue, {completion(result: result)})
+        }
+
+        Log.debug("Delete comment request: \(request)")
+        debugPrint(request)
     }
 
     // MARK: - CommentService serialize functions

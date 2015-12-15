@@ -52,7 +52,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     // MARK: - Colors
 
-    var backgroundColor: UIColor = UIColor.whiteColor()
+    var backgroundColor: UIColor = UIColor.fablerOrangeColor()
     var primaryColor: UIColor = UIColor.fablerOrangeColor()
 
     // MARK: - PodcastTableViewController functions
@@ -865,6 +865,10 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     func replyToComment(comment: Comment?) {
         self.replyComment = comment
         self.didRequestKeyboard()
+    }
+
+    func showActionSheet(menu: UIAlertController) {
+        self.presentViewController(menu, animated: true, completion: nil)
     }
 
     // MARK: - ChangesBasedOnSegment functions

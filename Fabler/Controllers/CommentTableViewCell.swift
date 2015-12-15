@@ -14,6 +14,7 @@ protocol CollapsibleUITableViewCellDelegate {
 
 protocol RepliesToCommentDelegate {
     func replyToComment(comment: Comment?)
+    func showActionSheet(menu: UIAlertController)
 }
 
 enum TextConversionError: ErrorType {
@@ -85,7 +86,25 @@ class CommentTableViewCell: UITableViewCell {
     }
 
     @IBAction func moreButtonPressed(sender: AnyObject) {
-        Log.debug("More button pressed.")
+        let menu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+
+        let delete = UIAlertAction(title: "Delete", style: .Destructive, handler: { [weak self] (action) in
+            if let controller = self, let comment = controller.comment {
+                let service = CommentService()
+
+                service.deleteComment(comment, completion: { [weak self] (result) in
+                    if result, let controller = self {
+                        controller.collapseDelegate?.setCollapseState(controller, collapsed: !controller.barCollapsed)
+                    }
+                })
+            }
+        })
+        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+
+        menu.addAction(delete)
+        menu.addAction(cancel)
+
+        self.replyDelegate?.showActionSheet(menu)
     }
 
     // MARK: - CommentTableViewCell members
@@ -153,6 +172,18 @@ class CommentTableViewCell: UITableViewCell {
             }
 
             self.voteDidUpdate()
+
+            if let user = User.getCurrentUser() {
+                if comment.userId == user.userId {
+                    self.moreButton?.enabled = true
+                }
+            }
+
+            if comment.comment == "[Removed]" {
+                self.upButton?.enabled = false
+                self.downButton?.enabled = false
+                self.moreButton?.enabled = false
+            }
 
             let tapRec = UITapGestureRecognizer()
             tapRec.addTarget(self, action: "barTapped")

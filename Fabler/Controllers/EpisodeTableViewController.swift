@@ -297,4 +297,8 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.replyComment = comment
         self.didRequestKeyboard()
     }
+
+    func showActionSheet(menu: UIAlertController) {
+        self.presentViewController(menu, animated: true, completion: nil)
+    }
 }

@@ -36,6 +36,7 @@ struct FablerClient {
         case VoteComment(comment: Int, vote: Int)
         case ReadUser(user: Int)
         case ReadEpisode(episode: Int)
+        case DeleteComment(comment: Int)
 
         var method: Alamofire.Method {
             switch self {
@@ -69,6 +70,8 @@ struct FablerClient {
                 return .GET
             case .ReadEpisode:
                 return .GET
+            case .DeleteComment:
+                return .DELETE
             }
         }
 
@@ -104,6 +107,8 @@ struct FablerClient {
                 return "/users/\(user)/"
             case .ReadEpisode(let episode):
                 return "/episode/\(episode)/"
+            case .DeleteComment(let comment):
+                return "/comment/\(comment)/"
             }
         }
 
@@ -181,8 +186,6 @@ extension Alamofire.Request {
         )
     }
 }
-
-
 
 // MARK: - String extension
 
