@@ -35,6 +35,7 @@ final class Comment: Object {
     dynamic var parent: Comment?
     dynamic var podcast: Podcast?
     dynamic var episode: Episode?
+    dynamic var removed: Bool = false
 
     let children = List<Comment>()
 

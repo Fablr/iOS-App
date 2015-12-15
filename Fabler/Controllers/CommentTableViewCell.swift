@@ -188,7 +188,7 @@ class CommentTableViewCell: UITableViewCell {
                 }
             }
 
-            if comment.comment == "[Removed]" {
+            if comment.removed {
                 self.upButton?.enabled = false
                 self.downButton?.enabled = false
                 self.moreButton?.enabled = false

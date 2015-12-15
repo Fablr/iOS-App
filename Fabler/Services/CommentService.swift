@@ -348,6 +348,10 @@ class CommentService {
                 }
             }
 
+            if let removed = data["is_removed"].bool {
+                comment.removed = removed
+            }
+
             if let episode = episode {
                 let episodeService = EpisodeService()
                 if let episodeObject = episodeService.getEpisodeFor(episode, completion: nil) {
