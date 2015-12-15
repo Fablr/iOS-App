@@ -56,6 +56,47 @@ class PodcastService {
         }
     }
 
+    func setPrimaryColorForPodcast(podcast: Podcast, color: UIColor) {
+        do {
+            let realm = try Realm()
+            let components = CGColorGetComponents(color.CGColor)
+
+            let red = Float(components[0])
+            let green = Float(components[1])
+            let blue = Float(components[2])
+
+            try realm.write {
+                podcast.primaryRed = red
+                podcast.primaryGreen = green
+                podcast.primaryBlue = blue
+                podcast.primarySet = true
+            }
+        } catch {
+            Log.error("Realm write failed.")
+        }
+    }
+
+    func setBackgroundColorForPodcast(podcast: Podcast, color: UIColor) {
+        do {
+            let realm = try Realm()
+            let components = CGColorGetComponents(color.CGColor)
+
+            let red = Float(components[0])
+            let green = Float(components[1])
+            let blue = Float(components[2])
+
+            try realm.write {
+                podcast.backgroundRed = red
+                podcast.backgroundGreen = green
+                podcast.backgroundBlue = blue
+                podcast.backgroundSet = true
+            }
+        } catch {
+            Log.error("Realm write failed.")
+        }
+    }
+
+
     func readPodcastFor(podcastId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Podcast?) -> Void)?) -> Podcast? {
         if let completion = completion {
             let request = Alamofire
@@ -217,56 +258,66 @@ class PodcastService {
     // MARK: - PodcastService serialize functions
 
     private func serializePodcastObject(data: JSON) -> Podcast? {
-        let podcast = Podcast()
-
-        if let id = data["id"].int {
-            podcast.podcastId = id
-        }
-
-        if let title = data["title"].string {
-            podcast.title = title
-        }
-
-        if let author = data["author"].string {
-            podcast.author = author
-        }
-
-        if let explicit = data["explicit"].bool {
-            podcast.explicit = explicit
-        }
-
-        if let subscribed = data["subscribed"].bool {
-            podcast.subscribed = subscribed
-        }
-
-        if let publisherName = data["subscribed"].string {
-            podcast.publisherName = publisherName
-        }
-
-        if let publisherId = data["publisher"].int {
-            podcast.publisherId = publisherId
-        }
-
-        if let summary = data["summary"].string {
-            podcast.summary = summary
-        }
-
-        if let category = data["category"].string {
-            podcast.category = category
-        }
-
-        if let image = data["image"].string {
-            podcast.image = image
-        }
+        var podcast: Podcast?
 
         do {
             let realm = try Realm()
 
-            try realm.write {
-                realm.add(podcast, update: true)
+            if let id = data["id"].int {
+                if let existingPodcast = realm.objectForPrimaryKey(Podcast.self, key: id) {
+                    podcast = existingPodcast
+                } else {
+                    podcast = Podcast()
+                    podcast?.podcastId = id
+
+                    try realm.write {
+                        realm.add(podcast!)
+                    }
+                }
+            }
+
+            if let podcast = podcast {
+                try realm.write {
+                    if let title = data["title"].string {
+                        podcast.title = title
+                    }
+
+                    if let author = data["author"].string {
+                        podcast.author = author
+                    }
+
+                    if let explicit = data["explicit"].bool {
+                        podcast.explicit = explicit
+                    }
+
+                    if let subscribed = data["subscribed"].bool {
+                        podcast.subscribed = subscribed
+                    }
+
+                    if let publisherName = data["subscribed"].string {
+                        podcast.publisherName = publisherName
+                    }
+
+                    if let publisherId = data["publisher"].int {
+                        podcast.publisherId = publisherId
+                    }
+
+                    if let summary = data["summary"].string {
+                        podcast.summary = summary
+                    }
+
+                    if let category = data["category"].string {
+                        podcast.category = category
+                    }
+
+                    if let image = data["image"].string {
+                        podcast.image = image
+                    }
+                }
             }
         } catch {
             Log.error("Realm write failed.")
+            podcast = nil
         }
 
         return podcast

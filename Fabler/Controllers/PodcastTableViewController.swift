@@ -50,7 +50,84 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     var currentSegment: Int = 0
 
+    // MARK: - Colors
+
+    var backgroundColor: UIColor = UIColor.whiteColor()
+    var primaryColor: UIColor = UIColor.fablerOrangeColor()
+
     // MARK: - PodcastTableViewController functions
+
+    func setupImages() {
+        if let podcast = self.podcast, let url = NSURL(string: podcast.image) {
+            let downloader = KingfisherManager.sharedManager.downloader
+            let cache = KingfisherManager.sharedManager.cache
+
+            let id = podcast.podcastId
+            let key = "\(id)-header-blurred"
+
+            downloader.downloadImageWithURL(url, progressBlock: nil, completionHandler: { [weak self] (image, error, imageURL, originalData) in
+                if error == nil, let image = image {
+                    let service = PodcastService()
+
+                    if let podcast = service.readPodcastFor(id, completion: nil) {
+                        if !podcast.primarySet || !podcast.backgroundSet {
+                            let colors = image.getColors()
+                            service.setPrimaryColorForPodcast(podcast, color: colors.primaryColor)
+                            service.setBackgroundColorForPodcast(podcast, color: colors.backgroundColor)
+                        }
+                    }
+
+                    if let blurred = cache.retrieveImageInDiskCacheForKey(key) {
+                        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                            Log.debug("Setting blurred header image.")
+
+                            if let controller = self {
+                                controller.updateImages(image, blurred: blurred)
+                            }
+                        })
+                    } else {
+                        Log.debug("Attempting to blur image.")
+
+                        if let blurred = image.imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {
+                            Log.debug("Caching blurred header image.")
+                            cache.storeImage(blurred, forKey: key)
+
+                            dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                                Log.debug("Setting blurred header image.")
+
+                                if let controller = self {
+                                    controller.updateImages(image, blurred: blurred)
+                                }
+                            })
+                        }
+                    }
+                }
+            })
+        }
+    }
+
+    func updateImages(image: UIImage, blurred: UIImage) {
+        self.blurredHeaderImage?.image = blurred
+        self.headerImage?.image = image
+
+        if let podcast = self.podcast, let primary = podcast.primaryColor, var background = podcast.backgroundColor {
+            self.navigationController?.navigationBar.tintColor = primary
+            self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: primary]
+
+            if !background.isDarkColor {
+                background = primary
+            }
+
+            self.subscribeButton?.tintColor = background
+            self.settingsButton?.tintColor = background
+            self.titleLabel?.textColor = background
+
+            self.backgroundColor = background
+            self.primaryColor = primary
+
+            self.tableView.reloadData()
+        }
+    }
 
     func filterEpisodes() {
         switch self.currentSegment {
@@ -346,44 +423,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         //
         self.titleLabel?.text = podcast?.title
 
-        if let podcast = self.podcast, let url = NSURL(string: podcast.image) {
-            let downloader = KingfisherManager.sharedManager.downloader
-            let cache = KingfisherManager.sharedManager.cache
-
-            let id = podcast.podcastId
-            let key = "\(id)-header-blurred"
-
-            downloader.downloadImageWithURL(url, progressBlock: nil, completionHandler: { [weak self] (image, error, imageURL, originalData) in
-                if error == nil, let image = image {
-                    if let blurred = cache.retrieveImageInDiskCacheForKey(key) {
-                        dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                            Log.debug("Setting blurred header image.")
-
-                            if let controller = self {
-                                controller.blurredHeaderImage?.image = blurred
-                                controller.headerImage?.image = image
-                            }
-                        })
-                    } else {
-                        Log.debug("Attempting to blur image.")
-
-                        if let blurred = image.imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {
-                            Log.debug("Caching blurred header image.")
-                            cache.storeImage(blurred, forKey: key)
-
-                            dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                                Log.debug("Setting blurred header image.")
-
-                                if let controller = self {
-                                    controller.blurredHeaderImage?.image = blurred
-                                    controller.headerImage?.image = image
-                                }
-                            })
-                        }
-                    }
-                }
-            })
-        }
+        self.setupImages()
 
         self.settingsButton?.addTarget(self, action: "settingsButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
 
@@ -466,6 +506,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         if let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("EpisodeSectionHeader") as? EpisodeSectionHeaderView {
             view.delegate = self
             view.segmentControl?.selectedSegmentIndex = self.currentSegment
+            view.setColors(self.primaryColor, background: self.backgroundColor)
 
             return view
         }

@@ -29,4 +29,10 @@ class EpisodeSectionHeaderView: UITableViewHeaderFooterView {
     // MARK: - EpisodeSectionHeaderView members
 
     var delegate: ChangesBasedOnSegment?
+
+    // MARK: - EpisodeSectionHeaderView functions
+
+    func setColors(primary: UIColor, background: UIColor) {
+        self.segmentControl?.tintColor = background
+    }
 }

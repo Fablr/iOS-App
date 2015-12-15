@@ -29,6 +29,38 @@ final class Podcast: Object, Equatable {
     dynamic var download: Bool = true
     dynamic var downloadAmount: Int = 3
 
+    // MARK: - Color members
+
+    dynamic var primaryRed: Float = 0.0
+    dynamic var primaryGreen: Float = 0.0
+    dynamic var primaryBlue: Float = 0.0
+    dynamic var primarySet: Bool = false
+
+    var primaryColor: UIColor? {
+        get {
+            if self.primarySet {
+                return UIColor(red: CGFloat(self.primaryRed), green: CGFloat(self.primaryGreen), blue: CGFloat(self.primaryBlue), alpha: 1.0)
+            }
+
+            return nil
+        }
+    }
+
+    dynamic var backgroundRed: Float = 0.0
+    dynamic var backgroundGreen: Float = 0.0
+    dynamic var backgroundBlue: Float = 0.0
+    dynamic var backgroundSet: Bool = false
+
+    var backgroundColor: UIColor? {
+        get {
+            if self.backgroundSet {
+                return UIColor(red: CGFloat(self.backgroundRed), green: CGFloat(self.backgroundGreen), blue: CGFloat(self.backgroundBlue), alpha: 1.0)
+            }
+
+            return nil
+        }
+    }
+
     // MARK: - Realm methods
 
     override static func primaryKey() -> String? {
