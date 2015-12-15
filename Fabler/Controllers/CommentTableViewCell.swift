@@ -18,16 +18,20 @@ protocol RepliesToCommentDelegate {
     func showActionSheet(menu: UIAlertController)
 }
 
+protocol PerformsUserSegueDelegate {
+    func performSegueTo(user: User)
+}
+
 enum TextConversionError: ErrorType {
     case DataConversionFailed
 }
-
 
 class CommentTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlets
 
     @IBOutlet weak var commentTextView: UITextView?
+    @IBOutlet weak var userButton: UIButton?
     @IBOutlet weak var voteLabel: UILabel?
     @IBOutlet weak var subLabel: UILabel?
     @IBOutlet weak var subBar: UIView?
@@ -39,6 +43,12 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var commentIndent: NSLayoutConstraint?
 
     // MARK: - IBActions
+
+    @IBAction func userButtonPressed(sender: AnyObject) {
+        if let user = self.comment?.user {
+            self.segueDelegate?.performSegueTo(user)
+        }
+    }
 
     @IBAction func replyButtonPressed(sender: AnyObject) {
         if let comment = self.comment {
@@ -123,6 +133,7 @@ class CommentTableViewCell: UITableViewCell {
 
     var collapseDelegate: CollapsibleUITableViewCellDelegate?
     var replyDelegate: RepliesToCommentDelegate?
+    var segueDelegate: PerformsUserSegueDelegate?
 
     // MARK: - CommentTableViewCell functions
 
@@ -166,7 +177,9 @@ class CommentTableViewCell: UITableViewCell {
             dateFormatter.timeZone = localTimeZone
             dateFormatter.dateFormat = "dd/MM/yyyy 'at' HH:mm"
             let date = dateFormatter.stringFromDate(comment.submitDate)
-            self.subLabel?.text = "by \(comment.userName) on \(date)"
+            self.subLabel?.text = "on \(date)"
+
+            self.userButton?.setTitle(comment.userName, forState: .Normal)
 
             if let formattedComment = comment.formattedComment {
                 self.commentTextView?.attributedText = formattedComment
@@ -192,6 +205,11 @@ class CommentTableViewCell: UITableViewCell {
                 self.upButton?.enabled = false
                 self.downButton?.enabled = false
                 self.moreButton?.enabled = false
+                self.userButton?.enabled = false
+            } else {
+                self.upButton?.enabled = true
+                self.downButton?.enabled = true
+                self.userButton?.enabled = true
             }
 
             let tapRec = UITapGestureRecognizer()

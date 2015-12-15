@@ -70,7 +70,7 @@ class YouViewController: UIViewController, FBSDKLoginButtonDelegate {
 
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         if error != nil {
-            print(error.localizedDescription)
+            Log.error(error.localizedDescription)
         }
     }
 

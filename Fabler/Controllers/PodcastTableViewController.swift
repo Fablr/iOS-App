@@ -10,7 +10,7 @@ import UIKit
 import SlackTextViewController
 import Kingfisher
 
-class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate, ChangesBasedOnSegment {
+class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate, ChangesBasedOnSegment, PerformsUserSegueDelegate {
 
     // MARK: - PodcastTableViewController data members
 
@@ -305,8 +305,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     // swiftlint:disable function_body_length
     override func viewDidLoad() {
-        guard podcast != nil else {
-            print("expected a podcast initiated via previous controller")
+        guard self.podcast != nil else {
+            Log.error("expected a podcast initiated via previous controller")
             return
         }
 
@@ -429,8 +429,6 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         //
         self.titleLabel?.text = podcast?.title
 
-        self.setupImages()
-
         self.settingsButton?.addTarget(self, action: "settingsButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
 
         self.updateSubscribeButton(nil)
@@ -464,6 +462,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.navigationController?.navigationBar.clipsToBounds = true
         self.navigationItem.title = ""
+
+        self.setupImages()
 
         self.barAnimationComplete = false
 
@@ -502,6 +502,10 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         } else if segue.identifier == "displaySettingsSegue" {
             if let controller = segue.destinationViewController as? PodcastSettingsTableViewController, let podcast = sender as? Podcast {
                 controller.podcast = podcast
+            }
+        } else if segue.identifier == "displayUserSegue" {
+            if let controller = segue.destinationViewController as? UserTableViewController, let user = sender as? User {
+                controller.user = user
             }
         }
     }
@@ -728,6 +732,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         if let cell = cell as? CommentTableViewCell {
             cell.collapseDelegate = self
             cell.replyDelegate = self
+            cell.segueDelegate = self
 
             if let collapseIndexPath = self.indexPath, let collapsed = self.collapsed {
                 if collapseIndexPath == indexPath {
@@ -898,5 +903,11 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
             self.tableView.reloadData()
         }
+    }
+
+    // MARK: - PerformsUserSegue functions
+
+    func performSegueTo(user: User) {
+        performSegueWithIdentifier("displayUserSegue", sender: user)
     }
 }

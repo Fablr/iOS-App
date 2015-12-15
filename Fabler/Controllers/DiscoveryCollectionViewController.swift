@@ -58,7 +58,7 @@ class DiscoveryCollectionViewController: UICollectionViewController {
 
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         guard indexPath.section == 0 else {
-            print("Unexpected section selected.")
+            Log.warning("Unexpected section selected.")
             return
         }
 

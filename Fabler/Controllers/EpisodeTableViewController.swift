@@ -9,7 +9,7 @@
 import UIKit
 import SlackTextViewController
 
-class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate {
+class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate, PerformsUserSegueDelegate {
 
     // MARK: - EpisodeTableViewController members
 
@@ -124,7 +124,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     override func viewDidLoad() {
         guard self.episode != nil else {
-            print("expected a episode initiated via previous controller")
+            Log.error("expected a episode initiated via previous controller")
             return
         }
 
@@ -219,6 +219,14 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         super.didReceiveMemoryWarning()
     }
 
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "displayUserSegue" {
+            if let controller = segue.destinationViewController as? UserTableViewController, let user = sender as? User {
+                controller.user = user
+            }
+        }
+    }
+
     // MARK: - UITableView functions
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -267,6 +275,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         if let cell = cell as? CommentTableViewCell {
             cell.replyDelegate = self
             cell.collapseDelegate = self
+            cell.segueDelegate = self
 
             if let collapseIndexPath = self.indexPath, let collapsed = self.collapsed {
                 if collapseIndexPath.row == indexPath.row {
@@ -317,5 +326,11 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.textView.text = comment.comment
         self.replyComment = comment
         self.editingComment = true
+    }
+
+    // MARK: - PerformsUserSegue functions
+
+    func performSegueTo(user: User) {
+        performSegueWithIdentifier("displayUserSegue", sender: user)
     }
 }

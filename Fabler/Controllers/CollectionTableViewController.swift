@@ -85,7 +85,7 @@ class CollectionTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         guard indexPath.section == 0 else {
-            print("Unexpected section selected.")
+            Log.warning("Unexpected section selected.")
             return
         }
 

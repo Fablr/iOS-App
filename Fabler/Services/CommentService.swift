@@ -250,7 +250,6 @@ class CommentService {
         }
 
         Log.debug("Delete comment request: \(request)")
-        debugPrint(request)
     }
 
     func editComment(comment: Comment, newComment: String, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
@@ -288,7 +287,6 @@ class CommentService {
         }
 
         Log.debug("Edit comment request: \(request)")
-        debugPrint(request)
     }
 
     // MARK: - CommentService serialize functions

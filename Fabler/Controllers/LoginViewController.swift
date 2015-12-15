@@ -41,7 +41,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         if error == nil {
             performSegueWithIdentifier("loggedInSegue", sender: nil)
         } else {
-            print(error.localizedDescription)
+            Log.error(error.localizedDescription)
         }
     }
 

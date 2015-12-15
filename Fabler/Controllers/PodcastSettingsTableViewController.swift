@@ -57,7 +57,7 @@ class PodcastSettingsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         guard self.podcast != nil else {
-            print("expected a podcast initiated via previous controller")
+            Log.error("expected a podcast initiated via previous controller")
             return
         }
 
