@@ -14,6 +14,7 @@ protocol CollapsibleUITableViewCellDelegate {
 
 protocol RepliesToCommentDelegate {
     func replyToComment(comment: Comment?)
+    func editComment(comment: Comment)
     func showActionSheet(menu: UIAlertController)
 }
 
@@ -99,9 +100,17 @@ class CommentTableViewCell: UITableViewCell {
                 })
             }
         })
+
+        let edit = UIAlertAction(title: "Edit", style: .Default, handler: { [weak self] (action) in
+            if let controller = self, let comment = controller.comment {
+                controller.replyDelegate?.editComment(comment)
+            }
+        })
+
         let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
 
         menu.addAction(delete)
+        menu.addAction(edit)
         menu.addAction(cancel)
 
         self.replyDelegate?.showActionSheet(menu)

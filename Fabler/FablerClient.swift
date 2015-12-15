@@ -37,6 +37,7 @@ struct FablerClient {
         case ReadUser(user: Int)
         case ReadEpisode(episode: Int)
         case DeleteComment(comment: Int)
+        case EditComment(comment: Int, newComment: String)
 
         var method: Alamofire.Method {
             switch self {
@@ -72,6 +73,8 @@ struct FablerClient {
                 return .GET
             case .DeleteComment:
                 return .DELETE
+            case .EditComment:
+                return .PUT
             }
         }
 
@@ -108,6 +111,8 @@ struct FablerClient {
             case .ReadEpisode(let episode):
                 return "/episode/\(episode)/"
             case .DeleteComment(let comment):
+                return "/comment/\(comment)/"
+            case .EditComment(let comment, _):
                 return "/comment/\(comment)/"
             }
         }
@@ -148,6 +153,9 @@ struct FablerClient {
                 return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
             case .VoteComment(let comment, let vote):
                 let parameters: [String: AnyObject] = ["comment": comment, "value": vote]
+                return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+            case .EditComment(_, let newComment):
+                let parameters: [String: AnyObject] = ["comment": newComment]
                 return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
             default:
                 return mutableURLRequest

@@ -27,6 +27,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
     // MARK: - RepliesToCommentDelegate members
 
     var replyComment: Comment?
+    var editingComment: Bool = false
 
     // MARK: - EpisodeTableViewController functions
 
@@ -50,21 +51,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     func addMessage(message: String, parent: Int?) {
-        if let episode = self.episode {
-            let service = CommentService()
-            service.addCommentForEpisode(episode, comment: message, parentCommentId: parent, completion: { [weak self] (result) in
-                if let controller = self {
-                    if result {
-                        controller.refreshData(controller)
-                    } else {
-                        let alertController = UIAlertController(title: nil, message: "Unable to post comment.", preferredStyle: UIAlertControllerStyle.Alert)
-                        let dismissAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Cancel, handler: nil)
-                        alertController.addAction(dismissAction)
-                        controller.presentViewController(alertController, animated: true, completion: nil)
-                    }
-                }
-            })
-        }
+
     }
 
     func commentButtonPressed(sender: AnyObject) {
@@ -80,6 +67,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
 
         self.replyComment = nil
+        self.editingComment = false
         self.setTextInputbarHidden(true, animated: true)
     }
 
@@ -101,9 +89,31 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     override func didPressRightButton(sender: AnyObject!) {
-        if let message = self.textView.text.copy() as? String {
-            let id = self.replyComment?.commentId
-            self.addMessage(message, parent: id)
+        if let message = self.textView.text.copy() as? String, let episode = self.episode {
+            let service = CommentService()
+
+            if !self.editingComment {
+                let id = self.replyComment?.commentId
+
+                service.addCommentForEpisode(episode, comment: message, parentCommentId: id, completion: { [weak self] (result) in
+                    if let controller = self {
+                        if result {
+                            controller.refreshData(controller)
+                        }
+                    }
+                })
+            } else {
+                if let comment = self.replyComment {
+                    let service = CommentService()
+                    service.editComment(comment, newComment: message, completion: { [weak self] result in
+                        if let controller = self {
+                            if result {
+                                controller.refreshData(controller)
+                            }
+                        }
+                    })
+                }
+            }
         }
 
         super.didPressRightButton(sender)
@@ -300,5 +310,12 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     func showActionSheet(menu: UIAlertController) {
         self.presentViewController(menu, animated: true, completion: nil)
+    }
+
+    func editComment(comment: Comment) {
+        self.didRequestKeyboard()
+        self.textView.text = comment.comment
+        self.replyComment = comment
+        self.editingComment = true
     }
 }

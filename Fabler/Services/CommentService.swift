@@ -253,6 +253,44 @@ class CommentService {
         debugPrint(request)
     }
 
+    func editComment(comment: Comment, newComment: String, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+        let id = comment.commentId
+
+        let request = Alamofire
+        .request(FablerClient.Router.EditComment(comment: id, newComment: newComment))
+        .validate()
+        .response { request, response, data, error in
+            let result: Bool
+
+            if error == nil {
+                result = true
+
+                do {
+                    let responseRealm = try self.scratchRealm()
+                    if let responseComment = responseRealm.objectForPrimaryKey(Comment.self, key: id) {
+                        try responseRealm.write {
+                            responseComment.comment = newComment
+                        }
+                    }
+                } catch {
+                    Log.error("Realm write failed.")
+                }
+            } else {
+                result = false
+                Log.error("Edit failed with \(error).")
+
+                dispatch_async(dispatch_get_main_queue(), {
+                    SCLAlertView().showWarning("Warning", subTitle: "Unable to edit comment.")
+                })
+            }
+
+            dispatch_async(queue, {completion(result: result)})
+        }
+
+        Log.debug("Edit comment request: \(request)")
+        debugPrint(request)
+    }
+
     // MARK: - CommentService serialize functions
 
     private func serializeCommentObject(data: JSON, episode: Int?, podcast: Int?) -> Comment? {

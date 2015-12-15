@@ -45,6 +45,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     // MARK: - RepliesToCommentDelegate members
 
     var replyComment: Comment?
+    var editingComment: Bool = false
 
     // MARK: - ChangesBasedOnSegment members
 
@@ -239,24 +240,6 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         performSegueWithIdentifier("displaySettingsSegue", sender: self.podcast)
     }
 
-    func addMessage(message: String, parent: Int?) {
-        if let podcast = self.podcast {
-            let service = CommentService()
-            service.addCommentForPodcast(podcast, comment: message, parentCommentId: parent, completion: { [weak self] (result) in
-                if let controller = self {
-                    if result {
-                        controller.refreshCommentData(controller)
-                    } else {
-                        let alertController = UIAlertController(title: nil, message: "Unable to post comment.", preferredStyle: UIAlertControllerStyle.Alert)
-                        let dismissAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Cancel, handler: nil)
-                        alertController.addAction(dismissAction)
-                        controller.presentViewController(alertController, animated: true, completion: nil)
-                    }
-                }
-            })
-        }
-    }
-
     // MARK: - SLKTextViewController functions
 
     func didDismissKeyboard() {
@@ -265,6 +248,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
 
         self.replyComment = nil
+        self.editingComment = false
         self.setTextInputbarHidden(true, animated: true)
     }
 
@@ -286,9 +270,31 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     override func didPressRightButton(sender: AnyObject!) {
-        if let message = self.textView.text.copy() as? String {
-            let id = self.replyComment?.commentId
-            self.addMessage(message, parent: id)
+        if let message = self.textView.text.copy() as? String, let podcast = self.podcast {
+            let service = CommentService()
+
+            if !self.editingComment {
+                let id = self.replyComment?.commentId
+
+                service.addCommentForPodcast(podcast, comment: message, parentCommentId: id, completion: { [weak self] (result) in
+                    if let controller = self {
+                        if result {
+                            controller.refreshData(controller)
+                        }
+                    }
+                })
+            } else {
+                if let comment = self.replyComment {
+                    let service = CommentService()
+                    service.editComment(comment, newComment: message, completion: { [weak self] result in
+                        if let controller = self {
+                            if result {
+                                controller.refreshData(controller)
+                            }
+                        }
+                    })
+                }
+            }
         }
 
         super.didPressRightButton(sender)
@@ -869,6 +875,13 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     func showActionSheet(menu: UIAlertController) {
         self.presentViewController(menu, animated: true, completion: nil)
+    }
+
+    func editComment(comment: Comment) {
+        self.didRequestKeyboard()
+        self.textView.text = comment.comment
+        self.replyComment = comment
+        self.editingComment = true
     }
 
     // MARK: - ChangesBasedOnSegment functions
