@@ -485,6 +485,17 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         //
         // Reset navigation var
         //
+        if let navigationController = self.navigationController as? FablerNavigationController {
+            navigationController.setDefaultNavigationBar()
+        }
+    }
+
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidAppear(animated)
+
+        //
+        // Reset navigation var
+        //
         self.navigationController?.navigationBar.clipsToBounds = false
 
         if let navigationController = self.navigationController as? FablerNavigationController {

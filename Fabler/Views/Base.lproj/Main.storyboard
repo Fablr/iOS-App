@@ -68,7 +68,7 @@
         <!--Your Shows-->
         <scene sceneID="3qE-8D-r7Z">
             <objects>
-                <tableViewController id="RaP-X2-i0v" customClass="CollectionTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController extendedLayoutIncludesOpaqueBars="YES" id="RaP-X2-i0v" customClass="CollectionTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="115" sectionHeaderHeight="22" sectionFooterHeight="22" id="Idv-M6-Zjl">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -389,7 +389,7 @@
         <!--User Table View Controller-->
         <scene sceneID="12z-p8-hGk">
             <objects>
-                <tableViewController id="4Xq-nO-gyc" customClass="UserTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController extendedLayoutIncludesOpaqueBars="YES" id="4Xq-nO-gyc" customClass="UserTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="egT-kM-fmb">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -406,6 +406,7 @@
                                     </constraints>
                                 </imageView>
                             </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="yUf-fW-YH7" secondAttribute="bottom" constant="5" id="JkN-TF-BaW"/>
                                 <constraint firstItem="yUf-fW-YH7" firstAttribute="centerX" secondItem="FJF-TJ-EFc" secondAttribute="centerX" id="YHN-vX-UD0"/>
@@ -800,9 +801,9 @@
         <image name="menu" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nsB-VR-E4f"/>
-        <segue reference="Y9H-zW-Zfi"/>
         <segue reference="foL-zu-uHU"/>
+        <segue reference="fqu-mq-g5G"/>
+        <segue reference="Y9H-zW-Zfi"/>
         <segue reference="Det-ge-Yc7"/>
     </inferredMetricsTieBreakers>
 </document>
