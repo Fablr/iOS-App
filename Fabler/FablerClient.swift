@@ -93,7 +93,7 @@ struct FablerClient {
             case .SubscribeToPodcast:
                 return "/subscription/"
             case .ReadCurrentUser:
-                return "/users/current/"
+                return "/userprofile/current/"
             case .UpdateEpisodeMark:
                 return "/episodereceipt/"
             case .ReadCommentsForEpisode(let episode):
@@ -107,7 +107,7 @@ struct FablerClient {
             case .VoteComment:
                 return "/vote/"
             case .ReadUser(let user):
-                return "/users/\(user)/"
+                return "/userprofile/\(user)/"
             case .ReadEpisode(let episode):
                 return "/episode/\(episode)/"
             case .DeleteComment(let comment):
