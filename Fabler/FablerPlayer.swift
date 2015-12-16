@@ -12,6 +12,7 @@ public let PlayerStartPlayback = "com.Fabler.PlayerStartPlayback"
 
 // swiftlint:enable variable_name
 
+import UIKit
 import AVFoundation
 
 class FablerPlayer: NSObject {

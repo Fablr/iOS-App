@@ -8,6 +8,7 @@
 
 import UIKit
 import FBSDKLoginKit
+import SWRevealViewController
 
 class YouViewController: UIViewController, FBSDKLoginButtonDelegate {
 

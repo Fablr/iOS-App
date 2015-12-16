@@ -55,7 +55,6 @@
 		F491E74A1A7F4B300026528E /* CollectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7491A7F4B300026528E /* CollectionTableViewController.swift */; };
 		F491E74C1A7F4C630026528E /* PodcastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E74B1A7F4C630026528E /* PodcastTableViewCell.swift */; };
 		F491E7551A7F7E010026528E /* DiscoveryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7541A7F7E010026528E /* DiscoveryCollectionViewController.swift */; };
-		F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D750171BD38F0C009E1003 /* SWRevealViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,9 +122,6 @@
 		F491E7491A7F4B300026528E /* CollectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionTableViewController.swift; sourceTree = "<group>"; };
 		F491E74B1A7F4C630026528E /* PodcastTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastTableViewCell.swift; sourceTree = "<group>"; };
 		F491E7541A7F7E010026528E /* DiscoveryCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryCollectionViewController.swift; sourceTree = "<group>"; };
-		F4D750151BD38F0C009E1003 /* Fabler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Fabler-Bridging-Header.h"; sourceTree = "<group>"; };
-		F4D750161BD38F0C009E1003 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
-		F4D750171BD38F0C009E1003 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,7 +252,6 @@
 			children = (
 				45E5367A1BE173EB009E3F10 /* Controllers */,
 				45B51D091BE495D500F289F7 /* Models */,
-				F4D750141BD38E56009E1003 /* SWRevealViewController */,
 				45BF1C641BE31EE500665402 /* Services */,
 				F47029F31A7F27DB00E30A3C /* Supporting Files */,
 				4538B57E1BF55C6F00039DF1 /* Views */,
@@ -295,16 +290,6 @@
 				F4702A0A1A7F27DC00E30A3C /* Info.plist */,
 			);
 			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		F4D750141BD38E56009E1003 /* SWRevealViewController */ = {
-			isa = PBXGroup;
-			children = (
-				F4D750151BD38F0C009E1003 /* Fabler-Bridging-Header.h */,
-				F4D750161BD38F0C009E1003 /* SWRevealViewController.h */,
-				F4D750171BD38F0C009E1003 /* SWRevealViewController.m */,
-			);
-			path = SWRevealViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -517,7 +502,6 @@
 				45505F711BFB1EF600481291 /* DownloadManager.swift in Sources */,
 				4576FC061C13D74000381A28 /* EpisodeHeaderViewController.swift in Sources */,
 				453382201C1EA11000EA9DEE /* FablerImage.swift in Sources */,
-				F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */,
 				451CBBC61C20BED600758A81 /* UserTableViewController.swift in Sources */,
 				4501BB9B1C177F330021171C /* FablerUI.swift in Sources */,
 				450B76741BE983670033C0B6 /* PodcastTableViewController.swift in Sources */,
@@ -687,7 +671,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Fabler.Fabler;
 				PRODUCT_NAME = Fabler;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Fabler/SWRevealViewController/Fabler-Bridging-Header.h";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -713,7 +698,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Fabler.Fabler;
 				PRODUCT_NAME = Fabler;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Fabler/SWRevealViewController/Fabler-Bridging-Header.h";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};

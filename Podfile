@@ -14,6 +14,7 @@ target 'Fabler' do
   pod 'XNGMarkdownParser', '~>0.3.2'
   pod 'SCLAlertView', '~>0.4.3'
   pod 'Kingfisher', '~>1.8.4'
+  pod 'SWRevealViewController', '~>2.3.0'
 end
 
 target 'FablerTests' do

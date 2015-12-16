@@ -27,6 +27,7 @@ PODS:
   - SlackTextViewController (1.8)
   - SwiftyBeaver (0.3.0)
   - SwiftyJSON (2.3.2)
+  - SWRevealViewController (2.3.0)
   - XNGMarkdownParser (0.3.2)
 
 DEPENDENCIES:
@@ -40,6 +41,7 @@ DEPENDENCIES:
     tag `v1.8`)
   - SwiftyBeaver (~> 0.3.0)
   - SwiftyJSON (~> 2.3.2)
+  - SWRevealViewController (~> 2.3.0)
   - XNGMarkdownParser (~> 0.3.2)
 
 EXTERNAL SOURCES:
@@ -64,6 +66,7 @@ SPEC CHECKSUMS:
   SlackTextViewController: 0300adee2931fdbe72488990336f0937dbed048e
   SwiftyBeaver: df7961d4ecb75521ed6a9af40dd3076af1635fdd
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   XNGMarkdownParser: aed98c14f0c0eb20064184ddf9bac26c482722b2
 
 COCOAPODS: 0.39.0
