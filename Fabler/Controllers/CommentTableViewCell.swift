@@ -47,6 +47,13 @@ class CommentTableViewCell: UITableViewCell {
     @IBAction func userButtonPressed(sender: AnyObject) {
         if let user = self.comment?.user {
             self.segueDelegate?.performSegueTo(user)
+        } else if let id = self.comment?.userId {
+            let service = UserService()
+            service.getUserFor(id, completion: { [weak self] (user) in
+                if let controller = self, let user = user {
+                    controller.segueDelegate?.performSegueTo(user)
+                }
+            })
         }
     }
 

@@ -60,33 +60,35 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     func setupImages() {
         if let podcast = self.podcast, let url = NSURL(string: podcast.image) {
-            let downloader = KingfisherManager.sharedManager.downloader
-            let cache = KingfisherManager.sharedManager.cache
+            let manager = KingfisherManager.sharedManager
+            let cache = manager.cache
 
             let id = podcast.podcastId
             let key = "\(id)-header-blurred"
 
-            downloader.downloadImageWithURL(url, progressBlock: nil, completionHandler: { [weak self] (image, error, imageURL, originalData) in
-                if error == nil, let image = image {
-                    let service = PodcastService()
+            if let image = cache.retrieveImageInDiskCacheForKey(url.absoluteString), let blurred = cache.retrieveImageInDiskCacheForKey(key) {
+                let service = PodcastService()
 
-                    if let podcast = service.readPodcastFor(id, completion: nil) {
-                        if !podcast.primarySet || !podcast.backgroundSet {
-                            let colors = image.getColors()
-                            service.setPrimaryColorForPodcast(podcast, color: colors.primaryColor)
-                            service.setBackgroundColorForPodcast(podcast, color: colors.backgroundColor)
-                        }
-                    }
+                if !podcast.primarySet || !podcast.backgroundSet {
+                    let colors = image.getColors()
+                    service.setPrimaryColorForPodcast(podcast, color: colors.primaryColor)
+                    service.setBackgroundColorForPodcast(podcast, color: colors.backgroundColor)
+                }
 
-                    if let blurred = cache.retrieveImageInDiskCacheForKey(key) {
-                        dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                            Log.debug("Setting blurred header image.")
+                self.updateImages(image, blurred: blurred)
+            } else {
+                manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, url) in
+                    if error == nil, let image = image {
+                        let service = PodcastService()
 
-                            if let controller = self {
-                                controller.updateImages(image, blurred: blurred)
+                        if let podcast = service.readPodcastFor(id, completion: nil) {
+                            if !podcast.primarySet || !podcast.backgroundSet {
+                                let colors = image.getColors()
+                                service.setPrimaryColorForPodcast(podcast, color: colors.primaryColor)
+                                service.setBackgroundColorForPodcast(podcast, color: colors.backgroundColor)
                             }
-                        })
-                    } else {
+                        }
+
                         Log.debug("Attempting to blur image.")
 
                         if let blurred = image.imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {
@@ -102,8 +104,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
                             })
                         }
                     }
-                }
-            })
+                })
+            }
         }
     }
 

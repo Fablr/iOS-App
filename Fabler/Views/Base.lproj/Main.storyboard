@@ -395,12 +395,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="FJF-TJ-EFc">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="150"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="210"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yUf-fW-YH7">
+                                    <rect key="frame" x="200" y="5" width="200" height="200"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="200" id="ZaK-30-w63"/>
+                                        <constraint firstAttribute="height" constant="200" id="rdT-7o-zK1"/>
+                                    </constraints>
+                                </imageView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="yUf-fW-YH7" secondAttribute="bottom" constant="5" id="JkN-TF-BaW"/>
+                                <constraint firstItem="yUf-fW-YH7" firstAttribute="centerX" secondItem="FJF-TJ-EFc" secondAttribute="centerX" id="YHN-vX-UD0"/>
+                                <constraint firstItem="yUf-fW-YH7" firstAttribute="top" secondItem="FJF-TJ-EFc" secondAttribute="top" constant="5" id="ftI-38-pdG"/>
+                            </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Vih-0h-sfP">
-                                <rect key="frame" x="0.0" y="178" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="238" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Vih-0h-sfP" id="Bbx-9e-KO9">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -413,6 +427,9 @@
                             <outlet property="delegate" destination="4Xq-nO-gyc" id="E7c-5h-8ED"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="userImage" destination="yUf-fW-YH7" id="ymp-6o-CBy"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1zO-RZ-p3Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -783,9 +800,9 @@
         <image name="menu" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tWZ-CD-OTO"/>
-        <segue reference="Y9H-zW-Zfi"/>
         <segue reference="nsB-VR-E4f"/>
+        <segue reference="Y9H-zW-Zfi"/>
+        <segue reference="foL-zu-uHU"/>
         <segue reference="Det-ge-Yc7"/>
     </inferredMetricsTieBreakers>
 </document>

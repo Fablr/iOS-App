@@ -137,6 +137,10 @@ class UserService {
             user.currentUser = currentUser
         }
 
+        if let image = data["image"].string {
+            user.image = image
+        }
+
         do {
             let realm = try Realm()
 

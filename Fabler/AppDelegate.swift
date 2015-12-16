@@ -107,8 +107,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         podcastService.getSubscribedPodcasts(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), completion: { (podcasts) in
             Log.info("Caching subscribed podcast images.")
 
-            let downloader = KingfisherManager.sharedManager.downloader
-            let cache = KingfisherManager.sharedManager.cache
+            let manager = KingfisherManager.sharedManager
+            let cache = manager.cache
 
             for podcast in podcasts {
                 let id = podcast.podcastId
@@ -120,7 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
 
                 if let url = NSURL(string: podcast.image) {
-                    downloader.downloadImageWithURL(url, progressBlock: nil, completionHandler: { (image, error, imageURL, originalData) in
+                    manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, url) in
                         if error == nil, let image = image {
                             Log.info("Blurring image for '\(key)'")
                             if let blurred = image.imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {

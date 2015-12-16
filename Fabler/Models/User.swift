@@ -25,6 +25,7 @@ final class User: Object {
     dynamic var email: String = ""
     dynamic var userId: Int = 0
     dynamic var currentUser: Bool = false
+    dynamic var image: String = ""
 
     // MARK: - Realm methods
 
