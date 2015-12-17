@@ -22,33 +22,49 @@ class UserService {
 
     // MARK: - UserService functions
 
+    static var currentFacebookToken: FBSDKAccessToken?
+
     init() {
         let notificationCenter = NSNotificationCenter.defaultCenter()
         let mainQueue = NSOperationQueue.mainQueue()
 
-        notificationCenter.addObserverForName(FBSDKAccessTokenDidChangeNotification, object: nil, queue: mainQueue) { _ in
+        notificationCenter.addObserverForName(FBSDKAccessTokenDidChangeNotification, object: nil, queue: mainQueue) { notification in
             Log.info("Facebook token updated.")
 
             if let facebookToken = FBSDKAccessToken.currentAccessToken() {
-                _ = Alamofire
-                .request(FablerClient.Router.FacebookLogin(token: facebookToken.tokenString))
-                .validate()
-                .responseJSON { response in
-                    switch response.result {
-                    case .Success(let data):
-                        if let token = data.valueForKeyPath("access_token") as? String {
-                            FablerClient.Router.token = token
-                            NSNotificationCenter.defaultCenter().postNotificationName(TokenDidChangeNotification, object: self)
-                            self.updateCurrentUser()
-                        }
-                    case .Failure(let error):
-                        Log.error("Login error occured: \(error).")
-                    }
+                let updateToken: Bool
+
+                if let oldToken = UserService.currentFacebookToken where facebookToken.isEqualToAccessToken(oldToken) {
+                    updateToken = false
+                } else {
+                    updateToken = true
+                    UserService.currentFacebookToken = facebookToken
                 }
 
-                Log.debug("Login request made.")
+                if updateToken {
+                    _ = Alamofire
+                    .request(FablerClient.Router.FacebookLogin(token: facebookToken.tokenString))
+                    .validate()
+                    .responseJSON { response in
+                        switch response.result {
+                        case .Success(let data):
+                            if let token = data.valueForKeyPath("access_token") as? String {
+                                FablerClient.Router.token = token
+                                NSNotificationCenter.defaultCenter().postNotificationName(TokenDidChangeNotification, object: self)
+                                self.updateCurrentUser()
+                            }
+                        case .Failure(let error):
+                            Log.error("Login error occured: \(error).")
+                        }
+                    }
+
+                    Log.info("Login request made.")
+                } else {
+                    Log.info("New Facebook token is same as old Facebook token.")
+                }
             } else {
                 Log.warning("No current Facebook token.")
+                UserService.currentFacebookToken = nil
             }
         }
     }
