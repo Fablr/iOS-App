@@ -14,6 +14,10 @@ class BackpaneViewController: UIViewController {
 
     @IBOutlet weak var userButton: UIButton?
 
+    @IBAction func userButtonPressed(sender: AnyObject) {
+        performSegueWithIdentifier("pushUserSegue", sender: self.user)
+    }
+
     // MARK: - BackpaneViewController members
 
     private var user: User?
@@ -47,5 +51,14 @@ class BackpaneViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "pushUserSegue" {
+            if let controller = segue.destinationViewController as? FablerNavigationController, let root = controller.viewControllers.first as? UserTableViewController, let user = sender as? User {
+                root.user = user
+                root.root = true
+            }
+        }
     }
 }

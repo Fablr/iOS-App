@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class UserTableViewController: UITableViewController {
+class UserTableViewController: UITableViewController, PerformsLogoutSegueDelegate {
 
     // MARK: - IBOutlets
 
@@ -18,16 +18,25 @@ class UserTableViewController: UITableViewController {
     // MARK: - UserTableViewController members
 
     var user: User?
+    var root: Bool = false
 
     // MARK: - UIViewController functions
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+
         guard self.user != nil else {
-            Log.error("Expected a user initiated via previous controller.")
+            Log.info("Expected a user initiated via previous controller.")
             return
         }
 
-        super.viewDidLoad()
+        if self.root {
+            if revealViewController() != nil {
+                let menu = UIBarButtonItem(image: UIImage(named: "menu"), style: .Plain, target: revealViewController(), action: "revealToggle:")
+                self.navigationItem.leftBarButtonItem = menu
+                view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            }
+        }
 
         if let user = self.user, let url = NSURL(string: user.image) {
             let manager = KingfisherManager.sharedManager
@@ -57,5 +66,57 @@ class UserTableViewController: UITableViewController {
             let button = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: "editSegue")
             self.navigationItem.rightBarButtonItem = button
         }
+    }
+
+    // MARK: - UITableViewController functions
+
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        let result: Int
+
+        if let user = self.user where user.currentUser {
+            result = 1
+        } else {
+            result = 0
+        }
+
+        return result
+    }
+
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let result: Int
+
+        if section == 0 {
+            if let user = self.user where user.currentUser {
+                result = 1
+            } else {
+                result = 0
+            }
+        } else {
+            result = 0
+        }
+
+        return result
+    }
+
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        Log.verbose("Building cell.")
+
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("FBLogoutCell", forIndexPath: indexPath)
+
+            if let cell = cell as? FBLogoutTableViewCell {
+                cell.delegate = self
+            }
+
+            return cell
+        }
+
+        return UITableViewCell()
+    }
+
+    // MARK: - PerformsLogoutSegueDelegate
+
+    func performLogoutSegue() {
+        performSegueWithIdentifier("loggedOutSegue", sender: nil)
     }
 }

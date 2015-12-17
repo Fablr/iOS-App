@@ -485,6 +485,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         //
         // Reset navigation var
         //
+        self.navigationController?.navigationBar.clipsToBounds = false
+
         if let navigationController = self.navigationController as? FablerNavigationController {
             navigationController.setDefaultNavigationBar()
         }
@@ -496,8 +498,6 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         //
         // Reset navigation var
         //
-        self.navigationController?.navigationBar.clipsToBounds = false
-
         if let navigationController = self.navigationController as? FablerNavigationController {
             navigationController.setDefaultNavigationBar()
         }
