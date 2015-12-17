@@ -18,6 +18,7 @@
 		451CBBC61C20BED600758A81 /* UserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CBBC51C20BED600758A81 /* UserTableViewController.swift */; };
 		451CBBC81C2225B100758A81 /* FBLogoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CBBC71C2225B100758A81 /* FBLogoutTableViewCell.swift */; };
 		451CBBCA1C225CEC00758A81 /* ProfileSectionHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CBBC91C225CEC00758A81 /* ProfileSectionHeaderTableViewCell.swift */; };
+		451CBBCC1C229CD300758A81 /* UserEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CBBCB1C229CD300758A81 /* UserEditViewController.swift */; };
 		453382201C1EA11000EA9DEE /* FablerImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533821F1C1EA11000EA9DEE /* FablerImage.swift */; };
 		4538B57D1BF55C3800039DF1 /* SmallPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */; };
 		4538B5801BF55E1800039DF1 /* SmallPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */; };
@@ -52,7 +53,6 @@
 		F47029FD1A7F27DB00E30A3C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47029FC1A7F27DB00E30A3C /* Images.xcassets */; };
 		F4702A001A7F27DC00E30A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F47029FE1A7F27DB00E30A3C /* LaunchScreen.xib */; };
 		F4702A0C1A7F27DC00E30A3C /* FablerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4702A0B1A7F27DC00E30A3C /* FablerTests.swift */; };
-		F4702A181A7F351C00E30A3C /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4702A171A7F351C00E30A3C /* MenuTableViewController.swift */; };
 		F491E74A1A7F4B300026528E /* CollectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7491A7F4B300026528E /* CollectionTableViewController.swift */; };
 		F491E74C1A7F4C630026528E /* PodcastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E74B1A7F4C630026528E /* PodcastTableViewCell.swift */; };
 		F491E7551A7F7E010026528E /* DiscoveryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7541A7F7E010026528E /* DiscoveryCollectionViewController.swift */; };
@@ -82,6 +82,7 @@
 		451CBBC51C20BED600758A81 /* UserTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewController.swift; sourceTree = "<group>"; };
 		451CBBC71C2225B100758A81 /* FBLogoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FBLogoutTableViewCell.swift; sourceTree = "<group>"; };
 		451CBBC91C225CEC00758A81 /* ProfileSectionHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSectionHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		451CBBCB1C229CD300758A81 /* UserEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEditViewController.swift; sourceTree = "<group>"; };
 		4533821F1C1EA11000EA9DEE /* FablerImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerImage.swift; sourceTree = "<group>"; };
 		4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPlayer.xib; sourceTree = "<group>"; };
 		4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallPlayerViewController.swift; sourceTree = "<group>"; };
@@ -120,7 +121,6 @@
 		F4702A051A7F27DC00E30A3C /* Fabler.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Fabler.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4702A0A1A7F27DC00E30A3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4702A0B1A7F27DC00E30A3C /* FablerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FablerTests.swift; sourceTree = "<group>"; };
-		F4702A171A7F351C00E30A3C /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		F491E7491A7F4B300026528E /* CollectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionTableViewController.swift; sourceTree = "<group>"; };
 		F491E74B1A7F4C630026528E /* PodcastTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastTableViewCell.swift; sourceTree = "<group>"; };
 		F491E7541A7F7E010026528E /* DiscoveryCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryCollectionViewController.swift; sourceTree = "<group>"; };
@@ -210,13 +210,13 @@
 				451CBBC71C2225B100758A81 /* FBLogoutTableViewCell.swift */,
 				45FBA2591BF5E7FE00DD8D14 /* LargePlayerViewController.swift */,
 				4588CF2B1BDB46E40080E13D /* LoginViewController.swift */,
-				F4702A171A7F351C00E30A3C /* MenuTableViewController.swift */,
 				457E51E21BE864170079845E /* PodcastCell.swift */,
 				45E2E1371BFEBAEF00219098 /* PodcastSettingsTableViewController.swift */,
 				F491E74B1A7F4C630026528E /* PodcastTableViewCell.swift */,
 				450B76731BE983670033C0B6 /* PodcastTableViewController.swift */,
 				451CBBC91C225CEC00758A81 /* ProfileSectionHeaderTableViewCell.swift */,
 				4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */,
+				451CBBCB1C229CD300758A81 /* UserEditViewController.swift */,
 				451CBBC51C20BED600758A81 /* UserTableViewController.swift */,
 			);
 			path = Controllers;
@@ -500,6 +500,7 @@
 				450B76761BE9CC270033C0B6 /* Episode.swift in Sources */,
 				450B767C1BECABB30033C0B6 /* EpisodeTableViewController.swift in Sources */,
 				45BF1C681BE4921900665402 /* PodcastService.swift in Sources */,
+				451CBBCC1C229CD300758A81 /* UserEditViewController.swift in Sources */,
 				45E5367E1BE1F980009E3F10 /* FablerClient.swift in Sources */,
 				4538B5801BF55E1800039DF1 /* SmallPlayerViewController.swift in Sources */,
 				45505F711BFB1EF600481291 /* DownloadManager.swift in Sources */,
@@ -511,7 +512,6 @@
 				450B76741BE983670033C0B6 /* PodcastTableViewController.swift in Sources */,
 				457889121C12482A007D3600 /* FablerToolBarController.swift in Sources */,
 				450B767E1BEF49120033C0B6 /* User.swift in Sources */,
-				F4702A181A7F351C00E30A3C /* MenuTableViewController.swift in Sources */,
 				45B51D0B1BE495E700F289F7 /* Podcast.swift in Sources */,
 				457889101C115464007D3600 /* CommentSectionFooterView.swift in Sources */,
 				456BB5C91BF5B4A600D59C47 /* FablerNavigationController.swift in Sources */,

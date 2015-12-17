@@ -20,6 +20,14 @@ class UserTableViewController: UITableViewController, PerformsLogoutSegueDelegat
     var user: User?
     var root: Bool = false
 
+    // MARK: - UserTableViewController functions
+
+    func editButtonPushed() {
+        if let user = self.user {
+            performSegueWithIdentifier("editProfileSegue", sender: user)
+        }
+    }
+
     // MARK: - UIViewController functions
 
     override func viewDidLoad() {
@@ -63,8 +71,27 @@ class UserTableViewController: UITableViewController, PerformsLogoutSegueDelegat
         self.navigationItem.title = user!.userName
 
         if user!.currentUser {
-            let button = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: "editSegue")
+            let button = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: "editButtonPushed")
             self.navigationItem.rightBarButtonItem = button
+        }
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+        guard self.user != nil else {
+            Log.info("Expected a user initiated via previous controller.")
+            return
+        }
+
+        self.navigationItem.title = user!.userName
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "editProfileSegue" {
+            if let controller = segue.destinationViewController as? UserEditViewController, let user = sender as? User {
+                controller.user = user
+            }
         }
     }
 
@@ -134,6 +161,14 @@ class UserTableViewController: UITableViewController, PerformsLogoutSegueDelegat
     // MARK: - PerformsLogoutSegueDelegate
 
     func performLogoutSegue() {
-        performSegueWithIdentifier("loggedOutSegue", sender: nil)
+        //performSegueWithIdentifier("loggedOutSegue", sender: nil)
+        if let window = UIApplication.sharedApplication().delegate?.window {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+
+            let viewController = storyboard.instantiateViewControllerWithIdentifier("login")
+
+            window?.rootViewController = viewController
+            window?.makeKeyAndVisible()
+        }
     }
 }

@@ -86,6 +86,7 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Fabler/Alamofire.framework"
   install_framework "Pods-Fabler/Bolts.framework"
+  install_framework "Pods-Fabler/Eureka.framework"
   install_framework "Pods-Fabler/FBSDKCoreKit.framework"
   install_framework "Pods-Fabler/FBSDKLoginKit.framework"
   install_framework "Pods-Fabler/Kingfisher.framework"
@@ -101,6 +102,7 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Fabler/Alamofire.framework"
   install_framework "Pods-Fabler/Bolts.framework"
+  install_framework "Pods-Fabler/Eureka.framework"
   install_framework "Pods-Fabler/FBSDKCoreKit.framework"
   install_framework "Pods-Fabler/FBSDKLoginKit.framework"
   install_framework "Pods-Fabler/Kingfisher.framework"

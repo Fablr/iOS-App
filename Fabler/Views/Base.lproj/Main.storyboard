@@ -483,12 +483,30 @@
                     <navigationItem key="navigationItem" id="8aY-TK-21s"/>
                     <connections>
                         <outlet property="userImage" destination="yUf-fW-YH7" id="ymp-6o-CBy"/>
-                        <segue destination="skb-Nh-TJo" kind="presentation" identifier="loggedOutSegue" id="qAx-E6-lNW"/>
+                        <segue destination="e2I-xx-yxH" kind="show" identifier="editProfileSegue" id="P2a-Kw-rFT"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1zO-RZ-p3Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4162" y="960"/>
+        </scene>
+        <!--User Edit View Controller-->
+        <scene sceneID="JVv-rt-6wU">
+            <objects>
+                <viewController id="e2I-xx-yxH" customClass="UserEditViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="AWE-SL-Tv3"/>
+                        <viewControllerLayoutGuide type="bottom" id="bvx-gv-Mgp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AYw-HL-xUj">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dao-HB-QNf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5008" y="960"/>
         </scene>
         <!--Backpane View Controller-->
         <scene sceneID="4SI-bp-lri">
@@ -525,8 +543,7 @@
                                         <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="User"/>
                                         <connections>
-                                            <action selector="userButtonPressed:" destination="F7u-T7-oZO" eventType="touchUpInside" id="siF-Ee-m7p"/>
-                                            <segue destination="4Mp-X0-yx1" kind="custom" identifier="pushUserSegue" customClass="SWRevealViewControllerSeguePushController" id="iJD-ff-uLz"/>
+                                            <action selector="userButtonPressed:" destination="F7u-T7-oZO" eventType="touchUpInside" id="gyS-wm-bBK"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -578,6 +595,7 @@
                     <connections>
                         <outlet property="userButton" destination="jIg-j1-TCs" id="uzq-SZ-vd9"/>
                         <outlet property="userImage" destination="LSb-51-BjA" id="mZx-0C-uiH"/>
+                        <segue destination="4Mp-X0-yx1" kind="custom" identifier="pushUserSegue" customClass="SWRevealViewControllerSeguePushController" id="9xL-du-WtZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fjX-l1-SZ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
