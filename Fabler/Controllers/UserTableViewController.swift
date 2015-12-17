@@ -114,6 +114,23 @@ class UserTableViewController: UITableViewController, PerformsLogoutSegueDelegat
         return UITableViewCell()
     }
 
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCellWithIdentifier("SectionHeader")
+
+        if let cell = cell as? ProfileSectionHeaderTableViewCell {
+            switch section {
+            case 0:
+                cell.headerLabel?.text = "Account control"
+            default:
+                cell.headerLabel?.text = ""
+            }
+
+            cell.seperatorHeight?.constant = 0.5
+        }
+
+        return cell?.contentView
+    }
+
     // MARK: - PerformsLogoutSegueDelegate
 
     func performLogoutSegue() {

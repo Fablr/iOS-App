@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import Kingfisher
 
 class BackpaneViewController: UIViewController {
 
     // MARK: - IBOutlets
 
     @IBOutlet weak var userButton: UIButton?
+    @IBOutlet weak var userImage: UIImageView?
 
     @IBAction func userButtonPressed(sender: AnyObject) {
         performSegueWithIdentifier("pushUserSegue", sender: self.user)
@@ -25,8 +27,30 @@ class BackpaneViewController: UIViewController {
     // MARK: - BackpaneViewController functions
 
     func updateUserElements() {
-        if let title = self.user?.userName {
-            self.userButton?.setTitle(title, forState: .Normal)
+        if let user = self.user {
+            if let url = NSURL(string: user.image) {
+                let manager = KingfisherManager.sharedManager
+                let cache = manager.cache
+
+                let key = "\(user.userId)-profile"
+
+                if let circle = cache.retrieveImageInDiskCacheForKey(key) {
+                    self.userImage?.image = circle
+                } else {
+                    manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, url) in
+                        if error == nil, let image = image {
+                            let circle = image.imageRoundedIntoCircle()
+                            cache.storeImage(circle, forKey: key)
+
+                            dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                                self?.userImage?.image = circle
+                            })
+                        }
+                    })
+                }
+            }
+
+            self.userButton?.setTitle(user.userName, forState: .Normal)
         }
     }
 
@@ -39,10 +63,8 @@ class BackpaneViewController: UIViewController {
         let mainQueue = NSOperationQueue.mainQueue()
 
         notificationCenter.addObserverForName(CurrentUserDidChangeNotification, object: nil, queue: mainQueue) { [weak self] (_) in
-            if let controller = self {
-                controller.user = User.getCurrentUser()
-                controller.updateUserElements()
-            }
+            self?.user = User.getCurrentUser()
+            self?.updateUserElements()
         }
 
         self.user = User.getCurrentUser()
