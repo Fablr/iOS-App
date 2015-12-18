@@ -26,6 +26,7 @@ final class User: Object {
     dynamic var userId: Int = 0
     dynamic var currentUser: Bool = false
     dynamic var image: String = ""
+    dynamic var birthday: NSDate?
 
     // MARK: - Realm methods
 

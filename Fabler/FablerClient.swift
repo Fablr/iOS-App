@@ -38,6 +38,7 @@ struct FablerClient {
         case ReadEpisode(episode: Int)
         case DeleteComment(comment: Int)
         case EditComment(comment: Int, newComment: String)
+        case UpdateUser(user: Int, userName: String?, email: String?, firstName: String?, lastName: String?, birthday: NSDate?)
 
         var method: Alamofire.Method {
             switch self {
@@ -75,6 +76,8 @@ struct FablerClient {
                 return .DELETE
             case .EditComment:
                 return .PUT
+            case .UpdateUser:
+                return .PATCH
             }
         }
 
@@ -114,6 +117,8 @@ struct FablerClient {
                 return "/comment/\(comment)/"
             case .EditComment(let comment, _):
                 return "/comment/\(comment)/"
+            case .UpdateUser(let user, _, _, _, _, _):
+                return "/userprofile/\(user)/"
             }
         }
 
@@ -130,33 +135,70 @@ struct FablerClient {
             case .FacebookLogin(let token):
                 let parameters: [String: AnyObject] = ["access_token": token]
                 return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
+
             case .ReadEpisodesForPodcast(let podcast):
                 let parameters: [String: AnyObject] = ["podcast": podcast]
                 return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
+
             case .SubscribeToPodcast(let podcast, let subscribe):
                 let parameters: [String: AnyObject] = ["podcast": podcast, "active": subscribe]
                 return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+
             case .UpdateEpisodeMark(let episode, let mark, let completed):
                 let parameters: [String: AnyObject] = ["episode": episode, "mark": mark.toString(), "completed": completed]
                 return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+
             case .AddCommentForEpisode(_, let comment, let parent):
                 var parameters: [String: AnyObject] = ["comment": comment]
-                if parent != nil {
-                    parameters["parent"] = parent!
+
+                if let parent = parent {
+                    parameters["parent"] = parent
                 }
+
                 return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+
             case .AddCommentForPodcast(_, let comment, let parent):
                 var parameters: [String: AnyObject] = ["comment": comment]
-                if parent != nil {
-                    parameters["parent"] = parent!
+
+                if let parent = parent {
+                    parameters["parent"] = parent
                 }
+
                 return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+
             case .VoteComment(let comment, let vote):
                 let parameters: [String: AnyObject] = ["comment": comment, "value": vote]
                 return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+
             case .EditComment(_, let newComment):
                 let parameters: [String: AnyObject] = ["comment": newComment]
                 return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+
+            case .UpdateUser(_, let userName, let email, let firstName, let lastName, birthday: let birthday):
+                var parameters = [String: AnyObject]()
+
+                if let userName = userName {
+                    parameters["username"] = userName
+                }
+
+                if let email = email {
+                    parameters["email"] = email
+                }
+
+                if let firstName = firstName {
+                    parameters["first_name"] = firstName
+                }
+
+                if let lastName = lastName {
+                    parameters["last_name"] = lastName
+                }
+
+                if let birthday = birthday?.toString() {
+                    parameters["birthday"] = birthday
+                }
+
+                return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+
             default:
                 return mutableURLRequest
             }
@@ -268,5 +310,13 @@ extension NSTimeInterval {
         result = String(format: "%02d %02d:%02d:%02d", days, hours, minutes, seconds)
 
         return result
+    }
+}
+
+extension NSDate {
+    func toString() -> String {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.stringFromDate(self)
     }
 }

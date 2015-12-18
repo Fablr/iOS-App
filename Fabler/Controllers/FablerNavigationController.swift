@@ -34,7 +34,7 @@ class FablerNavigationController: UINavigationController {
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.translucent = false
         self.navigationBar.tintColor = UIColor.fablerOrangeColor()
-        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.fablerOrangeColor()]
+        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.darkGrayColor()]
         self.navigationBar.setTitleVerticalPositionAdjustment(0.0, forBarMetrics: UIBarMetrics.Default)
         self.currentStatusBarStyle = .Default
     }

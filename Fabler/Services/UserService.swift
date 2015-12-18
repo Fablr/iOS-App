@@ -20,13 +20,22 @@ import RealmSwift
 
 class UserService {
 
-    // MARK: - UserService functions
+    // MARK: - UserService members
 
     static var currentFacebookToken: FBSDKAccessToken?
+
+    private let queueIdentifier: String
+    private let pendingRequestQueue: dispatch_queue_t
+    private var pendingRequests: [Request] = []
+
+    // MARK: - UserService functions
 
     init() {
         let notificationCenter = NSNotificationCenter.defaultCenter()
         let mainQueue = NSOperationQueue.mainQueue()
+
+        self.queueIdentifier = NSUUID().UUIDString
+        self.pendingRequestQueue = dispatch_queue_create(self.queueIdentifier, nil)
 
         notificationCenter.addObserverForName(FBSDKAccessTokenDidChangeNotification, object: nil, queue: mainQueue) { notification in
             Log.info("Facebook token updated.")
@@ -34,6 +43,9 @@ class UserService {
             if let facebookToken = FBSDKAccessToken.currentAccessToken() {
                 let updateToken: Bool
 
+                //
+                // Debounce the notification
+                //
                 if let oldToken = UserService.currentFacebookToken where facebookToken.isEqualToAccessToken(oldToken) {
                     updateToken = false
                 } else {
@@ -42,7 +54,7 @@ class UserService {
                 }
 
                 if updateToken {
-                    _ = Alamofire
+                    let request = Alamofire
                     .request(FablerClient.Router.FacebookLogin(token: facebookToken.tokenString))
                     .validate()
                     .responseJSON { response in
@@ -56,7 +68,13 @@ class UserService {
                         case .Failure(let error):
                             Log.error("Login error occured: \(error).")
                         }
+
+                        if let request = response.request {
+                            self.removeRequestFromPending(request)
+                        }
                     }
+
+                    self.addRequestToPending(request)
 
                     Log.info("Login request made.")
                 } else {
@@ -84,10 +102,16 @@ class UserService {
                     Log.error("User request failed with \(error).")
                 }
 
+                if let request = response.request {
+                    self.removeRequestFromPending(request)
+                }
+
                 dispatch_async(queue, {completion(result: self.getUserFromRealm(userId))})
             }
 
-            Log.debug("Read user request: \(request)")
+            self.addRequestToPending(request)
+
+            Log.debug("Read user request: \(request).")
         }
 
         return self.getUserFromRealm(userId)
@@ -119,9 +143,144 @@ class UserService {
             case .Failure(let error):
                 Log.error("User request error occured: \(error).")
             }
+
+            if let request = response.request {
+                self.removeRequestFromPending(request)
+            }
         }
 
-        Log.debug("Current user request: \(request)")
+        self.addRequestToPending(request)
+
+        Log.debug("Current user request: \(request).")
+    }
+
+    func updateProfile(firstName: String?, lastName: String?, birthday: NSDate?, user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+        if let currentUser = User.getCurrentUser() {
+            guard currentUser.userId == user.userId else {
+                Log.error("Attempted to edit profile of user other than current user.")
+                return
+            }
+        }
+
+        let request = Alamofire
+        .request(FablerClient.Router.UpdateUser(user: user.userId, userName: nil, email: nil, firstName: firstName, lastName: lastName, birthday: birthday))
+        .validate()
+        .responseSwiftyJSON { response in
+            let result: Bool
+
+            switch response.result {
+            case .Success(let json):
+                self.serializeUserObject(json)
+                result = true
+            case .Failure(let error):
+                Log.error("Update user profile request error occured: \(error).")
+                result = false
+            }
+
+            if let request = response.request {
+                self.removeRequestFromPending(request)
+            }
+
+            dispatch_async(queue, {completion(result: result)})
+        }
+
+        self.addRequestToPending(request)
+
+        Log.debug("Update user profile: \(request).")
+    }
+
+    func updateEmail(email: String, user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+        if let currentUser = User.getCurrentUser() {
+            guard currentUser.userId == user.userId else {
+                Log.error("Attempted to edit profile of user other than current user.")
+                return
+            }
+        }
+
+        let request = Alamofire
+        .request(FablerClient.Router.UpdateUser(user: user.userId, userName: nil, email: email, firstName: nil, lastName: nil, birthday: nil))
+        .validate()
+        .responseSwiftyJSON { response in
+            let result: Bool
+
+            switch response.result {
+            case .Success(let json):
+                self.serializeUserObject(json)
+                result = true
+            case .Failure(let error):
+                Log.error("Update user email request error occured: \(error).")
+                result = false
+            }
+
+            if let request = response.request {
+                self.removeRequestFromPending(request)
+            }
+
+            dispatch_async(queue, {completion(result: result)})
+        }
+
+        self.addRequestToPending(request)
+
+        Log.debug("Update user email: \(request).")
+    }
+
+    func updateUsername(userName: String, user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+        if let currentUser = User.getCurrentUser() {
+            guard currentUser.userId == user.userId else {
+                Log.error("Attempted to edit profile of user other than current user.")
+                return
+            }
+        }
+
+        let request = Alamofire
+        .request(FablerClient.Router.UpdateUser(user: user.userId, userName: userName, email: nil, firstName: nil, lastName: nil, birthday: nil))
+        .validate()
+        .responseSwiftyJSON { response in
+            let result: Bool
+
+            switch response.result {
+            case .Success(let json):
+                self.serializeUserObject(json)
+                result = true
+            case .Failure(let error):
+                Log.error("Update user username request error occured: \(error).")
+                result = false
+            }
+
+            if let request = response.request {
+                self.removeRequestFromPending(request)
+            }
+
+            dispatch_async(queue, {completion(result: result)})
+        }
+
+        self.addRequestToPending(request)
+
+        Log.debug("Update user username: \(request).")
+    }
+
+    func outstandingRequestCount() -> Int {
+        var result: Int = 0
+
+        dispatch_sync(self.pendingRequestQueue) {
+            result = self.pendingRequests.count
+        }
+
+        return result
+    }
+
+    private func addRequestToPending(request: Request) {
+        dispatch_sync(self.pendingRequestQueue) {
+            self.pendingRequests.append(request)
+        }
+    }
+
+    private func removeRequestFromPending(request: NSURLRequest) {
+        dispatch_sync(self.pendingRequestQueue) {
+            self.pendingRequests = self.pendingRequests.filter({
+                !(($0.request != nil) && ($0.request! === request))
+            })
+        }
     }
 
     // MARK: - UserService serialize functions
@@ -155,6 +314,10 @@ class UserService {
 
         if let image = data["image"].string {
             user.image = image
+        }
+
+        if let birthday = (data["birthday"].string)?.toNSDate() {
+            user.birthday = birthday
         }
 
         do {

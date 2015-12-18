@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import RealmSwift
 
 class UserTableViewController: UITableViewController, PerformsLogoutSegueDelegate {
 
@@ -20,6 +21,8 @@ class UserTableViewController: UITableViewController, PerformsLogoutSegueDelegat
     var user: User?
     var root: Bool = false
 
+    var token: NotificationToken?
+
     // MARK: - UserTableViewController functions
 
     func editButtonPushed() {
@@ -28,22 +31,10 @@ class UserTableViewController: UITableViewController, PerformsLogoutSegueDelegat
         }
     }
 
-    // MARK: - UIViewController functions
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    func updateUserElements() {
         guard self.user != nil else {
             Log.info("Expected a user initiated via previous controller.")
             return
-        }
-
-        if self.root {
-            if revealViewController() != nil {
-                let menu = UIBarButtonItem(image: UIImage(named: "menu"), style: .Plain, target: revealViewController(), action: "revealToggle:")
-                self.navigationItem.leftBarButtonItem = menu
-                view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-            }
         }
 
         if let user = self.user, let url = NSURL(string: user.image) {
@@ -69,22 +60,56 @@ class UserTableViewController: UITableViewController, PerformsLogoutSegueDelegat
         }
 
         self.navigationItem.title = user!.userName
-
-        if user!.currentUser {
-            let button = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: "editButtonPushed")
-            self.navigationItem.rightBarButtonItem = button
-        }
     }
 
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    // MARK: - UIViewController functions
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
         guard self.user != nil else {
             Log.info("Expected a user initiated via previous controller.")
             return
         }
 
-        self.navigationItem.title = user!.userName
+        if self.root {
+            if revealViewController() != nil {
+                let menu = UIBarButtonItem(image: UIImage(named: "menu"), style: .Plain, target: revealViewController(), action: "revealToggle:")
+                self.navigationItem.leftBarButtonItem = menu
+                view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            }
+        }
+
+        self.updateUserElements()
+
+        if user!.currentUser {
+            let button = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editButtonPushed")
+            self.navigationItem.rightBarButtonItem = button
+
+            do {
+                let realm = try Realm()
+
+                self.token = realm.addNotificationBlock({ [weak self] (_, _) in
+                    self?.updateUserElements()
+                })
+            } catch {
+                Log.warning("Unable to monitor for user value changes.")
+            }
+        }
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        if let token = self.token {
+            do {
+                let realm = try Realm()
+
+                realm.removeNotification(token)
+            } catch {
+                Log.warning("Failed to remove notification.")
+            }
+        }
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

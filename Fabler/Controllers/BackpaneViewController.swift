@@ -71,6 +71,12 @@ class BackpaneViewController: UIViewController {
         updateUserElements()
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.updateUserElements()
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
