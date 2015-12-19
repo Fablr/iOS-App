@@ -16,19 +16,25 @@ class UserEditViewController: FormViewController {
 
     var user: User?
 
-    var alertDisplayed: Bool = false
-
     // MARK: - UserEditViewController functions
 
-    func cancelPressed(cell: ButtonCellOf<String>, row: ButtonRow) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    private func requestComplete(service: UserService, alert: SCLAlertViewResponder, showWarning: Bool, warningText: String) {
+        if service.outstandingRequestCount() == 0 {
+            self.setFormValues()
+            alert.close()
+            if showWarning {
+                SCLAlertView().showWarning("Warning", subTitle: warningText)
+            } else {
+                SCLAlertView().showSuccess("Saved", subTitle: "", duration: 2.0)
+            }
+        }
     }
 
     func savePressed(cell: ButtonCellOf<String>, row: ButtonRow) {
         if let user = self.user {
             let alert = SCLAlertView().showWait("Updating profile", subTitle: "")
             var showWarning: Bool = false
-            var warning: String = "Unable to save profile."
+            var warningText: String = "Unable to save profile."
             var close: Bool = true
 
             let values = form.values()
@@ -40,6 +46,9 @@ class UserEditViewController: FormViewController {
 
             let service = UserService()
 
+            //
+            // Send username as seperate request for unique error.
+            //
             if let value = values["Username"] as? String {
                 userName = value == user.userName ? nil : value
 
@@ -47,18 +56,30 @@ class UserEditViewController: FormViewController {
                     service.updateUsername(userName, user: user, completion: { result in
                         if !result {
                             showWarning = true
-                            warning = "Username is already in use."
+                            warningText = "Username is already in use."
                         }
 
-                        if service.outstandingRequestCount() == 0 {
-                            self.setFormValues()
-                            alert.close()
-                            if showWarning {
-                                SCLAlertView().showWarning("Warning", subTitle: warning)
-                            } else {
-                                SCLAlertView().showSuccess("Saved", subTitle: "", duration: 2.0)
-                            }
+                        self.requestComplete(service, alert: alert, showWarning: showWarning, warningText: warningText)
+                    })
+
+                    close = false
+                }
+            }
+
+            //
+            // Send email as seperate request for unique error.
+            //
+            if let value = values["Email"] as? String {
+                email = value == user.email ? nil : value
+
+                if let email = email {
+                    service.updateEmail(email, user: user, completion: { result in
+                        if !result {
+                            showWarning = true
+                            warningText = "Email is already in use."
                         }
+
+                        self.requestComplete(service, alert: alert, showWarning: showWarning, warningText: warningText)
                     })
 
                     close = false
@@ -71,31 +92,6 @@ class UserEditViewController: FormViewController {
 
             if let value = values["LastName"] as? String {
                 lastName = value == user.lastName ? nil : value
-            }
-
-            if let value = values["Email"] as? String {
-                email = value == user.email ? nil : value
-
-                if let email = email {
-                    service.updateEmail(email, user: user, completion: { result in
-                        if !result {
-                            showWarning = true
-                            warning = "Email is already in use."
-                        }
-
-                        if service.outstandingRequestCount() == 0 {
-                            self.setFormValues()
-                            alert.close()
-                            if showWarning {
-                                SCLAlertView().showWarning("Warning", subTitle: warning)
-                            } else {
-                                SCLAlertView().showSuccess("Saved", subTitle: "", duration: 2.0)
-                            }
-                        }
-                    })
-
-                    close = false
-                }
             }
 
             if let value = values["Birthday"] as? NSDate {
@@ -116,24 +112,23 @@ class UserEditViewController: FormViewController {
                         showWarning = true
                     }
 
-                    if service.outstandingRequestCount() == 0 {
-                        self.setFormValues()
-                        alert.close()
-                        if showWarning {
-                            SCLAlertView().showWarning("Warning", subTitle: warning)
-                        } else {
-                            SCLAlertView().showSuccess("Saved", subTitle: "", duration: 2.0)
-                        }
-                    }
+                    self.requestComplete(service, alert: alert, showWarning: showWarning, warningText: warningText)
                 })
 
                 close = false
             }
 
+            //
+            // If no requests were sent close the waiting alertview.
+            //
             if close {
                 alert.close()
             }
         }
+    }
+
+    func cancelPressed(cell: ButtonCellOf<String>, row: ButtonRow) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     func setFormValues() {
