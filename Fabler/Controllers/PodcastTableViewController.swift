@@ -513,7 +513,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
                 controller.episode = episode
             }
         } else if segue.identifier == "displaySettingsSegue" {
-            if let controller = segue.destinationViewController as? PodcastSettingsTableViewController, let podcast = sender as? Podcast {
+            if let controller = segue.destinationViewController as? PodcastSettingsViewController, let podcast = sender as? Podcast {
                 controller.podcast = podcast
             }
         } else if segue.identifier == "displayUserSegue" {
