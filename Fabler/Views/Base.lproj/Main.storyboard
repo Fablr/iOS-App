@@ -149,8 +149,8 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <segue destination="JHt-FC-ojy" kind="show" identifier="displayEpisodeSegue" id="mCF-CB-51q"/>
-                        <segue destination="4Xq-nO-gyc" kind="show" identifier="displayUserSegue" id="Det-ge-Yc7"/>
                         <segue destination="Pjq-tM-F5I" kind="presentation" identifier="displaySettingsSegue" modalPresentationStyle="overCurrentContext" id="qpZ-kc-Y4F"/>
+                        <segue destination="Hsx-Is-ecW" kind="show" identifier="displayUserSegue" id="dJZ-pb-oc5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GF7-cb-Its" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -189,114 +189,32 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="4Xq-nO-gyc" kind="show" identifier="displayUserSegue" id="11O-Fi-XQt"/>
+                        <segue destination="Hsx-Is-ecW" kind="show" identifier="displayUserSegue" id="h58-AZ-nKl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nTk-VJ-rOz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4162" y="-686"/>
         </scene>
-        <!--User Table View Controller-->
-        <scene sceneID="12z-p8-hGk">
+        <!--User View Controller-->
+        <scene sceneID="2Bm-fb-bvE">
             <objects>
-                <tableViewController id="4Xq-nO-gyc" customClass="UserTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="70" sectionHeaderHeight="28" sectionFooterHeight="28" id="egT-kM-fmb">
+                <viewController id="Hsx-Is-ecW" customClass="UserViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vbB-HO-C9w"/>
+                        <viewControllerLayoutGuide type="bottom" id="25n-cd-cvR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RzE-GS-dbz">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="FJF-TJ-EFc">
-                            <rect key="frame" x="0.0" y="44" width="600" height="210"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile-large" translatesAutoresizingMaskIntoConstraints="NO" id="yUf-fW-YH7">
-                                    <rect key="frame" x="200" y="5" width="200" height="200"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="200" id="ZaK-30-w63"/>
-                                        <constraint firstAttribute="height" constant="200" id="rdT-7o-zK1"/>
-                                    </constraints>
-                                </imageView>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="bottom" secondItem="yUf-fW-YH7" secondAttribute="bottom" constant="5" id="JkN-TF-BaW"/>
-                                <constraint firstItem="yUf-fW-YH7" firstAttribute="centerX" secondItem="FJF-TJ-EFc" secondAttribute="centerX" id="YHN-vX-UD0"/>
-                                <constraint firstItem="yUf-fW-YH7" firstAttribute="top" secondItem="FJF-TJ-EFc" secondAttribute="top" constant="5" id="ftI-38-pdG"/>
-                            </constraints>
-                        </view>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FBLogoutCell" rowHeight="70" id="Vih-0h-sfP" customClass="FBLogoutTableViewCell" customModule="Fabler" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="282" width="600" height="70"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Vih-0h-sfP" id="Bbx-9e-KO9">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="69"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bwi-8X-NJ9" customClass="FBSDKLoginButton">
-                                            <rect key="frame" x="13" y="13" width="574" height="43"/>
-                                            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <connections>
-                                                <outlet property="delegate" destination="Vih-0h-sfP" id="9DG-gV-WqD"/>
-                                            </connections>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="bwi-8X-NJ9" firstAttribute="leading" secondItem="Bbx-9e-KO9" secondAttribute="leadingMargin" constant="5" id="AFm-W8-XHn"/>
-                                        <constraint firstItem="bwi-8X-NJ9" firstAttribute="top" secondItem="Bbx-9e-KO9" secondAttribute="topMargin" constant="5" id="NMZ-ah-vTs"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="bwi-8X-NJ9" secondAttribute="bottom" constant="5" id="NY0-Sw-CMT"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="bwi-8X-NJ9" secondAttribute="trailing" constant="5" id="tZO-F7-h4N"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="fbButton" destination="bwi-8X-NJ9" id="NaC-u3-Olh"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SectionHeader" rowHeight="40" id="RIa-Jw-Hml" customClass="ProfileSectionHeaderTableViewCell" customModule="Fabler" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="352" width="600" height="40"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RIa-Jw-Hml" id="vyp-Jb-HlW">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="39"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5pj-ub-cYh">
-                                            <rect key="frame" x="8" y="16" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JVF-zc-w0Q">
-                                            <rect key="frame" x="13" y="38" width="587" height="1"/>
-                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="zK8-NF-PAa"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="JVF-zc-w0Q" secondAttribute="trailing" id="3Ol-Pw-3Bo"/>
-                                        <constraint firstItem="5pj-ub-cYh" firstAttribute="leading" secondItem="vyp-Jb-HlW" secondAttribute="leadingMargin" id="9Y8-hK-KCC"/>
-                                        <constraint firstAttribute="bottom" secondItem="5pj-ub-cYh" secondAttribute="bottom" constant="2" id="A3U-jY-1KR"/>
-                                        <constraint firstItem="JVF-zc-w0Q" firstAttribute="leading" secondItem="vyp-Jb-HlW" secondAttribute="leadingMargin" constant="5" id="M3g-Zb-h8a"/>
-                                        <constraint firstAttribute="bottom" secondItem="JVF-zc-w0Q" secondAttribute="bottom" id="pTT-FH-TUP"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="headerLabel" destination="5pj-ub-cYh" id="UQq-FG-Sjl"/>
-                                    <outlet property="seperatorHeight" destination="zK8-NF-PAa" id="wxF-J6-6hQ"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="4Xq-nO-gyc" id="22q-46-Fb4"/>
-                            <outlet property="delegate" destination="4Xq-nO-gyc" id="E7c-5h-8ED"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="8aY-TK-21s"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="afc-g8-PsU"/>
                     <connections>
-                        <outlet property="userImage" destination="yUf-fW-YH7" id="ymp-6o-CBy"/>
-                        <segue destination="e2I-xx-yxH" kind="presentation" identifier="editProfileSegue" modalPresentationStyle="overCurrentContext" id="Yz0-Kr-Kvy"/>
+                        <segue destination="e2I-xx-yxH" kind="presentation" identifier="editProfileSegue" modalPresentationStyle="overCurrentContext" id="dwz-iN-WPR"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1zO-RZ-p3Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V0H-Tq-97I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4162" y="960"/>
         </scene>
@@ -526,7 +444,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
-                        <segue destination="4Xq-nO-gyc" kind="relationship" relationship="rootViewController" id="Tr3-0g-6xw"/>
+                        <segue destination="Hsx-Is-ecW" kind="relationship" relationship="rootViewController" id="h0R-vv-3lW"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sRs-h2-lYN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -538,12 +456,11 @@
         <image name="logo-sidebar" width="126" height="45"/>
         <image name="menu" width="22" height="22"/>
         <image name="profile" width="70" height="70"/>
-        <image name="profile-large" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Det-ge-Yc7"/>
-        <segue reference="nsB-VR-E4f"/>
-        <segue reference="mUc-WM-FVw"/>
         <segue reference="P5W-DW-uff"/>
+        <segue reference="mUc-WM-FVw"/>
+        <segue reference="nsB-VR-E4f"/>
+        <segue reference="h58-AZ-nKl"/>
     </inferredMetricsTieBreakers>
 </document>

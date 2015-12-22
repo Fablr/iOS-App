@@ -1,29 +1,23 @@
 //
-//  UserTableViewController.swift
+//  UserViewController.swift
 //  Fabler
 //
-//  Created by Christopher Day on 12/15/15.
+//  Created by Christopher Day on 12/21/15.
 //  Copyright © 2015 Fabler. All rights reserved.
 //
 
 import UIKit
 import Kingfisher
-import RealmSwift
+import Eureka
 
-class UserTableViewController: UITableViewController, PerformsLogoutSegueDelegate {
+class UserViewController: FormViewController {
 
-    // MARK: - IBOutlets
-
-    @IBOutlet weak var userImage: UIImageView?
-
-    // MARK: - UserTableViewController members
+    // MARK: - UserViewController members
 
     var user: User?
     var root: Bool = false
 
-    var token: NotificationToken?
-
-    // MARK: - UserTableViewController functions
+    // MARK: - UserViewController functions
 
     func editButtonPushed() {
         if let user = self.user {
@@ -37,7 +31,7 @@ class UserTableViewController: UITableViewController, PerformsLogoutSegueDelegat
             return
         }
 
-        if let user = self.user, let url = NSURL(string: user.image) {
+        /*if let user = self.user, let url = NSURL(string: user.image) {
             let manager = KingfisherManager.sharedManager
             let cache = manager.cache
 
@@ -57,7 +51,7 @@ class UserTableViewController: UITableViewController, PerformsLogoutSegueDelegat
                     }
                 })
             }
-        }
+        }*/
 
         self.navigationItem.title = user!.userName
     }
@@ -82,33 +76,25 @@ class UserTableViewController: UITableViewController, PerformsLogoutSegueDelegat
 
         self.updateUserElements()
 
+        self.form +++= Section(header: "Social", footer: "")
+            <<< LabelRow() {
+                $0.title = "Followers"
+            }
+            <<< LabelRow() {
+                $0.title = "Following"
+            }
+            <<< LabelRow() {
+                $0.title = "Subscribed"
+            }
+
         if user!.currentUser {
+            self.form +++= Section(header: "Account Control", footer: "")
+                <<< LabelRow() {
+                    $0.title = "Logout"
+                }
+
             let button = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editButtonPushed")
             self.navigationItem.rightBarButtonItem = button
-
-            do {
-                let realm = try Realm()
-
-                self.token = realm.addNotificationBlock({ [weak self] (_, _) in
-                    self?.updateUserElements()
-                })
-            } catch {
-                Log.warning("Unable to monitor for user value changes.")
-            }
-        }
-    }
-
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-
-        if let token = self.token {
-            do {
-                let realm = try Realm()
-
-                realm.removeNotification(token)
-            } catch {
-                Log.warning("Failed to remove notification.")
-            }
         }
     }
 
@@ -120,73 +106,7 @@ class UserTableViewController: UITableViewController, PerformsLogoutSegueDelegat
         }
     }
 
-    // MARK: - UITableViewController functions
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        let result: Int
-
-        if let user = self.user where user.currentUser {
-            result = 1
-        } else {
-            result = 0
-        }
-
-        return result
-    }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let result: Int
-
-        if section == 0 {
-            if let user = self.user where user.currentUser {
-                result = 1
-            } else {
-                result = 0
-            }
-        } else {
-            result = 0
-        }
-
-        return result
-    }
-
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        Log.verbose("Building cell.")
-
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("FBLogoutCell", forIndexPath: indexPath)
-
-            if let cell = cell as? FBLogoutTableViewCell {
-                cell.delegate = self
-            }
-
-            return cell
-        }
-
-        return UITableViewCell()
-    }
-
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SectionHeader")
-
-        if let cell = cell as? ProfileSectionHeaderTableViewCell {
-            switch section {
-            case 0:
-                cell.headerLabel?.text = "Account control"
-            default:
-                cell.headerLabel?.text = ""
-            }
-
-            cell.seperatorHeight?.constant = 0.5
-        }
-
-        return cell?.contentView
-    }
-
-    // MARK: - PerformsLogoutSegueDelegate
-
     func performLogoutSegue() {
-        //performSegueWithIdentifier("loggedOutSegue", sender: nil)
         if let window = UIApplication.sharedApplication().delegate?.window {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
 

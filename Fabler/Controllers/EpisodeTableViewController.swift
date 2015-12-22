@@ -221,7 +221,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "displayUserSegue" {
-            if let controller = segue.destinationViewController as? UserTableViewController, let user = sender as? User {
+            if let controller = segue.destinationViewController as? UserViewController, let user = sender as? User {
                 controller.user = user
             }
         }
