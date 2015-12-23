@@ -31,28 +31,6 @@ class UserViewController: FormViewController {
             return
         }
 
-        /*if let user = self.user, let url = NSURL(string: user.image) {
-            let manager = KingfisherManager.sharedManager
-            let cache = manager.cache
-
-            let key = "\(user.userId)-profile"
-
-            if let circle = cache.retrieveImageInDiskCacheForKey(key) {
-                self.userImage?.image = circle
-            } else {
-                manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, url) in
-                    if error == nil, let image = image {
-                        let circle = image.imageRoundedIntoCircle()
-                        cache.storeImage(circle, forKey: key)
-
-                        dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                            self?.userImage?.image = circle
-                        })
-                    }
-                })
-            }
-        }*/
-
         self.navigationItem.title = user!.userName
     }
 
@@ -75,6 +53,35 @@ class UserViewController: FormViewController {
         }
 
         self.updateUserElements()
+
+        self.form +++= Section() {
+            var header = HeaderFooterView<UserHeaderView>(HeaderFooterProvider.NibFile(name: "UserHeader", bundle: nil))
+            header.onSetupView = { [weak self] (view, section, form) -> () in
+                if let user = self?.user, let url = NSURL(string: user.image) {
+                    let manager = KingfisherManager.sharedManager
+                    let cache = manager.cache
+
+                    let key = "\(user.userId)-profile"
+
+                    if let circle = cache.retrieveImageInDiskCacheForKey(key) {
+                        view.profileImage?.image = circle
+                    } else {
+                        manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, url) in
+                            if error == nil, let image = image {
+                                let circle = image.imageRoundedIntoCircle()
+                                cache.storeImage(circle, forKey: key)
+
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    view.profileImage?.image = circle
+                                })
+                            }
+                        })
+                    }
+                }
+            }
+
+            $0.header = header
+        }
 
         self.form +++= Section(header: "Social", footer: "")
             <<< LabelRow() {
@@ -116,4 +123,12 @@ class UserViewController: FormViewController {
             window?.makeKeyAndVisible()
         }
     }
+}
+
+class UserHeaderView: UIView {
+
+    // MARK: - IBOutlets
+
+    @IBOutlet weak var profileImage: UIImageView?
+
 }

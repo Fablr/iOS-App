@@ -17,6 +17,7 @@
 		450B76801BEF567D0033C0B6 /* BackpaneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B767F1BEF567D0033C0B6 /* BackpaneViewController.swift */; };
 		45173E341C269159006A8926 /* PodcastSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45173E331C269159006A8926 /* PodcastSettingsViewController.swift */; };
 		45173E361C290A62006A8926 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45173E351C290A62006A8926 /* UserViewController.swift */; };
+		45173E3A1C2A4C10006A8926 /* UserHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45173E391C2A4C10006A8926 /* UserHeader.xib */; };
 		451CBBCC1C229CD300758A81 /* UserEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CBBCB1C229CD300758A81 /* UserEditViewController.swift */; };
 		453382201C1EA11000EA9DEE /* FablerImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533821F1C1EA11000EA9DEE /* FablerImage.swift */; };
 		4538B57D1BF55C3800039DF1 /* SmallPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */; };
@@ -79,6 +80,7 @@
 		450B767F1BEF567D0033C0B6 /* BackpaneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackpaneViewController.swift; sourceTree = "<group>"; };
 		45173E331C269159006A8926 /* PodcastSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastSettingsViewController.swift; sourceTree = "<group>"; };
 		45173E351C290A62006A8926 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		45173E391C2A4C10006A8926 /* UserHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserHeader.xib; sourceTree = "<group>"; };
 		451CBBCB1C229CD300758A81 /* UserEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEditViewController.swift; sourceTree = "<group>"; };
 		4533821F1C1EA11000EA9DEE /* FablerImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerImage.swift; sourceTree = "<group>"; };
 		4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPlayer.xib; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				F47029FE1A7F27DB00E30A3C /* LaunchScreen.xib */,
 				45E536761BDF06E0009E3F10 /* Main.storyboard */,
 				4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */,
+				45173E391C2A4C10006A8926 /* UserHeader.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				45A386A21C1AE4E900B2EDDA /* EpisodeSectionHeader.xib in Resources */,
 				F4702A001A7F27DC00E30A3C /* LaunchScreen.xib in Resources */,
 				4538B57D1BF55C3800039DF1 /* SmallPlayer.xib in Resources */,
+				45173E3A1C2A4C10006A8926 /* UserHeader.xib in Resources */,
 				4576FC041C13CF0000381A28 /* EpisodeHeader.xib in Resources */,
 				45BFCC191C154299007D31C8 /* EpisodeCell.xib in Resources */,
 				4576FC001C13ACC900381A28 /* CommentCell.xib in Resources */,
