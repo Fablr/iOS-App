@@ -44,6 +44,11 @@ class UserViewController: FormViewController {
             return
         }
 
+        let service = UserService()
+
+        service.getFollowers(self.user!, completion: { _ in })
+        service.getFollowing(self.user!, completion: { _ in })
+
         if self.root {
             if revealViewController() != nil {
                 let menu = UIBarButtonItem(image: UIImage(named: "menu"), style: .Plain, target: revealViewController(), action: "revealToggle:")
@@ -53,6 +58,10 @@ class UserViewController: FormViewController {
         }
 
         self.updateUserElements()
+
+        self.tableView?.bounces = false
+
+        ButtonRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
 
         self.form +++= Section() {
             var header = HeaderFooterView<UserHeaderView>(HeaderFooterProvider.NibFile(name: "UserHeader", bundle: nil))
@@ -84,20 +93,30 @@ class UserViewController: FormViewController {
         }
 
         self.form +++= Section(header: "Social", footer: "")
-            <<< LabelRow() {
-                $0.title = "Followers"
+            <<< ButtonRow("Followers") {
+                $0.title = "\(self.user!.followers.count) Followers"
+                $0.presentationMode = .SegueName(segueName: "displayFollowersSegue", completionCallback: nil)
+            }.cellUpdate { cell, row in
+                cell.textLabel?.textAlignment = .Left
             }
-            <<< LabelRow() {
-                $0.title = "Following"
+            <<< ButtonRow("Following") {
+                $0.title = "\(self.user!.following.count) Following"
+                $0.presentationMode = .SegueName(segueName: "displayFollowingSegue", completionCallback: nil)
+            }.cellUpdate { cell, row in
+                cell.textLabel?.textAlignment = .Left
             }
-            <<< LabelRow() {
+            <<< ButtonRow() {
                 $0.title = "Subscribed"
+            }.cellUpdate { cell, row in
+                cell.textLabel?.textAlignment = .Left
             }
 
         if user!.currentUser {
             self.form +++= Section(header: "Account Control", footer: "")
-                <<< LabelRow() {
+                <<< ButtonRow() {
                     $0.title = "Logout"
+                }.cellUpdate { cell, row in
+                    cell.textLabel?.textAlignment = .Left
                 }
 
             let button = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editButtonPushed")
@@ -109,6 +128,24 @@ class UserViewController: FormViewController {
         if segue.identifier == "editProfileSegue" {
             if let controller = segue.destinationViewController as? UserEditViewController, let user = sender as? User {
                 controller.user = user
+            }
+        } else if segue.identifier == "displayFollowersSegue" {
+            if let controller = segue.destinationViewController as? UsersTableViewController {
+                controller.following = false
+                controller.user = self.user
+
+                if let followers = self.user?.followers {
+                    controller.users = Array(followers)
+                }
+            }
+        } else if segue.identifier == "displayFollowingSegue" {
+            if let controller = segue.destinationViewController as? UsersTableViewController {
+                controller.following = true
+                controller.user = self.user
+
+                if let following = self.user?.following {
+                    controller.users = Array(following)
+                }
             }
         }
     }

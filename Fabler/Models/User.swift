@@ -27,6 +27,10 @@ final class User: Object {
     dynamic var currentUser: Bool = false
     dynamic var image: String = ""
     dynamic var birthday: NSDate?
+    dynamic var followingUser: Bool = false
+
+    let followers = List<User>()
+    let following = List<User>()
 
     // MARK: - Realm methods
 

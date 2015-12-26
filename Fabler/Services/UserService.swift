@@ -38,7 +38,7 @@ class UserService {
         self.pendingRequestQueue = dispatch_queue_create(self.queueIdentifier, nil)
 
         notificationCenter.addObserverForName(FBSDKAccessTokenDidChangeNotification, object: nil, queue: mainQueue) { notification in
-            Log.info("Facebook token updated.")
+            Log.info("Facebook token updated")
 
             if let facebookToken = FBSDKAccessToken.currentAccessToken() {
                 let updateToken: Bool
@@ -66,7 +66,7 @@ class UserService {
                                 self.updateCurrentUser()
                             }
                         case .Failure(let error):
-                            Log.error("Login error occured: \(error).")
+                            Log.error("Login error occured: \(error)")
                         }
 
                         if let request = response.request {
@@ -76,12 +76,12 @@ class UserService {
 
                     self.addRequestToPending(request)
 
-                    Log.info("Login request made.")
+                    Log.info("Login request made")
                 } else {
-                    Log.info("New Facebook token is same as old Facebook token.")
+                    Log.info("New Facebook token is same as old Facebook token")
                 }
             } else {
-                Log.warning("No current Facebook token.")
+                Log.warning("No current Facebook token")
                 UserService.currentFacebookToken = nil
             }
         }
@@ -99,7 +99,7 @@ class UserService {
                 case .Success(let json):
                     self.serializeUserObject(json)
                 case .Failure(let error):
-                    Log.error("User request failed with \(error).")
+                    Log.error("User request failed with \(error)")
                 }
 
                 if let request = response.request {
@@ -111,7 +111,7 @@ class UserService {
 
             self.addRequestToPending(request)
 
-            Log.debug("Read user request: \(request).")
+            Log.debug("Read user request: \(request)")
         }
 
         return self.getUserFromRealm(userId)
@@ -125,7 +125,7 @@ class UserService {
 
             user = realm.objectForPrimaryKey(User.self, key: userId)
         } catch {
-            Log.error("Realm read failed.")
+            Log.error("Realm read failed")
         }
 
         return user
@@ -141,7 +141,7 @@ class UserService {
                 self.serializeUserObject(json)
                 NSNotificationCenter.defaultCenter().postNotificationName(CurrentUserDidChangeNotification, object: self)
             case .Failure(let error):
-                Log.error("User request error occured: \(error).")
+                Log.error("User request error occured: \(error)")
             }
 
             if let request = response.request {
@@ -157,7 +157,7 @@ class UserService {
     func updateProfile(firstName: String?, lastName: String?, birthday: NSDate?, user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         if let currentUser = User.getCurrentUser() {
             guard currentUser.userId == user.userId else {
-                Log.error("Attempted to edit profile of user other than current user.")
+                Log.error("Attempted to edit profile of user other than current user")
                 return
             }
         }
@@ -173,7 +173,7 @@ class UserService {
                 self.serializeUserObject(json)
                 result = true
             case .Failure(let error):
-                Log.error("Update user profile request error occured: \(error).")
+                Log.error("Update user profile request error occured: \(error)")
                 result = false
             }
 
@@ -192,7 +192,7 @@ class UserService {
     func updateEmail(email: String, user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         if let currentUser = User.getCurrentUser() {
             guard currentUser.userId == user.userId else {
-                Log.error("Attempted to edit profile of user other than current user.")
+                Log.error("Attempted to edit profile of user other than current user")
                 return
             }
         }
@@ -208,7 +208,7 @@ class UserService {
                 self.serializeUserObject(json)
                 result = true
             case .Failure(let error):
-                Log.error("Update user email request error occured: \(error).")
+                Log.error("Update user email request error occured: \(error)")
                 result = false
             }
 
@@ -221,13 +221,13 @@ class UserService {
 
         self.addRequestToPending(request)
 
-        Log.debug("Update user email: \(request).")
+        Log.debug("Update user email: \(request)")
     }
 
     func updateUsername(userName: String, user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         if let currentUser = User.getCurrentUser() {
             guard currentUser.userId == user.userId else {
-                Log.error("Attempted to edit profile of user other than current user.")
+                Log.error("Attempted to edit profile of user other than current user")
                 return
             }
         }
@@ -243,7 +243,7 @@ class UserService {
                 self.serializeUserObject(json)
                 result = true
             case .Failure(let error):
-                Log.error("Update user username request error occured: \(error).")
+                Log.error("Update user username request error occured: \(error)")
                 result = false
             }
 
@@ -256,8 +256,134 @@ class UserService {
 
         self.addRequestToPending(request)
 
-        Log.debug("Update user username: \(request).")
+        Log.debug("Update user username: \(request)")
     }
+
+    func getFollowers(user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+        let id = user.userId
+
+        let request = Alamofire
+        .request(FablerClient.Router.ReadFollowers(user: id))
+        .validate()
+        .responseSwiftyJSON { response in
+            var result: Bool = false
+
+            switch response.result {
+            case .Success(let json):
+                let followers = self.serializeUserCollection(json)
+                if let responseUser = self.getUserFor(id, completion: nil) {
+                    do {
+                        let realm = try Realm()
+
+                        try realm.write {
+                            responseUser.followers.removeAll()
+                            responseUser.followers.appendContentsOf(followers)
+                            result = true
+                        }
+                    } catch {
+                        Log.error("Realm write failed")
+                    }
+                }
+            case .Failure(let error):
+                Log.error("Follower request error occured: \(error)")
+            }
+
+            if let request = response.request {
+                self.removeRequestFromPending(request)
+            }
+
+            dispatch_async(queue, {completion(result: result)})
+        }
+
+        self.addRequestToPending(request)
+
+        Log.debug("Read followers request: \(request)")
+    }
+
+    func getFollowing(user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+        let id = user.userId
+
+        let request = Alamofire
+        .request(FablerClient.Router.ReadFollowing(user: id))
+        .validate()
+        .responseSwiftyJSON { response in
+            var result: Bool = false
+
+            switch response.result {
+            case .Success(let json):
+                let following = self.serializeUserCollection(json)
+                if let responseUser = self.getUserFor(id, completion: nil) {
+                    do {
+                        let realm = try Realm()
+
+                        try realm.write {
+                            responseUser.following.removeAll()
+                            responseUser.following.appendContentsOf(following)
+                            result = true
+                        }
+                    } catch {
+                        Log.error("Realm write failed")
+                    }
+                }
+            case .Failure(let error):
+                Log.error("Follower request error occured: \(error)")
+            }
+
+            if let request = response.request {
+                self.removeRequestFromPending(request)
+            }
+
+            dispatch_async(queue, {completion(result: result)})
+        }
+
+        self.addRequestToPending(request)
+
+        Log.debug("Read following request: \(request)")
+    }
+
+    func updateFollowing(user: User, following: Bool, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+        let id = user.userId
+
+        let urlRequest: URLRequestConvertible
+
+        if following {
+            urlRequest = FablerClient.Router.SetFollowing(user: id)
+        } else {
+            urlRequest = FablerClient.Router.SetUnfollow(user: id)
+        }
+
+        let request = Alamofire
+        .request(urlRequest)
+        .validate()
+        .response { request, response, data, error in
+            var result: Bool = false
+
+            if error == nil {
+                do {
+                    let realm = try Realm()
+                    if let responseUser = realm.objectForPrimaryKey(User.self, key: id) {
+                        try realm.write {
+                            responseUser.followingUser = following
+                        }
+
+                        result = true
+                    }
+                } catch {
+                    Log.error("Realm write failed")
+                }
+            } else {
+                Log.error("Follow failed with \(error).")
+            }
+
+            dispatch_async(queue, {completion(result: result)})
+        }
+
+        self.addRequestToPending(request)
+
+        Log.debug("Set following request: \(request)")
+    }
+
+    // MARK: UserService request functions
 
     func outstandingRequestCount() -> Int {
         var result: Int = 0
@@ -286,48 +412,64 @@ class UserService {
     // MARK: - UserService serialize functions
 
     private func serializeUserObject(data: JSON) -> User? {
-        let user = User()
-
-        if let id = data["id"].int {
-            user.userId = id
-        }
-
-        if let userName = data["username"].string {
-            user.userName = userName
-        }
-
-        if let firstName = data["first_name"].string {
-            user.firstName = firstName
-        }
-
-        if let lastName = data["last_name"].string {
-            user.lastName = lastName
-        }
-
-        if let email = data["email"].string {
-            user.email = email
-        }
-
-        if let currentUser = data["currentUser"].bool {
-            user.currentUser = currentUser
-        }
-
-        if let image = data["image"].string {
-            user.image = image
-        }
-
-        if let birthday = (data["birthday"].string)?.toNSDate() {
-            user.birthday = birthday
-        }
+        var user: User?
 
         do {
             let realm = try Realm()
 
-            try realm.write {
-                realm.add(user, update: true)
+            if let id = data["id"].int {
+                if let existingUser = realm.objectForPrimaryKey(User.self, key: id) {
+                    user = existingUser
+                } else {
+                    user = User()
+                    user?.userId = id
+
+                    try realm.write {
+                        realm.add(user!)
+                    }
+                }
+
+                Log.verbose("Serializing user \(id).")
+            }
+
+            if let user = user {
+                try realm.write {
+                    if let userName = data["username"].string {
+                        user.userName = userName
+                    }
+
+                    if let firstName = data["first_name"].string {
+                        user.firstName = firstName
+                    }
+
+                    if let lastName = data["last_name"].string {
+                        user.lastName = lastName
+                    }
+
+                    if let email = data["email"].string {
+                        user.email = email
+                    }
+
+                    if let currentUser = data["currentUser"].bool {
+                        user.currentUser = currentUser
+                    }
+
+                    if let image = data["image"].string {
+                        user.image = image
+                    }
+
+                    if let birthday = (data["birthday"].string)?.toNSDate() {
+                        user.birthday = birthday
+                    }
+
+                    if let following = data["following"].bool {
+                        user.followingUser = following
+                    }
+                }
             }
         } catch {
-            Log.error("Realm write failed.")
+            Log.error("Realm write failed")
+            user = nil
         }
 
         return user

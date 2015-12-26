@@ -39,6 +39,10 @@ struct FablerClient {
         case DeleteComment(comment: Int)
         case EditComment(comment: Int, newComment: String)
         case UpdateUser(user: Int, userName: String?, email: String?, firstName: String?, lastName: String?, birthday: NSDate?)
+        case ReadFollowers(user: Int)
+        case ReadFollowing(user: Int)
+        case SetFollowing(user: Int)
+        case SetUnfollow(user: Int)
 
         var method: Alamofire.Method {
             switch self {
@@ -78,6 +82,14 @@ struct FablerClient {
                 return .PUT
             case .UpdateUser:
                 return .PATCH
+            case .ReadFollowers:
+                return .GET
+            case .ReadFollowing:
+                return .GET
+            case .SetFollowing:
+                return .POST
+            case .SetUnfollow:
+                return .DELETE
             }
         }
 
@@ -119,6 +131,14 @@ struct FablerClient {
                 return "/comment/\(comment)/"
             case .UpdateUser(let user, _, _, _, _, _):
                 return "/userprofile/\(user)/"
+            case .ReadFollowers(let user):
+                return "/userprofile/\(user)/followers/"
+            case .ReadFollowing(let user):
+                return "/userprofile/\(user)/following/"
+            case .SetFollowing:
+                return "/following/"
+            case .SetUnfollow(let user):
+                return "/following/\(user)/"
             }
         }
 
@@ -197,6 +217,10 @@ struct FablerClient {
                     parameters["birthday"] = birthday
                 }
 
+                return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
+
+            case .SetFollowing(let user):
+                let parameters: [String: AnyObject] = ["following": user]
                 return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
 
             default:

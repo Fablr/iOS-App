@@ -18,6 +18,8 @@
 		45173E341C269159006A8926 /* PodcastSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45173E331C269159006A8926 /* PodcastSettingsViewController.swift */; };
 		45173E361C290A62006A8926 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45173E351C290A62006A8926 /* UserViewController.swift */; };
 		45173E3A1C2A4C10006A8926 /* UserHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45173E391C2A4C10006A8926 /* UserHeader.xib */; };
+		45173E3F1C2A877A006A8926 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45173E3E1C2A877A006A8926 /* UsersTableViewController.swift */; };
+		45173E411C2B1EE7006A8926 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45173E401C2B1EE7006A8926 /* UserTableViewCell.swift */; };
 		451CBBCC1C229CD300758A81 /* UserEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CBBCB1C229CD300758A81 /* UserEditViewController.swift */; };
 		453382201C1EA11000EA9DEE /* FablerImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533821F1C1EA11000EA9DEE /* FablerImage.swift */; };
 		4538B57D1BF55C3800039DF1 /* SmallPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */; };
@@ -81,6 +83,8 @@
 		45173E331C269159006A8926 /* PodcastSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastSettingsViewController.swift; sourceTree = "<group>"; };
 		45173E351C290A62006A8926 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		45173E391C2A4C10006A8926 /* UserHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserHeader.xib; sourceTree = "<group>"; };
+		45173E3E1C2A877A006A8926 /* UsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
+		45173E401C2B1EE7006A8926 /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		451CBBCB1C229CD300758A81 /* UserEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEditViewController.swift; sourceTree = "<group>"; };
 		4533821F1C1EA11000EA9DEE /* FablerImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerImage.swift; sourceTree = "<group>"; };
 		4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPlayer.xib; sourceTree = "<group>"; };
@@ -215,6 +219,8 @@
 				4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */,
 				451CBBCB1C229CD300758A81 /* UserEditViewController.swift */,
 				45173E351C290A62006A8926 /* UserViewController.swift */,
+				45173E3E1C2A877A006A8926 /* UsersTableViewController.swift */,
+				45173E401C2B1EE7006A8926 /* UserTableViewCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -522,11 +528,13 @@
 				4578890E1C1153E4007D3600 /* CommentTableViewCell.swift in Sources */,
 				F491E74C1A7F4C630026528E /* PodcastTableViewCell.swift in Sources */,
 				457E51E31BE864170079845E /* PodcastCell.swift in Sources */,
+				45173E411C2B1EE7006A8926 /* UserTableViewCell.swift in Sources */,
 				45BFCC1F1C1559A3007D31C8 /* EpisodeSectionHeaderView.swift in Sources */,
 				F491E74A1A7F4B300026528E /* CollectionTableViewController.swift in Sources */,
 				450B76781BE9DAA90033C0B6 /* EpisodeService.swift in Sources */,
 				4578890A1C10C108007D3600 /* Comment.swift in Sources */,
 				F491E7551A7F7E010026528E /* DiscoveryCollectionViewController.swift in Sources */,
+				45173E3F1C2A877A006A8926 /* UsersTableViewController.swift in Sources */,
 				4578890C1C10FF09007D3600 /* CommentService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
