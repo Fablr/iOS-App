@@ -9,11 +9,11 @@ target 'Fabler' do
   pod 'Alamofire', '~>3.1.4'
   pod 'SwiftyJSON', '~>2.3.2'
   pod 'RealmSwift', '~>0.97.0'
-  pod 'SlackTextViewController', :git => 'https://github.com/slackhq/SlackTextViewController.git', :tag => 'v1.8'
+  pod 'SlackTextViewController', '~>1.8'
   pod 'SwiftyBeaver', '~>0.3.0'
   pod 'XNGMarkdownParser', '~>0.3.2'
   pod 'SCLAlertView', '~>0.4.3'
-  pod 'Kingfisher', '~>1.8.5'
+  pod 'Kingfisher', '~>1.9.1'
   pod 'SWRevealViewController', '~>2.3.0'
   pod 'Eureka', '~>1.3.0'
 end
