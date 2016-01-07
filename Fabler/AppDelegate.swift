@@ -38,13 +38,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var userService: UserService?
     var player: FablerPlayer?
-    var downloader: DownloadManager?
+    var downloader: FablerDownloadManager?
     var scratchRealm: Realm?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Log.info("Application did finish launching.")
 
-        self.downloader = DownloadManager(identifier: "com.Fabler.Fabler.background")
+        self.downloader = FablerDownloadManager(backgroundSessionIdentifier: "com.Fabler.Fabler.background")
 
         do {
             self.scratchRealm = try Realm(configuration: Realm.Configuration(inMemoryIdentifier: ScratchRealmIdentifier))
@@ -94,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: () -> Void) {
-        self.downloader?.setBackgroundCompletionHandler(completionHandler)
+        self.downloader?.backgroundSessionCompletionHandler = completionHandler
     }
 
     func fillCaches() {

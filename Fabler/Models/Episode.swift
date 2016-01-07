@@ -8,7 +8,7 @@
 
 import RealmSwift
 
-final class Episode: DownloadObject {
+final class Episode: Object {
 
     // swiftlint:disable variable_name
 
@@ -39,11 +39,5 @@ final class Episode: DownloadObject {
 
     override static func primaryKey() -> String? {
         return "episodeId"
-    }
-
-    // MARK: - DownloadObject methods
-
-    override func primaryKeyValue() -> Int {
-        return self.episodeId
     }
 }
