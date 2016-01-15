@@ -24,7 +24,7 @@
 		453382201C1EA11000EA9DEE /* FablerImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533821F1C1EA11000EA9DEE /* FablerImage.swift */; };
 		4538B57D1BF55C3800039DF1 /* SmallPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */; };
 		4538B5801BF55E1800039DF1 /* SmallPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */; };
-		45505F711BFB1EF600481291 /* FablerDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45505F701BFB1EF600481291 /* FablerDownloader.swift */; };
+		45505F711BFB1EF600481291 /* FablerDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45505F701BFB1EF600481291 /* FablerDownloadManager.swift */; };
 		45633A681C17BB3B00E6023A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45633A671C17BB3B00E6023A /* CoreGraphics.framework */; };
 		456BB5C91BF5B4A600D59C47 /* FablerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */; };
 		456BB5CB1BF5CD3E00D59C47 /* FablerPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */; };
@@ -47,6 +47,7 @@
 		45BFCC1F1C1559A3007D31C8 /* EpisodeSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BFCC1E1C1559A3007D31C8 /* EpisodeSectionHeaderView.swift */; };
 		45E536781BDF06E0009E3F10 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45E536761BDF06E0009E3F10 /* Main.storyboard */; };
 		45E5367E1BE1F980009E3F10 /* FablerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5367D1BE1F980009E3F10 /* FablerClient.swift */; };
+		45F3B9F11C48C0F800582C72 /* FablerDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F3B9F01C48C0F800582C72 /* FablerDownload.swift */; };
 		45FBA2581BF5E7E900DD8D14 /* LargePlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45FBA2571BF5E7E900DD8D14 /* LargePlayer.xib */; };
 		45FBA25A1BF5E7FE00DD8D14 /* LargePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBA2591BF5E7FE00DD8D14 /* LargePlayerViewController.swift */; };
 		C777D4C75928ACC892324CE5 /* Pods_Fabler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FC93F29D694A1CBEDC5F5BA /* Pods_Fabler.framework */; };
@@ -89,7 +90,7 @@
 		4533821F1C1EA11000EA9DEE /* FablerImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerImage.swift; sourceTree = "<group>"; };
 		4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPlayer.xib; sourceTree = "<group>"; };
 		4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallPlayerViewController.swift; sourceTree = "<group>"; };
-		45505F701BFB1EF600481291 /* FablerDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerDownloader.swift; sourceTree = "<group>"; };
+		45505F701BFB1EF600481291 /* FablerDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerDownloadManager.swift; sourceTree = "<group>"; };
 		45633A671C17BB3B00E6023A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerNavigationController.swift; sourceTree = "<group>"; };
 		456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerPlayer.swift; sourceTree = "<group>"; };
@@ -112,6 +113,7 @@
 		45BFCC1E1C1559A3007D31C8 /* EpisodeSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeSectionHeaderView.swift; sourceTree = "<group>"; };
 		45E536771BDF06E0009E3F10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		45E5367D1BE1F980009E3F10 /* FablerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerClient.swift; sourceTree = "<group>"; };
+		45F3B9F01C48C0F800582C72 /* FablerDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerDownload.swift; sourceTree = "<group>"; };
 		45FBA2571BF5E7E900DD8D14 /* LargePlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LargePlayer.xib; sourceTree = "<group>"; };
 		45FBA2591BF5E7FE00DD8D14 /* LargePlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargePlayerViewController.swift; sourceTree = "<group>"; };
 		CB0B104F21EAF1E935FB6C42 /* Pods-Fabler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fabler.release.xcconfig"; path = "Pods/Target Support Files/Pods-Fabler/Pods-Fabler.release.xcconfig"; sourceTree = "<group>"; };
@@ -262,7 +264,8 @@
 				F47029F31A7F27DB00E30A3C /* Supporting Files */,
 				4538B57E1BF55C6F00039DF1 /* Views */,
 				F47029F51A7F27DB00E30A3C /* AppDelegate.swift */,
-				45505F701BFB1EF600481291 /* FablerDownloader.swift */,
+				45505F701BFB1EF600481291 /* FablerDownloadManager.swift */,
+				45F3B9F01C48C0F800582C72 /* FablerDownload.swift */,
 				45E5367D1BE1F980009E3F10 /* FablerClient.swift */,
 				456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */,
 				4533821F1C1EA11000EA9DEE /* FablerImage.swift */,
@@ -507,11 +510,12 @@
 				451CBBCC1C229CD300758A81 /* UserEditViewController.swift in Sources */,
 				45E5367E1BE1F980009E3F10 /* FablerClient.swift in Sources */,
 				4538B5801BF55E1800039DF1 /* SmallPlayerViewController.swift in Sources */,
-				45505F711BFB1EF600481291 /* FablerDownloader.swift in Sources */,
+				45505F711BFB1EF600481291 /* FablerDownloadManager.swift in Sources */,
 				4576FC061C13D74000381A28 /* EpisodeHeaderViewController.swift in Sources */,
 				453382201C1EA11000EA9DEE /* FablerImage.swift in Sources */,
 				4501BB9B1C177F330021171C /* FablerUI.swift in Sources */,
 				450B76741BE983670033C0B6 /* PodcastTableViewController.swift in Sources */,
+				45F3B9F11C48C0F800582C72 /* FablerDownload.swift in Sources */,
 				45173E341C269159006A8926 /* PodcastSettingsViewController.swift in Sources */,
 				457889121C12482A007D3600 /* FablerToolBarController.swift in Sources */,
 				450B767E1BEF49120033C0B6 /* User.swift in Sources */,
