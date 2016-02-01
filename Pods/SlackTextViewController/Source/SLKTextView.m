@@ -138,15 +138,6 @@ static NSString *const SLKTextViewGenericFormattingSelectorPrefix = @"slk_format
     }
 }
 
-- (void)addGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-{
-    if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
-        [gestureRecognizer addTarget:self action:@selector(slk_gestureRecognized:)];
-    }
-    
-    [super addGestureRecognizer:gestureRecognizer];
-}
-
 
 #pragma mark - Getters
 
@@ -530,16 +521,20 @@ SLKPastableMediaType SLKPastableMediaTypeFromNSString(NSString *string)
 
 - (void)beginFloatingCursorAtPoint:(CGPoint)point
 {
+    [super beginFloatingCursorAtPoint:point];
+    
     _trackpadEnabled = YES;
 }
 
 - (void)updateFloatingCursorAtPoint:(CGPoint)point
 {
-    // Do something
+    [super updateFloatingCursorAtPoint:point];
 }
 
 - (void)endFloatingCursor
 {
+    [super endFloatingCursor];
+
     _trackpadEnabled = NO;
     
     // We still need to notify a selection change in the textview after the trackpad is disabled
@@ -682,35 +677,6 @@ SLKPastableMediaType SLKPastableMediaTypeFromNSString(NSString *string)
 
 
 #pragma mark - Custom Actions
-
-- (void)slk_gestureRecognized:(UIGestureRecognizer *)gesture
-{
-    // In iOS 8 and earlier, the gesture recognizer responsible for the magnifying glass movement was 'UIVariableDelayLoupeGesture'
-    // Since iOS 9, that gesture is now called '_UITextSelectionForceGesture'
-    if ([gesture isMemberOfClass:NSClassFromString(@"UIVariableDelayLoupeGesture")] ||
-        [gesture isMemberOfClass:NSClassFromString(@"_UITextSelectionForceGesture")]) {
-        [self slk_willShowLoupe:gesture];
-    }
-}
-
-- (void)slk_willShowLoupe:(UIGestureRecognizer *)gesture
-{
-    if (gesture.state == UIGestureRecognizerStateBegan || gesture.state == UIGestureRecognizerStateChanged) {
-        _loupeVisible = YES;
-    }
-    else {
-        _loupeVisible = NO;
-    }
-    
-    // We still need to notify a selection change in the textview after the magnifying class is dismissed
-    if (gesture.state == UIGestureRecognizerStateEnded) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(textViewDidChangeSelection:)]) {
-            [self.delegate textViewDidChangeSelection:self];
-        }
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:SLKTextViewSelectedRangeDidChangeNotification object:self userInfo:nil];
-    }
-}
 
 - (void)slk_flashScrollIndicatorsIfNeeded
 {
