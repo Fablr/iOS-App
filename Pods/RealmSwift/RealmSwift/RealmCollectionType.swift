@@ -30,19 +30,14 @@ public final class RLMGenerator<T: Object>: GeneratorType {
         generatorBase = NSFastGenerator(collection)
     }
 
-    // swiftlint:disable valid_docs
-
-    /// Advance to the next element and return it, or `nil` if no next element
-    /// exists.
-    public func next() -> T? {
+    /// Advance to the next element and return it, or `nil` if no next element exists.
+    public func next() -> T? { // swiftlint:disable:this valid_docs
         let accessor = generatorBase.next() as! T?
         if let accessor = accessor {
             RLMInitializeSwiftAccessorGenerics(accessor)
         }
         return accessor
     }
-
-    // swiftlint:enable valid_docs
 }
 
 /**
@@ -215,6 +210,11 @@ public protocol RealmCollectionType: CollectionType, CustomStringConvertible {
     - parameter key:   The name of the property.
     */
     func setValue(value: AnyObject?, forKey key: String)
+
+    // MARK: Notifications
+
+    /// :nodoc:
+    func _addNotificationBlock(block: (AnyRealmCollection<Element>?, NSError?) -> ()) -> NotificationToken
 }
 
 private class _AnyRealmCollectionBase<T: Object>: RealmCollectionType {
@@ -241,6 +241,9 @@ private class _AnyRealmCollectionBase<T: Object>: RealmCollectionType {
     var endIndex: Int { fatalError() }
     func valueForKey(key: String) -> AnyObject? { fatalError() }
     func setValue(value: AnyObject?, forKey key: String) { fatalError() }
+    func _addNotificationBlock(block: (AnyRealmCollection<Element>?, NSError?) -> ()) -> NotificationToken {
+        fatalError()
+    }
 }
 
 private final class _AnyRealmCollection<C: RealmCollectionType>: _AnyRealmCollectionBase<C.Element> {
@@ -456,6 +459,13 @@ private final class _AnyRealmCollection<C: RealmCollectionType>: _AnyRealmCollec
     - parameter key:   The name of the property.
     */
     override func setValue(value: AnyObject?, forKey key: String) { base.setValue(value, forKey: key) }
+
+    // MARK: Notifications
+
+    /// :nodoc:
+    override func _addNotificationBlock(block: (AnyRealmCollection<Element>?, NSError?) -> ()) -> NotificationToken {
+        return base._addNotificationBlock(block)
+    }
 }
 
 /**
@@ -670,4 +680,27 @@ public final class AnyRealmCollection<T: Object>: RealmCollectionType {
     - parameter key:   The name of the property.
     */
     public func setValue(value: AnyObject?, forKey key: String) { base.setValue(value, forKey: key) }
+
+    // MARK: Notifications
+
+    /**
+    Register a block to be called each time the collection changes.
+
+    The block will be asynchronously called with the initial collection, and
+    then called again after each write transaction which changes the collection
+    or any of the items in the collection. You must retain the returned token for
+    as long as you want updates to continue to be sent to the block. To stop
+    receiving updates, call stop() on the token.
+
+    - parameter block: The block to be called each time the collection changes.
+    - returns: A token which must be held for as long as you want notifications to be delivered.
+    */
+    public func addNotificationBlock(block: (AnyRealmCollection<Element>?, NSError?) -> ()) -> NotificationToken {
+        return base._addNotificationBlock(block)
+    }
+
+    /// :nodoc:
+    public func _addNotificationBlock(block: (AnyRealmCollection<Element>?, NSError?) -> ()) -> NotificationToken {
+        return base._addNotificationBlock(block)
+    }
 }

@@ -19,7 +19,7 @@ enum Vote: Int {
 
 // swiftlint:enable type_name
 
-final class Comment: Object {
+final public class Comment: Object {
 
     // MARK: - Comment members
 
@@ -61,7 +61,7 @@ final class Comment: Object {
 
     // MARK: - Realm methods
 
-    override static func primaryKey() -> String? {
+    override public static func primaryKey() -> String? {
         return "commentId"
     }
 }

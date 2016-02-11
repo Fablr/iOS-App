@@ -21,16 +21,16 @@ SwiftyBeaver is the **colorful**, extensible, **lightweight** logger in Swift 2.
 10. Use `log.debug("foo")` syntax
 11. Get started with 2 lines of code
 12. Simple installation via Carthage, CocoaPods, Swift Package Manager or download
-13. Each log entry includes in detail mode:
-1. time (with microsecond precision)
-1. level (output in color)
-1. **thread name** (if not main thread)
-1. filename, function & line
-1. message (can be string or a variable of any type)
+13. Very detailed logging (optional):
+    1. time (with microsecond precision)
+    2. level (output in color)
+    3. **thread name** (if not main thread)
+    4. filename, function & line
+    5. message (can be string or a variable of any type)
 14. Has just ~350 lines of source code, easy to understand
 15. Native support for leading Xcode development plugins
 
-Please **follow [SwiftyBeaver on Twitter](https://twitter.com/SwiftyBeaver)** to stay up-to-date on new versions.
+Please **follow [SwiftyBeaver on Twitter](https://twitter.com/SwiftyBeaver)** to stay up-to-date on new versions & see the [Change Log](https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/CHANGELOG.md).
 
 ## Colors!
 
@@ -76,9 +76,7 @@ For installation details please see the next points.
 
 #### via Carthage
 
-You can use [Carthage](https://github.com/Carthage/Carthage
-                       
-                       ) to install SwiftyBeaver by adding that to your Cartfile:
+You can use [Carthage](https://github.com/Carthage/Carthage) to install SwiftyBeaver by adding that to your Cartfile:
 
 ``` 
 github "SwiftyBeaver/SwiftyBeaver"
@@ -89,10 +87,10 @@ github "SwiftyBeaver/SwiftyBeaver"
 To use [CocoaPods](https://cocoapods.org) just add this to your Podfile:
 
 ``` 
-pod 'SwiftyBeaver', '~> 0.2'
+pod 'SwiftyBeaver'
 ```
 
-#### via Swift Package Manager (Swift 2.2 beta)
+#### via Swift Package Manager (Swift 2.2)
 
 To use SwiftyBeaver as a [Swift Package Manager](https://swift.org/package-manager/) package just add the following in your Package.swift file.
 

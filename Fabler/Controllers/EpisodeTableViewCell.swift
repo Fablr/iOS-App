@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import ACPDownload
+import RealmSwift
 
 class EpisodeTableViewCell: UITableViewCell {
 
@@ -14,14 +16,19 @@ class EpisodeTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel?
     @IBOutlet weak var subLabel: UILabel?
+    @IBOutlet weak var downloadView: ACPDownloadView?
 
     // MARK: - EpisodeTableViewCell members
 
     var episode: Episode?
+    var token: NotificationToken?
 
     // MARK: - EpisodeTableViewCell functions
 
     func setEpisodeInstance(episode: Episode) {
+        token?.stop()
+        token = nil
+
         self.episode = episode
 
         if let episode = self.episode {
@@ -33,10 +40,79 @@ class EpisodeTableViewCell: UITableViewCell {
 
             self.titleLabel?.text = episode.title
             self.subLabel?.text = date
+
+            self.downloadView?.setActionForTap({ view, status in
+                switch status {
+                case .None:
+                    let downloader = FablerDownloadManager.sharedInstance
+                    downloader.downloadWithEpisode(episode)
+                    view.setIndicatorStatus(.Indeterminate)
+
+                    do {
+                        let realm = try Realm()
+
+                        self.token = realm.addNotificationBlock({ notification, realm in
+                            self.setDownloadStatus()
+                        })
+                    } catch {
+
+                    }
+                case .Indeterminate:
+                    break
+                case .Running:
+                    episode.download?.cancel()
+                    view.setIndicatorStatus(.None)
+                    self.token?.stop()
+                    self.token = nil
+                case .Completed:
+                    break
+                }
+            })
+
+            self.setDownloadStatus()
+        }
+    }
+
+    func setDownloadStatus() {
+        if let episode = self.episode {
+            if episode.download == nil {
+                self.downloadView?.setIndicatorStatus(.None)
+            } else {
+                switch episode.download!.state {
+                case .Unknown:
+                    fallthrough
+                case .Waiting:
+                    self.downloadView?.setIndicatorStatus(.Indeterminate)
+                case .Pausing:
+                    fallthrough
+                case .Paused:
+                    fallthrough
+                case .Failed:
+                    fallthrough
+                case .Cancelled:
+                    self.downloadView?.setIndicatorStatus(.None)
+                case .Downloading:
+                    self.downloadView?.setIndicatorStatus(.Running)
+                    if let written = episode.download?.totalBytesWritten, let total = episode.download?.totalBytes {
+                        if total != 0 {
+                            self.downloadView?.setProgress(Float(written / total), animated: true)
+                        }
+                    }
+                case .Completed:
+                    self.downloadView?.hidden = true
+                    token?.stop()
+                    token = nil
+                }
+            }
         }
     }
 
     // MARK: - UITableViewCell functions
+
+    deinit {
+        self.token?.stop()
+        self.token = nil
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()

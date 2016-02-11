@@ -84,6 +84,7 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-Fabler/ACPDownload.framework"
   install_framework "Pods-Fabler/Alamofire.framework"
   install_framework "Pods-Fabler/Bolts.framework"
   install_framework "Pods-Fabler/Eureka.framework"
@@ -100,6 +101,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Fabler/XNGMarkdownParser.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-Fabler/ACPDownload.framework"
   install_framework "Pods-Fabler/Alamofire.framework"
   install_framework "Pods-Fabler/Bolts.framework"
   install_framework "Pods-Fabler/Eureka.framework"

@@ -33,11 +33,6 @@
 import Foundation
 import RealmSwift
 
-public protocol FablerDownloadDelegate: class {
-    func download(download: FablerDownload, stateChanged toState: FablerDownloadState, fromState: FablerDownloadState)
-    func download(download: FablerDownload, progressChanged fractionCompleted: Float, totalBytesWritten: Int, totalBytesExpectedToWrite: Int)
-}
-
 public enum FablerDownloadState: Int {
     case Unknown = 0
     case Waiting
@@ -52,8 +47,6 @@ public enum FablerDownloadState: Int {
 public class FablerDownload: Object {
 
     // MARK: - Public members
-
-    public weak var delegate: FablerDownloadDelegate?
 
     public var url: NSURL? {
         didSet {
@@ -71,11 +64,12 @@ public class FablerDownload: Object {
         }
     }
 
+    private var _localUrl: NSURL?
     public var localUrl: NSURL? {
         set(value) {
-            self.localUrl = value
+            self._localUrl = value
 
-            if let localUrl = self.localUrl {
+            if let localUrl = self._localUrl {
                 do {
                     let realm = try Realm()
 
@@ -88,8 +82,8 @@ public class FablerDownload: Object {
             }
         }
         get {
-            if self.localUrl != nil {
-                return self.localUrl
+            if self._localUrl != nil {
+                return self._localUrl
             } else {
                 return NSURL(string: self.localUrlString)
             }
@@ -122,7 +116,7 @@ public class FablerDownload: Object {
                     stateRaw = value.rawValue
                 }
 
-                delegate?.download(self, stateChanged: FablerDownloadState(rawValue: stateRaw)!, fromState: FablerDownloadState(rawValue: lastStateRaw)!)
+                //delegate?.download(self, stateChanged: FablerDownloadState(rawValue: stateRaw)!, fromState: FablerDownloadState(rawValue: lastStateRaw)!)
             } catch {
                 Log.error("Realm write failed")
             }
@@ -150,7 +144,7 @@ public class FablerDownload: Object {
                 Log.error("Realm write failed")
             }
 
-            delegate?.download(self, progressChanged: fractionCompleted, totalBytesWritten: totalBytesWrittenRaw, totalBytesExpectedToWrite: totalBytesRaw)
+            //delegate?.download(self, progressChanged: fractionCompleted, totalBytesWritten: totalBytesWrittenRaw, totalBytesExpectedToWrite: totalBytesRaw)
         }
         get {
             return self.totalBytesWrittenRaw
@@ -179,7 +173,6 @@ public class FablerDownload: Object {
 
     // MARK: - Presisted members
 
-    dynamic var downloadId: Int = 0
     dynamic var resumeData: NSData? = nil
     dynamic var fractionCompleted: Float = 0
     dynamic var lastStateRaw: Int = 0
@@ -218,15 +211,10 @@ public class FablerDownload: Object {
         manager.cancel(self)
     }
 
-    public func remove() {
-        downloadTask?.cancel()
-        manager.remove(self)
-    }
-
     // MARK: - Realm methods
 
-    override public static func primaryKey() -> String? {
-        return "downloadId"
+    override public static func ignoredProperties() -> [String] {
+        return ["url", "_localUrl", "localUrl", "lastState", "state", "totalBytesWritten", "totalBytes", "manager", "downloadTask"]
     }
 }
 

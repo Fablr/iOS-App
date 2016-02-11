@@ -8,7 +8,7 @@
 
 import RealmSwift
 
-final class User: Object {
+final public class User: Object {
 
     // MARK: - User static members
 
@@ -34,7 +34,7 @@ final class User: Object {
 
     // MARK: - Realm methods
 
-    override static func primaryKey() -> String? {
+    override public static func primaryKey() -> String? {
         return "userId"
     }
 }

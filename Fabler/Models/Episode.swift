@@ -8,7 +8,7 @@
 
 import RealmSwift
 
-final class Episode: Object {
+final public class Episode: Object {
 
     // swiftlint:disable variable_name
 
@@ -30,14 +30,26 @@ final class Episode: Object {
     dynamic var podcastId: Int = 0
     dynamic var mark: NSTimeInterval = 0
     dynamic var completed: Bool = false
+    dynamic var download: FablerDownload?
 
     // MARK: - Setting members
 
     dynamic var saved: Bool = false
 
+    // MARK: - Episode functions
+
+    public func localURL() -> NSURL? {
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+        if let url = NSURL(string: link), lastPathComponent = url.lastPathComponent {
+            let fullPath = documentsPath.stringByAppendingPathComponent(lastPathComponent)
+            return NSURL(fileURLWithPath:fullPath)
+        }
+        return nil
+    }
+
     // MARK: - Realm methods
 
-    override static func primaryKey() -> String? {
+    override public static func primaryKey() -> String? {
         return "episodeId"
     }
 }

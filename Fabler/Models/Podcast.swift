@@ -8,7 +8,7 @@
 
 import RealmSwift
 
-final class Podcast: Object, Equatable {
+final public class Podcast: Object, Equatable {
 
     // MARK: - Podcast members
 
@@ -63,13 +63,13 @@ final class Podcast: Object, Equatable {
 
     // MARK: - Realm methods
 
-    override static func primaryKey() -> String? {
+    override public static func primaryKey() -> String? {
         return "podcastId"
     }
 }
 
 // MARK: - Podcast helper functions
 
-func == (lhs: Podcast, rhs: Podcast) -> Bool {
+public func == (lhs: Podcast, rhs: Podcast) -> Bool {
     return lhs.podcastId == rhs.podcastId
 }

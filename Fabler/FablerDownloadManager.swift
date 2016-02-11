@@ -47,6 +47,7 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
 
     private let downloadsLockQueue: dispatch_queue_t
     private let backgroundSessionIdentifier: String
+    private var downloads: Array<NSURLSessionDownloadTask>
     private lazy var backgroundSession: NSURLSession = self.newBackgroundURLSession()
 
     // MARK: - private functions
@@ -67,31 +68,32 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
         }
     }
 
+    private func getTaskFromURL(url: String) -> NSURLSessionDownloadTask? {
+        var task: NSURLSessionDownloadTask? = nil
+
+        if let index = self.downloads.indexOf({ $0.originalRequest?.URL?.URLString == url }) {
+            task = self.downloads[index]
+        }
+
+        return task
+    }
+
     private func getDownloadFromTask(task: NSURLSessionTask) -> FablerDownload? {
         var download: FablerDownload?
 
         if let url = task.originalRequest?.URL {
-            dispatch_sync(downloadsLockQueue) {
-                do {
-                    let realm = try Realm()
-
-                    download = realm.objects(FablerDownload).filter("urlString == %s", url.URLString).first
-                } catch {
-                    Log.error("Failed Realm read")
-                }
-            }
+            download = self.getDownloadFromURL(url.URLString)
         }
 
         return download
     }
 
-    private func getDownloadFromId(downloadId: Int) -> FablerDownload? {
+    private func getDownloadFromURL(url: String) -> FablerDownload? {
         var download: FablerDownload?
 
         do {
             let realm = try Realm()
-
-            download = realm.objectForPrimaryKey(FablerDownload.self, key: downloadId)
+            download = realm.objects(FablerDownload).filter("urlString == %s", url).first
         } catch {
             Log.error("Realm read failed")
         }
@@ -99,18 +101,24 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
         return download
     }
 
+    private func removeTask(task: NSURLSessionDownloadTask) {
+        if let index = self.downloads.indexOf(task) {
+            self.downloads.removeAtIndex(index)
+        }
+    }
+
     // MARK: - public functions
 
     public required init(backgroundSessionIdentifier: String) {
         self.downloadsLockQueue = dispatch_queue_create("com.Fabler.Fabler.downloadQueue", nil)
         self.backgroundSessionIdentifier = backgroundSessionIdentifier
+        self.downloads = Array<NSURLSessionDownloadTask>()
 
         super.init()
     }
 
-    public func downloadWithURL(url: NSURL, localUrl: NSURL, delegate: FablerDownloadDelegate?) -> FablerDownload? {
+    public func downloadWithURL(url: NSURL, localUrl: NSURL) -> FablerDownload? {
         var download: FablerDownload?
-        var id: Int?
 
         dispatch_sync(downloadsLockQueue) {
             do {
@@ -129,24 +137,57 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
                         realm.add(queueDownload!)
                     }
                 }
-
-                id = queueDownload?.downloadId
             } catch {
                 Log.error("Realm write failed")
             }
         }
 
-        if let id = id {
+        download = self.getDownloadFromURL(url.URLString)
+
+        return download
+    }
+
+    public func downloadWithEpisode(episode: Episode) -> FablerDownload? {
+        var download: FablerDownload?
+        let episodeId = episode.episodeId
+
+        dispatch_sync(downloadsLockQueue) {
             do {
+                var queueDownload: FablerDownload?
+
+                let service = EpisodeService()
+                let queueEpisode = service.getEpisodeFor(episodeId, completion: nil)
+
                 let realm = try Realm()
 
-                download = realm.objectForPrimaryKey(FablerDownload.self, key: id)
+                if let existingDownload = queueEpisode?.download {
+                    queueDownload = existingDownload
+                } else {
+                    if let url = NSURL(string: episode.link), let localUrl = queueEpisode?.localURL() {
+                        queueDownload = FablerDownload()
+                        queueDownload?.url = url
+                        queueDownload?.localUrl = localUrl
+                        queueDownload?.state = .Waiting
+
+                        try realm.write {
+                            realm.add(queueDownload!)
+                        }
+
+                        let task = self.backgroundSession.downloadTaskWithURL(url)
+                        task.resume()
+                        self.downloads.append(task)
+                    }
+                }
+
+                try realm.write {
+                    queueEpisode?.download = queueDownload
+                }
             } catch {
-                Log.error("Realm read failed")
+                Log.error("Realm write failed")
             }
         }
 
-        download?.delegate = delegate
+        download = self.getDownloadFromURL(episode.link)
 
         return download
     }
@@ -171,13 +212,13 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
             return
         }
 
-        let id = download.downloadId
+        let urlString = download.urlString
+        let url = download.url
 
         dispatch_sync(downloadsLockQueue) {
-            if let download = self.getDownloadFromId(id) {
+            if let queueDownload = self.getDownloadFromURL(urlString) {
                 if let resumeData = download.resumeData {
-                    download.downloadTask?.cancel()
-                    download.downloadTask = self.backgroundSession.downloadTaskWithResumeData(resumeData)
+                    self.downloads.append(self.backgroundSession.downloadTaskWithResumeData(resumeData))
 
                     do {
                         let realm = try Realm()
@@ -188,15 +229,14 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
                     } catch {
                         Log.error("Realm write failed")
                     }
+                } else {
+                    if let url = url {
+                        self.downloads.append(self.backgroundSession.downloadTaskWithURL(url))
+                    }
                 }
-            }
 
-            if let url = download.url where download.downloadTask == nil {
-                download.downloadTask = self.backgroundSession.downloadTaskWithURL(url)
+                queueDownload.state = .Waiting
             }
-
-            download.state = .Waiting
-            download.downloadTask?.resume()
         }
     }
 
@@ -220,20 +260,20 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
             return
         }
 
-        let id = download.downloadId
+        let urlString = download.urlString
 
         dispatch_sync(downloadsLockQueue) {
-            if let download = self.getDownloadFromId(id) {
-                download.state = .Pausing
-                download.downloadTask?.cancelByProducingResumeData({ (data) -> Void in
-                    if let download = self.getDownloadFromId(id) {
-                        download.state = .Paused
+            if let queueDownload = self.getDownloadFromURL(urlString), let task = self.getTaskFromURL(urlString) {
+                queueDownload.state = .Pausing
+                task.cancelByProducingResumeData({ (data) -> Void in
+                    if let handlerDownload = self.getDownloadFromURL(urlString) {
+                        handlerDownload.state = .Paused
 
                         do {
                             let realm = try Realm()
 
                             try realm.write {
-                                download.resumeData = data
+                                handlerDownload.resumeData = data
                             }
                         } catch {
                             Log.error("Realm write failed")
@@ -242,6 +282,8 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
                         completionHandler?(data)
                     }
                 })
+
+                self.removeTask(task)
             }
         }
     }
@@ -266,53 +308,25 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
             return
         }
 
-        let id = download.downloadId
+        let urlString = download.urlString
 
         dispatch_sync(downloadsLockQueue) {
-            if let download = self.getDownloadFromId(id) {
-                download.downloadTask?.cancel()
+            if let queueDownload = self.getDownloadFromURL(urlString), let task = self.getTaskFromURL(urlString) {
+                task.cancel()
 
                 do {
                     let realm = try Realm()
 
                     try realm.write {
-                        download.resumeData = nil
+                        queueDownload.resumeData = nil
                     }
                 } catch {
                     Log.error("Realm write failed")
                 }
 
-                download.state = .Cancelled
-            }
-        }
-    }
+                self.removeTask(task)
 
-    public func removeAll() {
-        do {
-            let realm = try Realm()
-
-            let downloads = Array(realm.objects(FablerDownload))
-
-            _ = downloads.map { $0.remove() }
-        } catch {
-            Log.error("Realm read failed")
-        }
-    }
-
-    public func remove(download: FablerDownload) {
-        let id = download.downloadId
-
-        dispatch_sync(downloadsLockQueue) {
-            if let download = self.getDownloadFromId(id) {
-                do {
-                    let realm = try Realm()
-
-                    try realm.write {
-                        realm.delete(download)
-                    }
-                } catch {
-                    Log.error("Realm write failed")
-                }
+                queueDownload.state = .Cancelled
             }
         }
     }
@@ -353,7 +367,7 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
     }
 
     public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
-        if let download = getDownloadFromTask(task) {
+        if let download = getDownloadFromTask(task) where error != nil {
             download.cancel()
             download.state = .Failed
 

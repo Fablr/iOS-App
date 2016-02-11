@@ -79,30 +79,32 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             } else {
                 manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, url) in
                     if error == nil, let image = image {
-                        let service = PodcastService()
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] in
+                            let service = PodcastService()
 
-                        if let podcast = service.readPodcastFor(id, completion: nil) {
-                            if !podcast.primarySet || !podcast.backgroundSet {
-                                let colors = image.getColors()
-                                service.setPrimaryColorForPodcast(podcast, color: colors.primaryColor)
-                                service.setBackgroundColorForPodcast(podcast, color: colors.backgroundColor)
-                            }
-                        }
-
-                        Log.debug("Attempting to blur image.")
-
-                        if let blurred = image.imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {
-                            Log.debug("Caching blurred header image.")
-                            cache.storeImage(blurred, forKey: key)
-
-                            dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                                Log.debug("Setting blurred header image.")
-
-                                if let controller = self {
-                                    controller.updateImages(image, blurred: blurred)
+                            if let podcast = service.readPodcastFor(id, completion: nil) {
+                                if !podcast.primarySet || !podcast.backgroundSet {
+                                    let colors = image.getColors()
+                                    service.setPrimaryColorForPodcast(podcast, color: colors.primaryColor)
+                                    service.setBackgroundColorForPodcast(podcast, color: colors.backgroundColor)
                                 }
-                            })
-                        }
+                            }
+
+                            Log.debug("Attempting to blur image.")
+
+                            if let blurred = image.imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {
+                                Log.debug("Caching blurred header image.")
+                                cache.storeImage(blurred, forKey: key)
+
+                                dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                                    Log.debug("Setting blurred header image.")
+
+                                    if let controller = self {
+                                        controller.updateImages(image, blurred: blurred)
+                                    }
+                                })
+                            }
+                        })
                     }
                 })
             }
@@ -701,9 +703,27 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             }
         })
 
-        detailAction.backgroundColor = UIColor.fablerOrangeColor()
+        if let color = self.podcast?.backgroundColor {
+            if color.isDarkColor {
+                detailAction.backgroundColor = color
+            } else {
+                detailAction.backgroundColor = self.podcast?.primaryColor
+            }
+        }
 
-        return [detailAction]
+        let downloadAction = UITableViewRowAction(style: .Normal, title: "Download", handler: { [weak self] (action: UITableViewRowAction, indexPath: NSIndexPath) in
+            if let controller = self {
+                let episode = controller.filteredEpisodes[indexPath.row]
+                let downloader = FablerDownloadManager.sharedInstance
+
+                downloader.downloadWithEpisode(episode)
+                controller.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            }
+        })
+
+        downloadAction.backgroundColor = UIColor.fablerOrangeColor()
+
+        return [detailAction, downloadAction]
     }
 
     // MARK: - PodcastTableViewController comment table functions
