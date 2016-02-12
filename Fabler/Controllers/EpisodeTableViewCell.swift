@@ -75,6 +75,7 @@ class EpisodeTableViewCell: UITableViewCell {
 
     func setDownloadStatus() {
         if let episode = self.episode {
+
             if episode.download == nil {
                 self.downloadView?.setIndicatorStatus(.None)
             } else {
@@ -93,10 +94,8 @@ class EpisodeTableViewCell: UITableViewCell {
                     self.downloadView?.setIndicatorStatus(.None)
                 case .Downloading:
                     self.downloadView?.setIndicatorStatus(.Running)
-                    if let written = episode.download?.totalBytesWritten, let total = episode.download?.totalBytes {
-                        if total != 0 {
-                            self.downloadView?.setProgress(Float(written / total), animated: true)
-                        }
+                    if let fraction = self.episode?.download?.fractionCompleted {
+                        self.downloadView?.setProgress(fraction, animated: true)
                     }
                 case .Completed:
                     self.downloadView?.hidden = true

@@ -162,6 +162,37 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
 
                 if let existingDownload = queueEpisode?.download {
                     queueDownload = existingDownload
+
+                    switch existingDownload.state {
+                    case .Unknown:
+                        fallthrough
+                    case .Waiting:
+                        fallthrough
+                    case .Pausing:
+                        fallthrough
+                    case .Paused:
+                        fallthrough
+                    case .Downloading:
+                        fallthrough
+                    case .Completed:
+                        break
+
+                    case .Cancelled:
+                        fallthrough
+                    case .Failed:
+                        if let task = self.getTaskFromURL(existingDownload.urlString) {
+                            task.cancel()
+                            self.removeTask(task)
+                        }
+
+                        if let url = existingDownload.url {
+                            existingDownload.state = .Waiting
+
+                            let task = self.backgroundSession.downloadTaskWithURL(url)
+                            task.resume()
+                            self.downloads.append(task)
+                        }
+                    }
                 } else {
                     if let url = NSURL(string: episode.link), let localUrl = queueEpisode?.localURL() {
                         queueDownload = FablerDownload()
@@ -327,6 +358,29 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
                 self.removeTask(task)
 
                 queueDownload.state = .Cancelled
+            }
+        }
+    }
+
+    public func remove(download: FablerDownload) {
+        guard download.state == .Completed else {
+            Log.warning("Invalid state to remove download from")
+            return
+        }
+
+        let urlString = download.urlString
+
+        dispatch_sync(downloadsLockQueue) {
+            if let task = self.getTaskFromURL(urlString) {
+                self.removeTask(task)
+            }
+
+            if let queueDownload = self.getDownloadFromURL(urlString), let local = queueDownload.localUrl {
+                do {
+                    try NSFileManager.defaultManager().removeItemAtURL(local)
+                } catch let error as NSError {
+                    Log.error("Failed to remove file due to \(error)")
+                }
             }
         }
     }

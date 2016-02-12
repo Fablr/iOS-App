@@ -211,6 +211,15 @@ public class FablerDownload: Object {
         manager.cancel(self)
     }
 
+    public func remove() {
+        guard self.state == .Completed else {
+            Log.warning("Invalid state to remove download from")
+            return
+        }
+
+        manager.remove(self)
+    }
+
     // MARK: - Realm methods
 
     override public static func ignoredProperties() -> [String] {

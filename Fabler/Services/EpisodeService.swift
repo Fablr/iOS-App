@@ -120,66 +120,88 @@ class EpisodeService {
         Log.debug("Episode mark request: \(request)")
     }
 
-    // MARK: - EpisodeService serialize functions
-
-    private func serializeEpisodeObject(data: JSON) -> Episode? {
-        let episode = Episode()
-
-        if let id = data["id"].int {
-            episode.episodeId = id
-        }
-
-        if let title = data["title"].string {
-            episode.title = title
-        }
-
-        if let link = data["link"].string {
-            episode.link = link
-        }
-
-        if let subtitle = data["subtitle"].string {
-            episode.subtitle = subtitle
-        }
-
-        if let episodeDescription = data["description"].string {
-            episode.episodeDescription = episodeDescription
-        }
-
-        if let pubdate = (data["pubdate"].string)?.toNSDate() {
-            episode.pubdate = pubdate
-        }
-
-        if let duration = (data["duration"].string)?.toNSTimeInterval() {
-            episode.duration = duration
-        }
-
-        if let explicit = data["explicit"].bool {
-            episode.explicit = explicit
-        }
-
-        if let podcastId = data["podcast"].int {
-            let podcastService = PodcastService()
-            episode.podcast = podcastService.readPodcastFor(podcastId, completion: nil)
-
-            episode.podcastId = podcastId
-        }
-
-        if let mark = (data["mark"].string)?.toNSTimeInterval() {
-            episode.mark = mark
-        }
-
-        if let completed = data["completed"].bool {
-            episode.completed = completed
-        }
-
+    func flipSaveForEpisode(episode: Episode) {
         do {
             let realm = try Realm()
 
             try realm.write {
-                realm.add(episode, update: true)
+                episode.saved = !(episode.saved)
             }
         } catch {
             Log.error("Realm write failed.")
+        }
+    }
+
+    // MARK: - EpisodeService serialize functions
+
+    private func serializeEpisodeObject(data: JSON) -> Episode? {
+        var episode: Episode?
+
+        do {
+            let realm = try Realm()
+
+            if let id = data["id"].int {
+                if let existingEpisode = realm.objectForPrimaryKey(Episode.self, key: id) {
+                    episode = existingEpisode
+                } else {
+                    episode = Episode()
+                    episode?.episodeId = id
+
+                    try realm.write {
+                        realm.add(episode!)
+                    }
+                }
+            }
+
+            if let episode = episode {
+                try realm.write {
+                    if let title = data["title"].string {
+                        episode.title = title
+                    }
+
+                    if let link = data["link"].string {
+                        episode.link = link
+                    }
+
+                    if let subtitle = data["subtitle"].string {
+                        episode.subtitle = subtitle
+                    }
+
+                    if let episodeDescription = data["description"].string {
+                        episode.episodeDescription = episodeDescription
+                    }
+
+                    if let pubdate = (data["pubdate"].string)?.toNSDate() {
+                        episode.pubdate = pubdate
+                    }
+
+                    if let duration = (data["duration"].string)?.toNSTimeInterval() {
+                        episode.duration = duration
+                    }
+
+                    if let explicit = data["explicit"].bool {
+                        episode.explicit = explicit
+                    }
+
+                    if let podcastId = data["podcast"].int {
+                        let podcastService = PodcastService()
+                        episode.podcast = podcastService.readPodcastFor(podcastId, completion: nil)
+
+                        episode.podcastId = podcastId
+                    }
+
+                    if let mark = (data["mark"].string)?.toNSTimeInterval() {
+                        episode.mark = mark
+                    }
+
+                    if let completed = data["completed"].bool {
+                        episode.completed = completed
+                    }
+                }
+            }
+        } catch {
+            Log.error("Realm write failed.")
+            episode = nil
         }
 
         return episode

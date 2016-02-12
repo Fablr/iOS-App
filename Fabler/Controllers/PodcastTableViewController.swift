@@ -696,6 +696,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     func episodesEditActions(indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        var results: [UITableViewRowAction] = []
+
         let detailAction = UITableViewRowAction(style: .Normal, title: "Details" , handler: { [weak self] (action: UITableViewRowAction, indexPath: NSIndexPath) in
             if let controller = self {
                 let episode = controller.filteredEpisodes[indexPath.row]
@@ -711,19 +713,38 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             }
         }
 
-        let downloadAction = UITableViewRowAction(style: .Normal, title: "Download", handler: { [weak self] (action: UITableViewRowAction, indexPath: NSIndexPath) in
-            if let controller = self {
-                let episode = controller.filteredEpisodes[indexPath.row]
-                let downloader = FablerDownloadManager.sharedInstance
+        results.append(detailAction)
 
-                downloader.downloadWithEpisode(episode)
-                controller.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            }
-        })
+        let episode = filteredEpisodes[indexPath.row]
 
-        downloadAction.backgroundColor = UIColor.fablerOrangeColor()
+        if let download = episode.download where download.state == .Completed {
+            let title = episode.saved ? "Unsave" : "Save"
 
-        return [detailAction, downloadAction]
+            let saveAction = UITableViewRowAction(style: .Normal, title: title, handler: { [weak self] (action: UITableViewRowAction, indexPath: NSIndexPath) in
+                if let controller = self {
+                    let episode = controller.filteredEpisodes[indexPath.row]
+                    let service = EpisodeService()
+
+                    service.flipSaveForEpisode(episode)
+                    controller.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                }
+            })
+
+            saveAction.backgroundColor = UIColor.fablerOrangeColor()
+
+            results.append(saveAction)
+
+            let deleteAction = UITableViewRowAction(style: .Destructive, title: "Delete", handler: { [weak self] (action: UITableViewRowAction, indexPath: NSIndexPath) in
+                if let controller = self, let download = controller.filteredEpisodes[indexPath.row].download {
+                    download.remove()
+                    controller.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                }
+            })
+
+            results.append(deleteAction)
+        }
+
+        return results
     }
 
     // MARK: - PodcastTableViewController comment table functions
