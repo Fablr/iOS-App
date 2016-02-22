@@ -9,6 +9,7 @@
 import UIKit
 import SlackTextViewController
 import Kingfisher
+import Hue
 
 class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate, ChangesBasedOnSegment, PerformsUserSegueDelegate {
 
@@ -70,9 +71,11 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
                 let service = PodcastService()
 
                 if !podcast.primarySet || !podcast.backgroundSet {
-                    let colors = image.getColors()
-                    service.setPrimaryColorForPodcast(podcast, color: colors.primaryColor)
-                    service.setBackgroundColorForPodcast(podcast, color: colors.backgroundColor)
+                    let colors = image.colors()
+                    if let primary = colors.1, let background = colors.0 {
+                        service.setPrimaryColorForPodcast(podcast, color: primary)
+                        service.setBackgroundColorForPodcast(podcast, color: background)
+                    }
                 }
 
                 self.updateImages(image, blurred: blurred)
@@ -84,9 +87,11 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
                             if let podcast = service.readPodcastFor(id, completion: nil) {
                                 if !podcast.primarySet || !podcast.backgroundSet {
-                                    let colors = image.getColors()
-                                    service.setPrimaryColorForPodcast(podcast, color: colors.primaryColor)
-                                    service.setBackgroundColorForPodcast(podcast, color: colors.backgroundColor)
+                                    let colors = image.colors()
+                                    if let primary = colors.1, let background = colors.0 {
+                                        service.setPrimaryColorForPodcast(podcast, color: primary)
+                                        service.setBackgroundColorForPodcast(podcast, color: background)
+                                    }
                                 }
                             }
 
@@ -119,7 +124,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             self.navigationController?.navigationBar.tintColor = primary
             self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: primary]
 
-            if !background.isDarkColor {
+            if !background.isDark {
                 background = primary
             }
 
@@ -137,7 +142,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     func filterEpisodes() {
         switch self.currentSegment {
         case 0:
-            self.filteredEpisodes = self.episodes.filter({!($0.completed)})
+            self.filteredEpisodes = self.episodes.filter({ $0.download != nil })
         case 1:
             self.filteredEpisodes = self.episodes
         default:
@@ -706,7 +711,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         })
 
         if let color = self.podcast?.backgroundColor {
-            if color.isDarkColor {
+            if color.isDark {
                 detailAction.backgroundColor = color
             } else {
                 detailAction.backgroundColor = self.podcast?.primaryColor

@@ -76,6 +76,8 @@ class EpisodeTableViewCell: UITableViewCell {
     func setDownloadStatus() {
         if let episode = self.episode {
 
+            self.downloadView?.hidden = false
+
             if episode.download == nil {
                 self.downloadView?.setIndicatorStatus(.None)
             } else {

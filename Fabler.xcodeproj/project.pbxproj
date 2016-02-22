@@ -38,6 +38,7 @@
 		457889121C12482A007D3600 /* FablerToolBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457889111C12482A007D3600 /* FablerToolBarController.swift */; };
 		457E51E31BE864170079845E /* PodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E51E21BE864170079845E /* PodcastCell.swift */; };
 		4588CF2C1BDB46E40080E13D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4588CF2B1BDB46E40080E13D /* LoginViewController.swift */; };
+		45A3433C1C76E99A00A660A2 /* FablerAutoDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3433B1C76E99A00A660A2 /* FablerAutoDownload.swift */; };
 		45A386A01C1ADFF900B2EDDA /* CommentSectionFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45A3869F1C1ADFF900B2EDDA /* CommentSectionFooter.xib */; };
 		45A386A21C1AE4E900B2EDDA /* EpisodeSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45A386A11C1AE4E900B2EDDA /* EpisodeSectionHeader.xib */; };
 		45B51D0B1BE495E700F289F7 /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B51D0A1BE495E700F289F7 /* Podcast.swift */; };
@@ -104,6 +105,7 @@
 		457889111C12482A007D3600 /* FablerToolBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerToolBarController.swift; sourceTree = "<group>"; };
 		457E51E21BE864170079845E /* PodcastCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCell.swift; sourceTree = "<group>"; };
 		4588CF2B1BDB46E40080E13D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		45A3433B1C76E99A00A660A2 /* FablerAutoDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerAutoDownload.swift; sourceTree = "<group>"; };
 		45A3869F1C1ADFF900B2EDDA /* CommentSectionFooter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentSectionFooter.xib; sourceTree = "<group>"; };
 		45A386A11C1AE4E900B2EDDA /* EpisodeSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EpisodeSectionHeader.xib; sourceTree = "<group>"; };
 		45B51D0A1BE495E700F289F7 /* Podcast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 				F47029F31A7F27DB00E30A3C /* Supporting Files */,
 				4538B57E1BF55C6F00039DF1 /* Views */,
 				F47029F51A7F27DB00E30A3C /* AppDelegate.swift */,
+				45A3433B1C76E99A00A660A2 /* FablerAutoDownload.swift */,
 				45F3B9F01C48C0F800582C72 /* FablerDownload.swift */,
 				45505F701BFB1EF600481291 /* FablerDownloadManager.swift */,
 				45E5367D1BE1F980009E3F10 /* FablerClient.swift */,
@@ -513,6 +516,7 @@
 				45505F711BFB1EF600481291 /* FablerDownloadManager.swift in Sources */,
 				4576FC061C13D74000381A28 /* EpisodeHeaderViewController.swift in Sources */,
 				453382201C1EA11000EA9DEE /* FablerImage.swift in Sources */,
+				45A3433C1C76E99A00A660A2 /* FablerAutoDownload.swift in Sources */,
 				4501BB9B1C177F330021171C /* FablerUI.swift in Sources */,
 				450B76741BE983670033C0B6 /* PodcastTableViewController.swift in Sources */,
 				45F3B9F11C48C0F800582C72 /* FablerDownload.swift in Sources */,

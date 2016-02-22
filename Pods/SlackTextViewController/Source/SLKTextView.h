@@ -1,5 +1,5 @@
 //
-//   Copyright 2014 Slack Technologies, Inc.
+//   Copyright 2014-2016 Slack Technologies, Inc.
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -99,7 +99,7 @@ typedef NS_OPTIONS(NSUInteger, SLKPastableMediaType) {
 /**
  Notifies the text view that the user pressed any arrow key. This is used to move the cursor up and down while having multiple lines.
  */
-- (void)didPressAnyArrowKey:(id)sender;
+- (void)didPressArrowKey:(UIKeyCommand *)keyCommand;
 
 
 #pragma mark - Markdown Formatting
@@ -107,7 +107,7 @@ typedef NS_OPTIONS(NSUInteger, SLKPastableMediaType) {
 /** YES if the a markdown closure symbol should be added automatically after double spacebar tap, just like the native gesture to add a sentence period. Default is YES.
  This will always be NO if there isn't any registered formatting symbols.
  */
-@property (nonatomic) BOOL autoCompleteFormatting;
+@property (nonatomic, readonly, getter=isFormattingEnabled) BOOL formattingEnabled;
 
 /** An array of the registered formatting symbols. */
 @property (nonatomic, readonly) NSArray *registeredSymbols;
@@ -120,6 +120,20 @@ typedef NS_OPTIONS(NSUInteger, SLKPastableMediaType) {
  @param title The tooltip item title for this formatting.
  */
 - (void)registerMarkdownFormattingSymbol:(NSString *)symbol withTitle:(NSString *)title;
+
+
+#pragma mark - External Keyboard Support
+
+/**
+ Registers and observes key commands' updates, when the text view is first responder.
+ Instead of typically overriding UIResponder's -keyCommands method, it is better to use this API for easier and safer implementation of key input detection.
+ 
+ @param input The keys that must be pressed by the user. Required.
+ @param modifiers The bit mask of modifier keys that must be pressed. Use 0 if none.
+ @param title The title to display to the user. Optional.
+ @param completion A completion block called whenever the key combination is detected. Required.
+ */
+- (void)observeKeyInput:(NSString *)input modifiers:(UIKeyModifierFlags)modifiers title:(NSString *)title completion:(void (^)(UIKeyCommand *keyCommand))completion;
 
 @end
 
