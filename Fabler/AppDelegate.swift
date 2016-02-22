@@ -30,7 +30,6 @@ import UIKit
 import FBSDKCoreKit
 import SwiftyBeaver
 import RealmSwift
-import Kingfisher
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -58,10 +57,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let notificationCenter = NSNotificationCenter.defaultCenter()
         let queue = NSOperationQueue.mainQueue()
 
-        notificationCenter.addObserverForName(TokenDidChangeNotification, object: nil, queue: queue) { [weak self] (_) in
-            if let app = self {
-                app.fillCaches()
-            }
+        notificationCenter.addObserverForName(TokenDidChangeNotification, object: nil, queue: queue) { _ in
+            let autoDownloader = FablerAutoDownload.sharedInstance
+            autoDownloader.addTask(.CacheImages)
+            autoDownloader.addTask(.CalculateEpisodes)
+            autoDownloader.addTask(.DownloadEpisodes)
         }
 
         self.userService = UserService()
@@ -92,43 +92,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: () -> Void) {
         FablerDownloadManager.sharedInstance.backgroundSessionCompletionHandler = completionHandler
-    }
-
-    func fillCaches() {
-        Log.info("Attempting pre-fetch and fill caches.")
-
-        //
-        // Fill image cache for subscribed podcasts
-        //
-        let podcastService = PodcastService()
-        podcastService.getSubscribedPodcasts(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), completion: { (podcasts) in
-            Log.info("Caching subscribed podcast images.")
-
-            let manager = KingfisherManager.sharedManager
-            let cache = manager.cache
-
-            for podcast in podcasts {
-                let id = podcast.podcastId
-                let key = "\(id)-header-blurred"
-
-                if let _ = cache.retrieveImageInDiskCacheForKey(key) {
-                    Log.debug("Skipping images for podcast \(id).")
-                    continue
-                }
-
-                if let url = NSURL(string: podcast.image) {
-                    manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, url) in
-                        if error == nil, let image = image {
-                            Log.info("Blurring image for '\(key)'")
-                            if let blurred = image.imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {
-                                Log.info("Cached image at '\(key)'.")
-                                cache.storeImage(blurred, forKey: key)
-                            }
-                        }
-                    })
-                }
-            }
-        })
-        // END
     }
 }

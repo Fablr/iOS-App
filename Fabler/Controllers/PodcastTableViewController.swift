@@ -72,10 +72,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
                 if !podcast.primarySet || !podcast.backgroundSet {
                     let colors = image.colors()
-                    if let primary = colors.1, let background = colors.0 {
-                        service.setPrimaryColorForPodcast(podcast, color: primary)
-                        service.setBackgroundColorForPodcast(podcast, color: background)
-                    }
+                    service.setPrimaryColorForPodcast(podcast, color: colors.primary)
+                    service.setBackgroundColorForPodcast(podcast, color: colors.background)
                 }
 
                 self.updateImages(image, blurred: blurred)
@@ -88,10 +86,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
                             if let podcast = service.readPodcastFor(id, completion: nil) {
                                 if !podcast.primarySet || !podcast.backgroundSet {
                                     let colors = image.colors()
-                                    if let primary = colors.1, let background = colors.0 {
-                                        service.setPrimaryColorForPodcast(podcast, color: primary)
-                                        service.setBackgroundColorForPodcast(podcast, color: background)
-                                    }
+                                    service.setPrimaryColorForPodcast(podcast, color: colors.primary)
+                                    service.setBackgroundColorForPodcast(podcast, color: colors.background)
                                 }
                             }
 

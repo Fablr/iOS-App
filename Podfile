@@ -17,7 +17,7 @@ target 'Fabler' do
   pod 'SWRevealViewController', '~>2.3.0'
   pod 'Eureka', '~>1.3.1'
   pod 'ACPDownload', '~>1.1.0'
-  pod 'Hue', '~>1.0.0'
+  pod 'Hue', '~>1.0.1'
   pod 'SwiftDate', '~>3.0.2'
 end
 

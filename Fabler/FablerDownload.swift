@@ -115,8 +115,6 @@ public class FablerDownload: Object {
                     lastStateRaw = stateRaw
                     stateRaw = value.rawValue
                 }
-
-                //delegate?.download(self, stateChanged: FablerDownloadState(rawValue: stateRaw)!, fromState: FablerDownloadState(rawValue: lastStateRaw)!)
             } catch {
                 Log.error("Realm write failed")
             }
@@ -143,8 +141,6 @@ public class FablerDownload: Object {
             } catch {
                 Log.error("Realm write failed")
             }
-
-            //delegate?.download(self, progressChanged: fractionCompleted, totalBytesWritten: totalBytesWrittenRaw, totalBytesExpectedToWrite: totalBytesRaw)
         }
         get {
             return self.totalBytesWrittenRaw
