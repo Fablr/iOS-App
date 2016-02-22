@@ -22,8 +22,6 @@ let Log: SwiftyBeaver.Type = {
     return log
 }()
 
-let ScratchRealmIdentifier = "fabler-scratch"
-
 // swiftlint:enable variable_name
 
 import UIKit
@@ -35,22 +33,14 @@ import RealmSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var userService: UserService?
-    var player: FablerPlayer?
-    var scratchRealm: Realm?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Log.info("Application did finish launching.")
 
-        do {
-            self.scratchRealm = try Realm(configuration: Realm.Configuration(inMemoryIdentifier: ScratchRealmIdentifier))
-        } catch {
-            Log.warning("Unable to create scratch Realm.")
-        }
+        let _ = FablerDownloadManager.sharedInstance
 
         if application.applicationState == UIApplicationState.Background {
             Log.debug("In background fetch mode.")
-
             return true
         }
 
@@ -64,8 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             autoDownloader.addTask(.DownloadEpisodes)
         }
 
-        self.userService = UserService()
-        self.player = FablerPlayer()
+        let _ = UserService.sharedInstance
+        let _ = FablerPlayer.sharedInstance
 
         let result = FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
 

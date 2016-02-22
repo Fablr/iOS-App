@@ -74,11 +74,7 @@ class SmallPlayerViewController: UIViewController {
     // MARK: - SmallPlayerViewController functions
 
     func updateOutlets() {
-        guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
-            return
-        }
-
-        self.player = delegate.player
+        self.player = FablerPlayer.sharedInstance
 
         if let player = self.player {
             titleLabel?.text = player.episode?.title

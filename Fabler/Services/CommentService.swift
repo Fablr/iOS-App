@@ -11,6 +11,12 @@ import SwiftyJSON
 import SCLAlertView
 import RealmSwift
 
+// swiftlint:disable variable_name
+
+let ScratchRealmIdentifier = "fabler-scratch"
+
+// swiftlint:enable variable_name
+
 class CommentService {
 
     // MARK: - CommentService functions

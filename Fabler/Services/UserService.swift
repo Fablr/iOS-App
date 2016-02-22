@@ -18,7 +18,11 @@ import Alamofire
 import SwiftyJSON
 import RealmSwift
 
-class UserService {
+public class UserService {
+
+    // MARK: - singleton
+
+    public static let sharedInstance = UserService()
 
     // MARK: - UserService members
 

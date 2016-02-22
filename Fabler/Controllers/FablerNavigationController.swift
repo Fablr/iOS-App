@@ -48,22 +48,18 @@ class FablerNavigationController: UINavigationController {
 
         self.setToolbarHidden(true, animated: true)
 
-        guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
-            return
+        let player = FablerPlayer.sharedInstance
+
+        if player.started {
+            self.playerAdded = true
+            self.setToolbarHidden(false, animated: true)
         }
 
-        if let player = delegate.player {
-            if player.started {
-                self.playerAdded = true
-                self.setToolbarHidden(false, animated: true)
-            }
-
-            player.registerPlaybackStarted { [weak self] in
-                if let controller = self {
-                    if !controller.playerAdded {
-                        controller.playerAdded = true
-                        controller.setToolbarHidden(false, animated: true)
-                    }
+        player.registerPlaybackStarted { [weak self] in
+            if let controller = self {
+                if !controller.playerAdded {
+                    controller.playerAdded = true
+                    controller.setToolbarHidden(false, animated: true)
                 }
             }
         }

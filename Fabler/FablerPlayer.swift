@@ -15,7 +15,11 @@ public let PlayerStartPlayback = "com.Fabler.PlayerStartPlayback"
 import UIKit
 import AVFoundation
 
-class FablerPlayer: NSObject {
+public class FablerPlayer: NSObject {
+
+    // MARK: - singleton
+
+    public static let sharedInstance = FablerPlayer()
 
     // MARK: - FablerPlayer members
 

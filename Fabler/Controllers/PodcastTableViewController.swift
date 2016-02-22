@@ -654,16 +654,12 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     func episodesDidSelectRowAtIndexPath(indexPath: NSIndexPath) {
-        guard let delegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
-            return
-        }
-
         let episode = filteredEpisodes[indexPath.row]
 
-        if let player = delegate.player {
-            player.startPlayback(episode)
-            performSegueWithIdentifier("displayEpisodeSegue", sender: episode)
-        }
+        let player = FablerPlayer.sharedInstance
+        player.startPlayback(episode)
+
+        performSegueWithIdentifier("displayEpisodeSegue", sender: episode)
     }
 
     func episodesNumberOfSectionsInTableView() -> Int {
