@@ -34,7 +34,7 @@ public class UserService {
 
     // MARK: - UserService functions
 
-    init() {
+    public init() {
         let notificationCenter = NSNotificationCenter.defaultCenter()
         let mainQueue = NSOperationQueue.mainQueue()
 
@@ -93,7 +93,7 @@ public class UserService {
 
     // MARK: - UserService API functions
 
-    func getUserFor(userId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: User?) -> Void)?) -> User? {
+    public func getUserFor(userId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: User?) -> Void)?) -> User? {
         if let completion = completion {
             let request = Alamofire
             .request(FablerClient.Router.ReadUser(user: userId))
@@ -135,7 +135,7 @@ public class UserService {
         return user
     }
 
-    func updateCurrentUser() {
+    public func updateCurrentUser() {
         let request = Alamofire
         .request(FablerClient.Router.ReadCurrentUser())
         .validate()
@@ -158,7 +158,7 @@ public class UserService {
         Log.debug("Current user request: \(request).")
     }
 
-    func updateProfile(firstName: String?, lastName: String?, birthday: NSDate?, user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    public func updateProfile(firstName: String?, lastName: String?, birthday: NSDate?, user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         if let currentUser = User.getCurrentUser() {
             guard currentUser.userId == user.userId else {
                 Log.error("Attempted to edit profile of user other than current user")
@@ -193,7 +193,7 @@ public class UserService {
         Log.debug("Update user profile: \(request).")
     }
 
-    func updateEmail(email: String, user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    public func updateEmail(email: String, user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         if let currentUser = User.getCurrentUser() {
             guard currentUser.userId == user.userId else {
                 Log.error("Attempted to edit profile of user other than current user")
@@ -228,7 +228,7 @@ public class UserService {
         Log.debug("Update user email: \(request)")
     }
 
-    func updateUsername(userName: String, user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    public func updateUsername(userName: String, user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         if let currentUser = User.getCurrentUser() {
             guard currentUser.userId == user.userId else {
                 Log.error("Attempted to edit profile of user other than current user")
@@ -263,7 +263,7 @@ public class UserService {
         Log.debug("Update user username: \(request)")
     }
 
-    func getFollowers(user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    public func getFollowers(user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         let id = user.userId
 
         let request = Alamofire
@@ -304,7 +304,7 @@ public class UserService {
         Log.debug("Read followers request: \(request)")
     }
 
-    func getFollowing(user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    public func getFollowing(user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         let id = user.userId
 
         let request = Alamofire
@@ -345,7 +345,7 @@ public class UserService {
         Log.debug("Read following request: \(request)")
     }
 
-    func updateFollowing(user: User, following: Bool, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    public func updateFollowing(user: User, following: Bool, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         let id = user.userId
 
         let urlRequest: URLRequestConvertible
@@ -389,7 +389,7 @@ public class UserService {
 
     // MARK: UserService request functions
 
-    func outstandingRequestCount() -> Int {
+    public func outstandingRequestCount() -> Int {
         var result: Int = 0
 
         dispatch_sync(self.pendingRequestQueue) {

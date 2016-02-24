@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Kingfisher
 
-class LargePlayerViewController: UIViewController {
+public class LargePlayerViewController: UIViewController {
 
     // MARK: - LargePlayerViewController members
 
@@ -72,11 +72,11 @@ class LargePlayerViewController: UIViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         self.playbackSlider?.continuous = false
 
         self.updateOutlets()
@@ -98,7 +98,7 @@ class LargePlayerViewController: UIViewController {
         super.viewDidLoad()
     }
 
-    override func didReceiveMemoryWarning() {
+    override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 

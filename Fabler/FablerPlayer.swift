@@ -23,17 +23,17 @@ public class FablerPlayer: NSObject {
 
     // MARK: - FablerPlayer members
 
-    let smallPlayer: SmallPlayerViewController
-    let largePlayer: LargePlayerViewController
-    let audioPlayer: AVQueuePlayer
+    public let smallPlayer: SmallPlayerViewController
+    public let largePlayer: LargePlayerViewController
+    private let audioPlayer: AVQueuePlayer
 
-    var playing: Bool
-    var started: Bool
-    var uiTimer: NSTimer?
-    var serviceTimer: NSTimer?
+    public var playing: Bool
+    public var started: Bool
+    private var uiTimer: NSTimer?
+    private var serviceTimer: NSTimer?
 
-    var episode: Episode?
-    var podcast: Podcast?
+    public var episode: Episode?
+    public var podcast: Podcast?
 
     // MARK: - FablerPlayer functions
 
@@ -77,7 +77,7 @@ public class FablerPlayer: NSObject {
         }
     }
 
-    func startPlayback(episode: Episode) {
+    public func startPlayback(episode: Episode) {
         guard self.episode != episode else {
             Log.info("Starting playback for existing episode.")
 
@@ -125,7 +125,7 @@ public class FablerPlayer: NSObject {
         }
     }
 
-    func pausePlayback() {
+    public func pausePlayback() {
         guard self.playing else {
             Log.warning("Episode is already paused.")
             return
@@ -143,7 +143,7 @@ public class FablerPlayer: NSObject {
         largePlayer.updateOutlets()
     }
 
-    func playPlayback() {
+    public func playPlayback() {
         guard !self.playing else {
             Log.warning("Episode is already playing.")
             return
@@ -159,7 +159,7 @@ public class FablerPlayer: NSObject {
         largePlayer.updateOutlets()
     }
 
-    func setPlaybackTo(seconds: Float) {
+    public func setPlaybackTo(seconds: Float) {
         Log.info("Setting playback to \(seconds) seconds.")
 
         if audioPlayer.currentItem == nil {
@@ -170,7 +170,7 @@ public class FablerPlayer: NSObject {
         self.playPlayback()
     }
 
-    func getCurrentDuration() -> Float {
+    public func getCurrentDuration() -> Float {
         guard audioPlayer.currentItem != nil else {
             return 0.0
         }
@@ -178,7 +178,7 @@ public class FablerPlayer: NSObject {
         return Float(audioPlayer.currentItem!.duration.seconds)
     }
 
-    func getCurrentTime() -> Float {
+    public func getCurrentTime() -> Float {
         guard audioPlayer.currentItem != nil else {
             return 0.0
         }
@@ -186,7 +186,7 @@ public class FablerPlayer: NSObject {
         return Float(audioPlayer.currentTime().seconds)
     }
 
-    func registerPlaybackStarted(completion: () -> Void) {
+    public func registerPlaybackStarted(completion: () -> Void) {
         let notificationCenter = NSNotificationCenter.defaultCenter()
         let mainQueue = NSOperationQueue.mainQueue()
 

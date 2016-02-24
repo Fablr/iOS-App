@@ -22,7 +22,7 @@ PODS:
   - SCLAlertView (0.5.1)
   - SlackTextViewController (1.9.1)
   - SwiftDate (3.0.2)
-  - SwiftyBeaver (0.3.3)
+  - SwiftyBeaver (0.3.4)
   - SwiftyJSON (2.3.2)
   - SWRevealViewController (2.3.0)
   - XNGMarkdownParser (0.3.2)
@@ -39,7 +39,7 @@ DEPENDENCIES:
   - SCLAlertView (~> 0.5.1)
   - SlackTextViewController (~> 1.9.1)
   - SwiftDate (~> 3.0.2)
-  - SwiftyBeaver (~> 0.3.3)
+  - SwiftyBeaver (~> 0.3.4)
   - SwiftyJSON (~> 2.3.2)
   - SWRevealViewController (~> 2.3.0)
   - XNGMarkdownParser (~> 0.3.2)
@@ -58,7 +58,7 @@ SPEC CHECKSUMS:
   SCLAlertView: 3ac39a863d3e10fc165662b1228b03402297aea9
   SlackTextViewController: 6b0d1030c53937226fc5358f217af2a34fc211cf
   SwiftDate: 952306bbcd546719ba7431889939b58c5f57bae8
-  SwiftyBeaver: 2444a0211ad8b06854915e13539f841517c48909
+  SwiftyBeaver: fd12d01eca16abe29d3a2135cd2349fb52a419e2
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   XNGMarkdownParser: aed98c14f0c0eb20064184ddf9bac26c482722b2

@@ -11,7 +11,7 @@ import XNGMarkdownParser
 
 // swiftlint:disable type_name
 
-enum Vote: Int {
+public enum Vote: Int {
     case Down = -1
     case None = 0
     case Up = 1

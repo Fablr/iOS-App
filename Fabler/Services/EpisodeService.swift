@@ -10,16 +10,11 @@ import Alamofire
 import SwiftyJSON
 import RealmSwift
 
-class EpisodeService {
-
-    // MARK: - EpisodeService functions
-
-    init() {
-    }
+public class EpisodeService {
 
     // MARK: - EpisodeService API functions
 
-    func getEpisodeFor(episodeId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Episode?) -> Void)?) -> Episode? {
+    public func getEpisodeFor(episodeId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Episode?) -> Void)?) -> Episode? {
         if let completion = completion {
             let request = Alamofire
                 .request(FablerClient.Router.ReadEpisode(episode: episodeId))
@@ -55,7 +50,7 @@ class EpisodeService {
         return episode
     }
 
-    func getEpisodesForPodcast(podcast: Podcast, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Episode]) -> Void)?) -> [Episode] {
+    public func getEpisodesForPodcast(podcast: Podcast, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Episode]) -> Void)?) -> [Episode] {
         let id = podcast.podcastId
 
         if let completion = completion {
@@ -93,7 +88,7 @@ class EpisodeService {
         return episodes
     }
 
-    func setMarkForEpisode(episode: Episode, mark: NSTimeInterval, completed: Bool) {
+    public func setMarkForEpisode(episode: Episode, mark: NSTimeInterval, completed: Bool) {
         do {
             let realm = try Realm()
 
@@ -120,7 +115,7 @@ class EpisodeService {
         Log.debug("Episode mark request: \(request)")
     }
 
-    func flipSaveForEpisode(episode: Episode) {
+    public func flipSaveForEpisode(episode: Episode) {
         do {
             let realm = try Realm()
 

@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class SmallPlayerViewController: UIViewController {
+public class SmallPlayerViewController: UIViewController {
 
     // MARK: - SmallPlayerViewController members
 
@@ -59,15 +59,15 @@ class SmallPlayerViewController: UIViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
     }
 
-    override func didReceiveMemoryWarning() {
+    override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 

@@ -17,16 +17,11 @@ let ScratchRealmIdentifier = "fabler-scratch"
 
 // swiftlint:enable variable_name
 
-class CommentService {
-
-    // MARK: - CommentService functions
-
-    init() {
-    }
+public class CommentService {
 
     // MARK: - CommentService API functions
 
-    func getCommentsForEpisode(episode: Episode, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Comment]) -> Void) -> [Comment] {
+    public func getCommentsForEpisode(episode: Episode, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Comment]) -> Void) -> [Comment] {
         guard let podcast = episode.podcast else {
             return []
         }
@@ -53,7 +48,7 @@ class CommentService {
         return self.getCommentsForEpisodeFromRealm(id)
     }
 
-    func getCommentsForEpisodeFromRealm(episode: Int) -> [Comment] {
+    public func getCommentsForEpisodeFromRealm(episode: Int) -> [Comment] {
         var comments: [Comment] = []
 
         do {
@@ -72,7 +67,7 @@ class CommentService {
         return comments
     }
 
-    func addCommentForEpisode(episode: Episode, comment: String, parentCommentId: Int?, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    public func addCommentForEpisode(episode: Episode, comment: String, parentCommentId: Int?, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         let id = episode.episodeId
         let title = episode.title
 
@@ -100,7 +95,7 @@ class CommentService {
         Log.debug("Adding comment request: \(request)")
     }
 
-    func getCommentsForPodcast(podcast: Podcast, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Comment]) -> Void) -> [Comment] {
+    public func getCommentsForPodcast(podcast: Podcast, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Comment]) -> Void) -> [Comment] {
         let id = podcast.podcastId
 
         let request = Alamofire
@@ -122,7 +117,7 @@ class CommentService {
         return self.getCommentsForPodcastFromRealm(id)
     }
 
-    func getCommentsForPodcastFromRealm(podcast: Int) -> [Comment] {
+    public func getCommentsForPodcastFromRealm(podcast: Int) -> [Comment] {
         var comments: [Comment] = []
 
         do {
@@ -141,7 +136,7 @@ class CommentService {
         return comments
     }
 
-    func addCommentForPodcast(podcast: Podcast, comment: String, parentCommentId: Int?, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    public func addCommentForPodcast(podcast: Podcast, comment: String, parentCommentId: Int?, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         let id = podcast.podcastId
         let title = podcast.title
 
@@ -169,7 +164,7 @@ class CommentService {
         Log.debug("Adding comment request: \(request)")
     }
 
-    func voteOnComment(comment: Comment, vote: Vote, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    public func voteOnComment(comment: Comment, vote: Vote, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         let id = comment.commentId
         let user = comment.userName
         let initialVote = comment.userVote.rawValue
@@ -221,7 +216,7 @@ class CommentService {
         Log.debug("Voting comment request: \(request)")
     }
 
-    func deleteComment(comment: Comment, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    public func deleteComment(comment: Comment, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         let id = comment.commentId
 
         let request = Alamofire
@@ -258,7 +253,7 @@ class CommentService {
         Log.debug("Delete comment request: \(request)")
     }
 
-    func editComment(comment: Comment, newComment: String, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    public func editComment(comment: Comment, newComment: String, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         let id = comment.commentId
 
         let request = Alamofire

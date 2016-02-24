@@ -11,16 +11,11 @@ import SwiftyJSON
 import RealmSwift
 import SCLAlertView
 
-class PodcastService {
-
-    // MARK: - PodcastService functions
-
-    init() {
-    }
+public class PodcastService {
 
     // MARK: - PodcastService API functions
 
-    func setNotificationForPodcast(podcast: Podcast, allowNotifications: Bool) {
+    public func setNotificationForPodcast(podcast: Podcast, allowNotifications: Bool) {
         do {
             let realm = try Realm()
 
@@ -32,7 +27,7 @@ class PodcastService {
         }
     }
 
-    func setDownloadForPodcast(podcast: Podcast, allowAutoDownload: Bool) {
+    public func setDownloadForPodcast(podcast: Podcast, allowAutoDownload: Bool) {
         do {
             let realm = try Realm()
 
@@ -44,7 +39,7 @@ class PodcastService {
         }
     }
 
-    func setDownloadAmountForPodcast(podcast: Podcast, amount: Int) {
+    public func setDownloadAmountForPodcast(podcast: Podcast, amount: Int) {
         do {
             let realm = try Realm()
 
@@ -56,7 +51,7 @@ class PodcastService {
         }
     }
 
-    func setPrimaryColorForPodcast(podcast: Podcast, color: UIColor) {
+    public func setPrimaryColorForPodcast(podcast: Podcast, color: UIColor) {
         do {
             let realm = try Realm()
             let components = CGColorGetComponents(color.CGColor)
@@ -76,7 +71,7 @@ class PodcastService {
         }
     }
 
-    func setBackgroundColorForPodcast(podcast: Podcast, color: UIColor) {
+    public func setBackgroundColorForPodcast(podcast: Podcast, color: UIColor) {
         do {
             let realm = try Realm()
             let components = CGColorGetComponents(color.CGColor)
@@ -97,7 +92,7 @@ class PodcastService {
     }
 
 
-    func readPodcastFor(podcastId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Podcast?) -> Void)?) -> Podcast? {
+    public func readPodcastFor(podcastId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Podcast?) -> Void)?) -> Podcast? {
         if let completion = completion {
             let request = Alamofire
             .request(FablerClient.Router.ReadPodcast(podcast: podcastId))
@@ -133,7 +128,7 @@ class PodcastService {
         return podcast
     }
 
-    func readAllPodcasts(queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Podcast]) -> Void)?) -> [Podcast] {
+    public func readAllPodcasts(queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Podcast]) -> Void)?) -> [Podcast] {
         if let completion = completion {
             let request = Alamofire
             .request(FablerClient.Router.ReadPodcasts())
@@ -169,7 +164,7 @@ class PodcastService {
         return podcasts
     }
 
-    func getSubscribedPodcasts(queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Podcast]) -> Void)?) -> [Podcast] {
+    public func getSubscribedPodcasts(queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: [Podcast]) -> Void)?) -> [Podcast] {
         if let completion = completion {
             let request = Alamofire
             .request(FablerClient.Router.ReadSubscribedPodcasts())
@@ -207,7 +202,7 @@ class PodcastService {
         return podcasts
     }
 
-    func subscribeToPodcast(podcast: Podcast, subscribe: Bool, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    public func subscribeToPodcast(podcast: Podcast, subscribe: Bool, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         do {
             let realm = try Realm()
 
