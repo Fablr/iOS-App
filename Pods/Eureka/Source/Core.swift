@@ -326,7 +326,7 @@ public protocol BaseCellType : class {
     /**
      Method called when the cell becomes first responder
      */
-    func cellBecomeFirstResponder() -> Bool
+    func cellBecomeFirstResponder(direction: Direction) -> Bool
     
     /**
      Method called when the cell resigns first responder
@@ -504,7 +504,7 @@ extension Form : RangeReplaceableCollectionType {
     public func reserveCapacity(n: Int){}
 
     public func replaceRange<C : CollectionType where C.Generator.Element == Section>(subRange: Range<Int>, with newElements: C) {
-        for (var i = subRange.startIndex; i < subRange.endIndex; i++) {
+        for i in subRange {
             if let section = kvoWrapper.sections.objectAtIndex(i) as? Section {
                 section.willBeRemovedFromForm()
                 kvoWrapper._allSections.removeAtIndex(kvoWrapper._allSections.indexOf(section)!)
@@ -591,13 +591,15 @@ extension Form {
     
     private func addRowObservers(taggable: Taggable, rowTags: [String], type: ConditionType) {
         for rowTag in rowTags{
+            if rowObservers[rowTag] == nil {
+              rowObservers[rowTag] = Dictionary()
+            }
             if let _ = rowObservers[rowTag]?[type]{
                 if !rowObservers[rowTag]![type]!.contains({ $0 === taggable }){
                     rowObservers[rowTag]?[type]!.append(taggable)
                 }
             }
             else{
-                rowObservers[rowTag] = Dictionary()
                 rowObservers[rowTag]?[type] = [taggable]
             }
         }
@@ -633,10 +635,11 @@ extension Form {
         guard var index = kvoWrapper._allSections.indexOf(section) else { return }
         var formIndex = NSNotFound
         while (formIndex == NSNotFound && index > 0){
-            let previous = kvoWrapper._allSections[--index]
+            index = index - 1
+            let previous = kvoWrapper._allSections[index]
             formIndex = kvoWrapper.sections.indexOfObject(previous)
         }
-        kvoWrapper.sections.insertObject(section, atIndex: formIndex == NSNotFound ? 0 : ++formIndex)
+        kvoWrapper.sections.insertObject(section, atIndex: formIndex == NSNotFound ? 0 : formIndex + 1 )
     }
 }
 
@@ -650,6 +653,14 @@ public func ==(lhs: Section, rhs: Section) -> Bool{
 }
 
 extension Section : Hidable, SectionDelegate {}
+
+extension Section {
+    
+    public func reload(rowAnimation: UITableViewRowAnimation = .None) {
+        guard let tableView = (form?.delegate as? FormViewController)?.tableView, index = index else { return }
+        tableView.reloadSections(NSIndexSet(index: index), withRowAnimation: rowAnimation)
+    }
+}
 
 /// The class representing the sections in a Eureka form.
 public class Section {
@@ -763,7 +774,7 @@ extension Section : RangeReplaceableCollectionType {
     public func reserveCapacity(n: Int){}
     
     public func replaceRange<C : CollectionType where C.Generator.Element == BaseRow>(subRange: Range<Int>, with newElements: C) {
-        for (var i = subRange.startIndex; i < subRange.endIndex; i++) {
+        for i in subRange.startIndex..<subRange.endIndex {
             if let row = kvoWrapper.rows.objectAtIndex(i) as? BaseRow {
                 row.willBeRemovedFromForm()
                 kvoWrapper._allRows.removeAtIndex(kvoWrapper._allRows.indexOf(row)!)
@@ -1085,10 +1096,11 @@ extension Section /* Condition */{
         guard var index = kvoWrapper._allRows.indexOf(row) else { return }
         var formIndex = NSNotFound
         while (formIndex == NSNotFound && index > 0){
-            let previous = kvoWrapper._allRows[--index]
+            index = index - 1
+            let previous = kvoWrapper._allRows[index]
             formIndex = kvoWrapper.rows.indexOfObject(previous)
         }
-        kvoWrapper.rows.insertObject(row, atIndex: formIndex == NSNotFound ? 0 : ++formIndex)
+        kvoWrapper.rows.insertObject(row, atIndex: formIndex == NSNotFound ? 0 : formIndex + 1)
     }
 }
 
@@ -1330,6 +1342,8 @@ public class BaseRow : BaseRowType {
         get { return nil }
     }
     
+    public static var estimatedRowHeight: CGFloat = 44.0
+    
     /// Condition that determines if the row should be disabled or not.
     public var disabled : Condition? {
         willSet { removeFromDisabledRowObservers() }
@@ -1396,6 +1410,27 @@ public class BaseRow : BaseRowType {
 }
 
 extension BaseRow: Equatable, Hidable, Disableable {}
+
+
+extension BaseRow {
+    
+    public func reload(rowAnimation: UITableViewRowAnimation = .None) {
+        guard let tableView = baseCell?.formViewController()?.tableView ?? (section?.form?.delegate as? FormViewController)?.tableView, indexPath = indexPath() else { return }
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: rowAnimation)
+    }
+    
+    public func deselect(animated: Bool = true) {
+        guard let indexPath = indexPath(), tableView = baseCell?.formViewController()?.tableView ?? (section?.form?.delegate as? FormViewController)?.tableView  else {
+            return
+        }
+        tableView.deselectRowAtIndexPath(indexPath, animated: animated)
+    }
+    
+    public func select(animated: Bool = false) {
+        guard let indexPath = indexPath(), tableView = baseCell?.formViewController()?.tableView ?? (section?.form?.delegate as? FormViewController)?.tableView  else { return }
+        tableView.selectRowAtIndexPath(indexPath, animated: animated, scrollPosition: .None)
+    }
+}
 
 public func ==(lhs: BaseRow, rhs: BaseRow) -> Bool{
     return lhs === rhs
@@ -1648,7 +1683,7 @@ public class Row<T: Equatable, Cell: CellType where Cell: BaseCell, Cell.Value =
 }
 
 /// Generic row type where a user must select a value among several options.
-public class SelectorRow<T: Equatable, VCType: TypedRowControllerType where VCType: UIViewController,  VCType.RowValue == T>: OptionsRow<T, PushSelectorCell<T>>, PresenterRowType {
+public class SelectorRow<T: Equatable, VCType: TypedRowControllerType, Cell: CellType where VCType: UIViewController,  VCType.RowValue == T, Cell: BaseCell, Cell.Value == T >: OptionsRow<T, Cell>, PresenterRowType {
     
     /// Defines how the view controller will be presented, pushed, etc.
     public var presentationMode: PresentationMode<VCType>?
@@ -1660,7 +1695,7 @@ public class SelectorRow<T: Equatable, VCType: TypedRowControllerType where VCTy
         super.init(tag: tag)
     }
     
-    public required convenience init(_ tag: String, @noescape _ initializer: (SelectorRow<T, VCType> -> ()) = { _ in }) {
+    public required convenience init(_ tag: String, @noescape _ initializer: (SelectorRow<T, VCType, Cell> -> ()) = { _ in }) {
         self.init(tag:tag)
         RowDefaults.rowInitialization["\(self.dynamicType)"]?(self)
         initializer(self)
@@ -1699,7 +1734,7 @@ public class SelectorRow<T: Equatable, VCType: TypedRowControllerType where VCTy
         if let title = selectorTitle {
             rowVC.title = title
         }
-        if let callback = self.presentationMode?.completionHandler{
+        if let callback = self.presentationMode?.completionHandler {
             rowVC.completionCallback = callback
         }
         onPresentCallback?(cell.formViewController()!, rowVC)
@@ -1708,7 +1743,7 @@ public class SelectorRow<T: Equatable, VCType: TypedRowControllerType where VCTy
 }
 
 /// Generic options selector row that allows multiple selection.
-public class GenericMultipleSelectorRow<T: Hashable, VCType: TypedRowControllerType where VCType: UIViewController,  VCType.RowValue == Set<T>>: Row<Set<T>, PushSelectorCell<Set<T>>>, PresenterRowType {
+public class GenericMultipleSelectorRow<T: Hashable, VCType: TypedRowControllerType, Cell: CellType where VCType: UIViewController,  VCType.RowValue == Set<T>, Cell: BaseCell, Cell.Value == Set<T>>: Row<Set<T>, Cell>, PresenterRowType {
     
     /// Defines how the view controller will be presented, pushed, etc.
     public var presentationMode: PresentationMode<VCType>?
@@ -1730,7 +1765,7 @@ public class GenericMultipleSelectorRow<T: Hashable, VCType: TypedRowControllerT
         presentationMode = .Show(controllerProvider: ControllerProvider.Callback { return VCType() }, completionCallback: { vc in vc.navigationController?.popViewControllerAnimated(true) })
     }
     
-    public required convenience init(_ tag: String, @noescape _ initializer: (GenericMultipleSelectorRow<T, VCType> -> ()) = { _ in }) {
+    public required convenience init(_ tag: String, @noescape _ initializer: (GenericMultipleSelectorRow<T, VCType, Cell> -> ()) = { _ in }) {
         self.init(tag:tag)
         RowDefaults.rowInitialization["\(self.dynamicType)"]?(self)
         initializer(self)
@@ -1909,6 +1944,17 @@ public protocol AreaCell {
     var textView: UITextView { get }
 }
 
+/**
+*  Protocol for cells that contain a postal address
+*/
+public protocol PostalAddressCell {
+	var streetTextField: UITextField { get }
+	var stateTextField: UITextField { get }
+	var postalCodeTextField: UITextField { get }
+	var cityTextField: UITextField { get }
+	var countryTextField: UITextField { get }
+}
+
 extension CellType where Self: UITableViewCell {
 }
 
@@ -1962,7 +2008,7 @@ public class BaseCell : UITableViewCell, BaseCellType {
     /**
      Called when the cell becomes first responder
      */
-    public func cellBecomeFirstResponder() -> Bool {
+    public func cellBecomeFirstResponder(direction: Direction = .Down) -> Bool {
         return becomeFirstResponder()
     }
     
@@ -2004,7 +2050,7 @@ public class Cell<T: Equatable> : BaseCell, TypedCellType {
     public override func setup(){
         super.setup()
     }
-    
+        
     /**
      Function responsible for updating the cell each time it is reloaded.
      */
@@ -2117,7 +2163,7 @@ public enum ControllerProvider<VCType: UIViewController>{
  */
 public struct DataProvider<T: Equatable> {
     
-    var arrayData: [T]?
+    public let arrayData: [T]?
     
     public init(arrayData: [T]){
         self.arrayData = arrayData
@@ -2155,6 +2201,9 @@ public enum PresentationMode<VCType: UIViewController> {
     case SegueClass(segueClass: UIStoryboardSegue.Type, completionCallback: (UIViewController->())?)
     
     
+    case Popover(controllerProvider: ControllerProvider<VCType>, completionCallback: (UIViewController->())?)
+    
+    
     var completionHandler: (UIViewController ->())? {
         switch self{
             case .Show(_, let completionCallback):
@@ -2165,14 +2214,24 @@ public enum PresentationMode<VCType: UIViewController> {
                 return completionCallback
             case .SegueClass(_, let completionCallback):
                 return completionCallback
+            case .Popover(_, let completionCallback):
+                return completionCallback
         }
     }
     
-    func presentViewController(viewController: VCType!, row: BaseRow, presentingViewController:FormViewController){
+    
+    /**
+     Present the view controller provided by PresentationMode. Should only be used from custom row implementation.
+     
+     - parameter viewController:           viewController to present if it makes sense (normally provided by createController method)
+     - parameter row:                      associated row
+     - parameter presentingViewController: form view controller
+     */
+    public func presentViewController(viewController: VCType!, row: BaseRow, presentingViewController:FormViewController){
         switch self {
             case .Show(_, _):
                 presentingViewController.showViewController(viewController, sender: row)
-            case .PresentModally:
+            case .PresentModally(_, _):
                 presentingViewController.presentViewController(viewController, animated: true, completion: nil)
             case .SegueName(let segueName, _):
                 presentingViewController.performSegueWithIdentifier(segueName, sender: row)
@@ -2180,11 +2239,23 @@ public enum PresentationMode<VCType: UIViewController> {
                 let segue = segueClass.init(identifier: row.tag, source: presentingViewController, destination: viewController)
                 presentingViewController.prepareForSegue(segue, sender: row)
                 segue.perform()
-        }
+            case .Popover(_, _):
+                guard let porpoverController = viewController.popoverPresentationController else {
+                    fatalError()
+                }
+                porpoverController.sourceView = porpoverController.sourceView ?? presentingViewController.tableView
+                porpoverController.sourceRect = porpoverController.sourceRect ?? row.baseCell.frame
+                presentingViewController.presentViewController(viewController, animated: true, completion: nil)
+            }
         
     }
     
-    func createController() -> VCType? {
+    /**
+     Creates the view controller specified by presentation mode. Should only be used from custom row implementation.
+     
+     - returns: the created view controller or nil depending on the PresentationMode type.
+     */
+    public func createController() -> VCType? {
         switch self {
             case .Show(let controllerProvider, let completionCallback):
                 let controller = controllerProvider.createController()
@@ -2200,6 +2271,14 @@ public enum PresentationMode<VCType: UIViewController> {
                     completionController?.completionCallback = callback
                 }
                 return controller
+            case .Popover(let controllerProvider, let completionCallback):
+                let controller = controllerProvider.createController()
+                controller.modalPresentationStyle = .Popover
+                let completionController = controller as? RowControllerType
+                if let callback = completionCallback {
+                    completionController?.completionCallback = callback
+                }
+                return controller
             default:
                 return nil
         }
@@ -2209,7 +2288,7 @@ public enum PresentationMode<VCType: UIViewController> {
 /**
  *  Protocol to be implemented by custom formatters.
  */
-public protocol FormatterProtocol{
+public protocol FormatterProtocol {
     func getNewPosition(forPosition forPosition: UITextPosition, inTextInput textInput: UITextInput, oldValue: String?, newValue: String?) -> UITextPosition
 }
 
@@ -2398,12 +2477,6 @@ public class FormViewController : UIViewController, FormViewControllerProtocol {
     lazy public var navigationAccessoryView : NavigationAccessoryView = {
         [unowned self] in
         let naview = NavigationAccessoryView(frame: CGRectMake(0, 0, self.view.frame.width, 44.0))
-        naview.doneButton.target = self
-        naview.doneButton.action = "navigationDone:"
-        naview.previousButton.target = self
-        naview.previousButton.action = "navigationAction:"
-        naview.nextButton.target = self
-        naview.nextButton.action = "navigationAction:"
         naview.tintColor = self.view.tintColor
         return naview
         }()
@@ -2412,8 +2485,8 @@ public class FormViewController : UIViewController, FormViewControllerProtocol {
     public var navigationOptions : RowNavigationOptions?
     private var tableViewStyle: UITableViewStyle = .Grouped
     
-    public convenience init(style: UITableViewStyle) {
-        self.init(nibName: nil, bundle: nil)
+    public init(style: UITableViewStyle) {
+        super.init(nibName: nil, bundle: nil)
         tableViewStyle = style
     }
     
@@ -2430,6 +2503,9 @@ public class FormViewController : UIViewController, FormViewControllerProtocol {
         if tableView == nil {
             tableView = UITableView(frame: view.bounds, style: tableViewStyle)
             tableView?.autoresizingMask = UIViewAutoresizing.FlexibleWidth.union(.FlexibleHeight)
+            if #available(iOS 9.0, *){
+                tableView?.cellLayoutMarginsFollowReadableWidth = false
+            }
         }
         if tableView?.superview == nil {
             view.addSubview(tableView!)
@@ -2440,8 +2516,7 @@ public class FormViewController : UIViewController, FormViewControllerProtocol {
         if tableView?.dataSource == nil {
             tableView?.dataSource = self
         }
-        tableView?.rowHeight = UITableViewAutomaticDimension
-        tableView?.estimatedRowHeight = 44.0
+        tableView?.estimatedRowHeight = BaseRow.estimatedRowHeight
     }
     
     public override func viewWillAppear(animated: Bool) {
@@ -2602,10 +2677,12 @@ extension FormViewController : UITableViewDelegate {
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         guard tableView == self.tableView else { return }
-        if !form[indexPath].baseCell.cellCanBecomeFirstResponder() || !form[indexPath].baseCell.cellBecomeFirstResponder() {
+        let row = form[indexPath]
+        // row.baseCell.cellBecomeFirstResponder() may be cause InlineRow collapsed then section count will be changed. Use orignal indexPath will out of  section's bounds.
+        if !row.baseCell.cellCanBecomeFirstResponder() || !row.baseCell.cellBecomeFirstResponder() {
             self.tableView?.endEditing(true)
         }
-        form[indexPath].didSelect()
+        row.didSelect()
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -2764,14 +2841,12 @@ extension FormViewController {
      Called when the keyboard will disappear. Adjusts insets of the tableView.
      */
     public func keyboardWillHide(notification: NSNotification){
-        guard let table = tableView,  let _ = table.findFirstResponder()?.formCell() else  { return }
+        guard let table = tableView,  let oldBottom = oldBottomInset else  { return }
         let keyBoardInfo = notification.userInfo!
         var tableInsets = table.contentInset
         var scrollIndicatorInsets = table.scrollIndicatorInsets
-        if let oldBottomInset = oldBottomInset {
-            tableInsets.bottom = oldBottomInset
-            scrollIndicatorInsets.bottom = tableInsets.bottom
-        }
+        tableInsets.bottom = oldBottom
+        scrollIndicatorInsets.bottom = tableInsets.bottom
         oldBottomInset = nil
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(keyBoardInfo[UIKeyboardAnimationDurationUserInfoKey]!.doubleValue)
@@ -2782,11 +2857,11 @@ extension FormViewController {
     }
 }
 
+public enum Direction { case Up, Down }
+
 extension FormViewController {
     
     //MARK: Navigation Methods
-    
-    private enum Direction { case Up, Down }
     
     func navigationDone(sender: UIBarButtonItem) {
         tableView?.endEditing(true)
@@ -2802,7 +2877,7 @@ extension FormViewController {
         guard let nextRow = nextRowForRow(form[currentIndexPath], withDirection: direction) else { return }
         if nextRow.baseCell.cellCanBecomeFirstResponder(){
             tableView?.scrollToRowAtIndexPath(nextRow.indexPath()!, atScrollPosition: .None, animated: false)
-            nextRow.baseCell.cellBecomeFirstResponder()
+            nextRow.baseCell.cellBecomeFirstResponder(direction)
         }
     }
     
@@ -2831,6 +2906,12 @@ extension FormViewController {
         guard options.contains(.Enabled) else { return nil }
         guard row.baseCell.cellCanBecomeFirstResponder() else { return nil}
         navigationAccessoryView.previousButton.enabled = nextRowForRow(row, withDirection: .Up) != nil
+        navigationAccessoryView.doneButton.target = self
+        navigationAccessoryView.doneButton.action = "navigationDone:"
+        navigationAccessoryView.previousButton.target = self
+        navigationAccessoryView.previousButton.action = "navigationAction:"
+        navigationAccessoryView.nextButton.target = self
+        navigationAccessoryView.nextButton.action = "navigationAction:"
         navigationAccessoryView.nextButton.enabled = nextRowForRow(row, withDirection: .Down) != nil
         return navigationAccessoryView
     }
@@ -2965,4 +3046,38 @@ public class SelectableSection<Row, T where Row: BaseRow, Row: SelectableRowType
     public override func rowsHaveBeenAdded(rows: [BaseRow], atIndexes: NSIndexSet) {
         prepareSelectableRows(rows)
     }
+}
+
+
+/**
+*  Protocol to be implemented by PostalAddress types.
+*/
+public protocol PostalAddressType: Equatable {
+	var street: String? { get set }
+	var state: String? { get set }
+	var postalCode: String? { get set }
+	var city: String? { get set }
+	var country: String? { get set }
+}
+
+public func == <T: PostalAddressType>(lhs: T, rhs: T) -> Bool {
+	return lhs.street == rhs.street && lhs.state == rhs.state && lhs.postalCode == rhs.postalCode && lhs.city == rhs.city && lhs.country == rhs.country
+}
+
+public struct PostalAddress: PostalAddressType {
+	public var street: String?
+	public var state: String?
+	public var postalCode: String?
+	public var city: String?
+	public var country: String?
+	
+	public init(){}
+	
+	public init(street: String?, state: String?, postalCode: String?, city: String?, country: String?) {
+		self.street = street
+		self.state = state
+		self.postalCode = postalCode
+		self.city = city
+		self.country = country
+	}
 }

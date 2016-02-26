@@ -94,13 +94,13 @@ extension UIImage {
         UIGraphicsBeginImageContextWithOptions(squareImage.size, false, 0.0)
 
         let clippingPath = UIBezierPath(
-            roundedRect: CGRect(origin: CGPointZero, size: squareImage.size),
+            roundedRect: CGRect(origin: CGPoint.zero, size: squareImage.size),
             cornerRadius: radius
         )
 
         clippingPath.addClip()
 
-        squareImage.drawInRect(CGRect(origin: CGPointZero, size: squareImage.size))
+        squareImage.drawInRect(CGRect(origin: CGPoint.zero, size: squareImage.size))
 
         let roundedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

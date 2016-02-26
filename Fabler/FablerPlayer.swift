@@ -40,7 +40,7 @@ public class FablerPlayer: NSObject {
     override init() {
         smallPlayer = SmallPlayerViewController(nibName: "SmallPlayer", bundle: nil)
         let width = UIScreen.mainScreen().bounds.size.width
-        smallPlayer.view.frame = CGRectMake(0, 0, width, 44)
+        smallPlayer.view.frame = CGRect(x: 0, y: 0, width: width, height: 44)
 
         largePlayer = LargePlayerViewController(nibName: "LargePlayer", bundle: nil)
         largePlayer.modalPresentationStyle = .OverCurrentContext

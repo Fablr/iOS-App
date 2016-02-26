@@ -27,7 +27,6 @@ let Log: SwiftyBeaver.Type = {
 import UIKit
 import FBSDKCoreKit
 import SwiftyBeaver
-import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -50,6 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         notificationCenter.addObserverForName(TokenDidChangeNotification, object: nil, queue: queue) { _ in
             let autoDownloader = FablerAutoDownload.sharedInstance
             autoDownloader.addTask(.CacheImages)
+            autoDownloader.addTask(.DeleteEpisodes)
             autoDownloader.addTask(.CalculateEpisodes)
             autoDownloader.addTask(.DownloadEpisodes)
         }
@@ -70,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             viewController = storyboard.instantiateViewControllerWithIdentifier("start")
         }
 
-        self.window?.rootViewController = viewController;
+        self.window?.rootViewController = viewController
         self.window?.makeKeyAndVisible()
 
         return result

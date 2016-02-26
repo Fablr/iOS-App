@@ -267,7 +267,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     override class func tableViewStyleForCoder(decoder: NSCoder) -> UITableViewStyle {
-        return UITableViewStyle.Plain;
+        return UITableViewStyle.Plain
     }
 
     override func didPressLeftButton(sender: AnyObject!) {
@@ -342,7 +342,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.blurredHeaderImage?.contentMode = .ScaleAspectFill
         self.blurredHeaderImage?.clipsToBounds = true
 
-        let header = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.headerHeight - (statusBarHeight + navBarHeight) + self.subHeaderHeight))
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.headerHeight - (statusBarHeight + navBarHeight) + self.subHeaderHeight))
 
         let sub = self.createSubHeader()
         sub.translatesAutoresizingMaskIntoConstraints = false
@@ -695,7 +695,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     func episodesEditActions(indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         var results: [UITableViewRowAction] = []
 
-        let detailAction = UITableViewRowAction(style: .Normal, title: "Details" , handler: { [weak self] (action: UITableViewRowAction, indexPath: NSIndexPath) in
+        let detailAction = UITableViewRowAction(style: .Normal, title: "Details", handler: { [weak self] (action: UITableViewRowAction, indexPath: NSIndexPath) in
             if let controller = self {
                 let episode = controller.filteredEpisodes[indexPath.row]
                 controller.performSegueWithIdentifier("displayEpisodeSegue", sender: episode)

@@ -35,9 +35,36 @@ protocol TextAreaConformance : FormatterConformance {
     var placeholder : String? { get set }
 }
 
+public protocol PostalAddressRowConformance: PostalAddressFormatterConformance {
+	var postalAddressPercentage : CGFloat? { get set }
+	var placeholderColor : UIColor? { get set }
+	var streetPlaceholder : String? { get set }
+	var statePlaceholder : String? { get set }
+	var postalCodePlaceholder : String? { get set }
+	var cityPlaceholder : String? { get set }
+	var countryPlaceholder : String? { get set }
+}
+
 public protocol FormatterConformance: class {
     var formatter: NSFormatter? { get set }
     var useFormatterDuringInput: Bool { get set }
+}
+
+public protocol PostalAddressFormatterConformance: class {
+	var streetUseFormatterDuringInput: Bool { get set }
+	var streetFormatter: NSFormatter? { get set }
+	
+	var stateUseFormatterDuringInput: Bool { get set }
+	var stateFormatter: NSFormatter? { get set }
+	
+	var postalCodeUseFormatterDuringInput: Bool { get set }
+	var postalCodeFormatter: NSFormatter? { get set }
+	
+	var cityUseFormatterDuringInput: Bool { get set }
+	var cityFormatter: NSFormatter? { get set }
+	
+	var countryUseFormatterDuringInput: Bool { get set }
+	var countryFormatter: NSFormatter? { get set }
 }
 
 public class FieldRow<T: Any, Cell: CellType where Cell: BaseCell, Cell: TextFieldCell, Cell.Value == T>: Row<T, Cell>, FieldRowConformance, KeyboardReturnHandler {
@@ -83,6 +110,73 @@ public class FieldRow<T: Any, Cell: CellType where Cell: BaseCell, Cell: TextFie
             }
         }
     }
+}
+
+public class _PostalAddressRow<T: Equatable, Cell: CellType where Cell: BaseCell, Cell: PostalAddressCell, Cell.Value == T>: Row<T, Cell>, PostalAddressRowConformance, KeyboardReturnHandler {
+	
+	/// Configuration for the keyboardReturnType of this row
+	public var keyboardReturnType : KeyboardReturnTypeConfiguration?
+	
+	/// The percentage of the cell that should be occupied by the postal address
+	public var postalAddressPercentage: CGFloat?
+	
+	/// The textColor for the textField's placeholder
+	public var placeholderColor : UIColor?
+	
+	/// The placeholder for the street textField
+	public var streetPlaceholder : String?
+	
+	/// The placeholder for the state textField
+	public var statePlaceholder : String?
+	
+	/// The placeholder for the zip textField
+	public var postalCodePlaceholder : String?
+	
+	/// The placeholder for the city textField
+	public var cityPlaceholder : String?
+	
+	/// The placeholder for the country textField
+	public var countryPlaceholder : String?
+	
+	/// A formatter to be used to format the user's input for street
+	public var streetFormatter: NSFormatter?
+	
+	/// A formatter to be used to format the user's input for state
+	public var stateFormatter: NSFormatter?
+	
+	/// A formatter to be used to format the user's input for zip
+	public var postalCodeFormatter: NSFormatter?
+	
+	/// A formatter to be used to format the user's input for city
+	public var cityFormatter: NSFormatter?
+	
+	/// A formatter to be used to format the user's input for country
+	public var countryFormatter: NSFormatter?
+	
+	/// If the formatter should be used while the user is editing the street.
+	public var streetUseFormatterDuringInput: Bool
+	
+	/// If the formatter should be used while the user is editing the state.
+	public var stateUseFormatterDuringInput: Bool
+	
+	/// If the formatter should be used while the user is editing the zip.
+	public var postalCodeUseFormatterDuringInput: Bool
+	
+	/// If the formatter should be used while the user is editing the city.
+	public var cityUseFormatterDuringInput: Bool
+	
+	/// If the formatter should be used while the user is editing the country.
+	public var countryUseFormatterDuringInput: Bool
+	
+	public required init(tag: String?) {
+		streetUseFormatterDuringInput = false
+		stateUseFormatterDuringInput = false
+		postalCodeUseFormatterDuringInput = false
+		cityUseFormatterDuringInput = false
+		countryUseFormatterDuringInput = false
+		
+		super.init(tag: tag)
+	}
 }
 
 public protocol _DatePickerRowProtocol {
@@ -261,7 +355,33 @@ public class _PasswordRow: FieldRow<String, PasswordCell> {
     }
 }
 
-public class _DecimalRow: FieldRow<Float, DecimalCell> {
+public class DecimalFormatter : NSNumberFormatter, FormatterProtocol {
+    
+    public override init() {
+        super.init()
+        locale = .currentLocale()
+        numberStyle = .DecimalStyle
+        minimumFractionDigits = 2
+        maximumFractionDigits = 2
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override public func getObjectValue(obj: AutoreleasingUnsafeMutablePointer<AnyObject?>, forString string: String, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>) -> Bool {
+        guard obj != nil else { return false }
+        let str = string.componentsSeparatedByCharactersInSet(NSCharacterSet.decimalDigitCharacterSet().invertedSet).joinWithSeparator("")
+        obj.memory = NSNumber(double: (Double(str) ?? 0.0)/Double(pow(10.0, Double(minimumFractionDigits))))
+        return true
+    }
+    
+    public func getNewPosition(forPosition position: UITextPosition, inTextInput textInput: UITextInput, oldValue: String?, newValue: String?) -> UITextPosition {
+        return textInput.positionFromPosition(position, offset:((newValue?.characters.count ?? 0) - (oldValue?.characters.count ?? 0))) ?? position
+    }
+}
+
+public class _DecimalRow: FieldRow<Double, DecimalCell> {
     public required init(tag: String?) {
         super.init(tag: tag)
         let numberFormatter = NSNumberFormatter()
@@ -411,11 +531,34 @@ public class _SwitchRow: Row<Bool, SwitchCell> {
     }
 }
 
-public class _PushRow<T: Equatable> : SelectorRow<T, SelectorViewController<T>> {
+public class _PushRow<T: Equatable, Cell: CellType where Cell: BaseCell, Cell.Value == T> : SelectorRow<T, SelectorViewController<T>, Cell> {
     
     public required init(tag: String?) {
         super.init(tag: tag)
         presentationMode = .Show(controllerProvider: ControllerProvider.Callback { return SelectorViewController<T>(){ _ in } }, completionCallback: { vc in vc.navigationController?.popViewControllerAnimated(true) })
+    }
+}
+
+public class _PopoverSelectorRow<T: Equatable, Cell: CellType where Cell: BaseCell, Cell.Value == T> : SelectorRow<T, SelectorViewController<T>, Cell> {
+    
+    public required init(tag: String?) {
+        super.init(tag: tag)
+        onPresentCallback = { [weak self] (_, viewController) -> Void in
+            guard let porpoverController = viewController.popoverPresentationController, tableView = self?.baseCell.formViewController()?.tableView, cell = self?.cell else {
+                fatalError()
+            }
+            porpoverController.sourceView = tableView
+            porpoverController.sourceRect = tableView.convertRect(cell.detailTextLabel?.frame ?? cell.textLabel?.frame ?? cell.contentView.frame, fromView: cell)
+        }
+        presentationMode = .Popover(controllerProvider: ControllerProvider.Callback { return SelectorViewController<T>(){ _ in } }, completionCallback: { [weak self] in
+            $0.dismissViewControllerAnimated(true, completion: nil)
+            self?.reload()
+            })
+    }
+    
+    public override func didSelect() {
+        deselect()
+        super.didSelect()
     }
 }
 
@@ -464,13 +607,18 @@ public class OptionsRow<T: Equatable, Cell: CellType where Cell: BaseCell, Cell.
     }
 }
 
-public class _ActionSheetRow<T: Equatable>: OptionsRow<T, AlertSelectorCell<T>>, PresenterRowType {
+public class _ActionSheetRow<T: Equatable, Cell: CellType where Cell: BaseCell, Cell.Value == T>: OptionsRow<T, Cell>, PresenterRowType {
     
     public var onPresentCallback : ((FormViewController, SelectorAlertController<T>)->())?
     lazy public var presentationMode: PresentationMode<SelectorAlertController<T>>? = {
         return .PresentModally(controllerProvider: ControllerProvider.Callback { [weak self] in
             let vc = SelectorAlertController<T>(title: self?.selectorTitle, message: nil, preferredStyle: .ActionSheet)
-            vc.row = self
+			if let popView = vc.popoverPresentationController {
+                guard let cell = self?.cell, tableView = cell.formViewController()?.tableView else { fatalError() }
+				popView.sourceView = tableView
+                popView.sourceRect = tableView.convertRect(cell.detailTextLabel?.frame ?? cell.textLabel?.frame ?? cell.contentView.frame, fromView: cell)
+			}
+			vc.row = self
             return vc
             },
             completionCallback: { [weak self] in
@@ -498,7 +646,7 @@ public class _ActionSheetRow<T: Equatable>: OptionsRow<T, AlertSelectorCell<T>>,
     }
 }
 
-public class _AlertRow<T: Equatable>: OptionsRow<T, AlertSelectorCell<T>>, PresenterRowType {
+public class _AlertRow<T: Equatable, Cell: CellType where Cell: BaseCell, Cell.Value == T>: OptionsRow<T, Cell>, PresenterRowType {
     
     public var onPresentCallback : ((FormViewController, SelectorAlertController<T>)->())?
     lazy public var presentationMode: PresentationMode<SelectorAlertController<T>>? = {
@@ -532,28 +680,40 @@ public class _AlertRow<T: Equatable>: OptionsRow<T, AlertSelectorCell<T>>, Prese
     }
 }
 
-public struct ImageRowSourceTypes : OptionSetType{
+public struct ImageRowSourceTypes : OptionSetType {
     
-    public  let rawValue : Int
-    public  init(rawValue:Int){ self.rawValue = rawValue}
-    private init(_ sourceType: UIImagePickerControllerSourceType){ self.rawValue = sourceType.rawValue }
+    public let rawValue: Int
+    public var imagePickerControllerSourceTypeRawValue: Int { return self.rawValue >> 1 }
     
-    static let Camera  = ImageRowSourceTypes(.Camera)
-    static let PhotoLibrary  = ImageRowSourceTypes(.PhotoLibrary)
-    static let SavedPhotosAlbum = ImageRowSourceTypes(.SavedPhotosAlbum)
-    static let All: ImageRowSourceTypes = [Camera, PhotoLibrary, SavedPhotosAlbum]
+    public init(rawValue: Int) { self.rawValue = rawValue }
+    private init(_ sourceType: UIImagePickerControllerSourceType) { self.init(rawValue: 1 << sourceType.rawValue) }
+    
+    public static let PhotoLibrary  = ImageRowSourceTypes(.PhotoLibrary)
+    public static let Camera  = ImageRowSourceTypes(.Camera)
+    public static let SavedPhotosAlbum = ImageRowSourceTypes(.SavedPhotosAlbum)
+    public static let All: ImageRowSourceTypes = [Camera, PhotoLibrary, SavedPhotosAlbum]
 }
 
-public class _ImageRow : SelectorRow<UIImage, ImagePickerController> {
+public enum ImageClearAction {
+    case No
+    case Yes(style: UIAlertActionStyle)
+}
 
-    public var sourceTypes: ImageRowSourceTypes
+public class _ImageRow<Cell: CellType where Cell: BaseCell, Cell.Value == UIImage> : SelectorRow<UIImage, ImagePickerController, Cell> {
     
-    private var _sourceType: UIImagePickerControllerSourceType = .Camera
+    public var sourceTypes: ImageRowSourceTypes
+    public internal(set) var imageURL: NSURL?
+	public var clearAction = ImageClearAction.Yes(style: .Destructive)
+    
+	private var _sourceType: UIImagePickerControllerSourceType = .Camera
     
     public required init(tag: String?) {
         sourceTypes = .All
         super.init(tag: tag)
-        presentationMode = .PresentModally(controllerProvider: ControllerProvider.Callback { return ImagePickerController() }, completionCallback: { vc in vc.dismissViewControllerAnimated(true, completion: nil) })
+        presentationMode = .PresentModally(controllerProvider: ControllerProvider.Callback { return ImagePickerController() }, completionCallback: { [weak self] vc in
+                self?.select()
+                vc.dismissViewControllerAnimated(true, completion: nil)
+            })
         self.displayValueFor = nil
 
     }
@@ -575,44 +735,80 @@ public class _ImageRow : SelectorRow<UIImage, ImagePickerController> {
     }
     
     public override func customDidSelect() {
+        guard !isDisabled else {
+            super.customDidSelect()
+            return
+        }
+        deselect()
         
-        // check if we have only one source type given
+        var availableSources: ImageRowSourceTypes = []
+        
+        if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
+            availableSources.insert(.PhotoLibrary)
+        }
+        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
+            availableSources.insert(.Camera)
+        }
+        if UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum) {
+            availableSources.insert(.SavedPhotosAlbum)
+        }
+        
+        sourceTypes.intersectInPlace(availableSources)
+        
+        
+        if sourceTypes.isEmpty {
+            super.customDidSelect()
+            return
+        }
+        
+        // now that we know the number of actions aren't empty
         let sourceActionSheet = UIAlertController(title: nil, message: selectorTitle, preferredStyle: .ActionSheet)
+        guard let tableView = cell.formViewController()?.tableView  else { fatalError() }
+		if let popView = sourceActionSheet.popoverPresentationController {
+			popView.sourceView = tableView
+			popView.sourceRect = tableView.convertRect(cell.accessoryView?.frame ?? cell.contentView.frame, fromView: cell)
+		}
         
-        if sourceTypes.contains(.Camera) && UIImagePickerController.isSourceTypeAvailable(.Camera) {
-            let cameraOption = UIAlertAction(title: "Take Photo", style: .Default, handler: { [weak self] (alert: UIAlertAction) -> Void in
+		if sourceTypes.contains(.Camera) {
+            let cameraOption = UIAlertAction(title: NSLocalizedString("Take Photo", comment: ""), style: .Default, handler: { [weak self] _ in
                 self?.displayImagePickerController(.Camera)
             })
             sourceActionSheet.addAction(cameraOption)
         }
-        if sourceTypes.contains(.PhotoLibrary) && UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
-            let photoLibraryOption = UIAlertAction(title: "Photo Library", style: .Default, handler: { [weak self] (alert: UIAlertAction) -> Void in
+        if sourceTypes.contains(.PhotoLibrary) {
+            let photoLibraryOption = UIAlertAction(title: NSLocalizedString("Photo Library", comment: ""), style: .Default, handler: { [weak self] _ in
                 self?.displayImagePickerController(.PhotoLibrary)
             })
             sourceActionSheet.addAction(photoLibraryOption)
         }
-        if sourceTypes.contains(.SavedPhotosAlbum) && UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum) {
-            let savedPhotosOption = UIAlertAction(title: "Saved Photos", style: .Default, handler: { [weak self] (alert: UIAlertAction) -> Void in
+        if sourceTypes.contains(.SavedPhotosAlbum) {
+            let savedPhotosOption = UIAlertAction(title: NSLocalizedString("Saved Photos", comment: ""), style: .Default, handler: { [weak self] _ in
                 self?.displayImagePickerController(.SavedPhotosAlbum)
             })
             sourceActionSheet.addAction(savedPhotosOption)
         }
         
-        guard !sourceActionSheet.actions.isEmpty else{
-            super.customDidSelect()
-            return
+        switch clearAction {
+        case .Yes(let style):
+            if let _ = value {
+                let clearPhotoOption = UIAlertAction(title: NSLocalizedString("Clear Photo", comment: ""), style: style, handler: { [weak self] _ in
+                    self?.value = nil
+                    self?.updateCell()
+                    })
+                sourceActionSheet.addAction(clearPhotoOption)
+            }
+        case .No:
+            break
         }
         
-        // now that we know the number of actions aren't emopty
+        // check if we have only one source type given
         if sourceActionSheet.actions.count == 1 {
-            if let imagePickerSourceType = UIImagePickerControllerSourceType(rawValue: sourceTypes.rawValue) {
-                self.displayImagePickerController(imagePickerSourceType)
+            if let imagePickerSourceType = UIImagePickerControllerSourceType(rawValue: sourceTypes.imagePickerControllerSourceTypeRawValue) {
+                displayImagePickerController(imagePickerSourceType)
             }
-        }
-        else{
-            let cancelOption = UIAlertAction(title: "Cancel", style: .Cancel, handler:nil)
+        } else {
+            let cancelOption = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler:nil)
             sourceActionSheet.addAction(cancelOption)
-            
             
             if let presentingViewController = cell.formViewController() {
                 presentingViewController.presentViewController(sourceActionSheet, animated: true, completion:nil)
@@ -644,7 +840,7 @@ public class _ImageRow : SelectorRow<UIImage, ImagePickerController> {
     }
 }
 
-public class _MultipleSelectorRow<T: Hashable> : GenericMultipleSelectorRow<T, MultipleSelectorViewController<T>> {
+public class _MultipleSelectorRow<T: Hashable, Cell: CellType where Cell: BaseCell, Cell.Value == Set<T>> : GenericMultipleSelectorRow<T, MultipleSelectorViewController<T>, Cell> {
     public required init(tag: String?) {
         super.init(tag: tag)
         self.displayValueFor = {
@@ -1120,35 +1316,42 @@ public final class SegmentedRow<T: Equatable>: OptionsRow<T, SegmentedCell<T>>, 
 }
 
 /// An options row where the user can select an option from an ActionSheet
-public final class ActionSheetRow<T: Equatable>: _ActionSheetRow<T>, RowType {
+public final class ActionSheetRow<T: Equatable>: _ActionSheetRow<T, AlertSelectorCell<T>>, RowType {
     required public init(tag: String?) {
         super.init(tag: tag)
     }
 }
 
 /// An options row where the user can select an option from a modal Alert
-public final class AlertRow<T: Equatable>: _AlertRow<T>, RowType {
+public final class AlertRow<T: Equatable>: _AlertRow<T, AlertSelectorCell<T>>, RowType {
     required public init(tag: String?) {
         super.init(tag: tag)
     }
 }
 
 /// A selector row where the user can pick an image
-public final class ImageRow : _ImageRow, RowType {
+public final class ImageRow : _ImageRow<PushSelectorCell<UIImage>>, RowType {
     public required init(tag: String?) {
         super.init(tag: tag)
     }
 }
 
 /// A selector row where the user can pick an option from a pushed view controller
-public final class PushRow<T: Equatable> : _PushRow<T>, RowType {
+public final class PushRow<T: Equatable> : _PushRow<T, PushSelectorCell<T>>, RowType {
     public required init(tag: String?) {
         super.init(tag: tag)
     }
 }
 
+public final class PopoverSelectorRow<T: Equatable> : _PopoverSelectorRow<T, PushSelectorCell<T>>, RowType {
+    public required init(tag: String?) {
+        super.init(tag: tag)
+    }
+}
+
+
 /// A selector row where the user can pick several options from a pushed view controller
-public final class MultipleSelectorRow<T: Hashable> : _MultipleSelectorRow<T>, RowType {
+public final class MultipleSelectorRow<T: Hashable> : _MultipleSelectorRow<T, PushSelectorCell<Set<T>>>, RowType {
     public required init(tag: String?) {
         super.init(tag: tag)
     }
@@ -1204,4 +1407,18 @@ public final class PickerRow<T where T: Equatable>: _PickerRow<T>, RowType {
     required public init(tag: String?) {
         super.init(tag: tag)
     }
+}
+
+/// A PostalAddress valued row where the user can enter a postal address.
+public final class PostalAddressRow: _PostalAddressRow<PostalAddress, DefaultPostalAddressCell<PostalAddress>>, RowType {
+	public required init(tag: String? = nil) {
+		super.init(tag: tag)
+		onCellHighlight { cell, row  in
+			let color = cell.textLabel?.textColor
+			row.onCellUnHighlight { cell, _ in
+				cell.textLabel?.textColor = color
+			}
+			cell.textLabel?.textColor = cell.tintColor
+		}
+	}
 }

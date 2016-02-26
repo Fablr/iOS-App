@@ -13,8 +13,16 @@ final public class User: Object {
     // MARK: - User static members
 
     static func getCurrentUser() -> User? {
-        let realm = try! Realm()
-        return realm.objects(User).filter("currentUser == YES").first
+        let user: User?
+
+        do {
+            let realm = try Realm()
+            user = realm.objects(User).filter("currentUser == YES").first
+        } catch {
+            user = nil
+        }
+
+        return user
     }
 
     // MARK: - User members

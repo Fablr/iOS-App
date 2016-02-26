@@ -204,7 +204,7 @@ public class FablerDownload: Object {
             return
         }
 
-        manager.cancel(self)
+        self.manager.cancel(self)
     }
 
     public func remove() {
@@ -213,7 +213,7 @@ public class FablerDownload: Object {
             return
         }
 
-        manager.remove(self)
+        self.manager.remove(self)
     }
 
     // MARK: - Realm methods

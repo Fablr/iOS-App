@@ -81,7 +81,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     override class func tableViewStyleForCoder(decoder: NSCoder) -> UITableViewStyle {
-        return UITableViewStyle.Plain;
+        return UITableViewStyle.Plain
     }
 
     override func didPressLeftButton(sender: AnyObject!) {
@@ -144,7 +144,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
         if let header = self.headerController {
             var frame = header.view.frame
-            frame.size = CGSizeMake(header.view.frame.size.width, 70.0)
+            frame.size = CGSize(width: header.view.frame.size.width, height: 70.0)
             header.view.frame = frame
         }
 

@@ -15,7 +15,7 @@ target 'Fabler' do
   pod 'SCLAlertView', '~>0.5.1'
   pod 'Kingfisher', '~>2.0.3'
   pod 'SWRevealViewController', '~>2.3.0'
-  pod 'Eureka', '~>1.3.1'
+  pod 'Eureka', '~>1.4.1'
   pod 'ACPDownload', '~>1.1.0'
   pod 'Hue', '~>1.0.1'
   pod 'SwiftDate', '~>3.0.2'

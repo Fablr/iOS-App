@@ -16,6 +16,7 @@ public enum FablerAutoDownloadState {
     case CalculatingEpisodes
     case DownloadingEpisodes
     case CachingImages
+    case DeletingEpisodes
     case Errored
 }
 
@@ -23,6 +24,7 @@ public enum FablerAutoDownloadTask {
     case CalculateEpisodes
     case DownloadEpisodes
     case CacheImages
+    case DeleteEpisodes
 }
 
 public class FablerAutoDownload {
@@ -51,6 +53,8 @@ public class FablerAutoDownload {
     }
 
     public func addTask(task: FablerAutoDownloadTask) {
+        Log.info("Adding task to AutoDownload")
+
         dispatch_async(self.queue, {
             self.tasks.insert(task, atIndex: 0)
 
@@ -72,8 +76,11 @@ public class FablerAutoDownload {
 
     private func performNextTask() {
         guard self.state != .Errored else {
+            Log.error("AutoDownload is in error state")
             return
         }
+
+        Log.info("AutoDownload performing next task")
 
         if let task = self.tasks.popLast() {
             switch task {
@@ -83,6 +90,8 @@ public class FablerAutoDownload {
                 self.downloadEpisodes()
             case .CacheImages:
                 self.cacheImages()
+            case .DeleteEpisodes:
+                self.deleteEpisodes()
             }
         } else {
             self.state = .NotRunning
@@ -90,17 +99,23 @@ public class FablerAutoDownload {
     }
 
     private func calculateEpisodes() {
+        Log.info("AutoDownload is calculating episodes to download")
+
         self.state = .CalculatingEpisodes
 
         let service = PodcastService()
 
         _ = service.getSubscribedPodcasts(self.queue, completion: { podcasts in
+            Log.info("AutoDownload calculating episodes podcast callback")
+
             let service = EpisodeService()
 
             self.podcasts = podcasts.count
 
             for podcast in podcasts {
                 _ = service.getEpisodesForPodcast(podcast, queue: self.queue, completion: { episodes in
+                    Log.info("AutoDownload calculating episodes episode callback")
+
                     self.calculateDownloadsForPodcast(podcast, episodes: episodes)
 
                     self.podcasts -= 1
@@ -116,6 +131,8 @@ public class FablerAutoDownload {
     }
 
     private func downloadEpisodes() {
+        Log.info("AutoDownload downloading episodes")
+
         self.state = .DownloadingEpisodes
 
         let downloader = FablerDownloadManager.sharedInstance
@@ -131,6 +148,8 @@ public class FablerAutoDownload {
                 let realm = try Realm()
 
                 self.token = realm.addNotificationBlock({ _, _ in
+                    Log.info("AutoDownload removing completed downloads")
+
                     let finished = self.downloads.filter { $0.state == .Completed || $0.state == .Failed }
 
                     for download in finished {
@@ -138,6 +157,7 @@ public class FablerAutoDownload {
                     }
 
                     if self.downloads.count == 0 {
+                        Log.info("AutoDownload downloads finished")
                         self.performNextTask()
                     }
                 })
@@ -170,9 +190,9 @@ public class FablerAutoDownload {
     private func cacheImages() {
         self.state = .CachingImages
 
-        let podcastService = PodcastService()
+        let service = PodcastService()
 
-        _ = podcastService.getSubscribedPodcasts(self.queue, completion: { (podcasts) in
+        _ = service.getSubscribedPodcasts(self.queue, completion: { (podcasts) in
             Log.info("Caching subscribed podcast images.")
 
             let manager = KingfisherManager.sharedManager
@@ -212,5 +232,25 @@ public class FablerAutoDownload {
                 self.performNextTask()
             }
         })
+    }
+
+    private func deleteEpisodes() {
+        Log.info("AutoDownload deleting old episodes")
+
+        self.state = .DeletingEpisodes
+
+        let podcastService = PodcastService()
+        let episodeService = EpisodeService()
+
+        let podcasts = podcastService.getSubscribedPodcasts(completion: nil)
+
+        for podcast in podcasts {
+            let episodes = episodeService.getEpisodesForPodcast(podcast, completion: nil)
+            let filteredEpisodes = episodes.filter({ $0.completed && !($0.saved) && ($0.download != nil) })
+
+            for episode in filteredEpisodes {
+                episode.download?.remove()
+            }
+        }
     }
 }
