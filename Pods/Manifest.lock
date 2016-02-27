@@ -13,16 +13,16 @@ PODS:
   - FBSDKLoginKit (4.10.0):
     - FBSDKCoreKit
   - Hue (1.0.1)
-  - Kingfisher (2.0.3)
-  - Realm (0.98.2):
-    - Realm/Headers (= 0.98.2)
-  - Realm/Headers (0.98.2)
-  - RealmSwift (0.98.2):
-    - Realm (= 0.98.2)
+  - Kingfisher (2.0.4)
+  - Realm (0.98.3):
+    - Realm/Headers (= 0.98.3)
+  - Realm/Headers (0.98.3)
+  - RealmSwift (0.98.3):
+    - Realm (= 0.98.3)
   - SCLAlertView (0.5.1)
   - SlackTextViewController (1.9.1)
-  - SwiftDate (3.0.2)
-  - SwiftyBeaver (0.3.4)
+  - SwiftDate (3.0.6)
+  - SwiftyBeaver (0.3.5)
   - SwiftyJSON (2.3.2)
   - SWRevealViewController (2.3.0)
   - XNGMarkdownParser (0.3.2)
@@ -34,12 +34,12 @@ DEPENDENCIES:
   - FBSDKCoreKit (~> 4.10.0)
   - FBSDKLoginKit (~> 4.10.0)
   - Hue (~> 1.0.1)
-  - Kingfisher (~> 2.0.3)
-  - RealmSwift (~> 0.98.2)
+  - Kingfisher (~> 2.0.4)
+  - RealmSwift (~> 0.98.3)
   - SCLAlertView (~> 0.5.1)
   - SlackTextViewController (~> 1.9.1)
-  - SwiftDate (~> 3.0.2)
-  - SwiftyBeaver (~> 0.3.4)
+  - SwiftDate (~> 3.0.6)
+  - SwiftyBeaver (~> 0.3.5)
   - SwiftyJSON (~> 2.3.2)
   - SWRevealViewController (~> 2.3.0)
   - XNGMarkdownParser (~> 0.3.2)
@@ -52,13 +52,13 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 13bec8373fb3af94d44daf2aa1e0958687897fbd
   FBSDKLoginKit: d3d4a2e9d31954deb00bfea964167a05ca1ea976
   Hue: 0a53589bb58317e74068863b701ef1e5eee89ac1
-  Kingfisher: 44c1f1912f19371a67d701e67c96d6bb45ca1c8d
-  Realm: 88a147fe04b8f07191a676b15c779b2b448991de
-  RealmSwift: 9907c7415b3e19ef2ab9f89878fc890f03f93aea
+  Kingfisher: 8f1ec2c067ade2c549a1a594379b69c4b1ff81ab
+  Realm: c6a7d00221a2d5177810a674aebd40c5e0b70b0f
+  RealmSwift: d6ecad6e4c2a645d6ac956c2c7e9efb375f39c31
   SCLAlertView: 3ac39a863d3e10fc165662b1228b03402297aea9
   SlackTextViewController: 6b0d1030c53937226fc5358f217af2a34fc211cf
-  SwiftDate: 952306bbcd546719ba7431889939b58c5f57bae8
-  SwiftyBeaver: fd12d01eca16abe29d3a2135cd2349fb52a419e2
+  SwiftDate: 520c0e7de224c881fe4213caeca72d482ed3d45f
+  SwiftyBeaver: 2f90c3847586073616566dae043ad99b16866c4e
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   XNGMarkdownParser: aed98c14f0c0eb20064184ddf9bac26c482722b2
