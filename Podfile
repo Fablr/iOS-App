@@ -6,7 +6,7 @@ inhibit_all_warnings!
 target 'Fabler' do
   pod 'FBSDKLoginKit', '~>4.10.0'
   pod 'FBSDKCoreKit', '~>4.10.0'
-  pod 'Alamofire', '~>3.2'
+  pod 'Alamofire', '~>3.2.1'
   pod 'SwiftyJSON', '~>2.3.2'
   pod 'RealmSwift', '~>0.98.3'
   pod 'SlackTextViewController', '~>1.9.1'
@@ -19,6 +19,8 @@ target 'Fabler' do
   pod 'ACPDownload', '~>1.1.0'
   pod 'Hue', '~>1.0.1'
   pod 'SwiftDate', '~>3.0.6'
+  pod 'RxSwift', '~>2.2.0'
+  pod 'RxCocoa', '~>2.2.0'
 end
 
 target 'FablerTests' do

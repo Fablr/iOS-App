@@ -8,8 +8,9 @@
 
 import Foundation
 import SwiftDate
-import RealmSwift
 import Kingfisher
+import RxSwift
+import RxCocoa
 
 public enum FablerAutoDownloadState {
     case NotRunning
@@ -39,7 +40,7 @@ public class FablerAutoDownload {
     private let queue: dispatch_queue_t = dispatch_queue_create("com.Fabler.Fabler.AutoDownloadQueue", nil)
     private var episodes: [Episode] = []
     private var downloads: [FablerDownload] = []
-    private var token: NotificationToken? = nil
+    private var bag: DisposeBag! = DisposeBag()
     private var podcasts: Int = 0
 
     // MARK: - public members
@@ -49,7 +50,7 @@ public class FablerAutoDownload {
     // MARK: - public methods
 
     deinit {
-        self.token?.stop()
+        self.bag = nil
     }
 
     public func addTask(task: FablerAutoDownloadTask) {
@@ -82,7 +83,7 @@ public class FablerAutoDownload {
 
         Log.info("AutoDownload performing next task")
 
-        if let task = self.tasks.popLast() {
+        if let task = self.tasks.last {
             switch task {
             case .CalculateEpisodes:
                 self.calculateEpisodes()
@@ -96,6 +97,11 @@ public class FablerAutoDownload {
         } else {
             self.state = .NotRunning
         }
+    }
+
+    private func completeTask() {
+        _ = self.tasks.popLast()
+        self.performNextTask()
     }
 
     private func calculateEpisodes() {
@@ -113,16 +119,17 @@ public class FablerAutoDownload {
             self.podcasts = podcasts.count
 
             for podcast in podcasts {
+                let count = podcast.downloadAmount
                 _ = service.getEpisodesForPodcast(podcast, queue: self.queue, completion: { episodes in
                     Log.info("AutoDownload calculating episodes episode callback")
 
-                    self.calculateDownloadsForPodcast(podcast, episodes: episodes)
+                    self.calculateDownloadsForPodcast(count, episodes: episodes)
 
                     self.podcasts -= 1
 
                     if self.podcasts == 0 {
                         dispatch_async(self.queue, {
-                            self.performNextTask()
+                            self.completeTask()
                         })
                     }
                 })
@@ -140,14 +147,8 @@ public class FablerAutoDownload {
         for episode in self.episodes {
             if let download = downloader.downloadWithEpisode(episode) {
                 self.downloads.append(download)
-            }
-        }
-
-        if self.token == nil {
-            do {
-                let realm = try Realm()
-
-                self.token = realm.addNotificationBlock({ _, _ in
+                download.rx_observe(FablerDownloadState.self, "state")
+                .subscribeNext({ state in
                     Log.info("AutoDownload removing completed downloads")
 
                     let finished = self.downloads.filter { $0.state == .Completed || $0.state == .Failed }
@@ -157,18 +158,19 @@ public class FablerAutoDownload {
                     }
 
                     if self.downloads.count == 0 {
-                        Log.info("AutoDownload downloads finished")
-                        self.performNextTask()
+                        dispatch_async(self.queue, {
+                            Log.info("AutoDownload downloads finished")
+                            self.bag = DisposeBag()
+                            self.completeTask()
+                        })
                     }
                 })
-            } catch {
-                self.state = .Errored
+                .addDisposableTo(self.bag)
             }
         }
     }
 
-    private func calculateDownloadsForPodcast(podcast: Podcast, episodes: [Episode]) {
-        let count = podcast.downloadAmount
+    private func calculateDownloadsForPodcast(count: Int, episodes: [Episode]) {
         let sortedEpisodes = episodes.sort({ (e1: Episode, e2: Episode) -> Bool in
             return e1.pubdate < e2.pubdate
         })
@@ -222,14 +224,14 @@ public class FablerAutoDownload {
                         self.podcasts -= 1
 
                         if self.podcasts == 0 {
-                            self.performNextTask()
+                            self.completeTask()
                         }
                     })
                 }
             }
 
             if self.podcasts == 0 {
-                self.performNextTask()
+                self.completeTask()
             }
         })
     }
@@ -252,5 +254,7 @@ public class FablerAutoDownload {
                 episode.download?.remove()
             }
         }
+
+        self.completeTask()
     }
 }

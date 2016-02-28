@@ -33,7 +33,7 @@
 import Foundation
 import RealmSwift
 
-public enum FablerDownloadState: Int {
+@objc public enum FablerDownloadState: Int {
     case Unknown = 0
     case Waiting
     case Downloading
