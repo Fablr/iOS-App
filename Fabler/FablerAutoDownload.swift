@@ -38,7 +38,7 @@ public class FablerAutoDownload {
 
     private var tasks: [FablerAutoDownloadTask] = []
     private let queue: dispatch_queue_t = dispatch_queue_create("com.Fabler.Fabler.AutoDownloadQueue", nil)
-    private var episodes: [Episode] = []
+    private var episodes: [Int] = []
     private var downloads: [FablerDownload] = []
     private var bag: DisposeBag! = DisposeBag()
     private var podcasts: Int = 0
@@ -101,6 +101,7 @@ public class FablerAutoDownload {
 
     private func completeTask() {
         _ = self.tasks.popLast()
+        self.bag = DisposeBag()
         self.performNextTask()
     }
 
@@ -144,9 +145,13 @@ public class FablerAutoDownload {
 
         let downloader = FablerDownloadManager.sharedInstance
 
-        for episode in self.episodes {
-            if let download = downloader.downloadWithEpisode(episode) {
+        for id in self.episodes {
+            let service = EpisodeService()
+
+            if let episode = service.getEpisodeFor(id, completion: nil), let download = downloader.downloadWithEpisode(episode) {
+                Log.info("AutoDownloading episode")
                 self.downloads.append(download)
+
                 download.rx_observe(FablerDownloadState.self, "state")
                 .subscribeNext({ state in
                     Log.info("AutoDownload removing completed downloads")
@@ -160,13 +165,19 @@ public class FablerAutoDownload {
                     if self.downloads.count == 0 {
                         dispatch_async(self.queue, {
                             Log.info("AutoDownload downloads finished")
-                            self.bag = DisposeBag()
+                            self.episodes.removeAll()
                             self.completeTask()
                         })
                     }
                 })
                 .addDisposableTo(self.bag)
             }
+        }
+
+        if self.downloads.count == 0 {
+            Log.info("AutoDownload downloads finished")
+            self.episodes.removeAll()
+            self.completeTask()
         }
     }
 
@@ -185,7 +196,7 @@ public class FablerAutoDownload {
                 downloads = Array(sortedEpisodes.filter({ $0.download == nil})[0...count - 1])
             }
 
-            self.episodes.appendContentsOf(downloads)
+            _ = downloads.map { self.episodes.append($0.episodeId) }
         }
     }
 
