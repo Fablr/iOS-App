@@ -58,7 +58,7 @@ class EpisodeTableViewCell: UITableViewCell {
 
                     }
                 case .Indeterminate:
-                    break
+                    fallthrough
                 case .Running:
                     episode.download?.cancel()
                     view.setIndicatorStatus(.None)
