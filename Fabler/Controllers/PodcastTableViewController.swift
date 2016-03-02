@@ -10,8 +10,9 @@ import UIKit
 import SlackTextViewController
 import Kingfisher
 import Hue
+import ChameleonFramework
 
-class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate, ChangesBasedOnSegment, PerformsUserSegueDelegate {
+class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate, ChangesBasedOnSegment, PerformsUserSegueDelegate, PresentAlertControllerDelegate {
 
     // MARK: - PodcastTableViewController data members
 
@@ -72,8 +73,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
                 if !podcast.primarySet || !podcast.backgroundSet {
                     let colors = image.colors()
-                    service.setPrimaryColorForPodcast(podcast, color: colors.primary)
-                    service.setBackgroundColorForPodcast(podcast, color: colors.background)
+                    service.setPrimaryColorForPodcast(podcast, color: colors.primary.flatten())
+                    service.setBackgroundColorForPodcast(podcast, color: colors.background.flatten())
                 }
 
                 self.updateImages(image, blurred: blurred)
@@ -86,8 +87,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
                             if let podcast = service.readPodcastFor(id, completion: nil) {
                                 if !podcast.primarySet || !podcast.backgroundSet {
                                     let colors = image.colors()
-                                    service.setPrimaryColorForPodcast(podcast, color: colors.primary)
-                                    service.setBackgroundColorForPodcast(podcast, color: colors.background)
+                                    service.setPrimaryColorForPodcast(podcast, color: colors.primary.flatten())
+                                    service.setBackgroundColorForPodcast(podcast, color: colors.background.flatten())
                                 }
                             }
 
@@ -687,6 +688,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
         if let cell = cell as? EpisodeTableViewCell {
             cell.setEpisodeInstance(episode)
+
+            cell.presentDelegate = self
         }
 
         return cell
@@ -715,22 +718,6 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         let episode = filteredEpisodes[indexPath.row]
 
         if let download = episode.download where download.state == .Completed {
-            let title = episode.saved ? "Unsave" : "Save"
-
-            let saveAction = UITableViewRowAction(style: .Normal, title: title, handler: { [weak self] (action: UITableViewRowAction, indexPath: NSIndexPath) in
-                if let controller = self {
-                    let episode = controller.filteredEpisodes[indexPath.row]
-                    let service = EpisodeService()
-
-                    service.flipSaveForEpisode(episode)
-                    controller.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                }
-            })
-
-            saveAction.backgroundColor = UIColor.fablerOrangeColor()
-
-            results.append(saveAction)
-
             let deleteAction = UITableViewRowAction(style: .Destructive, title: "Delete", handler: { [weak self] (action: UITableViewRowAction, indexPath: NSIndexPath) in
                 if let controller = self, let download = controller.filteredEpisodes[indexPath.row].download {
                     download.remove()
@@ -960,5 +947,11 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     func performSegueTo(user: User) {
         performSegueWithIdentifier("displayUserSegue", sender: user)
+    }
+
+    // MARK: - PresentAlertController functions
+
+    func presentAlert(controller: UIAlertController) {
+        self.presentViewController(controller, animated: true, completion: nil)
     }
 }

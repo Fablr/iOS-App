@@ -11,20 +11,20 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="110"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3vD-Ni-i2w" id="sI9-AA-JDb">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="109"/>
+                <rect key="frame" x="0.0" y="0.0" width="414" height="109.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="BHN-fV-fcS">
-                        <rect key="frame" x="8" y="8" width="358" height="93"/>
+                        <rect key="frame" x="8" y="8" width="323" height="93"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TBP-73-IOv">
-                                <rect key="frame" x="0.0" y="0.0" width="358" height="68"/>
+                                <rect key="frame" x="0.0" y="0.0" width="323" height="68"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1AS-si-LQU">
-                                <rect key="frame" x="0.0" y="68" width="358" height="25"/>
+                                <rect key="frame" x="0.0" y="68" width="323" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="U6S-Wf-7Xa"/>
                                 </constraints>
@@ -35,30 +35,49 @@
                         </subviews>
                     </stackView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uKu-9i-Cfm" customClass="ACPDownloadView">
-                        <rect key="frame" x="371" y="40" width="30" height="30"/>
+                        <rect key="frame" x="336" y="40" width="30" height="30"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="kJw-ec-jYT"/>
                             <constraint firstAttribute="height" constant="30" id="vff-oY-la7"/>
                         </constraints>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O4p-o1-0cY">
+                        <rect key="frame" x="371" y="40" width="30" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="fAn-ew-CF5"/>
+                            <constraint firstAttribute="width" constant="30" id="wN2-rI-HYC"/>
+                        </constraints>
+                        <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                        <state key="normal" image="ellipsis"/>
+                        <connections>
+                            <action selector="ellipsisButtonPressed:" destination="3vD-Ni-i2w" eventType="touchUpInside" id="E4N-yC-Z6y"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="uKu-9i-Cfm" firstAttribute="centerY" secondItem="sI9-AA-JDb" secondAttribute="centerY" id="0wa-OF-HUH"/>
                     <constraint firstItem="BHN-fV-fcS" firstAttribute="leading" secondItem="sI9-AA-JDb" secondAttribute="leadingMargin" id="5zd-2F-V9o"/>
                     <constraint firstItem="uKu-9i-Cfm" firstAttribute="leading" secondItem="BHN-fV-fcS" secondAttribute="trailing" constant="5" id="86M-j5-FLU"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="uKu-9i-Cfm" secondAttribute="trailing" constant="5" id="NGH-m0-37k"/>
+                    <constraint firstItem="O4p-o1-0cY" firstAttribute="leading" secondItem="uKu-9i-Cfm" secondAttribute="trailing" constant="5" id="J8x-0w-dKF"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="O4p-o1-0cY" secondAttribute="trailing" constant="5" id="Mep-A7-vdM"/>
                     <constraint firstItem="BHN-fV-fcS" firstAttribute="top" secondItem="sI9-AA-JDb" secondAttribute="topMargin" id="RcY-M2-pWs"/>
                     <constraint firstAttribute="bottomMargin" secondItem="BHN-fV-fcS" secondAttribute="bottom" id="Tjy-wE-pO6"/>
+                    <constraint firstItem="O4p-o1-0cY" firstAttribute="centerY" secondItem="sI9-AA-JDb" secondAttribute="centerY" id="jca-9J-q14"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="downloadView" destination="uKu-9i-Cfm" id="WCa-Ug-uX9"/>
+                <outlet property="ellipsisButton" destination="O4p-o1-0cY" id="3YP-YE-Yfd"/>
                 <outlet property="subLabel" destination="1AS-si-LQU" id="5q1-6B-YMc"/>
                 <outlet property="titleLabel" destination="TBP-73-IOv" id="rbP-5i-9dF"/>
             </connections>
             <point key="canvasLocation" x="603" y="658"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="ellipsis" width="25" height="25"/>
+    </resources>
 </document>

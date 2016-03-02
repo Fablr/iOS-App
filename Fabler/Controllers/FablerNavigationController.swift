@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ChameleonFramework
 
 class FablerNavigationController: UINavigationController {
 
@@ -30,13 +31,12 @@ class FablerNavigationController: UINavigationController {
 
     func setDefaultNavigationBar() {
         self.navigationBar.barStyle = UIBarStyle.Default
-        self.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        self.navigationBar.shadowImage = UIImage()
+        self.navigationBar.barTintColor = UIColor.fablerOrangeColor().flatten()
         self.navigationBar.translucent = false
-        self.navigationBar.tintColor = UIColor.fablerOrangeColor()
-        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.darkGrayColor()]
+        self.navigationBar.tintColor = UIColor(contrastingBlackOrWhiteColorOn: UIColor.fablerOrangeColor().flatten(), isFlat: true)
+        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(contrastingBlackOrWhiteColorOn: UIColor.fablerOrangeColor().flatten(), isFlat: true)]
         self.navigationBar.setTitleVerticalPositionAdjustment(0.0, forBarMetrics: UIBarMetrics.Default)
-        self.currentStatusBarStyle = .Default
+        self.setStatusBarStyle(UIStatusBarStyleContrast)
     }
 
     // MARK: - UIViewController functions

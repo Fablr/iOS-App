@@ -7,6 +7,9 @@ PODS:
   - Bolts/AppLinks (1.6.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.6.0)
+  - ChameleonFramework (2.1.0):
+    - ChameleonFramework/Default (= 2.1.0)
+  - ChameleonFramework/Default (2.1.0)
   - Eureka (1.4.1)
   - FBSDKCoreKit (4.10.0):
     - Bolts (~> 1.5)
@@ -33,6 +36,7 @@ PODS:
 DEPENDENCIES:
   - ACPDownload (~> 1.1.0)
   - Alamofire (~> 3.2.1)
+  - ChameleonFramework (~> 2.1.0)
   - Eureka (~> 1.4.1)
   - FBSDKCoreKit (~> 4.10.0)
   - FBSDKLoginKit (~> 4.10.0)
@@ -53,6 +57,7 @@ SPEC CHECKSUMS:
   ACPDownload: 9c6349be96019b6c8c87ad46570af1cbc7106bf4
   Alamofire: f11d8624a05f5d39e0c99309b3e600a3ba64298a
   Bolts: f52a250053bb517ca874523c3913776359ab3def
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Eureka: 2f1921d3162491921d2fef3b516bc4ef93a05122
   FBSDKCoreKit: 13bec8373fb3af94d44daf2aa1e0958687897fbd
   FBSDKLoginKit: d3d4a2e9d31954deb00bfea964167a05ca1ea976

@@ -50,10 +50,6 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
     }
 
-    func addMessage(message: String, parent: Int?) {
-
-    }
-
     func commentButtonPressed(sender: AnyObject) {
         self.replyComment = nil
         self.didRequestKeyboard()

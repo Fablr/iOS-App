@@ -20,7 +20,7 @@
                                 <segment title="All"/>
                                 <segment title="Comments"/>
                             </segments>
-                            <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="1" green="0.59999999999999998" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="segmentValueChanged:" destination="iN0-l3-epB" eventType="valueChanged" id="m2F-5D-WDk"/>
                             </connections>
