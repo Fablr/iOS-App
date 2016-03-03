@@ -38,6 +38,17 @@ class PodcastSettingsViewController: FormViewController {
         }
     }
 
+    func unsubscribePressed(cell: ButtonCellOf<String>, row: ButtonRow) {
+        if let podcast = self.podcast {
+            let service = PodcastService()
+            let subscribed = !(podcast.subscribed)
+
+            service.subscribeToPodcast(podcast, subscribe: subscribed, completion: nil)
+        }
+
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
     func closePressed(cell: ButtonCellOf<String>, row: ButtonRow) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -60,6 +71,14 @@ class PodcastSettingsViewController: FormViewController {
             return
         }
 
+        let tint: UIColor
+
+        if podcast!.primaryColor != nil {
+            tint = podcast!.primaryColor!
+        } else {
+            tint = .fablerOrangeColor()
+        }
+
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
         let veView = UIVisualEffectView(effect: blurEffect)
         veView.frame = self.view.bounds
@@ -67,10 +86,22 @@ class PodcastSettingsViewController: FormViewController {
         self.view.insertSubview(veView, atIndex: 0)
         self.tableView?.backgroundColor = UIColor.clearColor()
 
-        CheckRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
-        IntRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
+        CheckRow.defaultCellSetup = { cell, row in cell.tintColor = tint }
+        IntRow.defaultCellSetup = { cell, row in cell.tintColor = tint }
 
-        self.navigationAccessoryView.tintColor = .fablerOrangeColor()
+        self.navigationAccessoryView.tintColor = tint
+
+        self.form +++= Section()
+            <<< ButtonRow("Unsubscribe") {
+                $0.title = $0.tag
+                $0.onCellSelection(self.unsubscribePressed)
+                $0.cellSetup({ cell, row in
+                    cell.tintColor = UIColor.flatRedColor()
+                    if let size = cell.textLabel?.font.pointSize {
+                        cell.textLabel?.font = UIFont.boldSystemFontOfSize(size)
+                    }
+                })
+            }
 
         self.form +++= Section()
             <<< CheckRow("AutoDownload") {
@@ -90,8 +121,8 @@ class PodcastSettingsViewController: FormViewController {
             <<< ButtonRow("Close") {
                 $0.title = $0.tag
                 $0.onCellSelection(self.closePressed)
-                $0.cellSetup({ cell, row in cell.tintColor = UIColor.fablerOrangeColor()})
-        }
+                $0.cellSetup({ cell, row in cell.tintColor = tint })
+            }
 
         self.setFormValues()
     }

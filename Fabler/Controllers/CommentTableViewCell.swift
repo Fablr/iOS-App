@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ChameleonFramework
 
 protocol CollapsibleUITableViewCellDelegate {
     func setCollapseState(cell: UITableViewCell, collapsed: Bool)
@@ -138,6 +139,8 @@ class CommentTableViewCell: UITableViewCell {
     var comment: Comment?
     var barCollapsed: Bool = true
 
+    var tint: UIColor = .fablerOrangeColor()
+
     var collapseDelegate: CollapsibleUITableViewCellDelegate?
     var replyDelegate: RepliesToCommentDelegate?
     var segueDelegate: PerformsUserSegueDelegate?
@@ -153,14 +156,14 @@ class CommentTableViewCell: UITableViewCell {
         if let comment = self.comment {
             switch comment.userVote {
             case .Down:
-                self.downButton?.tintColor = UIColor.washedOutFablerOrangeColor()
-                self.upButton?.tintColor = UIColor.fablerOrangeColor()
+                self.downButton?.tintColor = tint.lightenByPercentage(0.25)
+                self.upButton?.tintColor = tint
             case .Up:
-                self.downButton?.tintColor = UIColor.fablerOrangeColor()
-                self.upButton?.tintColor = UIColor.washedOutFablerOrangeColor()
+                self.downButton?.tintColor = tint
+                self.upButton?.tintColor = tint.lightenByPercentage(0.25)
             default:
-                self.downButton?.tintColor = UIColor.fablerOrangeColor()
-                self.upButton?.tintColor = UIColor.fablerOrangeColor()
+                self.downButton?.tintColor = tint
+                self.upButton?.tintColor = tint
             }
 
             self.voteLabel?.text = "\(comment.voteCount)"
@@ -187,6 +190,7 @@ class CommentTableViewCell: UITableViewCell {
             self.subLabel?.text = "on \(date)"
 
             self.userButton?.setTitle(comment.userName, forState: .Normal)
+            self.userButton?.tintColor = self.tint
 
             if let formattedComment = comment.formattedComment {
                 self.commentTextView?.attributedText = formattedComment
@@ -218,6 +222,9 @@ class CommentTableViewCell: UITableViewCell {
                 self.downButton?.enabled = true
                 self.userButton?.enabled = true
             }
+
+            self.replyButton?.tintColor = tint
+            self.moreButton?.tintColor = tint
 
             let tapRec = UITapGestureRecognizer()
             tapRec.addTarget(self, action: "barTapped")

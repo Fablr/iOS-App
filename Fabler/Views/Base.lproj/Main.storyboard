@@ -119,9 +119,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Your Shows" id="ovY-ud-e84">
-                        <barButtonItem key="leftBarButtonItem" image="menu" id="bvR-yD-ToH">
-                            <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="bvR-yD-ToH"/>
                     </navigationItem>
                     <connections>
                         <outlet property="menuButton" destination="bvR-yD-ToH" id="Rui-eS-C5i"/>
@@ -233,7 +231,7 @@
                                 <rect key="frame" x="0.0" y="28" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="C9y-MZ-hG2" id="lXr-SK-kbI">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="b0b-KU-7Xo">
@@ -470,9 +468,7 @@
                         </cells>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Discovery" id="cfc-BV-ZDE">
-                        <barButtonItem key="leftBarButtonItem" image="menu" id="okk-0h-9oo">
-                            <color key="tintColor" red="1" green="0.56470588235294117" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="okk-0h-9oo"/>
                     </navigationItem>
                     <connections>
                         <outlet property="menuButton" destination="okk-0h-9oo" id="XbV-1C-7L9"/>
@@ -537,8 +533,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="AX5-vf-8TQ"/>
         <segue reference="cPh-g7-fxF"/>
-        <segue reference="P5W-DW-uff"/>
-        <segue reference="mUc-WM-FVw"/>
         <segue reference="nsB-VR-E4f"/>
+        <segue reference="Y9H-zW-Zfi"/>
+        <segue reference="P5W-DW-uff"/>
     </inferredMetricsTieBreakers>
 </document>

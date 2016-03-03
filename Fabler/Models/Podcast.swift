@@ -46,21 +46,6 @@ final public class Podcast: Object, Equatable {
         }
     }
 
-    dynamic var backgroundRed: Float = 0.0
-    dynamic var backgroundGreen: Float = 0.0
-    dynamic var backgroundBlue: Float = 0.0
-    dynamic var backgroundSet: Bool = false
-
-    var backgroundColor: UIColor? {
-        get {
-            if self.backgroundSet {
-                return UIColor(red: CGFloat(self.backgroundRed), green: CGFloat(self.backgroundGreen), blue: CGFloat(self.backgroundBlue), alpha: 1.0)
-            }
-
-            return nil
-        }
-    }
-
     // MARK: - Realm methods
 
     override public static func primaryKey() -> String? {

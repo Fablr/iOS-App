@@ -11,6 +11,8 @@ import SlackTextViewController
 import Kingfisher
 import Hue
 import ChameleonFramework
+import RxSwift
+import RxCocoa
 
 class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate, ChangesBasedOnSegment, PerformsUserSegueDelegate, PresentAlertControllerDelegate {
 
@@ -20,24 +22,16 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     var episodes: [Episode] = []
     var filteredEpisodes: [Episode] = []
     var comments: [Comment] = []
+    var bag: DisposeBag! = DisposeBag()
 
     // MARK: - PodcastTableViewController ui members
 
     var refreshControl: UIRefreshControl?
     var headerImage: UIImageView?
-    var blurredHeaderImage: UIImageView?
-    var titleLabel: UILabel?
-    var settingsButton: UIButton?
-    var subscribeButton: UIButton?
-    var settingsButtonWidth: NSLayoutConstraint?
 
     // MARK: - PodcastTableViewController magic members
 
-    let headerHeight: CGFloat = 130.0
-    let subHeaderHeight: CGFloat = 70.0
-    var headerSwitchOffset: CGFloat = 0.0
-    var barAnimationComplete: Bool = false
-    var barIsCollapsed: Bool = false
+    let headerHeight: CGFloat = 160.0
 
     // MARK: - CollapsibleUITableViewCellDelegate members
 
@@ -53,12 +47,36 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     var currentSegment: Int = 0
 
-    // MARK: - Colors
-
-    var backgroundColor: UIColor = UIColor.fablerOrangeColor()
-    var primaryColor: UIColor = UIColor.fablerOrangeColor()
-
     // MARK: - PodcastTableViewController functions
+
+    func setColorFor(podcast: Podcast, image: UIImage) {
+        let service = PodcastService()
+
+        let average = UIColor(averageColorFromImage: image).flatten()
+
+        var potentials: [UIColor] = []
+        potentials.append(average)
+
+        let colors = image.colors()
+        potentials.append(colors.background.flatten())
+        potentials.append(colors.primary.flatten())
+        potentials.append(colors.secondary.flatten())
+        potentials.append(colors.detail.flatten())
+
+        var colorSet: Bool = false
+
+        for color in potentials {
+            if color.isContrastingWith(.whiteColor()) {
+                service.setPrimaryColorForPodcast(podcast, color: color)
+                colorSet = true
+                break
+            }
+        }
+
+        if !colorSet {
+            service.setPrimaryColorForPodcast(podcast, color: average)
+        }
+    }
 
     func setupImages() {
         if let podcast = self.podcast, let url = NSURL(string: podcast.image) {
@@ -66,45 +84,29 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             let cache = manager.cache
 
             let id = podcast.podcastId
-            let key = "\(id)-header-blurred"
 
-            if let image = cache.retrieveImageInDiskCacheForKey(url.absoluteString), let blurred = cache.retrieveImageInDiskCacheForKey(key) {
-                let service = PodcastService()
-
-                if !podcast.primarySet || !podcast.backgroundSet {
-                    let colors = image.colors()
-                    service.setPrimaryColorForPodcast(podcast, color: colors.primary.flatten())
-                    service.setBackgroundColorForPodcast(podcast, color: colors.background.flatten())
+            if let image = cache.retrieveImageInDiskCacheForKey(url.absoluteString) {
+                if !podcast.primarySet {
+                    self.setColorFor(podcast, image: image)
                 }
 
-                self.updateImages(image, blurred: blurred)
+                self.updateImages(image)
             } else {
-                manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, url) in
+                manager.retrieveImageWithURL(url, optionsInfo: [.CallbackDispatchQueue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))], progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, url) in
                     if error == nil, let image = image {
-                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] in
-                            let service = PodcastService()
+                        let service = PodcastService()
 
-                            if let podcast = service.readPodcastFor(id, completion: nil) {
-                                if !podcast.primarySet || !podcast.backgroundSet {
-                                    let colors = image.colors()
-                                    service.setPrimaryColorForPodcast(podcast, color: colors.primary.flatten())
-                                    service.setBackgroundColorForPodcast(podcast, color: colors.background.flatten())
-                                }
+                        if let podcast = service.readPodcastFor(id, completion: nil), let controller = self {
+                            if !podcast.primarySet {
+                                controller.setColorFor(podcast, image: image)
                             }
+                        }
 
-                            Log.debug("Attempting to blur image.")
+                        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                            Log.debug("Setting header image.")
 
-                            if let blurred = image.imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {
-                                Log.debug("Caching blurred header image.")
-                                cache.storeImage(blurred, forKey: key)
-
-                                dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                                    Log.debug("Setting blurred header image.")
-
-                                    if let controller = self {
-                                        controller.updateImages(image, blurred: blurred)
-                                    }
-                                })
+                            if let controller = self {
+                                controller.updateImages(image)
                             }
                         })
                     }
@@ -113,24 +115,19 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
     }
 
-    func updateImages(image: UIImage, blurred: UIImage) {
-        self.blurredHeaderImage?.image = blurred
+    func updateImages(image: UIImage) {
         self.headerImage?.image = image
 
-        if let podcast = self.podcast, let primary = podcast.primaryColor, var background = podcast.backgroundColor {
-            self.navigationController?.navigationBar.tintColor = primary
-            self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: primary]
-
-            if !background.isDark {
-                background = primary
-            }
-
-            self.subscribeButton?.tintColor = background
-            self.settingsButton?.tintColor = background
-            self.titleLabel?.textColor = background
-
-            self.backgroundColor = background
-            self.primaryColor = primary
+        if let podcast = self.podcast, let primary = podcast.primaryColor {
+            //
+            // Setup navigation bar
+            //
+            self.navigationController?.navigationBar.barTintColor = primary
+            self.navigationController?.navigationBar.translucent = false
+            self.navigationController?.navigationBar.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primary, isFlat: true)
+            self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(contrastingBlackOrWhiteColorOn: primary, isFlat: true)]
+            self.navigationController?.navigationBar.clipsToBounds = false
+            self.setStatusBarStyle(UIStatusBarStyleContrast)
 
             self.tableView.reloadData()
         }
@@ -200,20 +197,12 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
     }
 
-    func subscribeButtonPressed(sender: AnyObject) {
+    func subscribeButtonPressed() {
         if let podcast = self.podcast {
             let service = PodcastService()
             let subscribed = !(podcast.subscribed)
 
-            self.updateSubscribeButton(subscribed)
-
-            service.subscribeToPodcast(podcast, subscribe: subscribed, completion: { [weak self] (result) in
-                if let controller = self {
-                    if !result {
-                        controller.updateSubscribeButton(!subscribed)
-                    }
-                }
-            })
+            service.subscribeToPodcast(podcast, subscribe: subscribed, completion: nil)
         }
     }
 
@@ -222,27 +211,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.didRequestKeyboard()
     }
 
-    func updateSubscribeButton(override: Bool?) {
-        if let override = override {
-            if override {
-                self.subscribeButton?.setTitle("Unsubscribe", forState: .Normal)
-                self.settingsButtonWidth?.constant = 70.0
-            } else {
-                self.subscribeButton?.setTitle("Subscribe", forState: .Normal)
-                self.settingsButtonWidth?.constant = 0.0
-            }
-        } else if let podcast = self.podcast {
-            if podcast.subscribed {
-                self.subscribeButton?.setTitle("Unsubscribe", forState: .Normal)
-                self.settingsButtonWidth?.constant = 70.0
-            } else {
-                self.subscribeButton?.setTitle("Subscribe", forState: .Normal)
-                self.settingsButtonWidth?.constant = 0.0
-            }
-        }
-    }
-
-    func settingsButtonPressed(sender: AnyObject) {
+    func settingsButtonPressed() {
         performSegueWithIdentifier("displaySettingsSegue", sender: self.podcast)
     }
 
@@ -309,6 +278,10 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     // MARK: - UIViewController functions
 
+    deinit {
+        self.bag = nil
+    }
+
     // swiftlint:disable function_body_length
     override func viewDidLoad() {
         guard self.podcast != nil else {
@@ -317,6 +290,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
 
         super.viewDidLoad()
+
+        self.navigationItem.title = self.podcast?.title
 
         //
         // TableView setup
@@ -329,63 +304,30 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             navBarHeight = 0.0
         }
 
-        self.headerSwitchOffset = self.headerHeight - (statusBarHeight + navBarHeight) - statusBarHeight - navBarHeight
-
         self.headerImage = UIImageView()
-        self.blurredHeaderImage?.backgroundColor = UIColor(red: 225.0/255.0, green: 225.0/255.0, blue: 225.0/255.0, alpha: 1.0)
+        self.headerImage?.backgroundColor = UIColor.fablerOrangeColor()
         self.headerImage?.translatesAutoresizingMaskIntoConstraints = false
         self.headerImage?.contentMode = .ScaleAspectFill
         self.headerImage?.clipsToBounds = true
 
-        self.blurredHeaderImage = UIImageView()
-        self.blurredHeaderImage?.backgroundColor = UIColor(red: 225.0/255.0, green: 225.0/255.0, blue: 225.0/255.0, alpha: 1.0)
-        self.blurredHeaderImage?.translatesAutoresizingMaskIntoConstraints = false
-        self.blurredHeaderImage?.contentMode = .ScaleAspectFill
-        self.blurredHeaderImage?.clipsToBounds = true
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.headerHeight - (statusBarHeight + navBarHeight)))
 
-        let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.headerHeight - (statusBarHeight + navBarHeight) + self.subHeaderHeight))
-
-        let sub = self.createSubHeader()
-        sub.translatesAutoresizingMaskIntoConstraints = false
-
-        if let image = self.headerImage, let blurredImage = self.blurredHeaderImage {
+        if let image = self.headerImage {
             header.addSubview(image)
-            header.insertSubview(blurredImage, belowSubview: image)
-            header.insertSubview(sub, belowSubview: blurredImage)
 
             self.tableView.tableHeaderView = header
 
-            let views = ["super": self.view, "tableView": self.tableView, "image": image, "blurredImage": blurredImage, "sub": sub]
-            let metrics = ["headerHeight": (self.headerHeight - (statusBarHeight + navBarHeight)), "minHeaderHeight": (statusBarHeight + navBarHeight), "subHeaderHeight": self.subHeaderHeight]
+            let views = ["super": self.view, "tableView": self.tableView, "image": image]
 
-            var format = "V:[image(>=minHeaderHeight)]-(subHeaderHeight@750)-|"
-            var constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: metrics, views: views)
-            self.view.addConstraints(constraint)
-
-            format = "V:[blurredImage(>=minHeaderHeight)]-(subHeaderHeight@750)-|"
-            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: metrics, views: views)
-            self.view.addConstraints(constraint)
-
-            format = "V:|-(headerHeight)-[sub(subHeaderHeight)]"
-            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: metrics, views: views)
+            var format = "V:[image]-(0@750)-|"
+            var constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: nil, views: views)
             self.view.addConstraints(constraint)
 
             format = "|-0-[image]-0-|"
-            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: metrics, views: views)
+            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: nil, views: views)
             self.view.addConstraints(constraint)
 
-            format = "|-0-[blurredImage]-0-|"
-            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: metrics, views: views)
-            self.view.addConstraints(constraint)
-
-            format = "|-0-[sub]-0-|"
-            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: metrics, views: views)
-            self.view.addConstraints(constraint)
-
-            var magic = NSLayoutConstraint(item: image, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1.0, constant: 0.0)
-            self.view.addConstraint(magic)
-
-            magic = NSLayoutConstraint(item: blurredImage, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1.0, constant: 0.0)
+            let magic = NSLayoutConstraint(item: image, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1.0, constant: 0.0)
             self.view.addConstraint(magic)
         }
 
@@ -416,8 +358,18 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
         self.leftButton.setImage(UIImage(named: "delete"), forState: UIControlState.Normal)
         self.leftButton.tintColor = UIColor.fablerOrangeColor()
-        self.rightButton.setTitle("Send", forState: UIControlState.Normal)
+        self.rightButton.setTitle("Post", forState: UIControlState.Normal)
         self.rightButton.tintColor = UIColor.fablerOrangeColor()
+
+        self.podcast?
+        .rx_observe(Bool.self, "primarySet")
+        .subscribeNext({ [weak self] (set) in
+            if let primary = self?.podcast?.primaryColor {
+                self?.leftButton.tintColor = primary
+                self?.rightButton.tintColor = primary
+            }
+        })
+        .addDisposableTo(self.bag)
 
         self.textInputbar.autoHideRightButton = true
 
@@ -433,12 +385,21 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         //
         // Static element setup
         //
-        self.titleLabel?.text = podcast?.title
+        self.podcast?
+        .rx_observe(Bool.self, "subscribed")
+        .subscribeNext({ subscribed in
+            if let subscribed = subscribed {
+                if subscribed {
+                    let button = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.Plain, target: self, action: "settingsButtonPressed")
+                    self.navigationItem.rightBarButtonItem = button
+                } else {
+                    let button = UIBarButtonItem(title: "Subscribe", style: UIBarButtonItemStyle.Plain, target: self, action: "subscribeButtonPressed")
+                    self.navigationItem.rightBarButtonItem = button
+                }
+            }
 
-        self.settingsButton?.addTarget(self, action: "settingsButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
-
-        self.updateSubscribeButton(nil)
-        self.subscribeButton?.addTarget(self, action: "subscribeButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
+        })
+        .addDisposableTo(self.bag)
 
         //
         // RefreshControl setup
@@ -457,21 +418,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
-        //
-        // Setup navigation bar
-        //
-        self.navigationController?.navigationBar.barStyle = .Black
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.translucent = true
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        self.navigationController?.navigationBar.clipsToBounds = true
-        self.navigationItem.title = ""
-
         self.setupImages()
-
-        self.barAnimationComplete = false
 
         //
         // Refresh data
@@ -533,7 +480,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         if let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("EpisodeSectionHeader") as? EpisodeSectionHeaderView {
             view.delegate = self
             view.segmentControl?.selectedSegmentIndex = self.currentSegment
-            view.setColors(self.primaryColor, background: self.backgroundColor)
+            view.setColors(self.podcast?.primaryColor)
 
             return view
         }
@@ -629,6 +576,11 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("CommentSectionFooter") as? CommentSectionFooterView {
             view.delegate = self
+
+            if let primary = self.podcast?.primaryColor {
+                view.commentButton?.tintColor = primary
+            }
+
             return view
         }
 
@@ -705,12 +657,10 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             }
         })
 
-        if let color = self.podcast?.backgroundColor {
-            if color.isDark {
-                detailAction.backgroundColor = color
-            } else {
-                detailAction.backgroundColor = self.podcast?.primaryColor
-            }
+        if let primary = self.podcast?.primaryColor {
+            detailAction.backgroundColor = primary
+        } else {
+            detailAction.backgroundColor = .fablerOrangeColor()
         }
 
         results.append(detailAction)
@@ -772,6 +722,10 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             cell.replyDelegate = self
             cell.segueDelegate = self
 
+            if let primary = self.podcast?.primaryColor {
+                cell.tint = primary
+            }
+
             if let collapseIndexPath = self.indexPath, let collapsed = self.collapsed {
                 if collapseIndexPath == indexPath {
                     cell.barCollapsed = collapsed
@@ -790,110 +744,6 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     func commentsEditActions(indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         return nil
-    }
-
-    // MARK: - PodcastTableViewController magic functions
-
-    func createSubHeader() -> UIView {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-
-        self.titleLabel = UILabel()
-        self.titleLabel?.translatesAutoresizingMaskIntoConstraints = false
-        self.titleLabel?.numberOfLines = 1
-        self.titleLabel?.font = UIFont.systemFontOfSize(18.0)
-        self.titleLabel?.lineBreakMode = NSLineBreakMode.ByTruncatingTail
-        self.titleLabel?.text = "Title"
-
-        self.subscribeButton = UIButton(type: UIButtonType.System)
-        self.subscribeButton?.translatesAutoresizingMaskIntoConstraints = false
-        self.subscribeButton?.tintColor = UIColor.fablerOrangeColor()
-        self.subscribeButton?.setTitle("Subscribe", forState: .Normal)
-
-        self.settingsButton = UIButton(type: UIButtonType.System)
-        self.settingsButton?.translatesAutoresizingMaskIntoConstraints = false
-        self.settingsButton?.tintColor = UIColor.fablerOrangeColor()
-        self.settingsButton?.setTitle("Settings", forState: .Normal)
-
-        if let title = self.titleLabel, let subscribe = self.subscribeButton, let settings = self.settingsButton {
-            view.addSubview(title)
-            view.addSubview(subscribe)
-            view.addSubview(settings)
-
-            let views = ["title": title, "subscribe": subscribe, "settings": settings]
-
-            var format = "V:|-0-[title]-0-|"
-            var constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: nil, views: views)
-            view.addConstraints(constraint)
-
-            format = "V:|-0-[subscribe]-0-|"
-            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: nil, views: views)
-            view.addConstraints(constraint)
-
-            format = "V:|-0-[settings]-0-|"
-            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: nil, views: views)
-            view.addConstraints(constraint)
-
-            format = "|-5-[title]"
-            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: nil, views: views)
-            view.addConstraints(constraint)
-
-            format = "[subscribe][settings]|"
-            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: nil, views: views)
-            view.addConstraints(constraint)
-
-            format = "[title]-(0@900)-[subscribe]"
-            constraint = NSLayoutConstraint.constraintsWithVisualFormat(format, options: .DirectionLeadingToTrailing, metrics: nil, views: views)
-            view.addConstraints(constraint)
-
-            var widthConstraint = NSLayoutConstraint(item: subscribe, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 90.0)
-            view.addConstraint(widthConstraint)
-
-            widthConstraint = NSLayoutConstraint(item: settings, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 70.0)
-            self.settingsButtonWidth = widthConstraint
-            view.addConstraint(widthConstraint)
-        }
-
-        return view
-    }
-
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
-        super.scrollViewDidScroll(scrollView)
-
-        let y = scrollView.contentOffset.y
-
-        if y > self.headerSwitchOffset && !self.barIsCollapsed {
-            self.barAnimationComplete = false
-            self.navigationItem.title = self.podcast?.title
-            self.barIsCollapsed = true
-        } else if y < self.headerSwitchOffset && self.barIsCollapsed {
-            self.navigationItem.title = ""
-            self.barAnimationComplete = false
-            self.barIsCollapsed = false
-        }
-
-        if y > (self.headerSwitchOffset) && y <= (self.headerSwitchOffset + 40) {
-            let delta = 40 - (y - self.headerSwitchOffset)
-
-            Log.verbose("Delta at \(delta).")
-
-            self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(delta, forBarMetrics: UIBarMetrics.Default)
-
-            if let image = self.headerImage, let _ = self.blurredHeaderImage?.image {
-                let alpha = (1.0 - (1.0 * ((40.0 - delta) / 40.0)))
-                image.alpha = alpha
-            }
-        }
-
-        if !self.barAnimationComplete && y > (self.headerSwitchOffset + 40) {
-            self.navigationController?.navigationBar.setTitleVerticalPositionAdjustment(0.0, forBarMetrics: UIBarMetrics.Default)
-
-            if let image = self.headerImage, let _ = self.blurredHeaderImage?.image {
-                image.alpha = 0.0
-            }
-
-            self.barAnimationComplete = true
-        }
     }
 
     // MARK: - CollapsibleUITableViewCellDelegate functions

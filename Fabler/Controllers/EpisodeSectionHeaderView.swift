@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Hue
 
 protocol ChangesBasedOnSegment {
     func segmentDidChangeTo(index: Int)
@@ -32,7 +33,24 @@ class EpisodeSectionHeaderView: UITableViewHeaderFooterView {
 
     // MARK: - EpisodeSectionHeaderView functions
 
-    func setColors(primary: UIColor, background: UIColor) {
-        self.segmentControl?.tintColor = background
+    func setColors(primary: UIColor?) {
+        var foreground: UIColor
+        var background: UIColor
+
+        if primary == nil {
+            foreground = .fablerOrangeColor()
+        } else {
+            foreground = primary!
+        }
+
+        if foreground.isBlackOrWhite {
+            background = foreground
+            foreground = UIColor(contrastingBlackOrWhiteColorOn: foreground, isFlat: true)
+        } else {
+            background = UIColor(contrastingBlackOrWhiteColorOn: foreground, isFlat: true)
+        }
+
+        self.segmentControl?.tintColor = foreground
+        self.segmentControl?.backgroundColor = background
     }
 }

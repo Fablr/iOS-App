@@ -213,9 +213,8 @@ public class FablerAutoDownload {
 
             for podcast in podcasts {
                 let id = podcast.podcastId
-                let key = "\(id)-header-blurred"
 
-                if let _ = cache.retrieveImageInDiskCacheForKey(key) {
+                if let _ = cache.retrieveImageInDiskCacheForKey(podcast.image) {
                     Log.debug("Skipping images for podcast \(id).")
                     continue
                 }
@@ -224,14 +223,6 @@ public class FablerAutoDownload {
                     self.podcasts += 1
 
                     manager.retrieveImageWithURL(url, optionsInfo: [.CallbackDispatchQueue(self.queue)], progressBlock: nil, completionHandler: { (image, error, cacheType, url) in
-                        if error == nil, let image = image {
-                            Log.info("Blurring image for '\(key)'")
-                            if let blurred = image.imageWithAppliedCoreImageFilter("CIGaussianBlur", filterParameters: ["inputRadius": 25.0]) {
-                                Log.info("Cached image at '\(key)'.")
-                                cache.storeImage(blurred, forKey: key)
-                            }
-                        }
-
                         self.podcasts -= 1
 
                         if self.podcasts == 0 {

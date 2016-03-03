@@ -162,7 +162,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
         self.leftButton.setImage(UIImage(named: "delete"), forState: UIControlState.Normal)
         self.leftButton.tintColor = UIColor.fablerOrangeColor()
-        self.rightButton.setTitle("Send", forState: UIControlState.Normal)
+        self.rightButton.setTitle("Post", forState: UIControlState.Normal)
         self.rightButton.tintColor = UIColor.fablerOrangeColor()
 
         self.textInputbar.autoHideRightButton = true

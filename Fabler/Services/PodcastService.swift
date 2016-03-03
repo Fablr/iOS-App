@@ -71,27 +71,6 @@ public class PodcastService {
         }
     }
 
-    public func setBackgroundColorForPodcast(podcast: Podcast, color: UIColor) {
-        do {
-            let realm = try Realm()
-            let components = CGColorGetComponents(color.CGColor)
-
-            let red = Float(components[0])
-            let green = Float(components[1])
-            let blue = Float(components[2])
-
-            try realm.write {
-                podcast.backgroundRed = red
-                podcast.backgroundGreen = green
-                podcast.backgroundBlue = blue
-                podcast.backgroundSet = true
-            }
-        } catch {
-            Log.error("Realm write failed.")
-        }
-    }
-
-
     public func readPodcastFor(podcastId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Podcast?) -> Void)?) -> Podcast? {
         if let completion = completion {
             let request = Alamofire
@@ -202,7 +181,7 @@ public class PodcastService {
         return podcasts
     }
 
-    public func subscribeToPodcast(podcast: Podcast, subscribe: Bool, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    public func subscribeToPodcast(podcast: Podcast, subscribe: Bool, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Bool) -> Void)?) {
         do {
             let realm = try Realm()
 
@@ -222,7 +201,9 @@ public class PodcastService {
         .responseJSON { response in
             switch response.result {
             case .Success:
-                dispatch_async(queue, {completion(result: true)})
+                if let completion = completion {
+                    dispatch_async(queue, {completion(result: true)})
+                }
             case .Failure(let error):
                 Log.error("Subscription request failed with \(error).")
 
@@ -243,7 +224,9 @@ public class PodcastService {
                     Log.error("Realm write failed.")
                 }
 
-                dispatch_async(queue, {completion(result: false)})
+                if let completion = completion {
+                    dispatch_async(queue, {completion(result: false)})
+                }
             }
         }
 

@@ -66,16 +66,11 @@ class EpisodeTableViewCell: UITableViewCell {
         self.subLabel?.text = date
 
         if let podcast = episode.podcast {
-            podcast.rx_observe(Float.self, "backgroundBlue")
+            podcast.rx_observe(Float.self, "primaryBlue")
             .subscribeNext({ [weak self] (color) in
-                if let bgColor = self?.episode?.podcast?.backgroundColor, let primary = self?.episode?.podcast?.primaryColor {
-                    if bgColor.isDark {
-                        self?.downloadView?.tintColor = bgColor
-                        self?.ellipsisButton?.tintColor = bgColor
-                    } else {
-                        self?.downloadView?.tintColor = primary
-                        self?.ellipsisButton?.tintColor = primary
-                    }
+                if let primary = self?.episode?.podcast?.primaryColor {
+                    self?.downloadView?.tintColor = primary
+                    self?.ellipsisButton?.tintColor = primary
                 }
             })
             .addDisposableTo(self.bag)
