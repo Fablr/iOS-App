@@ -51,8 +51,12 @@ public class FablerPlayer: NSObject {
         let width = UIScreen.mainScreen().bounds.size.width
         smallPlayer.view.frame = CGRect(x: 0, y: 0, width: width, height: 44)
 
-        largePlayer = LargePlayerViewController(nibName: "LargePlayer", bundle: nil)
-        largePlayer.modalPresentationStyle = .OverCurrentContext
+        let storyboard = UIStoryboard(name: "LargePlayer", bundle: nil)
+        if let controller = storyboard.instantiateViewControllerWithIdentifier("player") as? LargePlayerViewController {
+            self.largePlayer = controller
+        } else {
+            fatalError("Unable to cast LargePlayer from storyboard.")
+        }
 
         super.init()
 
