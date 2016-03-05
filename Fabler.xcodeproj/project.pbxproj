@@ -15,6 +15,9 @@
 		450B767C1BECABB30033C0B6 /* EpisodeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B767B1BECABB30033C0B6 /* EpisodeTableViewController.swift */; };
 		450B767E1BEF49120033C0B6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B767D1BEF49120033C0B6 /* User.swift */; };
 		450B76801BEF567D0033C0B6 /* BackpaneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B767F1BEF567D0033C0B6 /* BackpaneViewController.swift */; };
+		45149BDD1C894BB40044E8F1 /* UpNext.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45149BDC1C894BB40044E8F1 /* UpNext.xib */; };
+		45149BDF1C894DE00044E8F1 /* UpNextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45149BDE1C894DE00044E8F1 /* UpNextViewController.swift */; };
+		45149BE11C896AAC0044E8F1 /* LargePlayerStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45149BE01C896AAC0044E8F1 /* LargePlayerStoryboard.storyboard */; };
 		45173E341C269159006A8926 /* PodcastSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45173E331C269159006A8926 /* PodcastSettingsViewController.swift */; };
 		45173E361C290A62006A8926 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45173E351C290A62006A8926 /* UserViewController.swift */; };
 		45173E3A1C2A4C10006A8926 /* UserHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45173E391C2A4C10006A8926 /* UserHeader.xib */; };
@@ -82,6 +85,9 @@
 		450B767B1BECABB30033C0B6 /* EpisodeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeTableViewController.swift; sourceTree = "<group>"; };
 		450B767D1BEF49120033C0B6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		450B767F1BEF567D0033C0B6 /* BackpaneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackpaneViewController.swift; sourceTree = "<group>"; };
+		45149BDC1C894BB40044E8F1 /* UpNext.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpNext.xib; sourceTree = "<group>"; };
+		45149BDE1C894DE00044E8F1 /* UpNextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpNextViewController.swift; sourceTree = "<group>"; };
+		45149BE01C896AAC0044E8F1 /* LargePlayerStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LargePlayerStoryboard.storyboard; sourceTree = "<group>"; };
 		45173E331C269159006A8926 /* PodcastSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastSettingsViewController.swift; sourceTree = "<group>"; };
 		45173E351C290A62006A8926 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		45173E391C2A4C10006A8926 /* UserHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserHeader.xib; sourceTree = "<group>"; };
@@ -165,6 +171,8 @@
 				45E536761BDF06E0009E3F10 /* Main.storyboard */,
 				4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */,
 				45173E391C2A4C10006A8926 /* UserHeader.xib */,
+				45149BDC1C894BB40044E8F1 /* UpNext.xib */,
+				45149BE01C896AAC0044E8F1 /* LargePlayerStoryboard.storyboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -225,6 +233,7 @@
 				45173E351C290A62006A8926 /* UserViewController.swift */,
 				45173E3E1C2A877A006A8926 /* UsersTableViewController.swift */,
 				45173E401C2B1EE7006A8926 /* UserTableViewCell.swift */,
+				45149BDE1C894DE00044E8F1 /* UpNextViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -409,10 +418,12 @@
 				4538B57D1BF55C3800039DF1 /* SmallPlayer.xib in Resources */,
 				45173E3A1C2A4C10006A8926 /* UserHeader.xib in Resources */,
 				4576FC041C13CF0000381A28 /* EpisodeHeader.xib in Resources */,
+				45149BE11C896AAC0044E8F1 /* LargePlayerStoryboard.storyboard in Resources */,
 				45BFCC191C154299007D31C8 /* EpisodeCell.xib in Resources */,
 				4576FC001C13ACC900381A28 /* CommentCell.xib in Resources */,
 				45FBA2581BF5E7E900DD8D14 /* LargePlayer.xib in Resources */,
 				F47029FD1A7F27DB00E30A3C /* Images.xcassets in Resources */,
+				45149BDD1C894BB40044E8F1 /* UpNext.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,6 +529,7 @@
 				453382201C1EA11000EA9DEE /* FablerImage.swift in Sources */,
 				45A3433C1C76E99A00A660A2 /* FablerAutoDownload.swift in Sources */,
 				4501BB9B1C177F330021171C /* FablerUI.swift in Sources */,
+				45149BDF1C894DE00044E8F1 /* UpNextViewController.swift in Sources */,
 				450B76741BE983670033C0B6 /* PodcastTableViewController.swift in Sources */,
 				45F3B9F11C48C0F800582C72 /* FablerDownload.swift in Sources */,
 				45173E341C269159006A8926 /* PodcastSettingsViewController.swift in Sources */,

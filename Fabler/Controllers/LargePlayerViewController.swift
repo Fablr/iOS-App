@@ -27,11 +27,18 @@ public class LargePlayerViewController: UIViewController {
     @IBOutlet weak var closeButton: UIButton?
     @IBOutlet weak var currentTimeLabel: UILabel?
     @IBOutlet weak var durationLabel: UILabel?
+    @IBOutlet weak var upNextButton: UIButton?
 
     // MARK: - IBActions
 
     @IBAction func doneButtonPressed(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    @IBAction func upNextButtonPressed(sender: AnyObject) {
+        let upNext = UpNextViewController(nibName: "UpNext", bundle: nil)
+        upNext.modalPresentationStyle = .OverCurrentContext
+        presentViewController(upNext, animated: true, completion: nil)
     }
 
     @IBAction func playButtonPressed(sender: AnyObject) {
@@ -90,7 +97,7 @@ public class LargePlayerViewController: UIViewController {
         playbackSlider?.maximumValue = 0.0
         playbackSlider?.minimumValue = 0.0
 
-        if let podcast = self.player?.podcast, let url = NSURL(string: podcast.image) {
+        if let podcast = self.player?.episode?.podcast, let url = NSURL(string: podcast.image) {
             let placeholder = UIImage()
             self.artImage?.kf_setImageWithURL(url, placeholderImage: placeholder)
         }

@@ -14,7 +14,7 @@ import ChameleonFramework
 import RxSwift
 import RxCocoa
 
-class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate, ChangesBasedOnSegment, PerformsUserSegueDelegate, PresentAlertControllerDelegate {
+class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate, ChangesBasedOnSegment, PerformsUserSegueDelegate, PresentAlertControllerDelegate, PerformsEpisodeSegueDelegate {
 
     // MARK: - PodcastTableViewController data members
 
@@ -623,7 +623,15 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             let frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
             let label = UILabel(frame: frame)
 
-            label.text = "No episodes for this podcast."
+            let text: String
+
+            if self.currentSegment == 0 {
+                text = "No episodes downloaded for this podcast."
+            } else {
+                text = "No episodes avaliable for this podcast."
+            }
+
+            label.text = text
             label.textAlignment = NSTextAlignment.Center
 
             self.tableView?.backgroundView = label
@@ -642,6 +650,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             cell.setEpisodeInstance(episode)
 
             cell.presentDelegate = self
+            cell.segueDelegate = self
         }
 
         return cell
@@ -795,7 +804,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     // MARK: - PerformsUserSegue functions
 
-    func performSegueTo(user: User) {
+    func performSegueToUser(user: User) {
         performSegueWithIdentifier("displayUserSegue", sender: user)
     }
 
@@ -803,5 +812,11 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     func presentAlert(controller: UIAlertController) {
         self.presentViewController(controller, animated: true, completion: nil)
+    }
+
+    // MARK: - PerformsEpisodeSegue functions
+
+    func performSegueToEpisode(episode: Episode) {
+        performSegueWithIdentifier("displayEpisodeSegue", sender: episode)
     }
 }

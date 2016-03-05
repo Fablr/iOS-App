@@ -326,7 +326,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     // MARK: - PerformsUserSegue functions
 
-    func performSegueTo(user: User) {
+    func performSegueToUser(user: User) {
         performSegueWithIdentifier("displayUserSegue", sender: user)
     }
 }

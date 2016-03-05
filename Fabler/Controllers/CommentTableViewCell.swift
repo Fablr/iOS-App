@@ -20,7 +20,7 @@ protocol RepliesToCommentDelegate {
 }
 
 protocol PerformsUserSegueDelegate {
-    func performSegueTo(user: User)
+    func performSegueToUser(user: User)
 }
 
 enum TextConversionError: ErrorType {
@@ -47,12 +47,12 @@ class CommentTableViewCell: UITableViewCell {
 
     @IBAction func userButtonPressed(sender: AnyObject) {
         if let user = self.comment?.user {
-            self.segueDelegate?.performSegueTo(user)
+            self.segueDelegate?.performSegueToUser(user)
         } else if let id = self.comment?.userId {
             let service = UserService()
             service.getUserFor(id, completion: { [weak self] (user) in
                 if let controller = self, let user = user {
-                    controller.segueDelegate?.performSegueTo(user)
+                    controller.segueDelegate?.performSegueToUser(user)
                 }
             })
         }

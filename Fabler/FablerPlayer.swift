@@ -31,16 +31,22 @@ public class FablerPlayer: NSObject {
 
     public var playing: Bool = false
     public var started: Bool = false
+
     private var uiTimer: NSTimer?
     private var serviceTimer: NSTimer?
+
     private var image: UIImage?
 
     public var episode: Episode?
-    public var podcast: Podcast?
+
+    public var upNext: [Episode] = []
 
     // MARK: - FablerPlayer functions
 
     override init() {
+        //
+        // Create player views
+        //
         smallPlayer = SmallPlayerViewController(nibName: "SmallPlayer", bundle: nil)
         let width = UIScreen.mainScreen().bounds.size.width
         smallPlayer.view.frame = CGRect(x: 0, y: 0, width: width, height: 44)
@@ -50,11 +56,39 @@ public class FablerPlayer: NSObject {
 
         super.init()
 
+        //
+        // Register for playback finished notification
+        //
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        let mainQueue = NSOperationQueue.mainQueue()
+
+        notificationCenter.addObserverForName(AVPlayerItemDidPlayToEndTimeNotification, object: nil, queue: mainQueue) { [weak self] (item) in
+            if let player = self {
+                if let current = player.audioPlayer.currentItem, let episode = player.episode {
+                    let service = EpisodeService()
+                    let currentTime = Double(current.duration.seconds)
+                    service.setMarkForEpisode(episode, mark: currentTime, completed: true)
+                }
+
+                if !player.upNext.isEmpty {
+                    player.episode = player.upNext.removeFirst()
+                    player.insertCurrentEpisode()
+                    player.playPlayback()
+                }
+            }
+        }
+
+        //
+        // Set audio as active
+        //
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {}
 
+        //
+        // Set up remote command center
+        //
         let commandCenter = MPRemoteCommandCenter.sharedCommandCenter()
 
         commandCenter.playCommand.addTarget(self, action: "playPlayback")
@@ -124,7 +158,6 @@ public class FablerPlayer: NSObject {
         }
 
         self.episode = episode
-        self.podcast = episode.podcast
 
         self.insertCurrentEpisode()
         setPlaybackTo(Float(episode.mark - 1))
@@ -142,6 +175,14 @@ public class FablerPlayer: NSObject {
         NSNotificationCenter.defaultCenter().postNotificationName(PlayerStartPlayback, object: self)
     }
 
+    public func addEpisodeToUpNext(episode: Episode) {
+        if self.episode == nil {
+            self.startPlayback(episode)
+        } else {
+            self.upNext.append(episode)
+        }
+    }
+
     private func insertCurrentEpisode() {
         if let episode = self.episode {
             var url: NSURL? = nil
@@ -154,21 +195,11 @@ public class FablerPlayer: NSObject {
 
             if let url = url {
                 let item = AVPlayerItem(URL:url)
-                let notificationCenter = NSNotificationCenter.defaultCenter()
-                let mainQueue = NSOperationQueue.mainQueue()
-
-                notificationCenter.addObserverForName(AVPlayerItemDidPlayToEndTimeNotification, object: nil, queue: mainQueue) { item in
-                    if let current = self.audioPlayer.currentItem {
-                        let service = EpisodeService()
-                        let currentTime = Double(current.duration.seconds)
-                        service.setMarkForEpisode(episode, mark: currentTime, completed: true)
-                    }
-                }
 
                 audioPlayer.removeAllItems()
                 audioPlayer.insertItem(item, afterItem: nil)
 
-                if let podcast = self.podcast, let url = NSURL(string: podcast.image) {
+                if let podcast = self.episode?.podcast, let url = NSURL(string: podcast.image) {
                     let manager = KingfisherManager.sharedManager
                     manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, url) in
                         if error == nil, let player = self {
@@ -176,7 +207,6 @@ public class FablerPlayer: NSObject {
                         }
                     })
                 }
-
 
                 MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = [MPMediaItemPropertyTitle: episode.title]
             }
@@ -217,10 +247,6 @@ public class FablerPlayer: NSObject {
 
         smallPlayer.updateOutlets()
         largePlayer.updateOutlets()
-    }
-
-    public func liked() {
-        Log.info("WE LIKED IT")
     }
 
     public func skipForward() {

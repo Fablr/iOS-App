@@ -16,6 +16,10 @@ protocol PresentAlertControllerDelegate {
     func presentAlert(controller: UIAlertController)
 }
 
+protocol PerformsEpisodeSegueDelegate {
+    func performSegueToEpisode(episode: Episode)
+}
+
 class EpisodeTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlets
@@ -34,16 +38,71 @@ class EpisodeTableViewCell: UITableViewCell {
     // MARK: - Delegates
 
     var presentDelegate: PresentAlertControllerDelegate?
+    var segueDelegate: PerformsEpisodeSegueDelegate?
 
     // MARK: - IBActions
 
     @IBAction func ellipsisButtonPressed(sender: AnyObject) {
+        guard self.episode != nil else {
+            return
+        }
+
         let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
 
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
-
-        })
+        //
+        // Cancel
+        //
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         actionController.addAction(cancelAction)
+
+        //
+        // Comments
+        //
+        let commentAction = UIAlertAction(title: "Comments", style: .Default, handler: { [weak self] (action) in
+            if let episode = self?.episode {
+                self?.segueDelegate?.performSegueToEpisode(episode)
+            }
+        })
+        actionController.addAction(commentAction)
+
+        //
+        // Up Next
+        //
+        let upNextAction = UIAlertAction(title: "Add to Up Next", style: .Default, handler: { [weak self] (action) in
+            if let episode = self?.episode {
+                let player = FablerPlayer.sharedInstance
+                player.addEpisodeToUpNext(episode)
+            }
+            })
+        actionController.addAction(upNextAction)
+
+        //
+        // Save
+        //
+        let saveTitle: String
+        if self.episode!.saved {
+            saveTitle = "Unsave Episode"
+        } else {
+            saveTitle = "Save Episode"
+        }
+
+        let saveAction = UIAlertAction(title: saveTitle, style: .Default, handler: { [weak self] (action) in
+            if let episode = self?.episode {
+                let service = EpisodeService()
+                service.flipSaveForEpisode(episode)
+            }
+            })
+        actionController.addAction(saveAction)
+
+        //
+        // Delete
+        //
+        if episode!.download != nil && episode!.download!.state == .Completed {
+            let deleteAction = UIAlertAction(title: "Delete Episode", style: .Destructive, handler: { [weak self] (action) in
+                self?.episode?.download?.remove()
+            })
+            actionController.addAction(deleteAction)
+        }
 
         self.presentDelegate?.presentAlert(actionController)
     }
