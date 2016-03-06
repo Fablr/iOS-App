@@ -8,6 +8,9 @@
 
 import UIKit
 import SlackTextViewController
+import RxSwift
+import RxCocoa
+import ChameleonFramework
 
 class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate, PerformsUserSegueDelegate {
 
@@ -18,6 +21,8 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     var refreshControl: UIRefreshControl?
     var headerController: EpisodeHeaderViewController?
+
+    var bag: DisposeBag! = DisposeBag()
 
     // MARK: - CollapsibleUITableViewCellDelegate members
 
@@ -193,6 +198,28 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
             refresher.tintColor = UIColor.whiteColor()
             self.tableView.addSubview(refresher)
         }
+
+        //
+        // Dynamic change colors
+        //
+        self.episode?.podcast?
+        .rx_observe(Bool.self, "primarySet")
+        .subscribeNext({ [weak self] (set) in
+            if let primary = self?.episode?.podcast?.primaryColor {
+                self?.refreshControl?.backgroundColor = primary
+                self?.leftButton.tintColor = primary
+                self?.rightButton.tintColor = primary
+
+                self?.navigationController?.navigationBar.barTintColor = primary
+                self?.navigationController?.navigationBar.translucent = false
+                self?.navigationController?.navigationBar.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primary, isFlat: true)
+                self?.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(contrastingBlackOrWhiteColorOn: primary, isFlat: true)]
+                self?.setStatusBarStyle(UIStatusBarStyleContrast)
+
+                self?.tableView.reloadData()
+            }
+        })
+        .addDisposableTo(self.bag)
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -234,12 +261,18 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
             // Display empty view message but, still display section header
             //
             let frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
-            let label = UILabel(frame: frame)
+            let button = UIButton(type: .System)
 
-            label.text = "No comments for this episode."
-            label.textAlignment = NSTextAlignment.Center
+            button.frame = frame
+            button.setTitle("Be the first to comment!", forState: .Normal)
+            button.addTarget(self, action: "didRequestKeyboard", forControlEvents: .TouchUpInside)
+            if let primary = self.episode?.podcast?.primaryColor {
+                button.tintColor = primary
+            } else {
+                button.tintColor = .fablerOrangeColor()
+            }
 
-            self.tableView?.backgroundView = label
+            self.tableView?.backgroundView = button
             self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
         }
 
@@ -253,6 +286,11 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("CommentSectionFooter") as? CommentSectionFooterView {
             view.delegate = self
+
+            if let primary = self.episode?.podcast?.primaryColor {
+                view.commentButton?.tintColor = primary
+            }
+
             return view
         }
 
@@ -272,6 +310,10 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
             cell.replyDelegate = self
             cell.collapseDelegate = self
             cell.segueDelegate = self
+
+            if let primary = self.episode?.podcast?.primaryColor {
+                cell.tint = primary
+            }
 
             if let collapseIndexPath = self.indexPath, let collapsed = self.collapsed {
                 if collapseIndexPath.row == indexPath.row {

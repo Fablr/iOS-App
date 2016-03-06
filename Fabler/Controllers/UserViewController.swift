@@ -150,6 +150,14 @@ class UserViewController: FormViewController {
         }
     }
 
+    override func viewWillAppear(animated: Bool) {
+        if let navigation = self.navigationController as? FablerNavigationController {
+            navigation.setDefaultNavigationBar()
+        }
+
+        super.viewWillAppear(animated)
+    }
+
     func performLogoutSegue() {
         if let window = UIApplication.sharedApplication().delegate?.window {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)

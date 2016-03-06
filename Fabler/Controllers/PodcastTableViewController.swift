@@ -437,25 +437,6 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         // Reset navigation var
         //
         self.navigationController?.navigationBar.clipsToBounds = false
-
-        if let navigationController = self.navigationController as? FablerNavigationController {
-            navigationController.setDefaultNavigationBar()
-        }
-    }
-
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidAppear(animated)
-
-        //
-        // Reset navigation var
-        //
-        if let navigationController = self.navigationController as? FablerNavigationController {
-            navigationController.setDefaultNavigationBar()
-        }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -709,12 +690,23 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             // Display empty view message but, still display section header
             //
             let frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
-            let label = UILabel(frame: frame)
 
-            label.text = "No comments for this podcast."
-            label.textAlignment = NSTextAlignment.Center
+            let button = UIButton(type: .System)
+            button.frame = frame
+            button.setTitle("Be the first to comment!", forState: .Normal)
+            button.tintColor = .fablerOrangeColor()
+            button.addTarget(self, action: "didRequestKeyboard", forControlEvents: .TouchUpInside)
 
-            self.tableView?.backgroundView = label
+            self.podcast?
+            .rx_observe(Bool.self, "primarySet")
+            .subscribeNext({ [weak self] (set) in
+                if let primary = self?.podcast?.primaryColor {
+                    button.tintColor = primary
+                }
+            })
+            .addDisposableTo(self.bag)
+
+            self.tableView?.backgroundView = button
             self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
         }
 

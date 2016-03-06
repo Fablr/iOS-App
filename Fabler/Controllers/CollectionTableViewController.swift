@@ -64,6 +64,10 @@ class CollectionTableViewController: UITableViewController {
     }
 
     override func viewWillAppear(animated: Bool) {
+        if let navigation = self.navigationController as? FablerNavigationController {
+            navigation.setDefaultNavigationBar()
+        }
+
         super.viewWillAppear(animated)
 
         self.refreshData(self)
@@ -107,7 +111,7 @@ class CollectionTableViewController: UITableViewController {
 
         if count == 0 {
             let frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
-            let button = UIButton(type: UIButtonType.System) as UIButton
+            let button = UIButton(type: .System)
 
             button.tintColor = UIColor.fablerOrangeColor()
             button.setTitle("Click here to discover podcasts.", forState: .Normal)

@@ -39,6 +39,10 @@ class DiscoveryCollectionViewController: UICollectionViewController {
     }
 
     override func viewWillAppear(animated: Bool) {
+        if let navigation = self.navigationController as? FablerNavigationController {
+            navigation.setDefaultNavigationBar()
+        }
+
         super.viewWillAppear(animated)
     }
 
