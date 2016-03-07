@@ -35,6 +35,9 @@ class EpisodeTableViewCell: UITableViewCell {
     var token: NotificationToken?
     var bag: DisposeBag! = DisposeBag()
 
+    var upNextEnabled: Bool = true
+    var commentsEnabled: Bool = true
+
     // MARK: - Delegates
 
     var presentDelegate: PresentAlertControllerDelegate?
@@ -58,23 +61,27 @@ class EpisodeTableViewCell: UITableViewCell {
         //
         // Comments
         //
-        let commentAction = UIAlertAction(title: "Comments", style: .Default, handler: { [weak self] (action) in
-            if let episode = self?.episode {
-                self?.segueDelegate?.performSegueToEpisode(episode)
-            }
-        })
-        actionController.addAction(commentAction)
+        if self.commentsEnabled {
+            let commentAction = UIAlertAction(title: "Comments", style: .Default, handler: { [weak self] (action) in
+                if let episode = self?.episode {
+                    self?.segueDelegate?.performSegueToEpisode(episode)
+                }
+            })
+            actionController.addAction(commentAction)
+        }
 
         //
         // Up Next
         //
-        let upNextAction = UIAlertAction(title: "Add to Up Next", style: .Default, handler: { [weak self] (action) in
-            if let episode = self?.episode {
-                let player = FablerPlayer.sharedInstance
-                player.addEpisodeToUpNext(episode)
-            }
+        if self.upNextEnabled {
+            let upNextAction = UIAlertAction(title: "Add to Up Next", style: .Default, handler: { [weak self] (action) in
+                if let episode = self?.episode {
+                    let player = FablerPlayer.sharedInstance
+                    player.addEpisodeToUpNext(episode)
+                }
             })
-        actionController.addAction(upNextAction)
+            actionController.addAction(upNextAction)
+        }
 
         //
         // Save
@@ -91,7 +98,7 @@ class EpisodeTableViewCell: UITableViewCell {
                 let service = EpisodeService()
                 service.flipSaveForEpisode(episode)
             }
-            })
+        })
         actionController.addAction(saveAction)
 
         //
@@ -109,7 +116,7 @@ class EpisodeTableViewCell: UITableViewCell {
 
     // MARK: - EpisodeTableViewCell functions
 
-    func setEpisodeInstance(episode: Episode) {
+    func setEpisodeInstance(episode: Episode, dynamicColor: Bool = true) {
         token?.stop()
         token = nil
 
@@ -124,8 +131,9 @@ class EpisodeTableViewCell: UITableViewCell {
         self.titleLabel?.text = episode.title
         self.subLabel?.text = date
 
-        if let podcast = episode.podcast {
-            podcast.rx_observe(Float.self, "primaryBlue")
+        if let podcast = episode.podcast where dynamicColor {
+            podcast
+            .rx_observe(Bool.self, "primarySet")
             .subscribeNext({ [weak self] (color) in
                 if let primary = self?.episode?.podcast?.primaryColor {
                     self?.downloadView?.tintColor = primary

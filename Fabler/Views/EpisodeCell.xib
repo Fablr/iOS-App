@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="110" id="3vD-Ni-i2w" customClass="EpisodeTableViewCell" customModule="Fabler" customModuleProvider="target">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" showsReorderControl="YES" indentationWidth="10" rowHeight="110" id="3vD-Ni-i2w" customClass="EpisodeTableViewCell" customModule="Fabler" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="414" height="110"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3vD-Ni-i2w" id="sI9-AA-JDb">
@@ -36,7 +36,7 @@
                     </stackView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uKu-9i-Cfm" customClass="ACPDownloadView">
                         <rect key="frame" x="336" y="40" width="30" height="30"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="kJw-ec-jYT"/>
@@ -56,7 +56,7 @@
                         </connections>
                     </button>
                 </subviews>
-                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="uKu-9i-Cfm" firstAttribute="centerY" secondItem="sI9-AA-JDb" secondAttribute="centerY" id="0wa-OF-HUH"/>
                     <constraint firstItem="BHN-fV-fcS" firstAttribute="leading" secondItem="sI9-AA-JDb" secondAttribute="leadingMargin" id="5zd-2F-V9o"/>
@@ -68,6 +68,7 @@
                     <constraint firstItem="O4p-o1-0cY" firstAttribute="centerY" secondItem="sI9-AA-JDb" secondAttribute="centerY" id="jca-9J-q14"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="downloadView" destination="uKu-9i-Cfm" id="WCa-Ug-uX9"/>
                 <outlet property="ellipsisButton" destination="O4p-o1-0cY" id="3YP-YE-Yfd"/>

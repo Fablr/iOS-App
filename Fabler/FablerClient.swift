@@ -21,6 +21,8 @@ struct FablerClient {
         static let baseURLString = "http://api.fablersite-dev.elasticbeanstalk.com"
         static var token: String?
 
+        // MARK: - Calls
+
         case FacebookLogin(token: String)
         case ReadPodcasts()
         case ReadPodcast(podcast: Int)
@@ -319,6 +321,8 @@ extension String {
     }
 }
 
+// MARK: - NSTimeInterval extension
+
 extension NSTimeInterval {
     func toString() -> String {
         var result: String
@@ -336,6 +340,8 @@ extension NSTimeInterval {
         return result
     }
 }
+
+// MARK: - NSDate extension
 
 extension NSDate {
     func toString() -> String {

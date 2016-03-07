@@ -60,6 +60,7 @@ public class SwiftyBeaver {
         return destinations.count
     }
 
+    /// returns the current thread name
     class func threadName() -> String {
         if NSThread.isMainThread() {
             return "main"
@@ -125,6 +126,7 @@ public class SwiftyBeaver {
       if let queue = dest.queue {
         dispatch_group_enter(grp)
         dispatch_async(queue, {
+          dest.flush()
           dispatch_group_leave(grp)
         })
       }

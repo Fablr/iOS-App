@@ -9,6 +9,21 @@
 
 import Foundation
 
+// store operating system / platform
+#if os(iOS)
+let OS = "iOS"
+#elseif os(OSX)
+let OS = "OSX"
+#elseif os(watchOS)
+let OS = "watchOS"
+#elseif os(tvOS)
+let OS = "tvOS"
+#elseif os(Linux)
+let OS = "Linux"
+#else
+let OS = "Unknown"
+#endif
+
 struct MinLevelFilter {
     var minLevel = SwiftyBeaver.Level.Verbose
     var path = ""
@@ -22,6 +37,7 @@ public class BaseDestination: Hashable, Equatable {
     public var minLevel = SwiftyBeaver.Level.Verbose
     public var dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
     public var levelString = LevelString()
+    public var levelColor = LevelColor()
     
     public struct LevelString {
         public var Verbose = "VERBOSE"
@@ -31,21 +47,21 @@ public class BaseDestination: Hashable, Equatable {
         public var Error = "ERROR"
     }
     
+    // For a colored log level word in a logged line
+    // XCode RGB colors
+    public struct LevelColor {
+        public var Verbose = "fg200,200,200;"     // silver
+        public var Debug = "fg0,0,255;"           // blue
+        public var Info = "fg0,255,0;"            // green
+        public var Warning = "fg255,255,0;"       // yellow
+        public var Error = "fg255,0,0;"           // red
+    }
+    
     var minLevelFilters = [MinLevelFilter]()
     let formatter = NSDateFormatter()
 
-    // For a colored log level word in a logged line
-    // XCode RGB colors
-    var blue = "fg0,0,255;"
-    var green = "fg0,255,0;"
-    var yellow = "fg255,255,0;"
-    var red = "fg255,0,0;"
-    var magenta = "fg255,0,255;"
-    var cyan = "fg0,255,255;"
-    var silver = "fg200,200,200;"
     var reset = "\u{001b}[;"
     var escape = "\u{001b}["
-
 
     // each destination class must have an own hashValue Int
     lazy public var hashValue: Int = self.defaultHashValue
@@ -97,24 +113,24 @@ public class BaseDestination: Hashable, Equatable {
         
         switch level {
         case SwiftyBeaver.Level.Debug:
-            color = blue
+            color = levelColor.Debug
             levelStr = levelString.Debug
             
         case SwiftyBeaver.Level.Info:
-            color = green
+            color = levelColor.Info
             levelStr = levelString.Info
             
         case SwiftyBeaver.Level.Warning:
-            color = yellow
+            color = levelColor.Warning
             levelStr = levelString.Warning
             
         case SwiftyBeaver.Level.Error:
-            color = red
+            color = levelColor.Error
             levelStr = levelString.Error
 
         default:
             // Verbose is default
-            color = silver
+            color = levelColor.Verbose
             levelStr = levelString.Verbose
         }
         
@@ -165,6 +181,15 @@ public class BaseDestination: Hashable, Equatable {
         }
         return false
     }
+
+  /**
+    Triggered by main flush() method on each destination. Runs in background thread.
+   Use for destinations that buffer log items, implement this function to flush those
+   buffers to their final destination (web server...)
+   */
+  func flush() {
+    // no implementation in base destination needed
+  }
 }
 
 public func == (lhs: BaseDestination, rhs: BaseDestination) -> Bool {

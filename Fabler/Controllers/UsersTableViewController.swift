@@ -50,21 +50,6 @@ class UsersTableViewController: UITableViewController {
                 })
             }
         }
-
-
-        /*let service = PodcastService()
-        self.podcasts = service.getSubscribedPodcasts { [weak self] (podcasts) in
-            if let controller = self {
-                controller.podcasts = podcasts
-                controller.tableView.reloadData()
-
-                if let refresher = controller.refreshControl {
-                    if refresher.refreshing {
-                        refresher.endRefreshing()
-                    }
-                }
-            }
-        }*/
     }
 
     // MARK: - UIViewController functions

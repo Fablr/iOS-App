@@ -10,7 +10,7 @@ target 'Fabler' do
   pod 'SwiftyJSON', '~>2.3.2'
   pod 'RealmSwift', '~>0.98.3'
   pod 'SlackTextViewController', '~>1.9.1'
-  pod 'SwiftyBeaver', '~>0.3.5'
+  pod 'SwiftyBeaver', '~>0.4.0'
   pod 'XNGMarkdownParser', '~>0.3.2'
   pod 'SCLAlertView', '~>0.5.1'
   pod 'Kingfisher', '~>2.0.4'

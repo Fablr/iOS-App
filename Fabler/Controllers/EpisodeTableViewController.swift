@@ -253,9 +253,10 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
     // MARK: - UITableView functions
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
+
         if self.comments.count > 0 {
             self.tableView.backgroundView = nil
-            self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
         } else {
             //
             // Display empty view message but, still display section header

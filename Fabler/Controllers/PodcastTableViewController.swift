@@ -336,10 +336,6 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
         self.tableView.allowsMultipleSelection = false
 
-        self.edgesForExtendedLayout = UIRectEdge.Top
-
-        self.automaticallyAdjustsScrollViewInsets = true
-
         //
         // Register Nibs for reuse
         //
@@ -420,12 +416,15 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
         self.setupImages()
 
+        //self.edgesForExtendedLayout = .Top
+        //self.automaticallyAdjustsScrollViewInsets = true
+
         //
         // Refresh data
         //
         self.refreshEpisodeData(self)
         self.refreshCommentData(self)
-        self.refreshControl?.beginRefreshing()
+        //self.refreshControl?.beginRefreshing()
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -694,17 +693,12 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             let button = UIButton(type: .System)
             button.frame = frame
             button.setTitle("Be the first to comment!", forState: .Normal)
-            button.tintColor = .fablerOrangeColor()
             button.addTarget(self, action: "didRequestKeyboard", forControlEvents: .TouchUpInside)
-
-            self.podcast?
-            .rx_observe(Bool.self, "primarySet")
-            .subscribeNext({ [weak self] (set) in
-                if let primary = self?.podcast?.primaryColor {
-                    button.tintColor = primary
-                }
-            })
-            .addDisposableTo(self.bag)
+            if let primary = self.podcast?.primaryColor {
+                button.tintColor = primary
+            } else {
+                button.tintColor = .fablerOrangeColor()
+            }
 
             self.tableView?.backgroundView = button
             self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None

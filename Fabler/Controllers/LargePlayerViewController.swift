@@ -35,12 +35,6 @@ public class LargePlayerViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
-    @IBAction func upNextButtonPressed(sender: AnyObject) {
-        let upNext = UpNextViewController(nibName: "UpNext", bundle: nil)
-        upNext.modalPresentationStyle = .OverCurrentContext
-        presentViewController(upNext, animated: true, completion: nil)
-    }
-
     @IBAction func playButtonPressed(sender: AnyObject) {
         if let player = self.player {
             if player.playing {

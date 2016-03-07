@@ -18,7 +18,14 @@ public class FileDestination: BaseDestination {
     var fileHandle: NSFileHandle? = nil
     
     public override init() {
-        if let url = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first {
+        // platform-dependent logfile directory default
+        var logsBaseDir: NSSearchPathDirectory = .CachesDirectory
+        
+        if OS == "OSX" {
+            logsBaseDir = .DocumentDirectory
+        }
+        
+        if let url = fileManager.URLsForDirectory(logsBaseDir, inDomains: .UserDomainMask).first {
             logFileURL = url.URLByAppendingPathComponent("swiftybeaver.log", isDirectory: false)
         } else {
             logFileURL = NSURL()
@@ -27,13 +34,13 @@ public class FileDestination: BaseDestination {
         
         // bash font color, first value is intensity, second is color
         // see http://bit.ly/1Otu3Zr to learn more
-        blue = "0;34m"  // replace first 0 with 1 to make it bold
-        green = "0;32m"
-        yellow = "0;33m"
-        red = "0;31m"
-        magenta = "0;35m"
-        cyan = "0;36m"
-        silver = "0;37m"
+        // replace first 0 with 1 to make it bold
+        levelColor.Verbose = "0;37m"
+        levelColor.Debug = "0;34m"
+        levelColor.Info = "0;32m"
+        levelColor.Warning = "0;33m"
+        levelColor.Error = "0;31m"
+        
         reset = "\u{001b}[0m"
     }
     

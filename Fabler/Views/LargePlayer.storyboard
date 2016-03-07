@@ -124,7 +124,7 @@
                                                 <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Up Next"/>
                                                 <connections>
-                                                    <segue destination="1de-Ch-ao1" kind="presentation" modalPresentationStyle="overCurrentContext" id="uH2-qZ-jLG"/>
+                                                    <segue destination="XHf-xa-DXL" kind="presentation" modalPresentationStyle="overCurrentContext" id="fDQ-Iz-hgl"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -169,33 +169,23 @@
             </objects>
             <point key="canvasLocation" x="764" y="346"/>
         </scene>
-        <!--Table View Controller-->
-        <scene sceneID="Bgp-B8-OdY">
+        <!--Up Next Table View Controller-->
+        <scene sceneID="U9r-RS-QJn">
             <objects>
-                <tableViewController id="1de-Ch-ao1" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="kql-ZP-dLG">
+                <tableViewController id="XHf-xa-DXL" customClass="UpNextTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="VVB-y2-VoA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Replace" id="igT-3W-Glm">
-                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="igT-3W-Glm" id="BNI-jq-gBH">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <connections>
-                            <outlet property="dataSource" destination="1de-Ch-ao1" id="kyU-jI-kk2"/>
-                            <outlet property="delegate" destination="1de-Ch-ao1" id="dvM-Xc-hkd"/>
+                            <outlet property="dataSource" destination="XHf-xa-DXL" id="FK5-yb-e64"/>
+                            <outlet property="delegate" destination="XHf-xa-DXL" id="Yxl-Wh-CzJ"/>
                         </connections>
                     </tableView>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Rhe-ZV-ZHC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4MO-p0-ILf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1408" y="346"/>
+            <point key="canvasLocation" x="1361" y="346"/>
         </scene>
     </scenes>
     <resources>
