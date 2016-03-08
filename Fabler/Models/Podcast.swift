@@ -10,7 +10,7 @@ import RealmSwift
 
 final public class Podcast: Object, Equatable {
 
-    // MARK: - Podcast members
+    // MARK: - Podcast properties
 
     dynamic var title: String = ""
     dynamic var author: String = ""
@@ -23,13 +23,13 @@ final public class Podcast: Object, Equatable {
     dynamic var category: String = ""
     dynamic var image: String = ""
 
-    // MARK: - Setting members
+    // MARK: - Setting properties
 
     dynamic var notify: Bool = true
     dynamic var download: Bool = true
     dynamic var downloadAmount: Int = 3
 
-    // MARK: - Color members
+    // MARK: - Color properties
 
     dynamic var primaryRed: Float = 0.0
     dynamic var primaryGreen: Float = 0.0
@@ -53,7 +53,7 @@ final public class Podcast: Object, Equatable {
     }
 }
 
-// MARK: - Podcast helper functions
+// MARK: - Podcast helper methods
 
 public func == (lhs: Podcast, rhs: Podcast) -> Bool {
     return lhs.podcastId == rhs.podcastId

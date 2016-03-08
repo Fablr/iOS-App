@@ -12,7 +12,7 @@ import Kingfisher
 
 public class LargePlayerViewController: UIViewController {
 
-    // MARK: - LargePlayerViewController members
+    // MARK: - LargePlayerViewController properties
 
     weak var player: FablerPlayer?
 
@@ -67,25 +67,17 @@ public class LargePlayerViewController: UIViewController {
         }
     }
 
-    // MARK: - UIViewController functions
-
-    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+    // MARK: - UIViewController methods
 
     override public func viewDidLoad() {
         self.playbackSlider?.continuous = false
 
         self.updateOutlets()
 
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let blurEffect = UIBlurEffect(style: .Light)
         let veView = UIVisualEffectView(effect: blurEffect)
         veView.frame = self.view.bounds
-        self.view.backgroundColor = UIColor.clearColor()
+        self.view.backgroundColor = .clearColor()
         self.view.insertSubview(veView, atIndex: 0)
 
         playbackSlider?.maximumValue = 0.0
@@ -99,11 +91,7 @@ public class LargePlayerViewController: UIViewController {
         super.viewDidLoad()
     }
 
-    override public func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
-    // MARK: - SmallPlayerViewController functions
+    // MARK: - SmallPlayerViewController methods
 
     func updateOutlets() {
         self.player = FablerPlayer.sharedInstance

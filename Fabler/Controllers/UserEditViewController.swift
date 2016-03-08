@@ -12,11 +12,11 @@ import SCLAlertView
 
 class UserEditViewController: FormViewController {
 
-    // MARK: - UserEditViewController members
+    // MARK: - UserEditViewController properties
 
     var user: User?
 
-    // MARK: - UserEditViewController functions
+    // MARK: - UserEditViewController methods
 
     private func requestComplete(service: UserService, alert: SCLAlertViewResponder, showWarning: Bool, warningText: String) {
         if service.outstandingRequestCount() == 0 {
@@ -140,7 +140,7 @@ class UserEditViewController: FormViewController {
         }
     }
 
-    // MARK: - UIViewController functions
+    // MARK: - UIViewController methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -150,12 +150,12 @@ class UserEditViewController: FormViewController {
             return
         }
 
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let blurEffect = UIBlurEffect(style: .Light)
         let veView = UIVisualEffectView(effect: blurEffect)
         veView.frame = self.view.bounds
-        self.view.backgroundColor = UIColor.clearColor()
+        self.view.backgroundColor = .clearColor()
         self.view.insertSubview(veView, atIndex: 0)
-        self.tableView?.backgroundColor = UIColor.clearColor()
+        self.tableView?.backgroundColor = .clearColor()
 
         NameRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
         EmailRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
@@ -189,9 +189,9 @@ class UserEditViewController: FormViewController {
                 $0.title = $0.tag
                 $0.onCellSelection(self.savePressed)
                 $0.cellSetup({ cell, row in
-                    cell.tintColor = UIColor.fablerOrangeColor()
+                    cell.tintColor = .fablerOrangeColor()
                     if let size = cell.textLabel?.font.pointSize {
-                        cell.textLabel?.font = UIFont.boldSystemFontOfSize(size)
+                        cell.textLabel?.font = .boldSystemFontOfSize(size)
                     }
                 })
             }
@@ -200,7 +200,7 @@ class UserEditViewController: FormViewController {
             <<< ButtonRow("Cancel") {
                 $0.title = $0.tag
                 $0.onCellSelection(self.cancelPressed)
-                $0.cellSetup({ cell, row in cell.tintColor = UIColor.fablerOrangeColor()})
+                $0.cellSetup({ cell, row in cell.tintColor = .fablerOrangeColor()})
             }
 
         self.setFormValues()

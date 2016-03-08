@@ -38,19 +38,19 @@ class UserTableViewCell: UITableViewCell {
         }
     }
 
-    // MARK: - EpisodeTableViewCell members
+    // MARK: - EpisodeTableViewCell properties
 
     var user: User?
 
-    // MARK: - EpisodeTableViewCell functions
+    // MARK: - EpisodeTableViewCell methods
 
     func setupFollowButton(following: Bool) {
         if following {
             self.followButton?.setImage(UIImage(named: "user-remove"), forState: .Normal)
-            self.followButton?.tintColor = UIColor.washedOutFablerOrangeColor()
+            self.followButton?.tintColor = .washedOutFablerOrangeColor()
         } else {
             self.followButton?.setImage(UIImage(named: "user-add"), forState: .Normal)
-            self.followButton?.tintColor = UIColor.fablerOrangeColor()
+            self.followButton?.tintColor = .fablerOrangeColor()
         }
     }
 
@@ -90,15 +90,5 @@ class UserTableViewCell: UITableViewCell {
 
             self.userLabel?.text = title
         }
-    }
-
-    // MARK: - UITableViewCell functions
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
     }
 }

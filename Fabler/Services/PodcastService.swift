@@ -13,7 +13,7 @@ import SCLAlertView
 
 public class PodcastService {
 
-    // MARK: - PodcastService API functions
+    // MARK: - PodcastService API methods
 
     public func setNotificationForPodcast(podcast: Podcast, allowNotifications: Bool) {
         do {
@@ -233,7 +233,7 @@ public class PodcastService {
         Log.debug("Subscription request: \(request)")
     }
 
-    // MARK: - PodcastService serialize functions
+    // MARK: - PodcastService serialize methods
 
     private func serializePodcastObject(data: JSON) -> Podcast? {
         var podcast: Podcast?
@@ -315,7 +315,7 @@ public class PodcastService {
         return podcasts
     }
 
-    // MARK: - PodcastService helper functions
+    // MARK: - PodcastService helper methods
 
     private func updateUnsubscribedPodcasts(local: [Podcast], server: [Podcast]) {
         do {

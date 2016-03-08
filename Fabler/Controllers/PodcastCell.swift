@@ -13,5 +13,4 @@ class PodcastCell: UICollectionViewCell {
     // MARK: - IBOutlets
 
     @IBOutlet weak var tileImage: UIImageView?
-
 }

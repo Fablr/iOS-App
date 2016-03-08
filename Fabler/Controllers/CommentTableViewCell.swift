@@ -134,7 +134,7 @@ class CommentTableViewCell: UITableViewCell {
         self.replyDelegate?.showActionSheet(menu)
     }
 
-    // MARK: - CommentTableViewCell members
+    // MARK: - CommentTableViewCell properties
 
     var comment: Comment?
     var barCollapsed: Bool = true
@@ -145,7 +145,7 @@ class CommentTableViewCell: UITableViewCell {
     var replyDelegate: RepliesToCommentDelegate?
     var segueDelegate: PerformsUserSegueDelegate?
 
-    // MARK: - CommentTableViewCell functions
+    // MARK: - CommentTableViewCell methods
 
     func barTapped() {
         Log.verbose("User tapped comment.")
@@ -234,21 +234,11 @@ class CommentTableViewCell: UITableViewCell {
 
     func styleCellAsParent() {
         self.commentIndent?.constant = 2
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = .whiteColor()
     }
 
     func styleCellAsChild() {
         self.commentIndent?.constant = 42
         self.backgroundColor = UIColor(red: 250.0/255.0, green: 250.0/255.0, blue: 250.0/255.0, alpha: 1.0)
-    }
-
-    // MARK: - UITableViewCell functions
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
     }
 }

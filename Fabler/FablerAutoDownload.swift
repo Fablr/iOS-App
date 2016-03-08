@@ -34,7 +34,7 @@ public class FablerAutoDownload {
 
     public static let sharedInstance = FablerAutoDownload()
 
-    // MARK: - private members
+    // MARK: - Private properties
 
     private var tasks: [FablerAutoDownloadTask] = []
     private let queue: dispatch_queue_t = dispatch_queue_create("com.Fabler.Fabler.AutoDownloadQueue", nil)
@@ -43,11 +43,11 @@ public class FablerAutoDownload {
     private var bag: DisposeBag! = DisposeBag()
     private var podcasts: Int = 0
 
-    // MARK: - public members
+    // MARK: - Public properties
 
     public var state: FablerAutoDownloadState = .NotRunning
 
-    // MARK: - public methods
+    // MARK: - Public methods
 
     deinit {
         self.bag = nil
@@ -73,7 +73,7 @@ public class FablerAutoDownload {
         dispatch_resume(self.queue)
     }
 
-    // MARK: - private methods
+    // MARK: - Private methods
 
     private func performNextTask() {
         guard self.state != .Errored else {

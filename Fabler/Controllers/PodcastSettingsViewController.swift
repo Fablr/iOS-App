@@ -11,11 +11,11 @@ import Eureka
 
 class PodcastSettingsViewController: FormViewController {
 
-    // MARK: - PodcastSettingsViewController members
+    // MARK: - PodcastSettingsViewController properties
 
     var podcast: Podcast?
 
-    // MARK: - PodcastSettingsViewController functions
+    // MARK: - PodcastSettingsViewController methods
 
     func autoDownloadDidChange(row: CheckRow) {
         if let podcast = self.podcast, let value = row.value {
@@ -61,7 +61,7 @@ class PodcastSettingsViewController: FormViewController {
         }
     }
 
-    // MARK: - UIViewController functions
+    // MARK: - UIViewController methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,12 +79,12 @@ class PodcastSettingsViewController: FormViewController {
             tint = .fablerOrangeColor()
         }
 
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let blurEffect = UIBlurEffect(style: .Light)
         let veView = UIVisualEffectView(effect: blurEffect)
         veView.frame = self.view.bounds
-        self.view.backgroundColor = UIColor.clearColor()
+        self.view.backgroundColor = .clearColor()
         self.view.insertSubview(veView, atIndex: 0)
-        self.tableView?.backgroundColor = UIColor.clearColor()
+        self.tableView?.backgroundColor = .clearColor()
 
         CheckRow.defaultCellSetup = { cell, row in cell.tintColor = tint }
         IntRow.defaultCellSetup = { cell, row in cell.tintColor = tint }
@@ -96,9 +96,9 @@ class PodcastSettingsViewController: FormViewController {
                 $0.title = $0.tag
                 $0.onCellSelection(self.unsubscribePressed)
                 $0.cellSetup({ cell, row in
-                    cell.tintColor = UIColor.flatRedColor()
+                    cell.tintColor = .flatRedColor()
                     if let size = cell.textLabel?.font.pointSize {
-                        cell.textLabel?.font = UIFont.boldSystemFontOfSize(size)
+                        cell.textLabel?.font = .boldSystemFontOfSize(size)
                     }
                 })
             }

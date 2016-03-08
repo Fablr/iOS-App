@@ -19,10 +19,10 @@ public class UpNextTableViewController: UITableViewController, PresentAlertContr
     // MARK: - UIViewController methods
 
     override public func viewDidLoad() {
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let blurEffect = UIBlurEffect(style: .Light)
         let veView = UIVisualEffectView(effect: blurEffect)
         veView.frame = self.view.bounds
-        self.view.backgroundColor = UIColor.clearColor()
+        self.view.backgroundColor = .clearColor()
         self.view.insertSubview(veView, atIndex: 0)
 
         self.tableView.rowHeight = UITableViewAutomaticDimension

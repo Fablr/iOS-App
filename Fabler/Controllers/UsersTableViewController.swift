@@ -10,13 +10,13 @@ import UIKit
 
 class UsersTableViewController: UITableViewController {
 
-    // MARK: - UsersTableViewController members
+    // MARK: - UsersTableViewController properties
 
     var user: User?
     var users: [User] = []
     var following: Bool = false
 
-    // MARK: - UsersTableViewController functions
+    // MARK: - UsersTableViewController methods
 
     func refreshData(sender: AnyObject) {
         if let user = self.user {
@@ -52,7 +52,7 @@ class UsersTableViewController: UITableViewController {
         }
     }
 
-    // MARK: - UIViewController functions
+    // MARK: - UIViewController methods
 
     override func viewDidLoad() {
         self.tableView.allowsMultipleSelection = false
@@ -61,9 +61,9 @@ class UsersTableViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         if let refresher = self.refreshControl {
             refresher.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-            refresher.addTarget(self, action: "refreshData:", forControlEvents: UIControlEvents.ValueChanged)
-            refresher.backgroundColor = UIColor.fablerOrangeColor()
-            refresher.tintColor = UIColor.whiteColor()
+            refresher.addTarget(self, action: "refreshData:", forControlEvents: .ValueChanged)
+            refresher.backgroundColor = .fablerOrangeColor()
+            refresher.tintColor = .whiteColor()
             self.tableView.addSubview(refresher)
         }
 
@@ -83,7 +83,7 @@ class UsersTableViewController: UITableViewController {
         }
     }
 
-    // MARK: - UITableViewController functions
+    // MARK: - UITableViewController methods
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -94,7 +94,7 @@ class UsersTableViewController: UITableViewController {
 
         if result > 0 {
             self.tableView?.backgroundView = nil
-            self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+            self.tableView?.separatorStyle = .SingleLine
         } else {
             let frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
             let label = UILabel(frame: frame)
@@ -107,7 +107,7 @@ class UsersTableViewController: UITableViewController {
             label.textAlignment = NSTextAlignment.Center
 
             self.tableView?.backgroundView = label
-            self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
+            self.tableView?.separatorStyle = .None
         }
 
         return result

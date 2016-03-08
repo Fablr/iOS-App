@@ -10,7 +10,7 @@ import RealmSwift
 
 final public class User: Object {
 
-    // MARK: - User static members
+    // MARK: - User static properties
 
     static func getCurrentUser() -> User? {
         let user: User?
@@ -25,7 +25,7 @@ final public class User: Object {
         return user
     }
 
-    // MARK: - User members
+    // MARK: - User properties
 
     dynamic var userName: String = ""
     dynamic var firstName: String = ""
@@ -40,9 +40,16 @@ final public class User: Object {
     let followers = List<User>()
     let following = List<User>()
 
+    var followerCount: Int = 0
+    var followingCount: Int = 0
+
     // MARK: - Realm methods
 
     override public static func primaryKey() -> String? {
         return "userId"
+    }
+
+    override public static func ignoredProperties() -> [String] {
+        return ["followerCount", "followingCount"]
     }
 }

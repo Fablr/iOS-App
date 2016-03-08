@@ -10,13 +10,13 @@ import UIKit
 
 class FablerToolBarController: UIToolbar {
 
-    // MARK: - FablerToolBarController members
+    // MARK: - FablerToolBarController properties
 
     var item: UIBarButtonItem?
     var flexItemLeft: UIBarButtonItem?
     var flexItemRight: UIBarButtonItem?
 
-    // MARK: - UIToolbar functions
+    // MARK: - UIToolbar methods
 
     override func setItems(items: [UIBarButtonItem]?, animated: Bool) {
         let player = FablerPlayer.sharedInstance
@@ -36,9 +36,5 @@ class FablerToolBarController: UIToolbar {
         }
 
         super.setItems([self.flexItemLeft!, self.item!, self.flexItemRight!], animated: false)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
     }
 }

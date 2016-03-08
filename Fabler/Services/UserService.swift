@@ -24,7 +24,7 @@ public class UserService {
 
     public static let sharedInstance = UserService()
 
-    // MARK: - UserService members
+    // MARK: - UserService properties
 
     static var currentFacebookToken: FBSDKAccessToken?
 
@@ -32,7 +32,7 @@ public class UserService {
     private let pendingRequestQueue: dispatch_queue_t
     private var pendingRequests: [Request] = []
 
-    // MARK: - UserService functions
+    // MARK: - UserService methods
 
     public init() {
         let notificationCenter = NSNotificationCenter.defaultCenter()
@@ -91,7 +91,7 @@ public class UserService {
         }
     }
 
-    // MARK: - UserService API functions
+    // MARK: - UserService API methods
 
     public func getUserFor(userId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: User?) -> Void)?) -> User? {
         if let completion = completion {
@@ -282,6 +282,7 @@ public class UserService {
                         try realm.write {
                             responseUser.followers.removeAll()
                             responseUser.followers.appendContentsOf(followers)
+                            responseUser.followerCount = responseUser.followers.count
                             result = true
                         }
                     } catch {
@@ -323,6 +324,7 @@ public class UserService {
                         try realm.write {
                             responseUser.following.removeAll()
                             responseUser.following.appendContentsOf(following)
+                            responseUser.followingCount = following.count
                             result = true
                         }
                     } catch {
@@ -413,7 +415,7 @@ public class UserService {
         }
     }
 
-    // MARK: - UserService serialize functions
+    // MARK: - UserService serialize methods
 
     private func serializeUserObject(data: JSON) -> User? {
         var user: User?

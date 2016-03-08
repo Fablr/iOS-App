@@ -14,7 +14,7 @@ import ChameleonFramework
 
 class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate, PerformsUserSegueDelegate {
 
-    // MARK: - EpisodeTableViewController members
+    // MARK: - EpisodeTableViewController properties
 
     var episode: Episode?
     var comments: [Comment] = []
@@ -24,17 +24,17 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     var bag: DisposeBag! = DisposeBag()
 
-    // MARK: - CollapsibleUITableViewCellDelegate members
+    // MARK: - CollapsibleUITableViewCellDelegate properties
 
     var indexPath: NSIndexPath?
     var collapsed: Bool?
 
-    // MARK: - RepliesToCommentDelegate members
+    // MARK: - RepliesToCommentDelegate properties
 
     var replyComment: Comment?
     var editingComment: Bool = false
 
-    // MARK: - EpisodeTableViewController functions
+    // MARK: - EpisodeTableViewController methods
 
     func refreshData(sender: AnyObject) {
         if let episode = self.episode {
@@ -60,7 +60,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.didRequestKeyboard()
     }
 
-    // MARK: - SLKTextViewController functions
+    // MARK: - SLKTextViewController methods
 
     func didDismissKeyboard() {
         if let navigationController = self.navigationController as? FablerNavigationController {
@@ -82,7 +82,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     override class func tableViewStyleForCoder(decoder: NSCoder) -> UITableViewStyle {
-        return UITableViewStyle.Plain
+        return .Plain
     }
 
     override func didPressLeftButton(sender: AnyObject!) {
@@ -121,7 +121,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.didDismissKeyboard()
     }
 
-    // MARK: - UIViewController functions
+    // MARK: - UIViewController methods
 
     override func viewDidLoad() {
         guard self.episode != nil else {
@@ -155,7 +155,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.tableView.allowsSelection = false
         self.tableView.allowsMultipleSelection = false
 
-        self.edgesForExtendedLayout = UIRectEdge.None
+        self.edgesForExtendedLayout = .None
 
         //
         // SLKTextViewController setup
@@ -165,15 +165,15 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.keyboardPanningEnabled = false
         self.inverted = false
 
-        self.leftButton.setImage(UIImage(named: "delete"), forState: UIControlState.Normal)
-        self.leftButton.tintColor = UIColor.fablerOrangeColor()
-        self.rightButton.setTitle("Post", forState: UIControlState.Normal)
-        self.rightButton.tintColor = UIColor.fablerOrangeColor()
+        self.leftButton.setImage(UIImage(named: "delete"), forState: .Normal)
+        self.leftButton.tintColor = .fablerOrangeColor()
+        self.rightButton.setTitle("Post", forState: .Normal)
+        self.rightButton.tintColor = .fablerOrangeColor()
 
         self.textInputbar.autoHideRightButton = true
 
         self.textView.placeholder = "Add a comment."
-        self.textView.placeholderColor = UIColor.lightGrayColor()
+        self.textView.placeholderColor = .lightGrayColor()
 
         self.textView.registerMarkdownFormattingSymbol("**", withTitle: "Bold")
         self.textView.registerMarkdownFormattingSymbol("_", withTitle: "Italics")
@@ -193,9 +193,9 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.refreshControl = UIRefreshControl()
         if let refresher = self.refreshControl {
             refresher.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-            refresher.addTarget(self, action: "refreshData:", forControlEvents: UIControlEvents.ValueChanged)
-            refresher.backgroundColor = UIColor.fablerOrangeColor()
-            refresher.tintColor = UIColor.whiteColor()
+            refresher.addTarget(self, action: "refreshData:", forControlEvents: .ValueChanged)
+            refresher.backgroundColor = .fablerOrangeColor()
+            refresher.tintColor = .whiteColor()
             self.tableView.addSubview(refresher)
         }
 
@@ -229,17 +229,12 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         // Refresh data
         //
         self.refreshData(self)
-        self.refreshControl?.beginRefreshing()
     }
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
 
         self.didDismissKeyboard()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -250,7 +245,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
     }
 
-    // MARK: - UITableView functions
+    // MARK: - UITableView methods
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -274,7 +269,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
             }
 
             self.tableView?.backgroundView = button
-            self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
+            self.tableView?.separatorStyle = .None
         }
 
         return 1
@@ -334,7 +329,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         return cell
     }
 
-    // MARK: - CollapsibleUITableViewCellDelegate functions
+    // MARK: - CollapsibleUITableViewCellDelegate methods
 
     func setCollapseState(cell: UITableViewCell, collapsed: Bool) {
         if let indexPath = self.tableView.indexPathForCell(cell) {
@@ -349,7 +344,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
     }
 
-    // MARK: - RepliesToCommentDelegate functions
+    // MARK: - RepliesToCommentDelegate methods
 
     func replyToComment(comment: Comment?) {
         self.replyComment = comment
@@ -367,7 +362,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.editingComment = true
     }
 
-    // MARK: - PerformsUserSegue functions
+    // MARK: - PerformsUserSegue methods
 
     func performSegueToUser(user: User) {
         performSegueWithIdentifier("displayUserSegue", sender: user)

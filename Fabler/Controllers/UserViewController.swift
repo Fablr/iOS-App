@@ -9,15 +9,19 @@
 import UIKit
 import Kingfisher
 import Eureka
+import RxSwift
+import RxCocoa
 
 class UserViewController: FormViewController {
 
-    // MARK: - UserViewController members
+    // MARK: - UserViewController properties
 
     var user: User?
     var root: Bool = false
 
-    // MARK: - UserViewController functions
+    var bag: DisposeBag! = DisposeBag()
+
+    // MARK: - UserViewController properties
 
     func editButtonPushed() {
         if let user = self.user {
@@ -25,16 +29,7 @@ class UserViewController: FormViewController {
         }
     }
 
-    func updateUserElements() {
-        guard self.user != nil else {
-            Log.info("Expected a user initiated via previous controller.")
-            return
-        }
-
-        self.navigationItem.title = user!.userName
-    }
-
-    // MARK: - UIViewController functions
+    // MARK: - UIViewController methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,8 +51,6 @@ class UserViewController: FormViewController {
                 view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
             }
         }
-
-        self.updateUserElements()
 
         self.tableView?.bounces = false
 
@@ -122,6 +115,31 @@ class UserViewController: FormViewController {
             let button = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editButtonPushed")
             self.navigationItem.rightBarButtonItem = button
         }
+
+        self.user!
+        .rx_observe(Int.self, "followingCount")
+        .subscribeNext({ [weak self] (following) in
+            if let row = self?.form.rowByTag("Following"), let following = following {
+                row.title = "\(following) Following"
+            }
+        })
+        .addDisposableTo(self.bag)
+
+        self.user!
+        .rx_observe(Int.self, "followerCount")
+        .subscribeNext({ [weak self] (followers) in
+            if let row = self?.form.rowByTag("Followers"), let followers = followers {
+                row.title = "\(followers) Followers"
+            }
+        })
+        .addDisposableTo(self.bag)
+
+        self.user!
+        .rx_observe(String.self, "userName")
+        .subscribeNext({ [weak self] (name) in
+            self?.navigationItem.title = name
+        })
+        .addDisposableTo(self.bag)
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -175,5 +193,4 @@ class UserHeaderView: UIView {
     // MARK: - IBOutlets
 
     @IBOutlet weak var profileImage: UIImageView?
-
 }

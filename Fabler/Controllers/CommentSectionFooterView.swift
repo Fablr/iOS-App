@@ -20,7 +20,7 @@ class CommentSectionFooterView: UITableViewHeaderFooterView {
         self.delegate?.replyToComment(nil)
     }
 
-    // MARK: - CommentSectionFooterView members
+    // MARK: - CommentSectionFooterView properties
 
     var delegate: RepliesToCommentDelegate?
 }

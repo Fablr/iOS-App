@@ -16,38 +16,34 @@ import RxCocoa
 
 class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate, ChangesBasedOnSegment, PerformsUserSegueDelegate, PresentAlertControllerDelegate, PerformsEpisodeSegueDelegate {
 
-    // MARK: - PodcastTableViewController data members
+    // MARK: - PodcastTableViewController properties
 
     var podcast: Podcast?
     var episodes: [Episode] = []
     var filteredEpisodes: [Episode] = []
     var comments: [Comment] = []
+
     var bag: DisposeBag! = DisposeBag()
-
-    // MARK: - PodcastTableViewController ui members
-
     var refreshControl: UIRefreshControl?
     var headerImage: UIImageView?
 
-    // MARK: - PodcastTableViewController magic members
-
     let headerHeight: CGFloat = 160.0
 
-    // MARK: - CollapsibleUITableViewCellDelegate members
+    // MARK: - CollapsibleUITableViewCellDelegate properties
 
     var indexPath: NSIndexPath?
     var collapsed: Bool?
 
-    // MARK: - RepliesToCommentDelegate members
+    // MARK: - RepliesToCommentDelegate properties
 
     var replyComment: Comment?
     var editingComment: Bool = false
 
-    // MARK: - ChangesBasedOnSegment members
+    // MARK: - ChangesBasedOnSegment properties
 
     var currentSegment: Int = 0
 
-    // MARK: - PodcastTableViewController functions
+    // MARK: - PodcastTableViewController methods
 
     func setColorFor(podcast: Podcast, image: UIImage) {
         let service = PodcastService()
@@ -215,7 +211,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         performSegueWithIdentifier("displaySettingsSegue", sender: self.podcast)
     }
 
-    // MARK: - SLKTextViewController functions
+    // MARK: - SLKTextViewController methods
 
     func didDismissKeyboard() {
         if let navigationController = self.navigationController as? FablerNavigationController {
@@ -237,7 +233,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     override class func tableViewStyleForCoder(decoder: NSCoder) -> UITableViewStyle {
-        return UITableViewStyle.Plain
+        return .Plain
     }
 
     override func didPressLeftButton(sender: AnyObject!) {
@@ -276,7 +272,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.didDismissKeyboard()
     }
 
-    // MARK: - UIViewController functions
+    // MARK: - UIViewController methods
 
     deinit {
         self.bag = nil
@@ -305,7 +301,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
 
         self.headerImage = UIImageView()
-        self.headerImage?.backgroundColor = UIColor.fablerOrangeColor()
+        self.headerImage?.backgroundColor = .fablerOrangeColor()
         self.headerImage?.translatesAutoresizingMaskIntoConstraints = false
         self.headerImage?.contentMode = .ScaleAspectFill
         self.headerImage?.clipsToBounds = true
@@ -352,10 +348,10 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.keyboardPanningEnabled = false
         self.inverted = false
 
-        self.leftButton.setImage(UIImage(named: "delete"), forState: UIControlState.Normal)
-        self.leftButton.tintColor = UIColor.fablerOrangeColor()
-        self.rightButton.setTitle("Post", forState: UIControlState.Normal)
-        self.rightButton.tintColor = UIColor.fablerOrangeColor()
+        self.leftButton.setImage(UIImage(named: "delete"), forState: .Normal)
+        self.leftButton.tintColor = .fablerOrangeColor()
+        self.rightButton.setTitle("Post", forState: .Normal)
+        self.rightButton.tintColor = .fablerOrangeColor()
 
         self.podcast?
         .rx_observe(Bool.self, "primarySet")
@@ -370,7 +366,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.textInputbar.autoHideRightButton = true
 
         self.textView.placeholder = "Add a comment."
-        self.textView.placeholderColor = UIColor.lightGrayColor()
+        self.textView.placeholderColor = .lightGrayColor()
 
         self.textView.registerMarkdownFormattingSymbol("**", withTitle: "Bold")
         self.textView.registerMarkdownFormattingSymbol("_", withTitle: "Italics")
@@ -386,10 +382,10 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         .subscribeNext({ subscribed in
             if let subscribed = subscribed {
                 if subscribed {
-                    let button = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.Plain, target: self, action: "settingsButtonPressed")
+                    let button = UIBarButtonItem(title: "Settings", style: .Plain, target: self, action: "settingsButtonPressed")
                     self.navigationItem.rightBarButtonItem = button
                 } else {
-                    let button = UIBarButtonItem(title: "Subscribe", style: UIBarButtonItemStyle.Plain, target: self, action: "subscribeButtonPressed")
+                    let button = UIBarButtonItem(title: "Subscribe", style: .Plain, target: self, action: "subscribeButtonPressed")
                     self.navigationItem.rightBarButtonItem = button
                 }
             }
@@ -404,8 +400,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         if let refresher = self.refreshControl {
             refresher.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
             refresher.addTarget(self, action: "refreshData:", forControlEvents: UIControlEvents.ValueChanged)
-            refresher.backgroundColor = UIColor.clearColor()
-            refresher.tintColor = UIColor.whiteColor()
+            refresher.backgroundColor = .clearColor()
+            refresher.tintColor = .whiteColor()
             self.tableView.addSubview(refresher)
         }
     }
@@ -454,7 +450,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
     }
 
-    // MARK: - UITableViewController functions
+    // MARK: - UITableViewController methods
 
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("EpisodeSectionHeader") as? EpisodeSectionHeaderView {
@@ -580,7 +576,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         return result
     }
 
-    // MARK: - PodcastTableViewController episode table functions
+    // MARK: - PodcastTableViewController episode table methods
 
     func setupTableForEpisodes() {
         self.tableView.allowsSelection = true
@@ -598,7 +594,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     func episodesNumberOfSectionsInTableView() -> Int {
         if self.filteredEpisodes.count > 0 {
             self.tableView?.backgroundView = nil
-            self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
+            self.tableView?.separatorStyle = .None
         } else {
             let frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
             let label = UILabel(frame: frame)
@@ -615,7 +611,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             label.textAlignment = NSTextAlignment.Center
 
             self.tableView?.backgroundView = label
-            self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
+            self.tableView?.separatorStyle = .None
         }
 
         return 1
@@ -670,7 +666,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         return results
     }
 
-    // MARK: - PodcastTableViewController comment table functions
+    // MARK: - PodcastTableViewController comment table methods
 
     func setupTableForComments() {
         self.tableView.allowsSelection = false
@@ -683,7 +679,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     func commentsNumberOfSectionsInTableView() -> Int {
         if self.comments.count > 0 {
             self.tableView.backgroundView = nil
-            self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
+            self.tableView?.separatorStyle = .None
         } else {
             //
             // Display empty view message but, still display section header
@@ -701,7 +697,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             }
 
             self.tableView?.backgroundView = button
-            self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
+            self.tableView?.separatorStyle = .None
         }
 
         return 1
@@ -741,7 +737,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         return nil
     }
 
-    // MARK: - CollapsibleUITableViewCellDelegate functions
+    // MARK: - CollapsibleUITableViewCellDelegate methods
 
     func setCollapseState(cell: UITableViewCell, collapsed: Bool) {
         if let indexPath = self.tableView.indexPathForCell(cell) {
@@ -754,7 +750,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
     }
 
-    // MARK: - RepliesToCommentDelegate functions
+    // MARK: - RepliesToCommentDelegate methods
 
     func replyToComment(comment: Comment?) {
         self.replyComment = comment
@@ -772,7 +768,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.editingComment = true
     }
 
-    // MARK: - ChangesBasedOnSegment functions
+    // MARK: - ChangesBasedOnSegment methods
 
     func segmentDidChangeTo(index: Int) {
         let refresh: Bool = (index != self.currentSegment)
@@ -782,25 +778,24 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         if refresh {
             self.didDismissKeyboard()
             self.refreshData(self)
-            self.refreshControl?.beginRefreshing()
 
             self.tableView.reloadData()
         }
     }
 
-    // MARK: - PerformsUserSegue functions
+    // MARK: - PerformsUserSegue methods
 
     func performSegueToUser(user: User) {
         performSegueWithIdentifier("displayUserSegue", sender: user)
     }
 
-    // MARK: - PresentAlertController functions
+    // MARK: - PresentAlertController methods
 
     func presentAlert(controller: UIAlertController) {
         self.presentViewController(controller, animated: true, completion: nil)
     }
 
-    // MARK: - PerformsEpisodeSegue functions
+    // MARK: - PerformsEpisodeSegue methods
 
     func performSegueToEpisode(episode: Episode) {
         performSegueWithIdentifier("displayEpisodeSegue", sender: episode)

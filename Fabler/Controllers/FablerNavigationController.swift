@@ -11,13 +11,13 @@ import ChameleonFramework
 
 class FablerNavigationController: UINavigationController {
 
-    // MARK: - FablerNavigationController members
+    // MARK: - FablerNavigationController properties
 
     var playerAdded: Bool = false
 
     var currentStatusBarStyle: UIStatusBarStyle = .LightContent
 
-    // MARK: - FablerNavigationController functions
+    // MARK: - FablerNavigationController methods
 
     func displaySmallPlayer() {
         if playerAdded {
@@ -39,7 +39,7 @@ class FablerNavigationController: UINavigationController {
         self.setStatusBarStyle(UIStatusBarStyleContrast)
     }
 
-    // MARK: - UIViewController functions
+    // MARK: - UIViewController methods
 
     override func viewDidLoad() {
         super.viewDidLoad()

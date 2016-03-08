@@ -23,7 +23,7 @@ public class FablerPlayer: NSObject {
 
     public static let sharedInstance = FablerPlayer()
 
-    // MARK: - FablerPlayer members
+    // MARK: - FablerPlayer properties
 
     public let smallPlayer: SmallPlayerViewController
     public let largePlayer: LargePlayerViewController
@@ -41,7 +41,7 @@ public class FablerPlayer: NSObject {
 
     public var upNext: [Episode] = []
 
-    // MARK: - FablerPlayer functions
+    // MARK: - FablerPlayer methods
 
     override init() {
         //

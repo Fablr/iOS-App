@@ -690,6 +690,9 @@
 					"$(PROJECT_DIR)/Fabler",
 					"$(PROJECT_DIR)",
 				);
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
 				IBC_WARNINGS = NO;
 				IBSC_WARNINGS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Fabler/Supporting Files/Info.plist";
@@ -718,6 +721,9 @@
 					"$(PROJECT_DIR)/Fabler",
 					"$(PROJECT_DIR)",
 				);
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
 				IBC_WARNINGS = NO;
 				IBSC_WARNINGS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Fabler/Supporting Files/Info.plist";

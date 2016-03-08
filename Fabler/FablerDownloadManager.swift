@@ -39,18 +39,18 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
 
     public static let sharedInstance = FablerDownloadManager(backgroundSessionIdentifier: "com.Fabler.Fabler.background")
 
-    // MARK: - public members
+    // MARK: - Public properties
 
     public var backgroundSessionCompletionHandler: (() -> Void)?
 
-    // MARK: - private members
+    // MARK: - Private properties
 
     private let downloadsLockQueue: dispatch_queue_t
     private let backgroundSessionIdentifier: String
     private var downloads: Array<NSURLSessionDownloadTask>
     private lazy var backgroundSession: NSURLSession = self.newBackgroundURLSession()
 
-    // MARK: - private functions
+    // MARK: - Private methods
 
     private func newBackgroundURLSession() -> NSURLSession {
         let backgroundSessionConfiguration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier(backgroundSessionIdentifier)
@@ -107,7 +107,7 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
         }
     }
 
-    // MARK: - public functions
+    // MARK: - Public methods
 
     public required init(backgroundSessionIdentifier: String) {
         self.downloadsLockQueue = dispatch_queue_create("com.Fabler.Fabler.downloadQueue", nil)

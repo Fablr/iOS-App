@@ -10,13 +10,7 @@ import RealmSwift
 
 final public class Episode: Object {
 
-    // swiftlint:disable variable_name
-
-    static let PodcastDirectory = "podcasts"
-
-    // swiftlint:enable variable_name
-
-    // MARK: - Episode members
+    // MARK: - Episode properties
 
     dynamic var title: String = ""
     dynamic var subtitle: String = ""
@@ -32,11 +26,11 @@ final public class Episode: Object {
     dynamic var completed: Bool = false
     dynamic var download: FablerDownload?
 
-    // MARK: - Setting members
+    // MARK: - Setting properties
 
     dynamic var saved: Bool = false
 
-    // MARK: - Episode functions
+    // MARK: - Episode methods
 
     public func localURL() -> NSURL? {
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString

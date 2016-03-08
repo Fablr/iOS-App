@@ -19,7 +19,7 @@ let ScratchRealmIdentifier = "fabler-scratch"
 
 public class CommentService {
 
-    // MARK: - CommentService API functions
+    // MARK: - CommentService API methods
 
     public func getCommentsForEpisode(episode: Episode, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: [Comment]) -> Void) -> [Comment] {
         guard let podcast = episode.podcast else {
@@ -290,7 +290,7 @@ public class CommentService {
         Log.debug("Edit comment request: \(request)")
     }
 
-    // MARK: - CommentService serialize functions
+    // MARK: - CommentService serialize methods
 
     private func serializeCommentObject(data: JSON, episode: Int?, podcast: Int?) -> Comment? {
         var result: Comment?

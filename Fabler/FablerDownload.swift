@@ -46,7 +46,7 @@ import RealmSwift
 
 public class FablerDownload: Object {
 
-    // MARK: - Public members
+    // MARK: - Public properties
 
     public var url: NSURL? {
         didSet {
@@ -167,7 +167,7 @@ public class FablerDownload: Object {
     public let manager: FablerDownloadManager = FablerDownloadManager.sharedInstance
     public var downloadTask: NSURLSessionDownloadTask?
 
-    // MARK: - Presisted members
+    // MARK: - Presisted properties
 
     dynamic var resumeData: NSData? = nil
     dynamic var fractionCompleted: Float = 0

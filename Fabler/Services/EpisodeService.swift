@@ -12,7 +12,7 @@ import RealmSwift
 
 public class EpisodeService {
 
-    // MARK: - EpisodeService API functions
+    // MARK: - EpisodeService API methods
 
     public func getEpisodeFor(episodeId: Int, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Episode?) -> Void)?) -> Episode? {
         if let completion = completion {

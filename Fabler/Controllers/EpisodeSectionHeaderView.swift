@@ -27,11 +27,11 @@ class EpisodeSectionHeaderView: UITableViewHeaderFooterView {
         }
     }
 
-    // MARK: - EpisodeSectionHeaderView members
+    // MARK: - EpisodeSectionHeaderView properties
 
     var delegate: ChangesBasedOnSegment?
 
-    // MARK: - EpisodeSectionHeaderView functions
+    // MARK: - EpisodeSectionHeaderView methods
 
     func setColors(primary: UIColor?) {
         var foreground: UIColor

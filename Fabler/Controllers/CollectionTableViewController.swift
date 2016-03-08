@@ -16,11 +16,11 @@ class CollectionTableViewController: UITableViewController {
 
     @IBOutlet var menuButton: UIBarButtonItem?
 
-    // MARK: - CollectionTableViewController members
+    // MARK: - CollectionTableViewController properties
 
     var podcasts: [Podcast]?
 
-    // MARK: - CollectionTableViewController functions
+    // MARK: - CollectionTableViewController methods
 
     func refreshData(sender: AnyObject) {
         let service = PodcastService()
@@ -42,7 +42,7 @@ class CollectionTableViewController: UITableViewController {
         performSegueWithIdentifier("displayDiscoverySegue", sender: self)
     }
 
-    // MARK: - UIViewController functions
+    // MARK: - UIViewController methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,9 +56,9 @@ class CollectionTableViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         if let refresher = self.refreshControl {
             refresher.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-            refresher.addTarget(self, action: "refreshData:", forControlEvents: UIControlEvents.ValueChanged)
-            refresher.backgroundColor = UIColor.fablerOrangeColor()
-            refresher.tintColor = UIColor.whiteColor()
+            refresher.addTarget(self, action: "refreshData:", forControlEvents: .ValueChanged)
+            refresher.backgroundColor = .fablerOrangeColor()
+            refresher.tintColor = .whiteColor()
             self.tableView.addSubview(refresher)
         }
     }
@@ -71,11 +71,6 @@ class CollectionTableViewController: UITableViewController {
         super.viewWillAppear(animated)
 
         self.refreshData(self)
-        self.refreshControl?.beginRefreshing()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -113,13 +108,13 @@ class CollectionTableViewController: UITableViewController {
             let frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
             let button = UIButton(type: .System)
 
-            button.tintColor = UIColor.fablerOrangeColor()
+            button.tintColor = .fablerOrangeColor()
             button.setTitle("Click here to discover podcasts.", forState: .Normal)
             button.frame = frame
-            button.addTarget(self, action: "discoverButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
+            button.addTarget(self, action: "discoverButtonPressed:", forControlEvents: .TouchUpInside)
 
             self.tableView.backgroundView = button
-            self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+            self.tableView.separatorStyle = .None
         }
 
         return count

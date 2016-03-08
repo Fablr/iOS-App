@@ -10,6 +10,7 @@ import UIKit
 
 public class UpNextSectionHeaderView: UITableViewHeaderFooterView {
 
-    @IBOutlet weak var backButton: UIButton!
+    // MARK: - IBActions
 
+    @IBOutlet weak var backButton: UIButton!
 }

@@ -15,12 +15,12 @@ class DiscoveryCollectionViewController: UICollectionViewController {
 
     @IBOutlet weak var menuButton: UIBarButtonItem?
 
-    // MARK: - DiscoveryViewController members
+    // MARK: - DiscoveryViewController properties
 
     private let reuseIdentifier = "ShowCell"
     private var podcasts: [Podcast]?
 
-    // MARK: - UIViewController functions
+    // MARK: - UIViewController methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,10 +46,6 @@ class DiscoveryCollectionViewController: UICollectionViewController {
         super.viewWillAppear(animated)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "displayPodcastSegue" {
             if let controller = segue.destinationViewController as? PodcastTableViewController, let podcast = sender as? Podcast {
@@ -58,7 +54,7 @@ class DiscoveryCollectionViewController: UICollectionViewController {
         }
     }
 
-    // MARK: - UICollectionViewController functions
+    // MARK: - UICollectionViewController methods
 
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         guard indexPath.section == 0 else {
@@ -69,7 +65,7 @@ class DiscoveryCollectionViewController: UICollectionViewController {
         performSegueWithIdentifier("displayPodcastSegue", sender: podcasts![indexPath.row])
     }
 
-    // MARK: - UICollectionViewDataSource functions
+    // MARK: - UICollectionViewDataSource methods
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1

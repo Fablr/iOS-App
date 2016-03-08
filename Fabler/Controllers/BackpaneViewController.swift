@@ -16,15 +16,17 @@ class BackpaneViewController: UIViewController {
     @IBOutlet weak var userButton: UIButton?
     @IBOutlet weak var userImage: UIImageView?
 
+    // MARK: - IBActions
+
     @IBAction func userButtonPressed(sender: AnyObject) {
         performSegueWithIdentifier("pushUserSegue", sender: self.user)
     }
 
-    // MARK: - BackpaneViewController members
+    // MARK: - BackpaneViewController properties
 
     private var user: User?
 
-    // MARK: - BackpaneViewController functions
+    // MARK: - BackpaneViewController methods
 
     func updateUserElements() {
         if let user = self.user {
@@ -54,7 +56,7 @@ class BackpaneViewController: UIViewController {
         }
     }
 
-    // MARK: - UIViewController functions
+    // MARK: - UIViewController methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,10 +77,6 @@ class BackpaneViewController: UIViewController {
         super.viewWillAppear(animated)
 
         self.updateUserElements()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

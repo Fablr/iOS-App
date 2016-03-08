@@ -29,7 +29,7 @@ class EpisodeTableViewCell: UITableViewCell {
     @IBOutlet weak var downloadView: ACPDownloadView?
     @IBOutlet weak var ellipsisButton: UIButton?
 
-    // MARK: - EpisodeTableViewCell members
+    // MARK: - EpisodeTableViewCell properties
 
     var episode: Episode?
     var token: NotificationToken?
@@ -114,11 +114,11 @@ class EpisodeTableViewCell: UITableViewCell {
         self.presentDelegate?.presentAlert(actionController)
     }
 
-    // MARK: - EpisodeTableViewCell functions
+    // MARK: - EpisodeTableViewCell methods
 
     func setEpisodeInstance(episode: Episode, dynamicColor: Bool = true) {
-        token?.stop()
-        token = nil
+        self.bag = nil
+        self.bag = DisposeBag()
 
         self.episode = episode
 
@@ -209,18 +209,9 @@ class EpisodeTableViewCell: UITableViewCell {
         }
     }
 
-    // MARK: - UITableViewCell functions
+    // MARK: - UITableViewCell methods
 
     deinit {
-        self.token?.stop()
-        self.token = nil
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+        self.bag = nil
     }
 }

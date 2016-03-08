@@ -11,7 +11,7 @@ import AVFoundation
 
 public class SmallPlayerViewController: UIViewController {
 
-    // MARK: - SmallPlayerViewController members
+    // MARK: - SmallPlayerViewController properties
 
     weak var player: FablerPlayer?
 
@@ -53,25 +53,7 @@ public class SmallPlayerViewController: UIViewController {
         }
     }
 
-    // MARK: - UIViewController functions
-
-    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
-    override public func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
-    override public func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
-    // MARK: - SmallPlayerViewController functions
+    // MARK: - SmallPlayerViewController methods
 
     func updateOutlets() {
         self.player = FablerPlayer.sharedInstance

@@ -14,14 +14,4 @@ class PodcastTableViewCell: UITableViewCell {
 
     @IBOutlet weak var tileImage: UIImageView?
     @IBOutlet weak var titleLabel: UILabel?
-
-    // MARK: - UITableViewCell functions
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
 }

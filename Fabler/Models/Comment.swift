@@ -21,7 +21,7 @@ public enum Vote: Int {
 
 final public class Comment: Object {
 
-    // MARK: - Comment members
+    // MARK: - Comment properties
 
     dynamic var commentId: Int = 0
     dynamic var userName: String = ""
