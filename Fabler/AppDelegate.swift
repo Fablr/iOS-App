@@ -27,6 +27,7 @@ let Log: SwiftyBeaver.Type = {
 import UIKit
 import FBSDKCoreKit
 import SwiftyBeaver
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -35,6 +36,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Log.info("Application did finish launching.")
+
+        let config = Realm.Configuration(schemaVersion: 2, migrationBlock: { migration, oldSchemaVersion in
+            if oldSchemaVersion < 1 {
+                migration.enumerate(Podcast.className()) { oldObject, newObject in
+                    newObject!["sortOrderRaw"] = 1
+                }
+            }
+
+            if oldSchemaVersion < 2 {
+                migration.enumerate(Podcast.className()) { oldObject, newObject in
+                    newObject!["sortOrderRaw"] = "Newest to oldest"
+                }
+            }
+        })
+
+        Realm.Configuration.defaultConfiguration = config
 
         let _ = FablerDownloadManager.sharedInstance
 

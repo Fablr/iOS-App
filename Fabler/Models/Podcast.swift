@@ -8,6 +8,11 @@
 
 import RealmSwift
 
+public enum SortOrder: String {
+    case NewestOldest = "Newest to oldest"
+    case OldestNewest = "Oldest to newest"
+}
+
 final public class Podcast: Object, Equatable {
 
     // MARK: - Podcast properties
@@ -28,6 +33,17 @@ final public class Podcast: Object, Equatable {
     dynamic var notify: Bool = true
     dynamic var download: Bool = true
     dynamic var downloadAmount: Int = 3
+    dynamic var sortOrderRaw: String = "Newest to oldest"
+
+    var sortOrder: SortOrder {
+        get {
+            if let state = SortOrder(rawValue: self.sortOrderRaw) {
+                return state
+            }
+
+            return .NewestOldest
+        }
+    }
 
     // MARK: - Color properties
 

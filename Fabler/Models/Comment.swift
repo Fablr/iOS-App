@@ -47,7 +47,7 @@ final public class Comment: Object {
                 return state
             }
 
-            return Vote.None
+            return .None
         }
     }
 

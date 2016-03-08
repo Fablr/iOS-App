@@ -38,6 +38,13 @@ class PodcastSettingsViewController: FormViewController {
         }
     }
 
+    func sortOrderDidChange(row: AlertRow<String>) {
+        if let podcast = self.podcast, let rawValue = row.value, let value = SortOrder(rawValue: rawValue) {
+            let service = PodcastService()
+            service.setSortOrderForPodcast(podcast, order: value)
+        }
+    }
+
     func unsubscribePressed(cell: ButtonCellOf<String>, row: ButtonRow) {
         if let podcast = self.podcast {
             let service = PodcastService()
@@ -55,7 +62,7 @@ class PodcastSettingsViewController: FormViewController {
 
     func setFormValues() {
         if let podcast = self.podcast {
-            let values: [String: Any?] = ["AutoDownload": podcast.download, "Notifications": podcast.notify, "DownloadCount": podcast.downloadAmount]
+            let values: [String: Any?] = ["AutoDownload": podcast.download, "Notifications": podcast.notify, "DownloadCount": podcast.downloadAmount, "SortOrder": podcast.sortOrderRaw]
             self.form.setValues(values)
             self.tableView?.reloadData()
         }
@@ -115,6 +122,17 @@ class PodcastSettingsViewController: FormViewController {
             <<< IntRow("DownloadCount") {
                 $0.title = "Auto-download count"
                 $0.onChange(self.downloadCountDidChange)
+            }
+
+        self.form +++= Section()
+            <<< AlertRow<String>("SortOrder") {
+                $0.title = "Episode sort order"
+                $0.selectorTitle = "Episode sort order"
+                $0.options = [SortOrder.NewestOldest.rawValue, SortOrder.OldestNewest.rawValue]
+                $0.onChange(self.sortOrderDidChange)
+            }
+            .onPresent { _, action in
+                action.view.tintColor = tint
             }
 
         self.form +++= Section()

@@ -51,6 +51,18 @@ public class PodcastService {
         }
     }
 
+    public func setSortOrderForPodcast(podcast: Podcast, order: SortOrder) {
+        do {
+            let realm = try Realm()
+
+            try realm.write {
+                podcast.sortOrderRaw = order.rawValue
+            }
+        } catch {
+            Log.error("Realm write failed.")
+        }
+    }
+
     public func setPrimaryColorForPodcast(podcast: Podcast, color: UIColor) {
         do {
             let realm = try Realm()

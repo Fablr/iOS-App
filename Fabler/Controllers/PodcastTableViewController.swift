@@ -13,6 +13,7 @@ import Hue
 import ChameleonFramework
 import RxSwift
 import RxCocoa
+import SwiftDate
 
 class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewCellDelegate, RepliesToCommentDelegate, ChangesBasedOnSegment, PerformsUserSegueDelegate, PresentAlertControllerDelegate, PerformsEpisodeSegueDelegate {
 
@@ -137,6 +138,19 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             self.filteredEpisodes = self.episodes
         default:
             break
+        }
+
+        self.sortEpisodes()
+    }
+
+    func sortEpisodes() {
+        if let order = self.podcast?.sortOrder {
+            switch order {
+            case .NewestOldest:
+                self.filteredEpisodes.sortInPlace({ $0.pubdate > $1.pubdate })
+            case .OldestNewest:
+                self.filteredEpisodes.sortInPlace({ $1.pubdate > $0.pubdate })
+            }
         }
     }
 
@@ -390,6 +404,14 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
                 }
             }
 
+        })
+        .addDisposableTo(self.bag)
+
+        self.podcast?
+        .rx_observe(String.self, "sortOrderRaw")
+        .subscribeNext({ [weak self] (_) in
+            self?.sortEpisodes()
+            self?.tableView.reloadData()
         })
         .addDisposableTo(self.bag)
 

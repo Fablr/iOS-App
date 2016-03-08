@@ -182,9 +182,7 @@ public class FablerAutoDownload {
     }
 
     private func calculateDownloadsForPodcast(count: Int, episodes: [Episode]) {
-        let sortedEpisodes = episodes.sort({ (e1: Episode, e2: Episode) -> Bool in
-            return e1.pubdate < e2.pubdate
-        })
+        let sortedEpisodes = episodes.sort({ $0.pubdate > $1.pubdate })
         let localEpisodes = sortedEpisodes.filter { $0.download != nil }
 
         if localEpisodes.count < count {
