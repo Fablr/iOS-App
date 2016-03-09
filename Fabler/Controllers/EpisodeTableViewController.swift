@@ -22,6 +22,8 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
     var refreshControl: UIRefreshControl?
     var headerController: EpisodeHeaderViewController?
 
+    var root: Bool = false
+
     var bag: DisposeBag! = DisposeBag()
 
     // MARK: - CollapsibleUITableViewCellDelegate properties
@@ -58,6 +60,10 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
     func commentButtonPressed(sender: AnyObject) {
         self.replyComment = nil
         self.didRequestKeyboard()
+    }
+
+    @objc func doneButtonPressed(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     // MARK: - SLKTextViewController methods
@@ -220,6 +226,14 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
             }
         })
         .addDisposableTo(self.bag)
+
+        //
+        // Show dismiss button if we are the root of a navigation controller
+        //
+        if self.root {
+            let done = UIBarButtonItem(title: "Done", style: .Done, target: self, action: "doneButtonPressed:")
+            self.navigationItem.leftBarButtonItem = done
+        }
     }
 
     override func viewWillAppear(animated: Bool) {

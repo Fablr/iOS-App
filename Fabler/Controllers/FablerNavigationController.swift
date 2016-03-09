@@ -14,13 +14,14 @@ class FablerNavigationController: UINavigationController {
     // MARK: - FablerNavigationController properties
 
     var playerAdded: Bool = false
+    var showPlayer: Bool = true
 
     var currentStatusBarStyle: UIStatusBarStyle = .LightContent
 
     // MARK: - FablerNavigationController methods
 
     func displaySmallPlayer() {
-        if playerAdded {
+        if playerAdded && showPlayer {
             self.setToolbarHidden(false, animated: true)
         }
     }
@@ -50,16 +51,18 @@ class FablerNavigationController: UINavigationController {
 
         let player = FablerPlayer.sharedInstance
 
-        if player.started {
+        if player.started && showPlayer {
             self.playerAdded = true
             self.setToolbarHidden(false, animated: true)
         }
 
-        player.registerPlaybackStarted { [weak self] in
-            if let controller = self {
-                if !controller.playerAdded {
-                    controller.playerAdded = true
-                    controller.setToolbarHidden(false, animated: true)
+        if showPlayer {
+            player.registerPlaybackStarted { [weak self] in
+                if let controller = self {
+                    if !controller.playerAdded {
+                        controller.playerAdded = true
+                        controller.setToolbarHidden(false, animated: true)
+                    }
                 }
             }
         }

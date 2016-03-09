@@ -112,6 +112,9 @@
                                                 <rect key="frame" x="339" y="0.0" width="75" height="172"/>
                                                 <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" image="ellipsis"/>
+                                                <connections>
+                                                    <action selector="moreButtonPressed:" destination="mry-ye-vGf" eventType="touchUpInside" id="0nR-Hk-3SZ"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -171,12 +174,14 @@
                         <outlet property="currentTimeLabel" destination="X3n-2T-aBe" id="SX9-xQ-88V"/>
                         <outlet property="durationLabel" destination="tjd-CX-ymu" id="LPl-6T-pLm"/>
                         <outlet property="forwardButton" destination="TKn-nE-hK7" id="gRs-Bk-8rk"/>
+                        <outlet property="moreButton" destination="Cfv-nj-FDC" id="fjh-tn-Vk8"/>
                         <outlet property="playButton" destination="tqd-ui-oHs" id="oXf-3h-25g"/>
                         <outlet property="playbackSlider" destination="dGt-Hf-eKQ" id="ZsG-jC-fsJ"/>
                         <outlet property="rateButton" destination="2RK-3O-GqF" id="nR3-5N-wH4"/>
                         <outlet property="rewindButton" destination="jp6-uu-P1x" id="dCY-gU-Kv7"/>
                         <outlet property="titleLabel" destination="1fL-Vs-E4X" id="L4l-4a-s5h"/>
                         <outlet property="upNextButton" destination="0jL-rA-ngb" id="Yi4-no-EQK"/>
+                        <segue destination="lb5-DI-6zo" kind="presentation" identifier="presentEpisodeSegue" modalPresentationStyle="overCurrentContext" id="RTx-IK-dzb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QSz-QS-Vbz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -200,6 +205,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4MO-p0-ILf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1361" y="346"/>
+        </scene>
+        <!--Fabler Navigation Controller-->
+        <scene sceneID="Lgj-td-apT">
+            <objects>
+                <navigationController id="lb5-DI-6zo" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="HGw-5N-9El">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="M6p-S2-n4p">
+                        <rect key="frame" x="0.0" y="692" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="fQM-6c-Cr5" kind="relationship" relationship="rootViewController" id="gs7-RL-lwn"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yw4-Uh-h35" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1361" y="1243"/>
+        </scene>
+        <!--episode-->
+        <scene sceneID="8q1-JH-rDf">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="episode" id="fQM-6c-Cr5" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="PoF-Xw-y9d"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pf0-Hs-FE9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1826.5" y="1243"/>
         </scene>
     </scenes>
     <resources>

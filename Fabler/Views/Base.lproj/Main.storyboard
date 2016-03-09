@@ -176,7 +176,7 @@
         <!--Episode Table View Controller-->
         <scene sceneID="eSO-zs-4ui">
             <objects>
-                <viewController id="JHt-FC-ojy" customClass="EpisodeTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="episode" id="JHt-FC-ojy" customClass="EpisodeTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="thN-6c-WeO"/>
                         <viewControllerLayoutGuide type="bottom" id="F8T-0b-fLK"/>
@@ -228,7 +228,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserCell" rowHeight="80" id="C9y-MZ-hG2" customClass="UserTableViewCell" customModule="Fabler" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="600" height="80"/>
+                                <rect key="frame" x="0.0" y="72" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="C9y-MZ-hG2" id="lXr-SK-kbI">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="79.5"/>
@@ -531,10 +531,10 @@
         <image name="user-add" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AX5-vf-8TQ"/>
-        <segue reference="cPh-g7-fxF"/>
-        <segue reference="nsB-VR-E4f"/>
-        <segue reference="Y9H-zW-Zfi"/>
         <segue reference="P5W-DW-uff"/>
+        <segue reference="Y9H-zW-Zfi"/>
+        <segue reference="nsB-VR-E4f"/>
+        <segue reference="h58-AZ-nKl"/>
+        <segue reference="cPh-g7-fxF"/>
     </inferredMetricsTieBreakers>
 </document>

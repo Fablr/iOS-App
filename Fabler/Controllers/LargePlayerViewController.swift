@@ -29,8 +29,51 @@ public class LargePlayerViewController: UIViewController {
     @IBOutlet weak var durationLabel: UILabel?
     @IBOutlet weak var upNextButton: UIButton?
     @IBOutlet weak var rateButton: UIButton?
+    @IBOutlet weak var moreButton: UIButton?
 
     // MARK: - IBActions
+
+    @IBAction func moreButtonPressed(sender: AnyObject) {
+        if let episode = self.player?.episode {
+            let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+
+            //
+            // Cancel
+            //
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            actionController.addAction(cancelAction)
+
+            //
+            // Comments
+            //
+            let commentAction = UIAlertAction(title: "Comments", style: .Default, handler: { [weak self] (action) in
+                if let episode = self?.player?.episode {
+                    self?.performSegueWithIdentifier("presentEpisodeSegue", sender: episode)
+                }
+            })
+            actionController.addAction(commentAction)
+
+            //
+            // Save
+            //
+            let saveTitle: String
+            if episode.saved {
+                saveTitle = "Unsave Episode"
+            } else {
+                saveTitle = "Save Episode"
+            }
+
+            let saveAction = UIAlertAction(title: saveTitle, style: .Default, handler: { [weak self] (action) in
+                if let episode = self?.player?.episode {
+                    let service = EpisodeService()
+                    service.flipSaveForEpisode(episode)
+                }
+            })
+            actionController.addAction(saveAction)
+
+            self.presentViewController(actionController, animated: true, completion: nil)
+        }
+    }
 
     @IBAction func rateButtonPressed(sender: AnyObject) {
         if let player = self.player {
@@ -103,7 +146,17 @@ public class LargePlayerViewController: UIViewController {
         super.viewDidLoad()
     }
 
-    // MARK: - SmallPlayerViewController methods
+    override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "presentEpisodeSegue" {
+            if let navigator = segue.destinationViewController as? FablerNavigationController, let episode = sender as? Episode, let controller = navigator.topViewController as? EpisodeTableViewController {
+                navigator.showPlayer = false
+                controller.episode = episode
+                controller.root = true
+            }
+        }
+    }
+
+    // MARK: - LargePlayerViewController methods
 
     func updateOutlets() {
         self.player = FablerPlayer.sharedInstance
