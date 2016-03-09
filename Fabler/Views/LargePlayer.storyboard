@@ -72,8 +72,16 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="WjL-wq-Sqp">
                                         <rect key="frame" x="0.0" y="514" width="414" height="172"/>
                                         <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2RK-3O-GqF">
+                                                <rect key="frame" x="0.0" y="0.0" width="75" height="172"/>
+                                                <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal" title="1X"/>
+                                                <connections>
+                                                    <action selector="rateButtonPressed:" destination="mry-ye-vGf" eventType="touchUpInside" id="6N4-CD-Yt8"/>
+                                                </connections>
+                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jp6-uu-P1x">
-                                                <rect key="frame" x="0.0" y="0.0" width="131.5" height="172"/>
+                                                <rect key="frame" x="85" y="0.0" width="75" height="172"/>
                                                 <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" image="rewind">
                                                     <attributedString key="attributedTitle"/>
@@ -83,7 +91,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tqd-ui-oHs">
-                                                <rect key="frame" x="141.5" y="0.0" width="131" height="172"/>
+                                                <rect key="frame" x="170" y="0.0" width="75" height="172"/>
                                                 <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" image="play"/>
                                                 <connections>
@@ -91,7 +99,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TKn-nE-hK7">
-                                                <rect key="frame" x="282.5" y="0.0" width="131.5" height="172"/>
+                                                <rect key="frame" x="255" y="0.0" width="75" height="172"/>
                                                 <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" image="forward">
                                                     <attributedString key="attributedTitle"/>
@@ -99,6 +107,11 @@
                                                 <connections>
                                                     <action selector="forwardButtonPressed:" destination="mry-ye-vGf" eventType="touchUpInside" id="eDy-jn-w21"/>
                                                 </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cfv-nj-FDC">
+                                                <rect key="frame" x="339" y="0.0" width="75" height="172"/>
+                                                <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal" image="ellipsis"/>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -160,6 +173,7 @@
                         <outlet property="forwardButton" destination="TKn-nE-hK7" id="gRs-Bk-8rk"/>
                         <outlet property="playButton" destination="tqd-ui-oHs" id="oXf-3h-25g"/>
                         <outlet property="playbackSlider" destination="dGt-Hf-eKQ" id="ZsG-jC-fsJ"/>
+                        <outlet property="rateButton" destination="2RK-3O-GqF" id="nR3-5N-wH4"/>
                         <outlet property="rewindButton" destination="jp6-uu-P1x" id="dCY-gU-Kv7"/>
                         <outlet property="titleLabel" destination="1fL-Vs-E4X" id="L4l-4a-s5h"/>
                         <outlet property="upNextButton" destination="0jL-rA-ngb" id="Yi4-no-EQK"/>
@@ -189,6 +203,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ellipsis" width="25" height="25"/>
         <image name="forward" width="20" height="20"/>
         <image name="play" width="20" height="20"/>
         <image name="rewind" width="20" height="20"/>

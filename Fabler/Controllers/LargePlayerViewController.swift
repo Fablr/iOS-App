@@ -28,8 +28,20 @@ public class LargePlayerViewController: UIViewController {
     @IBOutlet weak var currentTimeLabel: UILabel?
     @IBOutlet weak var durationLabel: UILabel?
     @IBOutlet weak var upNextButton: UIButton?
+    @IBOutlet weak var rateButton: UIButton?
 
     // MARK: - IBActions
+
+    @IBAction func rateButtonPressed(sender: AnyObject) {
+        if let player = self.player {
+            let currentRate = player.rate
+            let nextRate = currentRate.nextRate
+
+            player.setRate(nextRate)
+
+            self.rateButton?.setTitle(nextRate.description, forState: .Normal)
+        }
+    }
 
     @IBAction func doneButtonPressed(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -104,6 +116,8 @@ public class LargePlayerViewController: UIViewController {
             } else {
                 playButton?.setImage(UIImage(named: "play"), forState: .Normal)
             }
+
+            self.rateButton?.setTitle(player.rate.description, forState: .Normal)
 
             updatePlayerProgress(player.getCurrentDuration(), current: player.getCurrentTime())
         }

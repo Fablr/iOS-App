@@ -17,6 +17,39 @@ import AVFoundation
 import MediaPlayer
 import Kingfisher
 
+public enum PlaybackRate: Float {
+    case Half = 0.5
+    case Normal = 1.0
+    case NormalPlus = 1.5
+    case Double = 2.0
+
+    var description: String {
+        switch self {
+        case Half:
+            return "0.5X"
+        case Normal:
+            return "1X"
+        case .NormalPlus:
+            return "1.5X"
+        case .Double:
+            return "2X"
+        }
+    }
+
+    var nextRate: PlaybackRate {
+        switch self {
+        case .Half:
+            return .Normal
+        case .Normal:
+            return .NormalPlus
+        case .NormalPlus:
+            return .Double
+        case .Double:
+            return .Half
+        }
+    }
+}
+
 public class FablerPlayer: NSObject {
 
     // MARK: - singleton
@@ -31,6 +64,8 @@ public class FablerPlayer: NSObject {
 
     public var playing: Bool = false
     public var started: Bool = false
+
+    public var rate: PlaybackRate = .Normal
 
     private var uiTimer: NSTimer?
     private var serviceTimer: NSTimer?
@@ -270,6 +305,11 @@ public class FablerPlayer: NSObject {
 
         audioPlayer.seekToTime(CMTime(seconds: Double(seconds), preferredTimescale: 10))
         self.playPlayback()
+    }
+
+    public func setRate(rate: PlaybackRate) {
+        self.rate = rate
+        self.audioPlayer.rate = rate.rawValue
     }
 
     public func getCurrentDuration() -> Float {
