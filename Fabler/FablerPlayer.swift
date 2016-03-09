@@ -201,6 +201,7 @@ public class FablerPlayer: NSObject {
         self.insertCurrentEpisode()
         setPlaybackTo(Float(episode.mark - 1))
         audioPlayer.play()
+        audioPlayer.rate = self.rate.rawValue
 
         playing = true
         started = true
@@ -280,6 +281,7 @@ public class FablerPlayer: NSObject {
 
         playing = true
         audioPlayer.play()
+        audioPlayer.rate = self.rate.rawValue
 
         uiTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "updateCurrentTime", userInfo: nil, repeats: true)
         serviceTimer = NSTimer.scheduledTimerWithTimeInterval(5, target:  self, selector: "updateService", userInfo: nil, repeats: true)
@@ -310,6 +312,10 @@ public class FablerPlayer: NSObject {
     public func setRate(rate: PlaybackRate) {
         self.rate = rate
         self.audioPlayer.rate = rate.rawValue
+
+        if !self.playing {
+            self.audioPlayer.pause()
+        }
     }
 
     public func getCurrentDuration() -> Float {
