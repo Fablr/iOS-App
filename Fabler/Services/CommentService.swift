@@ -310,12 +310,17 @@ public class CommentService {
             if let userId = data["user"].int {
                 let userService = UserService()
                 if let user = userService.getUserFor(userId, completion: nil) {
-                    var scratchUser: User?
-                    try realm.write {
-                        scratchUser = realm.create(User.self, value: user, update: true)
-                    }
+                    //
+                    // See issue described in scratchRealm:
+                    //
+                    //var scratchUser: User?
+                    //try realm.write {
+                    //    scratchUser = realm.create(User.self, value: user, update: true)
+                    //}
+                    //
+                    //comment.user = scratchUser
 
-                    comment.user = scratchUser
+                    comment.user = user
                 }
 
                 comment.userId = userId
@@ -403,6 +408,11 @@ public class CommentService {
     }
 
     private func scratchRealm() throws -> Realm {
-        return try Realm(configuration: Realm.Configuration(inMemoryIdentifier: ScratchRealmIdentifier))
+        //
+        // In-memory realms currently have an issue where circular references result in infinite recurison.
+        // For now just presist comments to disk.
+        //
+        //return try Realm(configuration: Realm.Configuration(inMemoryIdentifier: ScratchRealmIdentifier))
+        return try Realm()
     }
 }
