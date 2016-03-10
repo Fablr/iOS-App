@@ -181,7 +181,7 @@
                         <outlet property="rewindButton" destination="jp6-uu-P1x" id="dCY-gU-Kv7"/>
                         <outlet property="titleLabel" destination="1fL-Vs-E4X" id="L4l-4a-s5h"/>
                         <outlet property="upNextButton" destination="0jL-rA-ngb" id="Yi4-no-EQK"/>
-                        <segue destination="lb5-DI-6zo" kind="presentation" identifier="presentEpisodeSegue" modalPresentationStyle="overCurrentContext" id="RTx-IK-dzb"/>
+                        <segue destination="lb5-DI-6zo" kind="presentation" identifier="displayEpisodeSegue" modalPresentationStyle="overCurrentContext" id="RTx-IK-dzb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QSz-QS-Vbz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -201,6 +201,9 @@
                             <outlet property="delegate" destination="XHf-xa-DXL" id="Yxl-Wh-CzJ"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="lb5-DI-6zo" kind="presentation" identifier="displayEpisodeSegue" modalPresentationStyle="overCurrentContext" id="msD-uI-f0M"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4MO-p0-ILf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -244,4 +247,7 @@
         <image name="play" width="20" height="20"/>
         <image name="rewind" width="20" height="20"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="RTx-IK-dzb"/>
+    </inferredMetricsTieBreakers>
 </document>

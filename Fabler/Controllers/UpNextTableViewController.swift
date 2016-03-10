@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class UpNextTableViewController: UITableViewController, PresentAlertControllerDelegate {
+public class UpNextTableViewController: UITableViewController, PresentAlertControllerDelegate, PerformsEpisodeSegueDelegate {
 
     // MARK: - UpNextTableViewController methods
 
@@ -32,6 +32,16 @@ public class UpNextTableViewController: UITableViewController, PresentAlertContr
 
         self.tableView.registerNib(UINib(nibName: "EpisodeCell", bundle: nil), forCellReuseIdentifier: "EpisodeCell")
         self.tableView.registerNib(UINib(nibName: "UpNextSectionHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "SectionHeader")
+    }
+
+    override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "displayEpisodeSegue" {
+            if let navigator = segue.destinationViewController as? FablerNavigationController, let episode = sender as? Episode, let controller = navigator.topViewController as? EpisodeTableViewController {
+                navigator.showPlayer = false
+                controller.episode = episode
+                controller.root = true
+            }
+        }
     }
 
     // MARK: - UITableViewController methods
@@ -67,9 +77,9 @@ public class UpNextTableViewController: UITableViewController, PresentAlertContr
             cell.setEpisodeInstance(episode, dynamicColor: false)
 
             cell.presentDelegate = self
+            cell.segueDelegate = self
 
             cell.upNextEnabled = false
-            cell.commentsEnabled = false
         }
 
         return cell
@@ -98,5 +108,11 @@ public class UpNextTableViewController: UITableViewController, PresentAlertContr
 
     func presentAlert(controller: UIAlertController) {
         self.presentViewController(controller, animated: true, completion: nil)
+    }
+
+    // MARK: - PerformsEpisodeSegueDelegate methods
+
+    func performSegueToEpisode(episode: Episode) {
+        performSegueWithIdentifier("displayEpisodeSegue", sender: episode)
     }
 }

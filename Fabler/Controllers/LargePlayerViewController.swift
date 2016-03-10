@@ -48,7 +48,7 @@ public class LargePlayerViewController: UIViewController {
             //
             let commentAction = UIAlertAction(title: "Comments", style: .Default, handler: { [weak self] (action) in
                 if let episode = self?.player?.episode {
-                    self?.performSegueWithIdentifier("presentEpisodeSegue", sender: episode)
+                    self?.performSegueWithIdentifier("displayEpisodeSegue", sender: episode)
                 }
             })
             actionController.addAction(commentAction)
@@ -147,7 +147,7 @@ public class LargePlayerViewController: UIViewController {
     }
 
     override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "presentEpisodeSegue" {
+        if segue.identifier == "displayEpisodeSegue" {
             if let navigator = segue.destinationViewController as? FablerNavigationController, let episode = sender as? Episode, let controller = navigator.topViewController as? EpisodeTableViewController {
                 navigator.showPlayer = false
                 controller.episode = episode
