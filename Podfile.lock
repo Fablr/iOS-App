@@ -16,7 +16,7 @@ PODS:
   - FBSDKLoginKit (4.10.0):
     - FBSDKCoreKit
   - Hue (1.0.1)
-  - Kingfisher (2.0.4)
+  - Kingfisher (2.1.0)
   - Realm (0.98.3):
     - Realm/Headers (= 0.98.3)
   - Realm/Headers (0.98.3)
@@ -41,7 +41,7 @@ DEPENDENCIES:
   - FBSDKCoreKit (~> 4.10.0)
   - FBSDKLoginKit (~> 4.10.0)
   - Hue (~> 1.0.1)
-  - Kingfisher (~> 2.0.4)
+  - Kingfisher (~> 2.1.0)
   - RealmSwift (~> 0.98.3)
   - RxCocoa (~> 2.2.0)
   - RxSwift (~> 2.2.0)
@@ -62,7 +62,7 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 13bec8373fb3af94d44daf2aa1e0958687897fbd
   FBSDKLoginKit: d3d4a2e9d31954deb00bfea964167a05ca1ea976
   Hue: 0a53589bb58317e74068863b701ef1e5eee89ac1
-  Kingfisher: 8f1ec2c067ade2c549a1a594379b69c4b1ff81ab
+  Kingfisher: 3ac09acad75a25ab22f6d7cef3de10d61dd4792d
   Realm: c6a7d00221a2d5177810a674aebd40c5e0b70b0f
   RealmSwift: d6ecad6e4c2a645d6ac956c2c7e9efb375f39c31
   RxCocoa: 42efb7a7145a8d1d5878e94ce48a580d29e0c796

@@ -13,7 +13,7 @@ target 'Fabler' do
   pod 'SwiftyBeaver', '~>0.4.0'
   pod 'XNGMarkdownParser', '~>0.3.2'
   pod 'SCLAlertView', '~>0.5.1'
-  pod 'Kingfisher', '~>2.0.4'
+  pod 'Kingfisher', '~>2.1.0'
   pod 'SWRevealViewController', '~>2.3.0'
   pod 'Eureka', '~>1.4.1'
   pod 'ACPDownload', '~>1.1.0'
