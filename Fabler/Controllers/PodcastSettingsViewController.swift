@@ -18,17 +18,21 @@ class PodcastSettingsViewController: FormViewController {
     // MARK: - PodcastSettingsViewController methods
 
     func autoDownloadDidChange(row: CheckRow) {
-        if let podcast = self.podcast, let value = row.value {
-            let service = PodcastService()
-            service.setDownloadForPodcast(podcast, allowAutoDownload: value)
+        guard let podcast = self.podcast, let value = row.value else {
+            return
         }
+
+        let service = PodcastService()
+        service.setDownloadForPodcast(podcast, allowAutoDownload: value)
     }
 
     func notificationDidChange(row: CheckRow) {
-        if let podcast = self.podcast, let value = row.value {
-            let service = PodcastService()
-            service.setNotificationForPodcast(podcast, allowNotifications: value)
+        guard let podcast = self.podcast, let value = row.value else {
+            return
         }
+
+        let service = PodcastService()
+        service.setNotificationForPodcast(podcast, allowNotifications: value)
     }
 
     func downloadCountDidChange(row: IntRow) {
@@ -39,19 +43,23 @@ class PodcastSettingsViewController: FormViewController {
     }
 
     func sortOrderDidChange(row: AlertRow<String>) {
-        if let podcast = self.podcast, let rawValue = row.value, let value = SortOrder(rawValue: rawValue) {
-            let service = PodcastService()
-            service.setSortOrderForPodcast(podcast, order: value)
+        guard let podcast = self.podcast, let rawValue = row.value, let value = SortOrder(rawValue: rawValue) else {
+            return
         }
+
+        let service = PodcastService()
+        service.setSortOrderForPodcast(podcast, order: value)
     }
 
     func unsubscribePressed(cell: ButtonCellOf<String>, row: ButtonRow) {
-        if let podcast = self.podcast {
-            let service = PodcastService()
-            let subscribed = !(podcast.subscribed)
-
-            service.subscribeToPodcast(podcast, subscribe: subscribed, completion: nil)
+        guard let podcast = self.podcast else {
+            return
         }
+
+        let service = PodcastService()
+        let subscribed = !(podcast.subscribed)
+
+        service.subscribeToPodcast(podcast, subscribe: subscribed, completion: nil)
 
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -61,11 +69,13 @@ class PodcastSettingsViewController: FormViewController {
     }
 
     func setFormValues() {
-        if let podcast = self.podcast {
-            let values: [String: Any?] = ["AutoDownload": podcast.download, "Notifications": podcast.notify, "DownloadCount": podcast.downloadAmount, "SortOrder": podcast.sortOrderRaw]
-            self.form.setValues(values)
-            self.tableView?.reloadData()
+        guard let podcast = self.podcast else {
+            return
         }
+
+        let values: [String: Any?] = ["AutoDownload": podcast.download, "Notifications": podcast.notify, "DownloadCount": podcast.downloadAmount, "SortOrder": podcast.sortOrderRaw]
+        self.form.setValues(values)
+        self.tableView?.reloadData()
     }
 
     // MARK: - UIViewController methods

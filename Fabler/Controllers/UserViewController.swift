@@ -24,9 +24,11 @@ class UserViewController: FormViewController {
     // MARK: - UserViewController properties
 
     func editButtonPushed() {
-        if let user = self.user {
-            performSegueWithIdentifier("editProfileSegue", sender: user)
+        guard let user = self.user else {
+            return
         }
+
+        performSegueWithIdentifier("editProfileSegue", sender: user)
     }
 
     // MARK: - UIViewController methods
@@ -176,15 +178,23 @@ class UserViewController: FormViewController {
         super.viewWillAppear(animated)
     }
 
+    deinit {
+        self.bag = nil
+    }
+
+    // MARK: - UserViewController methods
+
     func performLogoutSegue() {
-        if let window = UIApplication.sharedApplication().delegate?.window {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-
-            let viewController = storyboard.instantiateViewControllerWithIdentifier("login")
-
-            window?.rootViewController = viewController
-            window?.makeKeyAndVisible()
+        guard let window = UIApplication.sharedApplication().delegate?.window else {
+            return
         }
+
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+
+        let viewController = storyboard.instantiateViewControllerWithIdentifier("login")
+
+        window?.rootViewController = viewController
+        window?.makeKeyAndVisible()
     }
 }
 

@@ -121,11 +121,11 @@ class CollectionTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard podcasts != nil else {
+        guard let podcasts = self.podcasts else {
             return 0
         }
 
-        return podcasts!.count
+        return podcasts.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

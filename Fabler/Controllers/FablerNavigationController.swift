@@ -58,11 +58,9 @@ class FablerNavigationController: UINavigationController {
 
         if showPlayer {
             player.registerPlaybackStarted { [weak self] in
-                if let controller = self {
-                    if !controller.playerAdded {
-                        controller.playerAdded = true
-                        controller.setToolbarHidden(false, animated: true)
-                    }
+                if let controller = self where !controller.playerAdded {
+                    controller.playerAdded = true
+                    controller.setToolbarHidden(false, animated: true)
                 }
             }
         }

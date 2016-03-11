@@ -31,85 +31,35 @@ class UserEditViewController: FormViewController {
     }
 
     func savePressed(cell: ButtonCellOf<String>, row: ButtonRow) {
-        if let user = self.user {
-            let alert = SCLAlertView().showWait("Updating profile", subTitle: "")
-            var showWarning: Bool = false
-            var warningText: String = "Unable to save profile."
-            var close: Bool = true
+        guard let user = self.user else {
+            return
+        }
 
-            let values = form.values()
-            var userName: String?
-            var firstName: String?
-            var lastName: String?
-            var email: String?
-            var birthday: NSDate?
+        let alert = SCLAlertView().showWait("Updating profile", subTitle: "")
+        var showWarning: Bool = false
+        var warningText: String = "Unable to save profile."
+        var close: Bool = true
 
-            let service = UserService()
+        let values = form.values()
+        var userName: String?
+        var firstName: String?
+        var lastName: String?
+        var email: String?
+        var birthday: NSDate?
 
-            //
-            // Send username as seperate request for unique error.
-            //
-            if let value = values["Username"] as? String {
-                userName = value == user.userName ? nil : value
+        let service = UserService()
 
-                if let userName = userName {
-                    service.updateUsername(userName, user: user, completion: { result in
-                        if !result {
-                            showWarning = true
-                            warningText = "Username is already in use."
-                        }
+        //
+        // Send username as seperate request for unique error.
+        //
+        if let value = values["Username"] as? String {
+            userName = value == user.userName ? nil : value
 
-                        self.requestComplete(service, alert: alert, showWarning: showWarning, warningText: warningText)
-                    })
-
-                    close = false
-                }
-            }
-
-            //
-            // Send email as seperate request for unique error.
-            //
-            if let value = values["Email"] as? String {
-                email = value == user.email ? nil : value
-
-                if let email = email {
-                    service.updateEmail(email, user: user, completion: { result in
-                        if !result {
-                            showWarning = true
-                            warningText = "Email is already in use."
-                        }
-
-                        self.requestComplete(service, alert: alert, showWarning: showWarning, warningText: warningText)
-                    })
-
-                    close = false
-                }
-            }
-
-            if let value = values["FirstName"] as? String {
-                firstName = value == user.firstName ? nil : value
-            }
-
-            if let value = values["LastName"] as? String {
-                lastName = value == user.lastName ? nil : value
-            }
-
-            if let value = values["Birthday"] as? NSDate {
-                let interval: Int
-
-                if user.birthday == nil {
-                    interval = 0
-                } else {
-                    interval = NSCalendar.currentCalendar().components(NSCalendarUnit.Day, fromDate: user.birthday!, toDate: value, options: NSCalendarOptions()).day
-                }
-
-                birthday = interval == 0 ? nil : value
-            }
-
-            if firstName != nil || lastName != nil || birthday != nil {
-                service.updateProfile(firstName, lastName: lastName, birthday: birthday, user: user, completion: { result in
+            if let userName = userName {
+                service.updateUsername(userName, user: user, completion: { result in
                     if !result {
                         showWarning = true
+                        warningText = "Username is already in use."
                     }
 
                     self.requestComplete(service, alert: alert, showWarning: showWarning, warningText: warningText)
@@ -117,13 +67,65 @@ class UserEditViewController: FormViewController {
 
                 close = false
             }
+        }
 
-            //
-            // If no requests were sent close the waiting alertview.
-            //
-            if close {
-                alert.close()
+        //
+        // Send email as seperate request for unique error.
+        //
+        if let value = values["Email"] as? String {
+            email = value == user.email ? nil : value
+
+            if let email = email {
+                service.updateEmail(email, user: user, completion: { result in
+                    if !result {
+                        showWarning = true
+                        warningText = "Email is already in use."
+                    }
+
+                    self.requestComplete(service, alert: alert, showWarning: showWarning, warningText: warningText)
+                })
+
+                close = false
             }
+        }
+
+        if let value = values["FirstName"] as? String {
+            firstName = value == user.firstName ? nil : value
+        }
+
+        if let value = values["LastName"] as? String {
+            lastName = value == user.lastName ? nil : value
+        }
+
+        if let value = values["Birthday"] as? NSDate {
+            let interval: Int
+
+            if user.birthday == nil {
+                interval = 0
+            } else {
+                interval = NSCalendar.currentCalendar().components(NSCalendarUnit.Day, fromDate: user.birthday!, toDate: value, options: NSCalendarOptions()).day
+            }
+
+            birthday = interval == 0 ? nil : value
+        }
+
+        if firstName != nil || lastName != nil || birthday != nil {
+            service.updateProfile(firstName, lastName: lastName, birthday: birthday, user: user, completion: { result in
+                if !result {
+                    showWarning = true
+                }
+
+                self.requestComplete(service, alert: alert, showWarning: showWarning, warningText: warningText)
+            })
+
+            close = false
+        }
+
+        //
+        // If no requests were sent close the waiting alertview.
+        //
+        if close {
+            alert.close()
         }
     }
 
@@ -132,12 +134,14 @@ class UserEditViewController: FormViewController {
     }
 
     func setFormValues() {
-        if let user = user {
-            let birthday = (user.birthday != nil) ? user.birthday! : NSDate()
-            let values: [String: Any?] = ["Username": user.userName, "FirstName": user.firstName, "LastName": user.lastName, "Email": user.email, "Birthday": birthday]
-            self.form.setValues(values)
-            self.tableView?.reloadData()
+        guard let user = self.user else {
+            return
         }
+
+        let birthday = (user.birthday != nil) ? user.birthday! : NSDate()
+        let values: [String: Any?] = ["Username": user.userName, "FirstName": user.firstName, "LastName": user.lastName, "Email": user.email, "Birthday": birthday]
+        self.form.setValues(values)
+        self.tableView?.reloadData()
     }
 
     // MARK: - UIViewController methods

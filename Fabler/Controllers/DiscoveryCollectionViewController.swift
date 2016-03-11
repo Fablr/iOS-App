@@ -32,9 +32,9 @@ class DiscoveryCollectionViewController: UICollectionViewController {
         }
 
         let service = PodcastService()
-        self.podcasts = service.readAllPodcasts { podcasts in
-            self.podcasts = podcasts
-            self.collectionView?.reloadData()
+        self.podcasts = service.readAllPodcasts { [weak self] (podcasts) in
+            self?.podcasts = podcasts
+            self?.collectionView?.reloadData()
         }
     }
 
@@ -72,11 +72,11 @@ class DiscoveryCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard podcasts != nil else {
+        guard let podcasts = self.podcasts else {
             return 0
         }
 
-        return podcasts!.count
+        return podcasts.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {

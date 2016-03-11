@@ -59,70 +59,82 @@ class CommentTableViewCell: UITableViewCell {
     }
 
     @IBAction func replyButtonPressed(sender: AnyObject) {
-        if let comment = self.comment {
-            let parent: Comment?
-
-            if comment.parent == nil {
-                parent = comment
-            } else {
-                parent = comment.parent
-            }
-
-            self.replyDelegate?.replyToComment(parent)
+        guard let comment = self.comment else {
+            return
         }
+
+        let parent: Comment?
+
+        if comment.parent == nil {
+            parent = comment
+        } else {
+            parent = comment.parent
+        }
+
+        self.replyDelegate?.replyToComment(parent)
     }
 
     @IBAction func upButtonPressed(sender: AnyObject) {
-        if let comment = self.comment {
-            let service = CommentService()
-            let vote: Vote
-
-            if comment.userVote == .Up {
-                vote = .None
-            } else {
-                vote = .Up
-            }
-
-            service.voteOnComment(comment, vote: vote, completion: self.voteDidFinish)
-            self.voteDidUpdate()
+        guard let comment = self.comment else {
+            return
         }
+
+        let service = CommentService()
+        let vote: Vote
+
+        if comment.userVote == .Up {
+            vote = .None
+        } else {
+            vote = .Up
+        }
+
+        service.voteOnComment(comment, vote: vote, completion: self.voteDidFinish)
+        self.voteDidUpdate()
     }
 
     @IBAction func downButtonPressed(sender: AnyObject) {
-        if let comment = self.comment {
-            let service = CommentService()
-            let vote: Vote
-
-            if comment.userVote == .Down {
-                vote = .None
-            } else {
-                vote = .Down
-            }
-
-            service.voteOnComment(comment, vote: vote, completion: self.voteDidFinish)
-            self.voteDidUpdate()
+        guard let comment = self.comment else {
+            return
         }
+
+        let service = CommentService()
+        let vote: Vote
+
+        if comment.userVote == .Down {
+            vote = .None
+        } else {
+            vote = .Down
+        }
+
+        service.voteOnComment(comment, vote: vote, completion: self.voteDidFinish)
+        self.voteDidUpdate()
     }
 
     @IBAction func moreButtonPressed(sender: AnyObject) {
         let menu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
 
         let delete = UIAlertAction(title: "Delete", style: .Destructive, handler: { [weak self] (action) in
-            if let controller = self, let comment = controller.comment {
-                let service = CommentService()
-
-                service.deleteComment(comment, completion: { [weak self] (result) in
-                    if result, let controller = self {
-                        controller.collapseDelegate?.setCollapseState(controller, collapsed: !controller.barCollapsed)
-                    }
-                })
+            guard let controller = self, let comment = controller.comment else {
+                return
             }
+
+            let service = CommentService()
+
+            service.deleteComment(comment, completion: { [weak self] (result) in
+                guard result else {
+                    return
+                }
+
+                self?.collapseDelegate?.setCollapseState(controller, collapsed: !controller.barCollapsed)
+            })
         })
 
         let edit = UIAlertAction(title: "Edit", style: .Default, handler: { [weak self] (action) in
-            if let controller = self, let comment = controller.comment {
-                controller.replyDelegate?.editComment(comment)
+            guard let comment = self?.comment else {
+                return
             }
+
+            self?.replyDelegate?.editComment(comment)
         })
 
         let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
@@ -153,21 +165,23 @@ class CommentTableViewCell: UITableViewCell {
     }
 
     func voteDidUpdate() {
-        if let comment = self.comment {
-            switch comment.userVote {
-            case .Down:
-                self.downButton?.tintColor = tint.lightenByPercentage(0.25)
-                self.upButton?.tintColor = tint
-            case .Up:
-                self.downButton?.tintColor = tint
-                self.upButton?.tintColor = tint.lightenByPercentage(0.25)
-            default:
-                self.downButton?.tintColor = tint
-                self.upButton?.tintColor = tint
-            }
-
-            self.voteLabel?.text = "\(comment.voteCount)"
+        guard let comment = self.comment else {
+            return
         }
+
+        switch comment.userVote {
+        case .Down:
+            self.downButton?.tintColor = tint.lightenByPercentage(0.25)
+            self.upButton?.tintColor = tint
+        case .Up:
+            self.downButton?.tintColor = tint
+            self.upButton?.tintColor = tint.lightenByPercentage(0.25)
+        default:
+            self.downButton?.tintColor = tint
+            self.upButton?.tintColor = tint
+        }
+
+        self.voteLabel?.text = "\(comment.voteCount)"
     }
 
     func voteDidFinish(result: Bool) {
@@ -179,57 +193,55 @@ class CommentTableViewCell: UITableViewCell {
     func setCommentInstance(comment: Comment) {
         self.comment = comment
 
-        if let comment = self.comment {
-            comment.parent == nil ? self.styleCellAsParent() : self.styleCellAsChild()
+        comment.parent == nil ? self.styleCellAsParent() : self.styleCellAsChild()
 
-            let localTimeZone = NSTimeZone.localTimeZone()
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.timeZone = localTimeZone
-            dateFormatter.dateFormat = "dd/MM/yyyy 'at' HH:mm"
-            let date = dateFormatter.stringFromDate(comment.submitDate)
-            self.subLabel?.text = "on \(date)"
+        let localTimeZone = NSTimeZone.localTimeZone()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.timeZone = localTimeZone
+        dateFormatter.dateFormat = "dd/MM/yyyy 'at' HH:mm"
+        let date = dateFormatter.stringFromDate(comment.submitDate)
+        self.subLabel?.text = "on \(date)"
 
-            self.userButton?.setTitle(comment.userName, forState: .Normal)
-            self.userButton?.tintColor = self.tint
+        self.userButton?.setTitle(comment.userName, forState: .Normal)
+        self.userButton?.tintColor = self.tint
 
-            if let formattedComment = comment.formattedComment {
-                self.commentTextView?.attributedText = formattedComment
-            } else {
-                self.commentTextView?.text = comment.comment
-            }
-
-            if self.barCollapsed {
-                self.subBar?.hidden = true
-            } else {
-                self.subBar?.hidden = false
-            }
-
-            self.voteDidUpdate()
-
-            if let user = User.getCurrentUser() {
-                if comment.userId == user.userId {
-                    self.moreButton?.enabled = true
-                }
-            }
-
-            if comment.removed {
-                self.upButton?.enabled = false
-                self.downButton?.enabled = false
-                self.moreButton?.enabled = false
-                self.userButton?.enabled = false
-            } else {
-                self.upButton?.enabled = true
-                self.downButton?.enabled = true
-                self.userButton?.enabled = true
-            }
-
-            self.replyButton?.tintColor = tint
-            self.moreButton?.tintColor = tint
-
-            let tapRec = UITapGestureRecognizer()
-            tapRec.addTarget(self, action: "barTapped")
-            self.contentView.addGestureRecognizer(tapRec)
+        if let formattedComment = comment.formattedComment {
+            self.commentTextView?.attributedText = formattedComment
+        } else {
+            self.commentTextView?.text = comment.comment
         }
+
+        if self.barCollapsed {
+            self.subBar?.hidden = true
+        } else {
+            self.subBar?.hidden = false
+        }
+
+        self.voteDidUpdate()
+
+        if let user = User.getCurrentUser() {
+            if comment.userId == user.userId {
+                self.moreButton?.enabled = true
+            }
+        }
+
+        if comment.removed {
+            self.upButton?.enabled = false
+            self.downButton?.enabled = false
+            self.moreButton?.enabled = false
+            self.userButton?.enabled = false
+        } else {
+            self.upButton?.enabled = true
+            self.downButton?.enabled = true
+            self.userButton?.enabled = true
+        }
+
+        self.replyButton?.tintColor = tint
+        self.moreButton?.tintColor = tint
+
+        let tapRec = UITapGestureRecognizer()
+        tapRec.addTarget(self, action: "barTapped")
+        self.contentView.addGestureRecognizer(tapRec)
     }
 
     func styleCellAsParent() {

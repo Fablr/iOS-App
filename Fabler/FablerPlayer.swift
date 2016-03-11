@@ -165,19 +165,21 @@ public class FablerPlayer: NSObject {
     }
 
     @objc private func updateCurrentTime() {
-        if let current = audioPlayer.currentItem, let episode = self.episode {
-            smallPlayer.updatePlayerProgress(Float(current.duration.seconds), current: Float(current.currentTime().seconds))
-            largePlayer.updatePlayerProgress(Float(current.duration.seconds), current: Float(current.currentTime().seconds))
-
-            var info: [String : AnyObject] = [MPMediaItemPropertyTitle: episode.title, MPMediaItemPropertyPlaybackDuration: current.duration.seconds, MPNowPlayingInfoPropertyElapsedPlaybackTime: current.currentTime().seconds]
-
-            if let image = self.image {
-                let art = MPMediaItemArtwork(image: image)
-                info[MPMediaItemPropertyArtwork] = art
-            }
-
-            MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = info
+        guard let current = audioPlayer.currentItem, let episode = self.episode else {
+            return
         }
+
+        smallPlayer.updatePlayerProgress(Float(current.duration.seconds), current: Float(current.currentTime().seconds))
+        largePlayer.updatePlayerProgress(Float(current.duration.seconds), current: Float(current.currentTime().seconds))
+
+        var info: [String : AnyObject] = [MPMediaItemPropertyTitle: episode.title, MPMediaItemPropertyPlaybackDuration: current.duration.seconds, MPNowPlayingInfoPropertyElapsedPlaybackTime: current.currentTime().seconds]
+
+        if let image = self.image {
+            let art = MPMediaItemArtwork(image: image)
+            info[MPMediaItemPropertyArtwork] = art
+        }
+
+        MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = info
     }
 
     @objc private func updateService() {
@@ -224,34 +226,34 @@ public class FablerPlayer: NSObject {
     }
 
     private func insertCurrentEpisode() {
-        if let episode = self.episode {
-            var url: NSURL? = nil
+        guard let episode = self.episode else {
+            return
+        }
 
-            if let download = episode.download where download.state == .Completed {
-                url = episode.localURL()
-            } else {
-                url = NSURL(string: episode.link)
-            }
+        var url: NSURL? = nil
 
-            if let url = url {
-                let item = AVPlayerItem(URL:url)
-
-                audioPlayer.removeAllItems()
-                audioPlayer.insertItem(item, afterItem: nil)
-
-                if let podcast = self.episode?.podcast, let url = NSURL(string: podcast.image) {
-                    let manager = KingfisherManager.sharedManager
-                    manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, url) in
-                        if error == nil, let player = self {
-                            player.image = image
-                        }
-                    })
-                }
-
-                MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = [MPMediaItemPropertyTitle: episode.title]
-            }
+        if let download = episode.download where download.state == .Completed {
+            url = episode.localURL()
         } else {
-            Log.warning("No episode currently set.")
+            url = NSURL(string: episode.link)
+        }
+
+        if let url = url {
+            let item = AVPlayerItem(URL:url)
+
+            audioPlayer.removeAllItems()
+            audioPlayer.insertItem(item, afterItem: nil)
+
+            if let podcast = self.episode?.podcast, let url = NSURL(string: podcast.image) {
+                let manager = KingfisherManager.sharedManager
+                manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, url) in
+                    if error == nil, let player = self {
+                        player.image = image
+                    }
+                })
+            }
+
+            MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = [MPMediaItemPropertyTitle: episode.title]
         }
     }
 

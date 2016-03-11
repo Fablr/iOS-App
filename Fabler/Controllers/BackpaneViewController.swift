@@ -80,11 +80,9 @@ class BackpaneViewController: UIViewController {
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "pushUserSegue" {
-            if let controller = segue.destinationViewController as? FablerNavigationController, let root = controller.viewControllers.first as? UserViewController, let user = sender as? User {
-                root.user = user
-                root.root = true
-            }
+        if let controller = segue.destinationViewController as? FablerNavigationController, let root = controller.viewControllers.first as? UserViewController, let user = sender as? User where segue.identifier == "pushUserSegue" {
+            root.user = user
+            root.root = true
         }
     }
 }

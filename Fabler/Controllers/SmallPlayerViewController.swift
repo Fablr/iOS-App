@@ -25,12 +25,14 @@ public class SmallPlayerViewController: UIViewController {
     // MARK: - IBActions
 
     @IBAction func playButtonPressed(sender: AnyObject) {
-        if let player = self.player {
-            if player.playing {
-                player.pausePlayback()
-            } else {
-                player.playPlayback()
-            }
+        guard let player = self.player else {
+            return
+        }
+
+        if player.playing {
+            player.pausePlayback()
+        } else {
+            player.playPlayback()
         }
     }
 
@@ -58,19 +60,21 @@ public class SmallPlayerViewController: UIViewController {
     func updateOutlets() {
         self.player = FablerPlayer.sharedInstance
 
-        if let player = self.player {
-            titleLabel?.text = player.episode?.title
+        guard let player = self.player else {
+            return
+        }
 
-            if player.playing {
-                playButton?.setImage(UIImage(named: "pause"), forState: .Normal)
-            } else {
-                playButton?.setImage(UIImage(named: "play"), forState: .Normal)
-            }
+        self.titleLabel?.text = player.episode?.title
+
+        if player.playing {
+            self.playButton?.setImage(UIImage(named: "pause"), forState: .Normal)
+        } else {
+            self.playButton?.setImage(UIImage(named: "play"), forState: .Normal)
         }
     }
 
     func updatePlayerProgress(duration: Float, current: Float) {
         let progress = current / duration
-        progressView?.setProgress(Float(progress), animated: true)
+        self.progressView?.setProgress(Float(progress), animated: true)
     }
 }

@@ -19,36 +19,42 @@ class UsersTableViewController: UITableViewController {
     // MARK: - UsersTableViewController methods
 
     func refreshData(sender: AnyObject) {
-        if let user = self.user {
-            let service = UserService()
+        guard let user = self.user else {
+            return
+        }
 
-            if following {
-                service.getFollowing(user, completion: { [weak self] (result) in
-                    if let controller = self where result {
-                        if let user = controller.user {
-                            controller.users = Array(user.following)
-                            controller.tableView.reloadData()
-                        }
+        let service = UserService()
 
-                        if let refresher = controller.refreshControl where refresher.refreshing {
-                            refresher.endRefreshing()
-                        }
-                    }
-                })
-            } else {
-                service.getFollowers(user, completion: { [weak self] (result) in
-                    if let controller = self where result {
-                        if let user = controller.user {
-                            controller.users = Array(user.followers)
-                            controller.tableView.reloadData()
-                        }
+        if following {
+            service.getFollowing(user, completion: { [weak self] (result) in
+                guard result else {
+                    return
+                }
 
-                        if let refresher = controller.refreshControl where refresher.refreshing {
-                            refresher.endRefreshing()
-                        }
-                    }
-                })
-            }
+                if let user = self?.user {
+                    self?.users = Array(user.following)
+                    self?.tableView.reloadData()
+                }
+
+                if let refresher = self?.refreshControl where refresher.refreshing {
+                    refresher.endRefreshing()
+                }
+            })
+        } else {
+            service.getFollowers(user, completion: { [weak self] (result) in
+                guard result else {
+                    return
+                }
+
+                if let user = self?.user {
+                    self?.users = Array(user.followers)
+                    self?.tableView.reloadData()
+                }
+
+                if let refresher = self?.refreshControl where refresher.refreshing {
+                    refresher.endRefreshing()
+                }
+            })
         }
     }
 

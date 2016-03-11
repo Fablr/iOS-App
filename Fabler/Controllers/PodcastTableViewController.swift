@@ -76,58 +76,60 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     func setupImages() {
-        if let podcast = self.podcast, let url = NSURL(string: podcast.image) {
-            let manager = KingfisherManager.sharedManager
-            let cache = manager.cache
+        guard let podcast = self.podcast, let url = NSURL(string: podcast.image) else {
+            return
+        }
 
-            let id = podcast.podcastId
+        let manager = KingfisherManager.sharedManager
+        let cache = manager.cache
 
-            if let image = cache.retrieveImageInDiskCacheForKey(url.absoluteString) {
-                if !podcast.primarySet {
-                    self.setColorFor(podcast, image: image)
+        let id = podcast.podcastId
+
+        if let image = cache.retrieveImageInDiskCacheForKey(url.absoluteString) {
+            if !podcast.primarySet {
+                self.setColorFor(podcast, image: image)
+            }
+
+            self.updateImages(image)
+        } else {
+            manager.retrieveImageWithURL(url, optionsInfo: [.CallbackDispatchQueue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))], progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, url) in
+                guard let image = image where error == nil else {
+                    return
                 }
 
-                self.updateImages(image)
-            } else {
-                manager.retrieveImageWithURL(url, optionsInfo: [.CallbackDispatchQueue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))], progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, url) in
-                    if error == nil, let image = image {
-                        let service = PodcastService()
+                let service = PodcastService()
 
-                        if let podcast = service.readPodcastFor(id, completion: nil), let controller = self {
-                            if !podcast.primarySet {
-                                controller.setColorFor(podcast, image: image)
-                            }
-                        }
+                if let podcast = service.readPodcastFor(id, completion: nil) where !podcast.primarySet {
+                    self?.setColorFor(podcast, image: image)
+                }
 
-                        dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                            Log.debug("Setting header image.")
+                dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                    Log.debug("Setting header image.")
 
-                            if let controller = self {
-                                controller.updateImages(image)
-                            }
-                        })
-                    }
+                    self?.updateImages(image)
                 })
-            }
+            })
         }
     }
 
     func updateImages(image: UIImage) {
         self.headerImage?.image = image
 
-        if let podcast = self.podcast, let primary = podcast.primaryColor {
-            //
-            // Setup navigation bar
-            //
-            self.navigationController?.navigationBar.barTintColor = primary
-            self.navigationController?.navigationBar.translucent = false
-            self.navigationController?.navigationBar.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primary, isFlat: true)
-            self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(contrastingBlackOrWhiteColorOn: primary, isFlat: true)]
-            self.navigationController?.navigationBar.clipsToBounds = false
-            self.setStatusBarStyle(UIStatusBarStyleContrast)
-
-            self.tableView.reloadData()
+        guard let podcast = self.podcast, let primary = podcast.primaryColor else {
+            return
         }
+
+        //
+        // Setup navigation bar
+        //
+        self.navigationController?.navigationBar.barTintColor = primary
+        self.navigationController?.navigationBar.translucent = false
+        self.navigationController?.navigationBar.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primary, isFlat: true)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(contrastingBlackOrWhiteColorOn: primary, isFlat: true)]
+        self.navigationController?.navigationBar.clipsToBounds = false
+        self.setStatusBarStyle(UIStatusBarStyleContrast)
+
+        self.tableView.reloadData()
     }
 
     func filterEpisodes() {
@@ -144,17 +146,19 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     func sortEpisodes() {
-        if let order = self.podcast?.sortOrder {
-            switch order {
-            case .NewestOldest:
-                self.filteredEpisodes.sortInPlace({ $0.pubdate > $1.pubdate })
-            case .OldestNewest:
-                self.filteredEpisodes.sortInPlace({ $1.pubdate > $0.pubdate })
-            }
+        guard let order = self.podcast?.sortOrder else {
+            return
+        }
+
+        switch order {
+        case .NewestOldest:
+            self.filteredEpisodes.sortInPlace({ $0.pubdate > $1.pubdate })
+        case .OldestNewest:
+            self.filteredEpisodes.sortInPlace({ $1.pubdate > $0.pubdate })
         }
     }
 
-    func refreshData(sender: AnyObject) {
+    func refreshData(sender: AnyObject?) {
         switch self.currentSegment {
         case 0:
             self.refreshEpisodeData(sender)
@@ -167,53 +171,51 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
     }
 
-    func refreshEpisodeData(sender: AnyObject) {
-        if let podcast = self.podcast {
-            let service = EpisodeService()
-            self.episodes = service.getEpisodesForPodcast(podcast, completion: { [weak self] (episodes) in
-                if let controller = self {
-                    controller.episodes = episodes
-                    controller.filterEpisodes()
-                    controller.tableView?.reloadData()
-
-                    if let refresher = controller.refreshControl {
-                        if refresher.refreshing {
-                            refresher.endRefreshing()
-                        }
-                    }
-                }
-            })
-
-            self.filterEpisodes()
+    func refreshEpisodeData(sender: AnyObject?) {
+        guard let podcast = self.podcast else {
+            return
         }
+
+        let service = EpisodeService()
+        self.episodes = service.getEpisodesForPodcast(podcast, completion: { [weak self] (episodes) in
+            self?.episodes = episodes
+            self?.filterEpisodes()
+            self?.tableView?.reloadData()
+
+            if let refresher = self?.refreshControl where refresher.refreshing {
+                refresher.endRefreshing()
+            }
+        })
+
+        self.filterEpisodes()
     }
 
-    func refreshCommentData(sender: AnyObject) {
-        if let podcast = self.podcast {
-            let service = CommentService()
-
-            service.getCommentsForPodcast(podcast, completion: { [weak self] (comments) in
-                if let controller = self {
-                    controller.comments = comments
-                    controller.tableView.reloadData()
-
-                    if let refresher = controller.refreshControl {
-                        if refresher.refreshing {
-                            refresher.endRefreshing()
-                        }
-                    }
-                }
-            })
+    func refreshCommentData(sender: AnyObject?) {
+        guard let podcast = self.podcast else {
+            return
         }
+
+        let service = CommentService()
+
+        service.getCommentsForPodcast(podcast, completion: { [weak self] (comments) in
+            self?.comments = comments
+            self?.tableView.reloadData()
+
+            if let refresher = self?.refreshControl where refresher.refreshing {
+                refresher.endRefreshing()
+            }
+        })
     }
 
     func subscribeButtonPressed() {
-        if let podcast = self.podcast {
-            let service = PodcastService()
-            let subscribed = !(podcast.subscribed)
-
-            service.subscribeToPodcast(podcast, subscribe: subscribed, completion: nil)
+        guard let podcast = self.podcast else {
+            return
         }
+
+        let service = PodcastService()
+        let subscribed = !(podcast.subscribed)
+
+        service.subscribeToPodcast(podcast, subscribe: subscribed, completion: nil)
     }
 
     func commentButtonPressed(sender: AnyObject) {
@@ -255,30 +257,32 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     override func didPressRightButton(sender: AnyObject!) {
-        if let message = self.textView.text.copy() as? String, let podcast = self.podcast {
-            let service = CommentService()
+        guard let message = self.textView.text.copy() as? String, let podcast = self.podcast else {
+            super.didPressRightButton(sender)
+            self.didDismissKeyboard()
 
-            if !self.editingComment {
-                let id = self.replyComment?.commentId
+            return
+        }
 
-                service.addCommentForPodcast(podcast, comment: message, parentCommentId: id, completion: { [weak self] (result) in
-                    if let controller = self {
-                        if result {
-                            controller.refreshData(controller)
-                        }
-                    }
-                })
-            } else {
-                if let comment = self.replyComment {
-                    let service = CommentService()
-                    service.editComment(comment, newComment: message, completion: { [weak self] result in
-                        if let controller = self {
-                            if result {
-                                controller.refreshData(controller)
-                            }
-                        }
-                    })
+        let service = CommentService()
+
+        if !self.editingComment {
+            let id = self.replyComment?.commentId
+
+            service.addCommentForPodcast(podcast, comment: message, parentCommentId: id, completion: { [weak self] (result) in
+                if result {
+                    self?.refreshData(nil)
                 }
+            })
+        } else {
+            if let comment = self.replyComment {
+                let service = CommentService()
+
+                service.editComment(comment, newComment: message, completion: { [weak self] result in
+                        if result {
+                            self?.refreshData(nil)
+                        }
+                })
             }
         }
 
@@ -434,15 +438,11 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
         self.setupImages()
 
-        //self.edgesForExtendedLayout = .Top
-        //self.automaticallyAdjustsScrollViewInsets = true
-
         //
         // Refresh data
         //
         self.refreshEpisodeData(self)
         self.refreshCommentData(self)
-        //self.refreshControl?.beginRefreshing()
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -762,14 +762,16 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     // MARK: - CollapsibleUITableViewCellDelegate methods
 
     func setCollapseState(cell: UITableViewCell, collapsed: Bool) {
-        if let indexPath = self.tableView.indexPathForCell(cell) {
-            self.indexPath = indexPath
-            self.collapsed = collapsed
-
-            self.tableView.beginUpdates()
-            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            self.tableView.endUpdates()
+        guard let indexPath = self.tableView.indexPathForCell(cell) else {
+            return
         }
+
+        self.indexPath = indexPath
+        self.collapsed = collapsed
+
+        self.tableView.beginUpdates()
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        self.tableView.endUpdates()
     }
 
     // MARK: - RepliesToCommentDelegate methods

@@ -22,9 +22,11 @@ class EpisodeSectionHeaderView: UITableViewHeaderFooterView {
     // MARK: - IBActions
 
     @IBAction func segmentValueChanged(sender: AnyObject) {
-        if let control = self.segmentControl {
-            self.delegate?.segmentDidChangeTo(control.selectedSegmentIndex)
+        guard let control = self.segmentControl else {
+            return
         }
+
+        self.delegate?.segmentDidChangeTo(control.selectedSegmentIndex)
     }
 
     // MARK: - EpisodeSectionHeaderView properties

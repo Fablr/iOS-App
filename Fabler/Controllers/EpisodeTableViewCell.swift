@@ -175,36 +175,37 @@ class EpisodeTableViewCell: UITableViewCell {
     }
 
     func setDownloadStatus() {
-        if let episode = self.episode {
+        guard let episode = self.episode else {
+            return
+        }
 
-            self.downloadView?.hidden = false
+        self.downloadView?.hidden = false
 
-            if episode.download == nil {
+        if episode.download == nil {
+            self.downloadView?.setIndicatorStatus(.None)
+        } else {
+            switch episode.download!.state {
+            case .Unknown:
+                fallthrough
+            case .Waiting:
+                self.downloadView?.setIndicatorStatus(.Indeterminate)
+            case .Pausing:
+                fallthrough
+            case .Paused:
+                fallthrough
+            case .Failed:
+                fallthrough
+            case .Cancelled:
                 self.downloadView?.setIndicatorStatus(.None)
-            } else {
-                switch episode.download!.state {
-                case .Unknown:
-                    fallthrough
-                case .Waiting:
-                    self.downloadView?.setIndicatorStatus(.Indeterminate)
-                case .Pausing:
-                    fallthrough
-                case .Paused:
-                    fallthrough
-                case .Failed:
-                    fallthrough
-                case .Cancelled:
-                    self.downloadView?.setIndicatorStatus(.None)
-                case .Downloading:
-                    self.downloadView?.setIndicatorStatus(.Running)
-                    if let fraction = self.episode?.download?.fractionCompleted {
-                        self.downloadView?.setProgress(fraction, animated: true)
-                    }
-                case .Completed:
-                    self.downloadView?.hidden = true
-                    token?.stop()
-                    token = nil
+            case .Downloading:
+                self.downloadView?.setIndicatorStatus(.Running)
+                if let fraction = self.episode?.download?.fractionCompleted {
+                    self.downloadView?.setProgress(fraction, animated: true)
                 }
+            case .Completed:
+                self.downloadView?.hidden = true
+                token?.stop()
+                token = nil
             }
         }
     }

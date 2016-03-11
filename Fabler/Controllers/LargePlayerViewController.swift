@@ -34,56 +34,60 @@ public class LargePlayerViewController: UIViewController {
     // MARK: - IBActions
 
     @IBAction func moreButtonPressed(sender: AnyObject) {
-        if let episode = self.player?.episode {
-            let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-
-            //
-            // Cancel
-            //
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-            actionController.addAction(cancelAction)
-
-            //
-            // Comments
-            //
-            let commentAction = UIAlertAction(title: "Comments", style: .Default, handler: { [weak self] (action) in
-                if let episode = self?.player?.episode {
-                    self?.performSegueWithIdentifier("displayEpisodeSegue", sender: episode)
-                }
-            })
-            actionController.addAction(commentAction)
-
-            //
-            // Save
-            //
-            let saveTitle: String
-            if episode.saved {
-                saveTitle = "Unsave Episode"
-            } else {
-                saveTitle = "Save Episode"
-            }
-
-            let saveAction = UIAlertAction(title: saveTitle, style: .Default, handler: { [weak self] (action) in
-                if let episode = self?.player?.episode {
-                    let service = EpisodeService()
-                    service.flipSaveForEpisode(episode)
-                }
-            })
-            actionController.addAction(saveAction)
-
-            self.presentViewController(actionController, animated: true, completion: nil)
+        guard let episode = self.player?.episode else {
+            return
         }
+
+        let actionController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+
+        //
+        // Cancel
+        //
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        actionController.addAction(cancelAction)
+
+        //
+        // Comments
+        //
+        let commentAction = UIAlertAction(title: "Comments", style: .Default, handler: { [weak self] (action) in
+            if let episode = self?.player?.episode {
+                self?.performSegueWithIdentifier("displayEpisodeSegue", sender: episode)
+            }
+        })
+        actionController.addAction(commentAction)
+
+        //
+        // Save
+        //
+        let saveTitle: String
+        if episode.saved {
+            saveTitle = "Unsave Episode"
+        } else {
+            saveTitle = "Save Episode"
+        }
+
+        let saveAction = UIAlertAction(title: saveTitle, style: .Default, handler: { [weak self] (action) in
+            if let episode = self?.player?.episode {
+                let service = EpisodeService()
+                service.flipSaveForEpisode(episode)
+            }
+        })
+        actionController.addAction(saveAction)
+
+        self.presentViewController(actionController, animated: true, completion: nil)
     }
 
     @IBAction func rateButtonPressed(sender: AnyObject) {
-        if let player = self.player {
-            let currentRate = player.rate
-            let nextRate = currentRate.nextRate
-
-            player.setRate(nextRate)
-
-            self.rateButton?.setTitle(nextRate.description, forState: .Normal)
+        guard let player = self.player else {
+            return
         }
+
+        let currentRate = player.rate
+        let nextRate = currentRate.nextRate
+
+        player.setRate(nextRate)
+
+        self.rateButton?.setTitle(nextRate.description, forState: .Normal)
     }
 
     @IBAction func doneButtonPressed(sender: AnyObject) {
@@ -91,35 +95,43 @@ public class LargePlayerViewController: UIViewController {
     }
 
     @IBAction func playButtonPressed(sender: AnyObject) {
-        if let player = self.player {
-            if player.playing {
-                player.pausePlayback()
-            } else {
-                player.playPlayback()
-            }
+        guard let player = self.player else {
+            return
+        }
+
+        if player.playing {
+            player.pausePlayback()
+        } else {
+            player.playPlayback()
         }
     }
 
     @IBAction func forwardButtonPressed(sender: AnyObject) {
-        if let current = playbackSlider?.value, let max = playbackSlider?.maximumValue, let player = self.player {
-            let next = (current + 15) >= max ? max : current + 15
-            playbackSlider?.setValue(next, animated: true)
-            player.setPlaybackTo(next)
+        guard let current = playbackSlider?.value, let max = playbackSlider?.maximumValue, let player = self.player else {
+            return
         }
+
+        let next = (current + 15) >= max ? max : current + 15
+        playbackSlider?.setValue(next, animated: true)
+        player.setPlaybackTo(next)
     }
 
     @IBAction func rewindButtonPressed(sender: AnyObject) {
-        if let current = playbackSlider?.value, let min = playbackSlider?.minimumValue, let player = self.player {
-            let next = (current - 15) <= min ? min : current - 15
-            playbackSlider?.setValue(next, animated: true)
-            player.setPlaybackTo(next)
+        guard let current = playbackSlider?.value, let min = playbackSlider?.minimumValue, let player = self.player else {
+            return
         }
+
+        let next = (current - 15) <= min ? min : current - 15
+        playbackSlider?.setValue(next, animated: true)
+        player.setPlaybackTo(next)
     }
 
     @IBAction func playbackSliderChanged(sender: AnyObject) {
-        if let player = self.player, let slider = sender as? UISlider {
-            player.setPlaybackTo(slider.value)
+        guard let player = self.player, let slider = sender as? UISlider else {
+            return
         }
+
+        player.setPlaybackTo(slider.value)
     }
 
     // MARK: - UIViewController methods
@@ -161,19 +173,21 @@ public class LargePlayerViewController: UIViewController {
     func updateOutlets() {
         self.player = FablerPlayer.sharedInstance
 
-        if let player = self.player {
-            titleLabel?.text = player.episode?.title
-
-            if player.playing {
-                playButton?.setImage(UIImage(named: "pause"), forState: .Normal)
-            } else {
-                playButton?.setImage(UIImage(named: "play"), forState: .Normal)
-            }
-
-            self.rateButton?.setTitle(player.rate.description, forState: .Normal)
-
-            updatePlayerProgress(player.getCurrentDuration(), current: player.getCurrentTime())
+        guard let player = self.player else {
+            return
         }
+
+        titleLabel?.text = player.episode?.title
+
+        if player.playing {
+            playButton?.setImage(UIImage(named: "pause"), forState: .Normal)
+        } else {
+            playButton?.setImage(UIImage(named: "play"), forState: .Normal)
+        }
+
+        self.rateButton?.setTitle(player.rate.description, forState: .Normal)
+
+        updatePlayerProgress(player.getCurrentDuration(), current: player.getCurrentTime())
     }
 
     func updatePlayerProgress(var duration: Float, var current: Float) {

@@ -39,22 +39,20 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
     // MARK: - EpisodeTableViewController methods
 
     func refreshData(sender: AnyObject) {
-        if let episode = self.episode {
-            let service = CommentService()
-
-            service.getCommentsForEpisode(episode, completion: { [weak self] (comments) in
-                if let controller = self {
-                    controller.comments = comments
-                    controller.tableView.reloadData()
-
-                    if let refresher = controller.refreshControl {
-                        if refresher.refreshing {
-                            refresher.endRefreshing()
-                        }
-                    }
-                }
-            })
+        guard let episode = self.episode else {
+            return
         }
+
+        let service = CommentService()
+
+        service.getCommentsForEpisode(episode, completion: { [weak self] (comments) in
+            self?.comments = comments
+            self?.tableView.reloadData()
+
+            if let refresher = self?.refreshControl where refresher.refreshing {
+                refresher.endRefreshing()
+            }
+        })
     }
 
     func commentButtonPressed(sender: AnyObject) {
@@ -96,30 +94,35 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
     }
 
     override func didPressRightButton(sender: AnyObject!) {
-        if let message = self.textView.text.copy() as? String, let episode = self.episode {
-            let service = CommentService()
+        guard let message = self.textView.text.copy() as? String, let episode = self.episode else {
+            super.didPressRightButton(sender)
+            self.didDismissKeyboard()
 
-            if !self.editingComment {
-                let id = self.replyComment?.commentId
+            return
+        }
 
-                service.addCommentForEpisode(episode, comment: message, parentCommentId: id, completion: { [weak self] (result) in
+        let service = CommentService()
+
+        if !self.editingComment {
+            let id = self.replyComment?.commentId
+
+            service.addCommentForEpisode(episode, comment: message, parentCommentId: id, completion: { [weak self] (result) in
+                if let controller = self {
+                    if result {
+                        controller.refreshData(controller)
+                    }
+                }
+            })
+        } else {
+            if let comment = self.replyComment {
+                let service = CommentService()
+                service.editComment(comment, newComment: message, completion: { [weak self] result in
                     if let controller = self {
                         if result {
                             controller.refreshData(controller)
                         }
                     }
                 })
-            } else {
-                if let comment = self.replyComment {
-                    let service = CommentService()
-                    service.editComment(comment, newComment: message, completion: { [weak self] result in
-                        if let controller = self {
-                            if result {
-                                controller.refreshData(controller)
-                            }
-                        }
-                    })
-                }
             }
         }
 
@@ -257,6 +260,10 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
                 controller.user = user
             }
         }
+    }
+
+    deinit {
+        self.bag = nil
     }
 
     // MARK: - UITableView methods
