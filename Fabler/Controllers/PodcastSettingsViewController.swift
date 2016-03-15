@@ -14,6 +14,7 @@ class PodcastSettingsViewController: FormViewController {
     // MARK: - PodcastSettingsViewController properties
 
     var podcast: Podcast?
+    var downloadSizeInBytes: Int = 0
 
     // MARK: - PodcastSettingsViewController methods
 
@@ -61,6 +62,9 @@ class PodcastSettingsViewController: FormViewController {
 
         service.subscribeToPodcast(podcast, subscribe: subscribed, completion: nil)
 
+        let manager = FablerDownloadManager.sharedInstance
+        manager.removeAll(podcast)
+
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
@@ -68,12 +72,24 @@ class PodcastSettingsViewController: FormViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
+    func downloadsClear(cell: ButtonCellOf<String>, row: ButtonRow) {
+        guard let podcast = self.podcast else {
+            return
+        }
+
+        let manager = FablerDownloadManager.sharedInstance
+        manager.removeAll(podcast)
+
+        self.downloadSizeInBytes = 0
+        self.setFormValues()
+    }
+
     func setFormValues() {
         guard let podcast = self.podcast else {
             return
         }
 
-        let values: [String: Any?] = ["AutoDownload": podcast.download, "Notifications": podcast.notify, "DownloadCount": podcast.downloadAmount, "SortOrder": podcast.sortOrderRaw]
+        let values: [String: Any?] = ["AutoDownload": podcast.download, "Notifications": podcast.notify, "DownloadCount": podcast.downloadAmount, "SortOrder": podcast.sortOrderRaw, "EpisodeSize": sizeStringFrom(self.downloadSizeInBytes)]
         self.form.setValues(values)
         self.tableView?.reloadData()
     }
@@ -144,6 +160,29 @@ class PodcastSettingsViewController: FormViewController {
             .onPresent { _, action in
                 action.view.tintColor = tint
             }
+
+        self.form +++= Section()
+            <<< AlertRow<String>("EpisodeSize") {
+                $0.title = "Size of downloaded episodes"
+                $0.disabled = true
+                $0.hidden = false
+            }
+            <<< ButtonRow("ClearEpisodes") {
+                $0.title = "Delete downloaded episodes "
+                $0.onCellSelection(self.downloadsClear)
+                $0.cellSetup({ cell, row in
+                    cell.tintColor = .flatRedColor()
+                    if let size = cell.textLabel?.font.pointSize {
+                        cell.textLabel?.font = .boldSystemFontOfSize(size)
+                    }
+                })
+            }
+
+        let manager = FablerDownloadManager.sharedInstance
+        manager.calculateSizeOnDisk(self.podcast!, completionHandler: { [weak self] (size) in
+            self?.downloadSizeInBytes = size
+            self?.setFormValues()
+        })
 
         self.form +++= Section()
             <<< ButtonRow("Close") {

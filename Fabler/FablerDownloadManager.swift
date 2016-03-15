@@ -130,9 +130,30 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
                 Log.error("Realm read failed")
             }
 
-            dispatch_async(dispatch_get_main_queue(), {
+            dispatch_async(dispatch_get_main_queue()) {
                 completionHandler(size: size)
-            })
+            }
+        }
+    }
+
+    public func calculateSizeOnDisk(forPodcast: Podcast, completionHandler: ((size: Int) -> ())) {
+        let id = forPodcast.podcastId
+
+        var size: Int = 0
+
+        dispatch_async(downloadsLockQueue) {
+            do {
+                let realm = try Realm()
+
+                let episodes = realm.objects(Episode).filter("download != nil && podcastId == %d", id)
+                _ = episodes.map { size += $0.download!.totalBytesWrittenRaw }
+            } catch {
+                Log.error("Realm read failed")
+            }
+
+            dispatch_async(dispatch_get_main_queue()) {
+                completionHandler(size: size)
+            }
         }
     }
 
@@ -389,6 +410,22 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
                 let downloads = Array(realm.objects(FablerDownload))
 
                 _ = downloads.map { $0.remove() }
+            } catch {
+                Log.error("Realm read failed")
+            }
+        }
+    }
+
+    public func removeAll(forPodcast: Podcast) {
+        let id = forPodcast.podcastId
+
+        dispatch_async(downloadsLockQueue) {
+            do {
+                let realm = try Realm()
+
+                let episodes = realm.objects(Episode).filter("download != nil && podcastId == %d", id)
+
+                _ =  episodes.map { $0.download!.remove() }
             } catch {
                 Log.error("Realm read failed")
             }
