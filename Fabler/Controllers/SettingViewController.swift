@@ -41,6 +41,29 @@ class SettingViewController: FormViewController {
         self.updateValues()
     }
 
+    func setupPodcastSection(podcasts: [Podcast]) {
+        guard let section = self.form.sectionByTag("PodcastSection") else {
+            return
+        }
+
+        section.removeAll()
+
+        for podcast in podcasts {
+            section
+                <<< ButtonRow() {
+                    $0.title = "\(podcast.title)"
+                }
+                .onCellSelection { [weak self] (cell, row) in
+                    self?.performSegueWithIdentifier("displayPodcastSettingsSegue", sender: podcast)
+                }
+                .cellUpdate { cell, row in
+                    cell.textLabel?.textAlignment = .Left
+                }
+        }
+
+        self.tableView?.reloadData()
+    }
+
     // MARK: UIViewController methods
 
     override func viewDidLoad() {
@@ -53,6 +76,8 @@ class SettingViewController: FormViewController {
         }
 
         self.navigationItem.title = "Settings"
+
+        ButtonRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
 
         //
         // Episode cache
@@ -101,6 +126,20 @@ class SettingViewController: FormViewController {
                 })
             }
 
+        //
+        // Individual podcast settings
+        //
+        self.form +++= Section(header: "Podcast Settings", footer: "") {
+            $0.tag = "PodcastSection"
+        }
+
+        let service = PodcastService()
+        let podcasts = service.getSubscribedPodcasts(completion: { [weak self] (podcasts) in
+            self?.setupPodcastSection(podcasts)
+        })
+
+        self.setupPodcastSection(podcasts)
+
         let cacheManager = KingfisherManager.sharedManager
 
         cacheManager.cache.calculateDiskCacheSizeWithCompletionHandler({ [weak self] (size) in
@@ -112,5 +151,14 @@ class SettingViewController: FormViewController {
         // Default values
         //
         self.updateValues()
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "displayPodcastSettingsSegue" {
+            if let controller = segue.destinationViewController as? PodcastSettingsViewController, let podcast = sender as? Podcast {
+                controller.podcast = podcast
+                controller.embeddedNavigation = true
+            }
+        }
     }
 }

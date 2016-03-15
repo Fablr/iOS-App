@@ -310,6 +310,24 @@
             </objects>
             <point key="canvasLocation" x="3339" y="1804"/>
         </scene>
+        <!--Podcast Settings View Controller-->
+        <scene sceneID="Tma-06-h4w">
+            <objects>
+                <viewController id="kzG-Cg-Ywl" customClass="PodcastSettingsViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="l3d-BS-AbA"/>
+                        <viewControllerLayoutGuide type="bottom" id="GQb-ra-P61"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1aO-AU-79q">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MWZ-k0-kMp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3339" y="2717"/>
+        </scene>
         <!--Setting View Controller-->
         <scene sceneID="Xzm-ID-TEr">
             <objects>
@@ -324,6 +342,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Rxn-Db-KI4"/>
+                    <connections>
+                        <segue destination="kzG-Cg-Ywl" kind="show" identifier="displayPodcastSettingsSegue" id="ATI-OI-dVX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rFC-yr-FYy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

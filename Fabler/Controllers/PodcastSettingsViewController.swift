@@ -16,6 +16,8 @@ class PodcastSettingsViewController: FormViewController {
     var podcast: Podcast?
     var downloadSizeInBytes: Int = 0
 
+    var embeddedNavigation: Bool = false
+
     // MARK: - PodcastSettingsViewController methods
 
     func autoDownloadDidChange(row: CheckRow) {
@@ -112,12 +114,16 @@ class PodcastSettingsViewController: FormViewController {
             tint = .fablerOrangeColor()
         }
 
-        let blurEffect = UIBlurEffect(style: .Light)
-        let veView = UIVisualEffectView(effect: blurEffect)
-        veView.frame = self.view.bounds
-        self.view.backgroundColor = .clearColor()
-        self.view.insertSubview(veView, atIndex: 0)
-        self.tableView?.backgroundColor = .clearColor()
+        if !self.embeddedNavigation {
+            let blurEffect = UIBlurEffect(style: .Light)
+            let veView = UIVisualEffectView(effect: blurEffect)
+            veView.frame = self.view.bounds
+            self.view.backgroundColor = .clearColor()
+            self.view.insertSubview(veView, atIndex: 0)
+            self.tableView?.backgroundColor = .clearColor()
+        } else {
+            self.navigationItem.title = self.podcast!.title
+        }
 
         CheckRow.defaultCellSetup = { cell, row in cell.tintColor = tint }
         IntRow.defaultCellSetup = { cell, row in cell.tintColor = tint }
@@ -184,12 +190,14 @@ class PodcastSettingsViewController: FormViewController {
             self?.setFormValues()
         })
 
-        self.form +++= Section()
-            <<< ButtonRow("Close") {
-                $0.title = $0.tag
-                $0.onCellSelection(self.closePressed)
-                $0.cellSetup({ cell, row in cell.tintColor = tint })
-            }
+        if !self.embeddedNavigation {
+            self.form +++= Section()
+                <<< ButtonRow("Close") {
+                    $0.title = $0.tag
+                    $0.onCellSelection(self.closePressed)
+                    $0.cellSetup({ cell, row in cell.tintColor = tint })
+                }
+        }
 
         self.setFormValues()
     }
