@@ -228,7 +228,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserCell" rowHeight="80" id="C9y-MZ-hG2" customClass="UserTableViewCell" customModule="Fabler" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="600" height="80"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="C9y-MZ-hG2" id="lXr-SK-kbI">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="79.5"/>
@@ -310,6 +310,25 @@
             </objects>
             <point key="canvasLocation" x="3339" y="1804"/>
         </scene>
+        <!--Setting View Controller-->
+        <scene sceneID="Xzm-ID-TEr">
+            <objects>
+                <viewController id="Qmw-Ls-b9V" customClass="SettingViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4bP-3K-cBn"/>
+                        <viewControllerLayoutGuide type="bottom" id="Pug-l1-8DF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8TM-RI-88r">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Rxn-Db-KI4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rFC-yr-FYy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2577" y="2717"/>
+        </scene>
         <!--Backpane View Controller-->
         <scene sceneID="4SI-bp-lri">
             <objects>
@@ -378,6 +397,15 @@
                                     <segue destination="0J7-Hk-VFu" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="uPP-0c-Naq"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mZr-WV-KCL">
+                                <rect key="frame" x="20" y="166" width="560" height="48"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="30"/>
+                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Settings"/>
+                                <connections>
+                                    <segue destination="S8W-rV-u0I" kind="custom" identifier="pushSettingController" customClass="SWRevealViewControllerSeguePushController" id="CKQ-r2-zZ8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -387,11 +415,14 @@
                             <constraint firstItem="vSE-Om-cvH" firstAttribute="leading" secondItem="d67-ps-YKm" secondAttribute="leadingMargin" id="KFq-KA-2XZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wl4-2B-knV" secondAttribute="trailing" id="Ln8-fJ-uJA"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vWq-gi-OxO" secondAttribute="trailing" id="OOs-Je-fFl"/>
+                            <constraint firstItem="mZr-WV-KCL" firstAttribute="leading" secondItem="d67-ps-YKm" secondAttribute="leadingMargin" id="X9z-e0-Bmu"/>
                             <constraint firstItem="vWq-gi-OxO" firstAttribute="leading" secondItem="d67-ps-YKm" secondAttribute="leadingMargin" id="YoB-hg-F2C"/>
                             <constraint firstItem="7jy-BW-GNM" firstAttribute="leading" secondItem="d67-ps-YKm" secondAttribute="leadingMargin" id="aYc-jO-Wo3"/>
+                            <constraint firstItem="mZr-WV-KCL" firstAttribute="trailing" secondItem="d67-ps-YKm" secondAttribute="trailingMargin" id="bNI-3Z-ooD"/>
                             <constraint firstItem="vSE-Om-cvH" firstAttribute="top" secondItem="ww7-5k-WrJ" secondAttribute="bottom" id="bfe-DS-01c"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7jy-BW-GNM" secondAttribute="trailing" id="cQn-7l-GlG"/>
                             <constraint firstItem="wl4-2B-knV" firstAttribute="leading" secondItem="d67-ps-YKm" secondAttribute="leadingMargin" id="tCQ-Qc-ZCG"/>
+                            <constraint firstItem="mZr-WV-KCL" firstAttribute="top" secondItem="wl4-2B-knV" secondAttribute="bottom" id="vOf-xZ-QfY"/>
                         </constraints>
                     </view>
                     <connections>
@@ -523,6 +554,24 @@
             </objects>
             <point key="canvasLocation" x="1765" y="960"/>
         </scene>
+        <!--Fabler Navigation Controller-->
+        <scene sceneID="CMq-4W-pPX">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="S8W-rV-u0I" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cSW-Jw-9Ye">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Qmw-Ls-b9V" kind="relationship" relationship="rootViewController" id="M6B-Im-4Iv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="soc-QR-a9h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1765" y="2717"/>
+        </scene>
     </scenes>
     <resources>
         <image name="logo-sidebar" width="126" height="45"/>
@@ -531,10 +580,10 @@
         <image name="user-add" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="h0R-vv-3lW"/>
         <segue reference="P5W-DW-uff"/>
         <segue reference="Y9H-zW-Zfi"/>
         <segue reference="nsB-VR-E4f"/>
-        <segue reference="h58-AZ-nKl"/>
         <segue reference="cPh-g7-fxF"/>
     </inferredMetricsTieBreakers>
 </document>

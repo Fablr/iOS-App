@@ -26,6 +26,7 @@
 		45173E411C2B1EE7006A8926 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45173E401C2B1EE7006A8926 /* UserTableViewCell.swift */; };
 		451CBBCC1C229CD300758A81 /* UserEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CBBCB1C229CD300758A81 /* UserEditViewController.swift */; };
 		453382201C1EA11000EA9DEE /* FablerImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533821F1C1EA11000EA9DEE /* FablerImage.swift */; };
+		453671871C97C47300D89AF8 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453671861C97C47300D89AF8 /* SettingViewController.swift */; };
 		4538B57D1BF55C3800039DF1 /* SmallPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */; };
 		4538B5801BF55E1800039DF1 /* SmallPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */; };
 		45505F711BFB1EF600481291 /* FablerDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45505F701BFB1EF600481291 /* FablerDownloadManager.swift */; };
@@ -96,6 +97,7 @@
 		45173E401C2B1EE7006A8926 /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		451CBBCB1C229CD300758A81 /* UserEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEditViewController.swift; sourceTree = "<group>"; };
 		4533821F1C1EA11000EA9DEE /* FablerImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerImage.swift; sourceTree = "<group>"; };
+		453671861C97C47300D89AF8 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPlayer.xib; sourceTree = "<group>"; };
 		4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallPlayerViewController.swift; sourceTree = "<group>"; };
 		45505F701BFB1EF600481291 /* FablerDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerDownloadManager.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				45173E401C2B1EE7006A8926 /* UserTableViewCell.swift */,
 				45149BDE1C894DE00044E8F1 /* UpNextTableViewController.swift */,
 				45149BE21C8D74840044E8F1 /* UpNextSectionHeaderView.swift */,
+				453671861C97C47300D89AF8 /* SettingViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				450B76781BE9DAA90033C0B6 /* EpisodeService.swift in Sources */,
 				4578890A1C10C108007D3600 /* Comment.swift in Sources */,
 				F491E7551A7F7E010026528E /* DiscoveryCollectionViewController.swift in Sources */,
+				453671871C97C47300D89AF8 /* SettingViewController.swift in Sources */,
 				45173E3F1C2A877A006A8926 /* UsersTableViewController.swift in Sources */,
 				4578890C1C10FF09007D3600 /* CommentService.swift in Sources */,
 			);

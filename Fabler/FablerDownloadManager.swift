@@ -117,6 +117,25 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
         super.init()
     }
 
+    public func calculateSizeOnDisk(completionHandler: ((size: Int) -> ())) {
+        dispatch_async(downloadsLockQueue) {
+            var size: Int = 0
+
+            do {
+                let realm = try Realm()
+
+                let downloads = Array(realm.objects(FablerDownload))
+                _ = downloads.map { size += $0.totalBytesWrittenRaw }
+            } catch {
+                Log.error("Realm read failed")
+            }
+
+            dispatch_async(dispatch_get_main_queue(), {
+                completionHandler(size: size)
+            })
+        }
+    }
+
     public func downloadWithURL(url: NSURL, localUrl: NSURL) -> FablerDownload? {
         var download: FablerDownload?
 
@@ -358,6 +377,20 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
                 self.removeTask(task)
 
                 queueDownload.state = .Cancelled
+            }
+        }
+    }
+
+    public func removeAll() {
+        dispatch_sync(downloadsLockQueue) {
+            do {
+                let realm = try Realm()
+
+                let downloads = Array(realm.objects(FablerDownload))
+
+                _ = downloads.map { $0.remove() }
+            } catch {
+                Log.error("Realm read failed")
             }
         }
     }
