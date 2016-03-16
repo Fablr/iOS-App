@@ -228,10 +228,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserCell" rowHeight="80" id="C9y-MZ-hG2" customClass="UserTableViewCell" customModule="Fabler" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="80"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="C9y-MZ-hG2" id="lXr-SK-kbI">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="79.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="b0b-KU-7Xo">
@@ -578,13 +578,18 @@
         <!--Fabler Navigation Controller-->
         <scene sceneID="CMq-4W-pPX">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="S8W-rV-u0I" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="S8W-rV-u0I" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="cSW-Jw-9Ye">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="IWc-ue-Ipt" customClass="FablerToolBarController" customModule="Fabler" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="Qmw-Ls-b9V" kind="relationship" relationship="rootViewController" id="M6B-Im-4Iv"/>
                     </connections>
@@ -601,10 +606,10 @@
         <image name="user-add" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="h0R-vv-3lW"/>
+        <segue reference="AX5-vf-8TQ"/>
+        <segue reference="aS3-kE-trV"/>
         <segue reference="P5W-DW-uff"/>
         <segue reference="Y9H-zW-Zfi"/>
         <segue reference="nsB-VR-E4f"/>
-        <segue reference="cPh-g7-fxF"/>
     </inferredMetricsTieBreakers>
 </document>

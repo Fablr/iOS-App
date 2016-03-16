@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Log.info("Application did finish launching.")
 
-        let config = Realm.Configuration(schemaVersion: 2, migrationBlock: { migration, oldSchemaVersion in
+        let config = Realm.Configuration(schemaVersion: 4, migrationBlock: { migration, oldSchemaVersion in
             if oldSchemaVersion < 1 {
                 migration.enumerate(Podcast.className()) { oldObject, newObject in
                     newObject!["sortOrderRaw"] = 1
@@ -47,6 +47,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if oldSchemaVersion < 2 {
                 migration.enumerate(Podcast.className()) { oldObject, newObject in
                     newObject!["sortOrderRaw"] = "Newest to oldest"
+                }
+            }
+
+            if oldSchemaVersion < 3 {
+                migration.enumerate(User.className()) { oldObject, newObject in
+                    newObject!["followerCount"] = 0
+                    newObject!["followingCount"] = 0
                 }
             }
         })

@@ -11,6 +11,8 @@ import Kingfisher
 import Eureka
 import RxSwift
 import RxCocoa
+import SCLAlertView
+import RealmSwift
 
 class UserViewController: FormViewController {
 
@@ -20,6 +22,7 @@ class UserViewController: FormViewController {
     var root: Bool = false
 
     var bag: DisposeBag! = DisposeBag()
+    var token: NotificationToken?
 
     // MARK: - UserViewController properties
 
@@ -31,20 +34,51 @@ class UserViewController: FormViewController {
         performSegueWithIdentifier("editProfileSegue", sender: user)
     }
 
-    // MARK: - UIViewController methods
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        guard self.user != nil else {
-            Log.info("Expected a user initiated via previous controller.")
+    func followButtonPressed() {
+        guard let user = self.user else {
             return
         }
 
         let service = UserService()
 
-        service.getFollowers(self.user!, completion: { _ in })
-        service.getFollowing(self.user!, completion: { _ in })
+        service.updateFollowing(user, following: !user.followingUser, completion: { (result) in
+            if !result {
+                let warningText = !user.followingUser ? "follow" : "unfollow"
+                SCLAlertView().showWarning("Warning", subTitle: "Unable to \(warningText) \(user.userName).")
+            }
+        })
+    }
+
+    // MARK: - UIViewController methods
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        guard let user = self.user else {
+            Log.info("Expected a user initiated via previous controller.")
+            return
+        }
+
+        token = user.realm?.addNotificationBlock({ [weak self] (_, _) in
+            guard let user = self?.user else {
+                return
+            }
+
+            if let row = self?.form.rowByTag("Following") {
+                row.title = "\(user.following.count) Following"
+            }
+
+            if let row = self?.form.rowByTag("Followers") {
+                row.title = "\(user.followers.count) Followers"
+            }
+
+            self?.tableView?.reloadData()
+        })
+
+        let service = UserService()
+
+        service.getFollowers(user, completion: { _ in })
+        service.getFollowing(user, completion: { _ in })
 
         if self.root {
             if revealViewController() != nil {
@@ -60,8 +94,8 @@ class UserViewController: FormViewController {
 
         self.form +++= Section() {
             var header = HeaderFooterView<UserHeaderView>(HeaderFooterProvider.NibFile(name: "UserHeader", bundle: nil))
-            header.onSetupView = { [weak self] (view, section, form) -> () in
-                if let user = self?.user, let url = NSURL(string: user.image) {
+            header.onSetupView = { (view, section, form) -> () in
+                if let url = NSURL(string: user.image) {
                     let manager = KingfisherManager.sharedManager
                     let cache = manager.cache
 
@@ -89,13 +123,13 @@ class UserViewController: FormViewController {
 
         self.form +++= Section(header: "Social", footer: "")
             <<< ButtonRow("Followers") {
-                $0.title = "\(self.user!.followers.count) Followers"
+                $0.title = "\(user.followers.count) Followers"
                 $0.presentationMode = .SegueName(segueName: "displayFollowersSegue", completionCallback: nil)
             }.cellUpdate { cell, row in
                 cell.textLabel?.textAlignment = .Left
             }
             <<< ButtonRow("Following") {
-                $0.title = "\(self.user!.following.count) Following"
+                $0.title = "\(user.following.count) Following"
                 $0.presentationMode = .SegueName(segueName: "displayFollowingSegue", completionCallback: nil)
             }.cellUpdate { cell, row in
                 cell.textLabel?.textAlignment = .Left
@@ -106,7 +140,7 @@ class UserViewController: FormViewController {
                 cell.textLabel?.textAlignment = .Left
             }
 
-        if user!.currentUser {
+        if user.currentUser {
             self.form +++= Section(header: "Account Control", footer: "")
                 <<< ButtonRow() {
                     $0.title = "Logout"
@@ -118,26 +152,27 @@ class UserViewController: FormViewController {
             self.navigationItem.rightBarButtonItem = button
         }
 
-        self.user!
-        .rx_observe(Int.self, "followingCount")
-        .subscribeNext({ [weak self] (following) in
-            if let row = self?.form.rowByTag("Following"), let following = following {
-                row.title = "\(following) Following"
-            }
-        })
-        .addDisposableTo(self.bag)
+        if !user.currentUser {
+            self.user!
+            .rx_observeWeakly(Bool.self, "followingUser")
+            .subscribeNext({ [ weak self] (following) in
+                if let following = following {
+                    let title: String
+                    if following {
+                        title = "Unfollow"
+                    } else {
+                        title = "Follow"
+                    }
+
+                    let button = UIBarButtonItem(title: title, style: .Plain, target: self, action: "followButtonPressed")
+                    self?.navigationItem.rightBarButtonItem = button
+                }
+            })
+            .addDisposableTo(self.bag)
+        }
 
         self.user!
-        .rx_observe(Int.self, "followerCount")
-        .subscribeNext({ [weak self] (followers) in
-            if let row = self?.form.rowByTag("Followers"), let followers = followers {
-                row.title = "\(followers) Followers"
-            }
-        })
-        .addDisposableTo(self.bag)
-
-        self.user!
-        .rx_observe(String.self, "userName")
+        .rx_observeWeakly(String.self, "userName")
         .subscribeNext({ [weak self] (name) in
             self?.navigationItem.title = name
         })
@@ -180,6 +215,7 @@ class UserViewController: FormViewController {
 
     deinit {
         self.bag = nil
+        self.token?.stop()
     }
 
     // MARK: - UserViewController methods

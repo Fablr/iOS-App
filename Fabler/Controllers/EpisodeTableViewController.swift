@@ -212,7 +212,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         // Dynamic change colors
         //
         self.episode?.podcast?
-        .rx_observe(Bool.self, "primarySet")
+        .rx_observeWeakly(Bool.self, "primarySet")
         .subscribeNext({ [weak self] (set) in
             if let primary = self?.episode?.podcast?.primaryColor {
                 self?.refreshControl?.backgroundColor = primary

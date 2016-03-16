@@ -133,7 +133,7 @@ class EpisodeTableViewCell: UITableViewCell {
 
         if let podcast = episode.podcast where dynamicColor {
             podcast
-            .rx_observe(Bool.self, "primarySet")
+            .rx_observeWeakly(Bool.self, "primarySet")
             .subscribeNext({ [weak self] (color) in
                 if let primary = self?.episode?.podcast?.primaryColor {
                     self?.downloadView?.tintColor = primary

@@ -153,6 +153,14 @@ class SettingViewController: FormViewController {
         self.updateValues()
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if let navigation = self.navigationController as? FablerNavigationController {
+            navigation.setDefaultNavigationBar()
+        }
+    }
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "displayPodcastSettingsSegue" {
             if let controller = segue.destinationViewController as? PodcastSettingsViewController, let podcast = sender as? Podcast {

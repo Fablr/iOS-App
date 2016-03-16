@@ -29,12 +29,11 @@ class UserTableViewCell: UITableViewCell {
 
         let service = UserService()
 
-        service.updateFollowing(user, following: !user.followingUser, completion: { result in
-            self.setupFollowButton(user.followingUser)
+        service.updateFollowing(user, following: !user.followingUser, completion: { [weak self] (result) in
+            self?.setupFollowButton(user.followingUser)
 
             if !result {
                 let warningText = !user.followingUser ? "follow" : "unfollow"
-
                 SCLAlertView().showWarning("Warning", subTitle: "Unable to \(warningText) \(user.userName).")
             }
         })
@@ -92,5 +91,11 @@ class UserTableViewCell: UITableViewCell {
         }
 
         self.userLabel?.text = title
+
+        if user.currentUser {
+            self.followButton?.hidden = true
+        } else {
+            self.followButton?.hidden = false
+        }
     }
 }

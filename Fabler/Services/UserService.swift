@@ -18,7 +18,7 @@ import Alamofire
 import SwiftyJSON
 import RealmSwift
 
-public class UserService {
+public final class UserService {
 
     // MARK: - singleton
 
@@ -282,7 +282,6 @@ public class UserService {
                         try realm.write {
                             responseUser.followers.removeAll()
                             responseUser.followers.appendContentsOf(followers)
-                            responseUser.followerCount = responseUser.followers.count
                             result = true
                         }
                     } catch {
@@ -324,7 +323,6 @@ public class UserService {
                         try realm.write {
                             responseUser.following.removeAll()
                             responseUser.following.appendContentsOf(following)
-                            responseUser.followingCount = following.count
                             result = true
                         }
                     } catch {
@@ -349,6 +347,8 @@ public class UserService {
 
     public func updateFollowing(user: User, following: Bool, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
         let id = user.userId
+
+        self.updateRealmUserFollowing(user, following: following)
 
         let urlRequest: URLRequestConvertible
 
@@ -379,6 +379,16 @@ public class UserService {
                 }
             } else {
                 Log.error("Follow failed with \(error).")
+
+                do {
+                    let realm = try Realm()
+
+                    if let responseUser = realm.objectForPrimaryKey(User.self, key: id) {
+                        self.updateRealmUserFollowing(responseUser, following: !following)
+                    }
+                } catch {
+                    Log.error("Realm write failed")
+                }
             }
 
             dispatch_async(queue, {completion(result: result)})
@@ -387,6 +397,34 @@ public class UserService {
         self.addRequestToPending(request)
 
         Log.debug("Set following request: \(request)")
+    }
+
+    private func updateRealmUserFollowing(user: User, following: Bool) {
+        guard let currentUser = User.getCurrentUser() else {
+            return
+        }
+
+        if following {
+            do {
+                let realm = try Realm()
+
+                try realm.write {
+                    user.followers.append(currentUser)
+                }
+            } catch {
+                Log.error("Realm write failed.")
+            }
+        } else if let index = user.followers.indexOf(currentUser) {
+            do {
+                let realm = try Realm()
+
+                try realm.write {
+                    user.followers.removeAtIndex(index)
+                }
+            } catch {
+                Log.error("Realm write failed.")
+            }
+        }
     }
 
     // MARK: UserService request functions

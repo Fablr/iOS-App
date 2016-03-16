@@ -8,6 +8,7 @@
 
 import UIKit
 import Eureka
+import ChameleonFramework
 
 class PodcastSettingsViewController: FormViewController {
 
@@ -200,5 +201,22 @@ class PodcastSettingsViewController: FormViewController {
         }
 
         self.setFormValues()
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+        guard let podcast = self.podcast else {
+            return
+        }
+
+        if let primary = podcast.primaryColor where self.embeddedNavigation {
+            self.navigationController?.navigationBar.barTintColor = primary
+            self.navigationController?.navigationBar.translucent = false
+            self.navigationController?.navigationBar.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primary, isFlat: true)
+            self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(contrastingBlackOrWhiteColorOn: primary, isFlat: true)]
+            self.navigationController?.navigationBar.clipsToBounds = false
+            self.setStatusBarStyle(UIStatusBarStyleContrast)
+        }
     }
 }

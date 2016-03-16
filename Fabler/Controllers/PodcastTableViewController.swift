@@ -372,7 +372,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.rightButton.tintColor = .fablerOrangeColor()
 
         self.podcast?
-        .rx_observe(Bool.self, "primarySet")
+        .rx_observeWeakly(Bool.self, "primarySet")
         .subscribeNext({ [weak self] (set) in
             if let primary = self?.podcast?.primaryColor {
                 self?.leftButton.tintColor = primary
@@ -396,7 +396,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         // Static element setup
         //
         self.podcast?
-        .rx_observe(Bool.self, "subscribed")
+        .rx_observeWeakly(Bool.self, "subscribed")
         .subscribeNext({ subscribed in
             if let subscribed = subscribed {
                 if subscribed {
@@ -412,7 +412,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         .addDisposableTo(self.bag)
 
         self.podcast?
-        .rx_observe(String.self, "sortOrderRaw")
+        .rx_observeWeakly(String.self, "sortOrderRaw")
         .subscribeNext({ [weak self] (_) in
             self?.sortEpisodes()
             self?.tableView.reloadData()
