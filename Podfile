@@ -4,8 +4,8 @@ use_frameworks!
 inhibit_all_warnings!
 
 target 'Fabler' do
-  pod 'FBSDKLoginKit', '~>4.10.0'
-  pod 'FBSDKCoreKit', '~>4.10.0'
+  pod 'FBSDKLoginKit', '~>4.10.1'
+  pod 'FBSDKCoreKit', '~>4.10.1'
   pod 'Alamofire', '~>3.2.1'
   pod 'SwiftyJSON', '~>2.3.2'
   pod 'RealmSwift', '~>0.98.5'

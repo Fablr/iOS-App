@@ -11,9 +11,9 @@ PODS:
     - ChameleonFramework/Default (= 2.1.0)
   - ChameleonFramework/Default (2.1.0)
   - Eureka (1.4.1)
-  - FBSDKCoreKit (4.10.0):
+  - FBSDKCoreKit (4.10.1):
     - Bolts (~> 1.5)
-  - FBSDKLoginKit (4.10.0):
+  - FBSDKLoginKit (4.10.1):
     - FBSDKCoreKit
   - Hue (1.0.1)
   - Kingfisher (2.1.0)
@@ -38,8 +38,8 @@ DEPENDENCIES:
   - Alamofire (~> 3.2.1)
   - ChameleonFramework (~> 2.1.0)
   - Eureka (~> 1.4.1)
-  - FBSDKCoreKit (~> 4.10.0)
-  - FBSDKLoginKit (~> 4.10.0)
+  - FBSDKCoreKit (~> 4.10.1)
+  - FBSDKLoginKit (~> 4.10.1)
   - Hue (~> 1.0.1)
   - Kingfisher (~> 2.1.0)
   - RealmSwift (~> 0.98.5)
@@ -59,8 +59,8 @@ SPEC CHECKSUMS:
   Bolts: f52a250053bb517ca874523c3913776359ab3def
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Eureka: 2f1921d3162491921d2fef3b516bc4ef93a05122
-  FBSDKCoreKit: 13bec8373fb3af94d44daf2aa1e0958687897fbd
-  FBSDKLoginKit: d3d4a2e9d31954deb00bfea964167a05ca1ea976
+  FBSDKCoreKit: d2aaed5e9ab7d8d6301c533376a1fbff1cf3deb5
+  FBSDKLoginKit: 699ff169080e3072de4b9b0faca90bf23dc36deb
   Hue: 0a53589bb58317e74068863b701ef1e5eee89ac1
   Kingfisher: 3ac09acad75a25ab22f6d7cef3de10d61dd4792d
   Realm: db08379969e45cea2edd1c3c0a090fe9e22d2d2f
