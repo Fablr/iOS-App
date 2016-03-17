@@ -231,7 +231,7 @@
                                 <rect key="frame" x="0.0" y="28" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="C9y-MZ-hG2" id="lXr-SK-kbI">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="b0b-KU-7Xo">
@@ -242,19 +242,19 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GwZ-1z-vNc">
-                                            <rect key="frame" x="90" y="29" width="447" height="21"/>
+                                            <rect key="frame" x="90" y="29" width="427" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nbc-VR-4Xd">
-                                            <rect key="frame" x="552" y="20" width="40" height="40"/>
+                                            <rect key="frame" x="532" y="20" width="60" height="40"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="40" id="LBs-n2-Kp0"/>
+                                                <constraint firstAttribute="width" constant="60" id="LBs-n2-Kp0"/>
                                                 <constraint firstAttribute="height" constant="40" id="xC0-KL-et6"/>
                                             </constraints>
                                             <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                            <state key="normal" image="user-add">
+                                            <state key="normal" title="Follow">
                                                 <color key="titleColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                                             </state>
                                             <connections>
@@ -603,7 +603,6 @@
         <image name="logo-sidebar" width="126" height="45"/>
         <image name="menu" width="22" height="22"/>
         <image name="profile" width="70" height="70"/>
-        <image name="user-add" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="AX5-vf-8TQ"/>

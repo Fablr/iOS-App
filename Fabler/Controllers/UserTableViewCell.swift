@@ -47,11 +47,9 @@ class UserTableViewCell: UITableViewCell {
 
     func setupFollowButton(following: Bool) {
         if following {
-            self.followButton?.setImage(UIImage(named: "user-remove"), forState: .Normal)
-            self.followButton?.tintColor = .washedOutFablerOrangeColor()
+            self.followButton?.setTitle("Unfollow", forState: .Normal)
         } else {
-            self.followButton?.setImage(UIImage(named: "user-add"), forState: .Normal)
-            self.followButton?.tintColor = .fablerOrangeColor()
+            self.followButton?.setTitle("Follow", forState: .Normal)
         }
     }
 
