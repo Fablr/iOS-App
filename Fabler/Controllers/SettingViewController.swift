@@ -155,7 +155,7 @@ class SettingViewController: FormViewController {
 
         let downloadManager = FablerDownloadManager.sharedInstance
 
-        downloadManager.calculateSizeOnDisk({ [weak self] (size) in
+        downloadManager.calculateSizeOnDisk(completionHandler: { [weak self] (size) in
             self?.downloadSizeInBytes = size
             self?.updateValues()
         })

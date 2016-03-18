@@ -110,32 +110,58 @@ public class FablerAutoDownload {
 
         self.state = .CalculatingEpisodes
 
-        let service = PodcastService()
+        let manager = FablerDownloadManager.sharedInstance
 
-        _ = service.getSubscribedPodcasts(self.queue, completion: { podcasts in
-            Log.info("AutoDownload calculating episodes podcast callback")
+        manager.calculateSizeOnDisk(self.queue) { size in
+            //
+            // Size callback
+            //
 
-            let service = EpisodeService()
+            let settingService = SettingService()
+            let setting = settingService.getSettingForCurrentUser()
 
-            self.podcasts = podcasts.count
+            if let setting = setting where setting.limitDownload && setting.limitAmountInBytes < size {
+                Log.info("AutoDownload will not download more episodes due to disk space limit")
+            } else {
+                let service = PodcastService()
 
-            for podcast in podcasts {
-                let count = podcast.downloadAmount
-                _ = service.getEpisodesForPodcast(podcast, queue: self.queue, completion: { episodes in
-                    Log.info("AutoDownload calculating episodes episode callback")
+                _ = service.getSubscribedPodcasts(self.queue) { podcasts in
+                    //
+                    // Podcasts callback
+                    //
+                    Log.info("AutoDownload calculating episodes podcast callback")
 
-                    self.calculateDownloadsForPodcast(count, episodes: episodes)
+                    let service = EpisodeService()
 
-                    self.podcasts -= 1
+                    self.podcasts = podcasts.count
 
-                    if self.podcasts == 0 {
-                        dispatch_async(self.queue, {
-                            self.completeTask()
-                        })
+                    for podcast in podcasts {
+                        let count = podcast.downloadAmount
+                        _ = service.getEpisodesForPodcast(podcast, queue: self.queue) { episodes in
+                            //
+                            // Episodes callback
+                            //
+
+                            Log.info("AutoDownload calculating episodes episode callback")
+
+                            self.calculateDownloadsForPodcast(count, episodes: episodes)
+
+                            self.podcasts -= 1
+
+                            if self.podcasts == 0 {
+                                dispatch_async(self.queue) {
+                                    //
+                                    // Complete callback
+                                    //
+
+                                    self.completeTask()
+                                }
+                            }
+                        }
                     }
-                })
+                }
             }
-        })
+        }
     }
 
     private func downloadEpisodes() {

@@ -117,7 +117,7 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
         super.init()
     }
 
-    public func calculateSizeOnDisk(completionHandler: ((size: Int) -> ())) {
+    public func calculateSizeOnDisk(queue: dispatch_queue_t = dispatch_get_main_queue(), completionHandler: ((size: Int) -> ())) {
         dispatch_async(downloadsLockQueue) {
             var size: Int = 0
 
@@ -130,13 +130,13 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
                 Log.error("Realm read failed")
             }
 
-            dispatch_async(dispatch_get_main_queue()) {
+            dispatch_async(queue) {
                 completionHandler(size: size)
             }
         }
     }
 
-    public func calculateSizeOnDisk(forPodcast: Podcast, completionHandler: ((size: Int) -> ())) {
+    public func calculateSizeOnDisk(forPodcast: Podcast, queue: dispatch_queue_t = dispatch_get_main_queue(), completionHandler: ((size: Int) -> ())) {
         let id = forPodcast.podcastId
 
         var size: Int = 0
@@ -151,7 +151,7 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
                 Log.error("Realm read failed")
             }
 
-            dispatch_async(dispatch_get_main_queue()) {
+            dispatch_async(queue) {
                 completionHandler(size: size)
             }
         }
