@@ -17,10 +17,18 @@ class SettingViewController: FormViewController {
     var downloadSizeInBytes: Int = 0
     var imageCacheSizeInBytes: Int = 0
 
+    var setting: Setting?
+
     // MARK: - SettingViewController methods
 
     func updateValues() {
-        let values: [String: Any?] = ["ImageCacheSize": sizeStringFrom(self.imageCacheSizeInBytes), "EpisodeSize": sizeStringFrom(self.downloadSizeInBytes)]
+        guard let setting = self.setting else {
+            return
+        }
+
+        let amount = Double(Double(setting.limitAmountInBytes) / (1024.0 * 1024.0))
+
+        let values: [String: Any?] = ["ImageCacheSize": sizeStringFrom(self.imageCacheSizeInBytes), "EpisodeSize": sizeStringFrom(self.downloadSizeInBytes), "Limit": setting.limitDownload, "LimitSize": round(100 * amount) / 100]
         self.form.setValues(values)
         self.tableView?.reloadData()
     }
@@ -39,6 +47,24 @@ class SettingViewController: FormViewController {
 
         self.imageCacheSizeInBytes = 0
         self.updateValues()
+    }
+
+    func limitDidChange(row: CheckRow) {
+        guard let value = row.value, let setting = self.setting else {
+            return
+        }
+
+        let service = SettingService()
+        service.setLimitDownload(setting, limit: value)
+    }
+
+    func limitSizeDidChange(row: DecimalRow) {
+        guard let value = row.value, let setting = self.setting else {
+            return
+        }
+
+        let service = SettingService()
+        service.setLimitDownloadSize(setting, sizeInBytes: Int(1024 * 1024 * value))
     }
 
     func setupPodcastSection(podcasts: [Podcast]) {
@@ -75,16 +101,44 @@ class SettingViewController: FormViewController {
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
 
+        let service = SettingService()
+        self.setting = service.getSettingForCurrentUser()
+
         self.navigationItem.title = "Settings"
 
+        self.navigationAccessoryView.tintColor = .fablerOrangeColor()
+
         ButtonRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
+        CheckRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
+        IntRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
+        DecimalRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
 
         //
         // Episode cache
         //
+        let amount: Double
+        if let setting = self.setting {
+            amount = Double(Double(setting.limitAmountInBytes) / (1024.0 * 1024.0))
+
+            Log.info("\(amount) \(setting.limitAmountInBytes)")
+        } else {
+            amount = 1.0
+        }
+
         self.form +++= Section(header: "Downloaded Episodes", footer: "")
+            <<< CheckRow("Limit") {
+                $0.title = "Limit space of downloaded episodes"
+                $0.onChange(self.limitDidChange)
+                $0.value = false
+            }
+            <<< DecimalRow("LimitSize") {
+                $0.title = "Limit amount in GB"
+                $0.hidden = Condition.Predicate(NSPredicate(format: "$Limit == false"))
+                $0.onChange(self.limitSizeDidChange)
+                $0.value = round(100 * amount) / 100
+            }
             <<< AlertRow<String>("EpisodeSize") {
-                $0.title = "Size of downloaded episodes"
+                $0.title = "Space of downloaded episodes"
                 $0.disabled = true
                 $0.hidden = false
             }
@@ -111,7 +165,7 @@ class SettingViewController: FormViewController {
         //
         self.form +++= Section(header: "Image Cache", footer: "")
             <<< AlertRow<String>("ImageCacheSize") {
-                $0.title = "Size of image cache"
+                $0.title = "Space of image cache"
                 $0.disabled = true
                 $0.hidden = false
             }
@@ -133,8 +187,8 @@ class SettingViewController: FormViewController {
             $0.tag = "PodcastSection"
         }
 
-        let service = PodcastService()
-        let podcasts = service.getSubscribedPodcasts(completion: { [weak self] (podcasts) in
+        let podcastService = PodcastService()
+        let podcasts = podcastService.getSubscribedPodcasts(completion: { [weak self] (podcasts) in
             self?.setupPodcastSection(podcasts)
         })
 

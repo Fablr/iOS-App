@@ -131,7 +131,7 @@ class PodcastSettingsViewController: FormViewController {
 
         self.navigationAccessoryView.tintColor = tint
 
-        self.form +++= Section()
+        self.form +++= Section("Subscription")
             <<< ButtonRow("Unsubscribe") {
                 $0.title = $0.tag
                 $0.onCellSelection(self.unsubscribePressed)
@@ -143,21 +143,23 @@ class PodcastSettingsViewController: FormViewController {
                 })
             }
 
-        self.form +++= Section()
-            <<< CheckRow("AutoDownload") {
-                $0.title = "Auto-download new episodes"
-                $0.onChange(self.autoDownloadDidChange)
-            }
+        self.form +++= Section("Notifications")
             <<< CheckRow("Notifications") {
                 $0.title = "Enable notifications for new episodes"
                 $0.onChange(self.notificationDidChange)
+            }
+
+        self.form +++= Section("Auto-download")
+            <<< CheckRow("AutoDownload") {
+                $0.title = "Auto-download new episodes"
+                $0.onChange(self.autoDownloadDidChange)
             }
             <<< IntRow("DownloadCount") {
                 $0.title = "Auto-download count"
                 $0.onChange(self.downloadCountDidChange)
             }
 
-        self.form +++= Section()
+        self.form +++= Section("Sorting")
             <<< AlertRow<String>("SortOrder") {
                 $0.title = "Episode sort order"
                 $0.selectorTitle = "Episode sort order"
@@ -168,9 +170,9 @@ class PodcastSettingsViewController: FormViewController {
                 action.view.tintColor = tint
             }
 
-        self.form +++= Section()
+        self.form +++= Section("Downloaded Episodes")
             <<< AlertRow<String>("EpisodeSize") {
-                $0.title = "Size of downloaded episodes"
+                $0.title = "Space of downloaded episodes"
                 $0.disabled = true
                 $0.hidden = false
             }

@@ -51,6 +51,8 @@
 		45BF1C681BE4921900665402 /* PodcastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF1C671BE4921900665402 /* PodcastService.swift */; };
 		45BFCC191C154299007D31C8 /* EpisodeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45BFCC181C154299007D31C8 /* EpisodeCell.xib */; };
 		45BFCC1F1C1559A3007D31C8 /* EpisodeSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BFCC1E1C1559A3007D31C8 /* EpisodeSectionHeaderView.swift */; };
+		45D36F5C1C9BBA9B00F5ABE2 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D36F5B1C9BBA9B00F5ABE2 /* Setting.swift */; };
+		45D36F5E1C9BCAFE00F5ABE2 /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D36F5D1C9BCAFE00F5ABE2 /* SettingService.swift */; };
 		45E536781BDF06E0009E3F10 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45E536761BDF06E0009E3F10 /* Main.storyboard */; };
 		45E5367E1BE1F980009E3F10 /* FablerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5367D1BE1F980009E3F10 /* FablerClient.swift */; };
 		45F3B9F11C48C0F800582C72 /* FablerDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F3B9F01C48C0F800582C72 /* FablerDownload.swift */; };
@@ -122,6 +124,8 @@
 		45BF1C671BE4921900665402 /* PodcastService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastService.swift; sourceTree = "<group>"; };
 		45BFCC181C154299007D31C8 /* EpisodeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EpisodeCell.xib; sourceTree = "<group>"; };
 		45BFCC1E1C1559A3007D31C8 /* EpisodeSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeSectionHeaderView.swift; sourceTree = "<group>"; };
+		45D36F5B1C9BBA9B00F5ABE2 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		45D36F5D1C9BCAFE00F5ABE2 /* SettingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
 		45E536771BDF06E0009E3F10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		45E5367D1BE1F980009E3F10 /* FablerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerClient.swift; sourceTree = "<group>"; };
 		45F3B9F01C48C0F800582C72 /* FablerDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerDownload.swift; sourceTree = "<group>"; };
@@ -194,6 +198,7 @@
 				450B76751BE9CC270033C0B6 /* Episode.swift */,
 				45B51D0A1BE495E700F289F7 /* Podcast.swift */,
 				450B767D1BEF49120033C0B6 /* User.swift */,
+				45D36F5B1C9BBA9B00F5ABE2 /* Setting.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -205,6 +210,7 @@
 				450B76771BE9DAA90033C0B6 /* EpisodeService.swift */,
 				45BF1C651BE31EF600665402 /* UserService.swift */,
 				45BF1C671BE4921900665402 /* PodcastService.swift */,
+				45D36F5D1C9BCAFE00F5ABE2 /* SettingService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -546,11 +552,13 @@
 				45FBA25A1BF5E7FE00DD8D14 /* LargePlayerViewController.swift in Sources */,
 				450B767A1BECA7610033C0B6 /* EpisodeTableViewCell.swift in Sources */,
 				F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */,
+				45D36F5E1C9BCAFE00F5ABE2 /* SettingService.swift in Sources */,
 				450B76801BEF567D0033C0B6 /* BackpaneViewController.swift in Sources */,
 				45BF1C661BE31EF600665402 /* UserService.swift in Sources */,
 				4578890E1C1153E4007D3600 /* CommentTableViewCell.swift in Sources */,
 				F491E74C1A7F4C630026528E /* PodcastTableViewCell.swift in Sources */,
 				457E51E31BE864170079845E /* PodcastCell.swift in Sources */,
+				45D36F5C1C9BBA9B00F5ABE2 /* Setting.swift in Sources */,
 				45173E411C2B1EE7006A8926 /* UserTableViewCell.swift in Sources */,
 				45BFCC1F1C1559A3007D31C8 /* EpisodeSectionHeaderView.swift in Sources */,
 				F491E74A1A7F4B300026528E /* CollectionTableViewController.swift in Sources */,

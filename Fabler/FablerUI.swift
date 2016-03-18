@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import Eureka
 
 extension UIColor {
     static func fablerOrangeColor() -> UIColor {
