@@ -15,16 +15,16 @@ PODS:
     - Bolts (~> 1.5)
   - FBSDKLoginKit (4.10.1):
     - FBSDKCoreKit
-  - Hue (1.0.1)
+  - Hue (1.1)
   - Kingfisher (2.1.0)
   - Realm (0.98.5):
     - Realm/Headers (= 0.98.5)
   - Realm/Headers (0.98.5)
   - RealmSwift (0.98.5):
     - Realm (= 0.98.5)
-  - RxCocoa (2.2.0):
-    - RxSwift (~> 2.2)
-  - RxSwift (2.2.0)
+  - RxCocoa (2.3.0):
+    - RxSwift (~> 2.3)
+  - RxSwift (2.3.0)
   - SCLAlertView (0.5.1)
   - SlackTextViewController (1.9.1)
   - SwiftDate (3.0.8)
@@ -40,11 +40,11 @@ DEPENDENCIES:
   - Eureka (~> 1.4.1)
   - FBSDKCoreKit (~> 4.10.1)
   - FBSDKLoginKit (~> 4.10.1)
-  - Hue (~> 1.0.1)
+  - Hue (~> 1.1)
   - Kingfisher (~> 2.1.0)
   - RealmSwift (~> 0.98.5)
-  - RxCocoa (~> 2.2.0)
-  - RxSwift (~> 2.2.0)
+  - RxCocoa (~> 2.3.0)
+  - RxSwift (~> 2.3.0)
   - SCLAlertView (~> 0.5.1)
   - SlackTextViewController (~> 1.9.1)
   - SwiftDate (~> 3.0.8)
@@ -61,12 +61,12 @@ SPEC CHECKSUMS:
   Eureka: 2f1921d3162491921d2fef3b516bc4ef93a05122
   FBSDKCoreKit: d2aaed5e9ab7d8d6301c533376a1fbff1cf3deb5
   FBSDKLoginKit: 699ff169080e3072de4b9b0faca90bf23dc36deb
-  Hue: 0a53589bb58317e74068863b701ef1e5eee89ac1
+  Hue: ed6781be844b58b2a38150cfd4bf24c33449faf8
   Kingfisher: 3ac09acad75a25ab22f6d7cef3de10d61dd4792d
   Realm: db08379969e45cea2edd1c3c0a090fe9e22d2d2f
   RealmSwift: cb11ad1c35e15dc982f2dbf5afe2a3124193a358
-  RxCocoa: 42efb7a7145a8d1d5878e94ce48a580d29e0c796
-  RxSwift: b8a749f2204c6c7a5c29b306a9c3bc11d5b87c5b
+  RxCocoa: cde4e993f496d2577bc3ba8b7dc7bf55a4ed809a
+  RxSwift: 0df59cc5edf28a31dbf83b049220b4b8e76b07c8
   SCLAlertView: 3ac39a863d3e10fc165662b1228b03402297aea9
   SlackTextViewController: 6b0d1030c53937226fc5358f217af2a34fc211cf
   SwiftDate: 971f8b9394f664f2226b9c3ab64e801a7291c612

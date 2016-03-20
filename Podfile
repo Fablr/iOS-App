@@ -19,9 +19,9 @@ target 'Fabler' do
   pod 'ACPDownload', '~>1.1.0'
   pod 'ChameleonFramework', '~>2.1.0'
   pod 'SwiftDate', '~>3.0.8'
-  pod 'RxSwift', '~>2.2.0'
-  pod 'RxCocoa', '~>2.2.0'
-  pod 'Hue', '~>1.0.1'
+  pod 'RxSwift', '~>2.3.0'
+  pod 'RxCocoa', '~>2.3.0'
+  pod 'Hue', '~>1.1'
 end
 
 target 'FablerTests' do
