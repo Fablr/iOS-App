@@ -246,11 +246,11 @@ public class FablerPlayer: NSObject {
 
             if let podcast = self.episode?.podcast, let url = NSURL(string: podcast.image) {
                 let manager = KingfisherManager.sharedManager
-                manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, url) in
+                manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil) { [weak self] (image, error, cacheType, url) in
                     if error == nil, let player = self {
                         player.image = image
                     }
-                })
+                }
             }
 
             MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = [MPMediaItemPropertyTitle: episode.title]

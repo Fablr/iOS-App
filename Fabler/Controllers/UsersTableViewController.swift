@@ -26,7 +26,7 @@ class UsersTableViewController: UITableViewController {
         let service = UserService()
 
         if following {
-            service.getFollowing(user, completion: { [weak self] (result) in
+            service.getFollowing(user) { [weak self] (result) in
                 guard result else {
                     return
                 }
@@ -39,9 +39,9 @@ class UsersTableViewController: UITableViewController {
                 if let refresher = self?.refreshControl where refresher.refreshing {
                     refresher.endRefreshing()
                 }
-            })
+            }
         } else {
-            service.getFollowers(user, completion: { [weak self] (result) in
+            service.getFollowers(user) { [weak self] (result) in
                 guard result else {
                     return
                 }
@@ -54,7 +54,7 @@ class UsersTableViewController: UITableViewController {
                 if let refresher = self?.refreshControl where refresher.refreshing {
                     refresher.endRefreshing()
                 }
-            })
+            }
         }
     }
 

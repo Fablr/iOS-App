@@ -29,14 +29,14 @@ class UserTableViewCell: UITableViewCell {
 
         let service = UserService()
 
-        service.updateFollowing(user, following: !user.followingUser, completion: { [weak self] (result) in
+        service.updateFollowing(user, following: !user.followingUser) { [weak self] (result) in
             self?.setupFollowButton(user.followingUser)
 
             if !result {
                 let warningText = !user.followingUser ? "follow" : "unfollow"
                 SCLAlertView().showWarning("Warning", subTitle: "Unable to \(warningText) \(user.userName).")
             }
-        })
+        }
     }
 
     // MARK: - EpisodeTableViewCell properties
@@ -73,7 +73,7 @@ class UserTableViewCell: UITableViewCell {
             if let circle = cache.retrieveImageInDiskCacheForKey(key) {
                 self.profileImage?.image = circle
             } else {
-                manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, url) in
+                manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil) { [weak self] (image, error, cacheType, url) in
                     guard let cell = self, let image = image where error == nil else {
                         return
                     }
@@ -81,10 +81,10 @@ class UserTableViewCell: UITableViewCell {
                     let circle = image.imageRoundedIntoCircle()
                     cache.storeImage(circle, forKey: key)
 
-                    dispatch_async(dispatch_get_main_queue(), {
+                    dispatch_async(dispatch_get_main_queue()) {
                         cell.profileImage?.image = circle
-                    })
-                })
+                    }
+                }
             }
         }
 

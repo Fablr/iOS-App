@@ -135,12 +135,12 @@ class PodcastSettingsViewController: FormViewController {
             <<< ButtonRow("Unsubscribe") {
                 $0.title = $0.tag
                 $0.onCellSelection(self.unsubscribePressed)
-                $0.cellSetup({ cell, row in
+                $0.cellSetup { cell, row in
                     cell.tintColor = .flatRedColor()
                     if let size = cell.textLabel?.font.pointSize {
                         cell.textLabel?.font = .boldSystemFontOfSize(size)
                     }
-                })
+                }
             }
 
         self.form +++= Section("Notifications")
@@ -179,26 +179,28 @@ class PodcastSettingsViewController: FormViewController {
             <<< ButtonRow("ClearEpisodes") {
                 $0.title = "Delete downloaded episodes "
                 $0.onCellSelection(self.downloadsClear)
-                $0.cellSetup({ cell, row in
+                $0.cellSetup { cell, row in
                     cell.tintColor = .flatRedColor()
                     if let size = cell.textLabel?.font.pointSize {
                         cell.textLabel?.font = .boldSystemFontOfSize(size)
                     }
-                })
+                }
             }
 
         let manager = FablerDownloadManager.sharedInstance
-        manager.calculateSizeOnDisk(self.podcast!, completionHandler: { [weak self] (size) in
+        manager.calculateSizeOnDisk(self.podcast!) { [weak self] (size) in
             self?.downloadSizeInBytes = size
             self?.setFormValues()
-        })
+        }
 
         if !self.embeddedNavigation {
             self.form +++= Section()
                 <<< ButtonRow("Close") {
                     $0.title = $0.tag
                     $0.onCellSelection(self.closePressed)
-                    $0.cellSetup({ cell, row in cell.tintColor = tint })
+                    $0.cellSetup { cell, row in
+                        cell.tintColor = tint
+                    }
                 }
         }
 

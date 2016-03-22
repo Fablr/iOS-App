@@ -336,7 +336,7 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
         dispatch_sync(downloadsLockQueue) {
             if let queueDownload = self.getDownloadFromURL(urlString), let task = self.getTaskFromURL(urlString) {
                 queueDownload.state = .Pausing
-                task.cancelByProducingResumeData({ (data) -> Void in
+                task.cancelByProducingResumeData { (data) -> Void in
                     if let handlerDownload = self.getDownloadFromURL(urlString) {
                         handlerDownload.state = .Paused
 
@@ -352,7 +352,7 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
 
                         completionHandler?(data)
                     }
-                })
+                }
 
                 self.removeTask(task)
             }

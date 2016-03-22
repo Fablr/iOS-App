@@ -96,7 +96,9 @@ public class PodcastService {
                     Log.error("Podcast request failed with \(error).")
                 }
 
-                dispatch_async(queue, {completion(result: self.getPodcastFromRealm(podcastId))})
+                dispatch_async(queue) {
+                    completion(result: self.getPodcastFromRealm(podcastId))
+                }
             }
 
             Log.debug("Read podcast request: \(request)")
@@ -132,7 +134,9 @@ public class PodcastService {
                     Log.error("Podcasts request failed with \(error).")
                 }
 
-                dispatch_async(queue, {completion(result: self.getAllPodcastsFromRealm())})
+                dispatch_async(queue) {
+                    completion(result: self.getAllPodcastsFromRealm())
+                }
             }
 
             Log.debug("Read podcasts request: \(request)")
@@ -170,7 +174,9 @@ public class PodcastService {
                     Log.error("Subscribed podcasts request failed with \(error).")
                 }
 
-                dispatch_async(queue, {completion(result: self.getSubscribedPodcastsFromRealm())})
+                dispatch_async(queue) {
+                    completion(result: self.getSubscribedPodcastsFromRealm())
+                }
             }
 
             Log.debug("Subscribed podcasts request: \(request)")
@@ -214,7 +220,9 @@ public class PodcastService {
             switch response.result {
             case .Success:
                 if let completion = completion {
-                    dispatch_async(queue, {completion(result: true)})
+                    dispatch_async(queue) {
+                        completion(result: true)
+                    }
                 }
             case .Failure(let error):
                 Log.error("Subscription request failed with \(error).")
@@ -224,9 +232,9 @@ public class PodcastService {
                     if let responsePodcast = responseRealm.objectForPrimaryKey(Podcast.self, key: id) {
                         let text = subscribe ? "subscribe" : "unsubscribe"
 
-                        dispatch_async(dispatch_get_main_queue(), {
+                        dispatch_async(dispatch_get_main_queue()) {
                             SCLAlertView().showWarning("Warning", subTitle: "Was unable to \(text) to \(title).")
-                        })
+                        }
 
                         try responseRealm.write {
                             responsePodcast.subscribed = !subscribe
@@ -237,7 +245,9 @@ public class PodcastService {
                 }
 
                 if let completion = completion {
-                    dispatch_async(queue, {completion(result: false)})
+                    dispatch_async(queue) {
+                        completion(result: false)
+                    }
                 }
             }
         }

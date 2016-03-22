@@ -42,12 +42,12 @@ class UserViewController: FormViewController {
 
         let service = UserService()
 
-        service.updateFollowing(user, following: !user.followingUser, completion: { (result) in
+        service.updateFollowing(user, following: !user.followingUser) { (result) in
             if !result {
                 let warningText = !user.followingUser ? "follow" : "unfollow"
                 SCLAlertView().showWarning("Warning", subTitle: "Unable to \(warningText) \(user.userName).")
             }
-        })
+        }
     }
 
     // MARK: - UIViewController methods
@@ -60,7 +60,7 @@ class UserViewController: FormViewController {
             return
         }
 
-        token = user.realm?.addNotificationBlock({ [weak self] (_, _) in
+        token = user.realm?.addNotificationBlock { [weak self] (_, _) in
             guard let user = self?.user else {
                 return
             }
@@ -74,7 +74,7 @@ class UserViewController: FormViewController {
             }
 
             self?.tableView?.reloadData()
-        })
+        }
 
         let service = UserService()
 
@@ -106,16 +106,16 @@ class UserViewController: FormViewController {
                     if let circle = cache.retrieveImageInDiskCacheForKey(key) {
                         view.profileImage?.image = circle
                     } else {
-                        manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, url) in
+                        manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil) { (image, error, cacheType, url) in
                             if error == nil, let image = image {
                                 let circle = image.imageRoundedIntoCircle()
                                 cache.storeImage(circle, forKey: key)
 
-                                dispatch_async(dispatch_get_main_queue(), {
+                                dispatch_async(dispatch_get_main_queue()) {
                                     view.profileImage?.image = circle
-                                })
+                                }
                             }
-                        })
+                        }
                     }
                 }
             }
@@ -158,7 +158,7 @@ class UserViewController: FormViewController {
         if !user.currentUser {
             self.user!
             .rx_observeWeakly(Bool.self, "followingUser")
-            .subscribeNext({ [ weak self] (following) in
+            .subscribeNext { [ weak self] (following) in
                 if let following = following {
                     let title: String
                     if following {
@@ -170,15 +170,15 @@ class UserViewController: FormViewController {
                     let button = UIBarButtonItem(title: title, style: .Plain, target: self, action: #selector(UserViewController.followButtonPressed))
                     self?.navigationItem.rightBarButtonItem = button
                 }
-            })
+            }
             .addDisposableTo(self.bag)
         }
 
         self.user!
         .rx_observeWeakly(String.self, "userName")
-        .subscribeNext({ [weak self] (name) in
+        .subscribeNext { [weak self] (name) in
             self?.navigationItem.title = name
-        })
+        }
         .addDisposableTo(self.bag)
     }
 

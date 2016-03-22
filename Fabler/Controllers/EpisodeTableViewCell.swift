@@ -62,11 +62,11 @@ class EpisodeTableViewCell: UITableViewCell {
         // Comments
         //
         if self.commentsEnabled {
-            let commentAction = UIAlertAction(title: "Comments", style: .Default, handler: { [weak self] (action) in
+            let commentAction = UIAlertAction(title: "Comments", style: .Default) { [weak self] (action) in
                 if let episode = self?.episode {
                     self?.segueDelegate?.performSegueToEpisode(episode)
                 }
-            })
+            }
             actionController.addAction(commentAction)
         }
 
@@ -74,12 +74,12 @@ class EpisodeTableViewCell: UITableViewCell {
         // Up Next
         //
         if self.upNextEnabled {
-            let upNextAction = UIAlertAction(title: "Add to Up Next", style: .Default, handler: { [weak self] (action) in
+            let upNextAction = UIAlertAction(title: "Add to Up Next", style: .Default) { [weak self] (action) in
                 if let episode = self?.episode {
                     let player = FablerPlayer.sharedInstance
                     player.addEpisodeToUpNext(episode)
                 }
-            })
+            }
             actionController.addAction(upNextAction)
         }
 
@@ -93,21 +93,21 @@ class EpisodeTableViewCell: UITableViewCell {
             saveTitle = "Save Episode"
         }
 
-        let saveAction = UIAlertAction(title: saveTitle, style: .Default, handler: { [weak self] (action) in
+        let saveAction = UIAlertAction(title: saveTitle, style: .Default) { [weak self] (action) in
             if let episode = self?.episode {
                 let service = EpisodeService()
                 service.flipSaveForEpisode(episode)
             }
-        })
+        }
         actionController.addAction(saveAction)
 
         //
         // Delete
         //
         if episode!.download != nil && episode!.download!.state == .Completed {
-            let deleteAction = UIAlertAction(title: "Delete Episode", style: .Destructive, handler: { [weak self] (action) in
+            let deleteAction = UIAlertAction(title: "Delete Episode", style: .Destructive) { [weak self] (action) in
                 self?.episode?.download?.remove()
-            })
+            }
             actionController.addAction(deleteAction)
         }
 
@@ -134,16 +134,16 @@ class EpisodeTableViewCell: UITableViewCell {
         if let podcast = episode.podcast where dynamicColor {
             podcast
             .rx_observeWeakly(Bool.self, "primarySet")
-            .subscribeNext({ [weak self] (color) in
+            .subscribeNext { [weak self] (color) in
                 if let primary = self?.episode?.podcast?.primaryColor {
                     self?.downloadView?.tintColor = primary
                     self?.ellipsisButton?.tintColor = primary
                 }
-            })
+            }
             .addDisposableTo(self.bag)
         }
 
-        self.downloadView?.setActionForTap({ view, status in
+        self.downloadView?.setActionForTap { view, status in
             switch status {
             case .None:
                 let downloader = FablerDownloadManager.sharedInstance
@@ -153,9 +153,9 @@ class EpisodeTableViewCell: UITableViewCell {
                 do {
                     let realm = try Realm()
 
-                    self.token = realm.addNotificationBlock({ notification, realm in
+                    self.token = realm.addNotificationBlock { notification, realm in
                         self.setDownloadStatus()
-                    })
+                    }
                 } catch {
 
                 }
@@ -169,7 +169,7 @@ class EpisodeTableViewCell: UITableViewCell {
             case .Completed:
                 break
             }
-        })
+        }
 
         self.setDownloadStatus()
     }

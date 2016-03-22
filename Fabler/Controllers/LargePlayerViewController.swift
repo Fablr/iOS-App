@@ -49,11 +49,11 @@ public class LargePlayerViewController: UIViewController {
         //
         // Comments
         //
-        let commentAction = UIAlertAction(title: "Comments", style: .Default, handler: { [weak self] (action) in
+        let commentAction = UIAlertAction(title: "Comments", style: .Default) { [weak self] (action) in
             if let episode = self?.player?.episode {
                 self?.performSegueWithIdentifier("displayEpisodeSegue", sender: episode)
             }
-        })
+        }
         actionController.addAction(commentAction)
 
         //
@@ -66,12 +66,12 @@ public class LargePlayerViewController: UIViewController {
             saveTitle = "Save Episode"
         }
 
-        let saveAction = UIAlertAction(title: saveTitle, style: .Default, handler: { [weak self] (action) in
+        let saveAction = UIAlertAction(title: saveTitle, style: .Default) { [weak self] (action) in
             if let episode = self?.player?.episode {
                 let service = EpisodeService()
                 service.flipSaveForEpisode(episode)
             }
-        })
+        }
         actionController.addAction(saveAction)
 
         self.presentViewController(actionController, animated: true, completion: nil)

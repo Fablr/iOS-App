@@ -110,7 +110,9 @@ public final class UserService {
                     self.removeRequestFromPending(request)
                 }
 
-                dispatch_async(queue, {completion(result: self.getUserFromRealm(userId))})
+                dispatch_async(queue) {
+                    completion(result: self.getUserFromRealm(userId))
+                }
             }
 
             self.addRequestToPending(request)
@@ -185,7 +187,9 @@ public final class UserService {
                 self.removeRequestFromPending(request)
             }
 
-            dispatch_async(queue, {completion(result: result)})
+            dispatch_async(queue) {
+                completion(result: result)
+            }
         }
 
         self.addRequestToPending(request)
@@ -220,7 +224,9 @@ public final class UserService {
                 self.removeRequestFromPending(request)
             }
 
-            dispatch_async(queue, {completion(result: result)})
+            dispatch_async(queue) {
+                completion(result: result)
+            }
         }
 
         self.addRequestToPending(request)
@@ -255,7 +261,9 @@ public final class UserService {
                 self.removeRequestFromPending(request)
             }
 
-            dispatch_async(queue, {completion(result: result)})
+            dispatch_async(queue) {
+                completion(result: result)
+            }
         }
 
         self.addRequestToPending(request)
@@ -297,7 +305,9 @@ public final class UserService {
             }
 
             if let completion = completion {
-                dispatch_async(queue, {completion(result: result)})
+                dispatch_async(queue) {
+                    completion(result: result)
+                }
             }
         }
 
@@ -340,7 +350,9 @@ public final class UserService {
             }
 
             if let completion = completion {
-                dispatch_async(queue, {completion(result: result)})
+                dispatch_async(queue) {
+                    completion(result: result)
+                }
             }
         }
 
@@ -395,7 +407,9 @@ public final class UserService {
                 }
             }
 
-            dispatch_async(queue, {completion(result: result)})
+            dispatch_async(queue) {
+                completion(result: result)
+            }
         }
 
         self.addRequestToPending(request)
@@ -466,7 +480,9 @@ public final class UserService {
             }
 
             if let completion = completion {
-                dispatch_async(queue, {completion(result: result)})
+                dispatch_async(queue) {
+                    completion(result: result)
+                }
             }
         }
 
@@ -495,9 +511,9 @@ public final class UserService {
 
     private func removeRequestFromPending(request: NSURLRequest) {
         dispatch_sync(self.pendingRequestQueue) {
-            self.pendingRequests = self.pendingRequests.filter({
+            self.pendingRequests = self.pendingRequests.filter {
                 !(($0.request != nil) && ($0.request! === request))
-            })
+            }
         }
     }
 

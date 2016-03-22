@@ -56,14 +56,14 @@ class UserEditViewController: FormViewController {
             userName = value == user.userName ? nil : value
 
             if let userName = userName {
-                service.updateUsername(userName, user: user, completion: { result in
+                service.updateUsername(userName, user: user) { result in
                     if !result {
                         showWarning = true
                         warningText = "Username is already in use."
                     }
 
                     self.requestComplete(service, alert: alert, showWarning: showWarning, warningText: warningText)
-                })
+                }
 
                 close = false
             }
@@ -76,14 +76,14 @@ class UserEditViewController: FormViewController {
             email = value == user.email ? nil : value
 
             if let email = email {
-                service.updateEmail(email, user: user, completion: { result in
+                service.updateEmail(email, user: user) { result in
                     if !result {
                         showWarning = true
                         warningText = "Email is already in use."
                     }
 
                     self.requestComplete(service, alert: alert, showWarning: showWarning, warningText: warningText)
-                })
+                }
 
                 close = false
             }
@@ -110,13 +110,13 @@ class UserEditViewController: FormViewController {
         }
 
         if firstName != nil || lastName != nil || birthday != nil {
-            service.updateProfile(firstName, lastName: lastName, birthday: birthday, user: user, completion: { result in
+            service.updateProfile(firstName, lastName: lastName, birthday: birthday, user: user) { result in
                 if !result {
                     showWarning = true
                 }
 
                 self.requestComplete(service, alert: alert, showWarning: showWarning, warningText: warningText)
-            })
+            }
 
             close = false
         }
@@ -192,19 +192,21 @@ class UserEditViewController: FormViewController {
             <<< ButtonRow("Save") {
                 $0.title = $0.tag
                 $0.onCellSelection(self.savePressed)
-                $0.cellSetup({ cell, row in
+                $0.cellSetup { cell, row in
                     cell.tintColor = .fablerOrangeColor()
                     if let size = cell.textLabel?.font.pointSize {
                         cell.textLabel?.font = .boldSystemFontOfSize(size)
                     }
-                })
+                }
             }
 
         self.form +++= Section()
             <<< ButtonRow("Cancel") {
                 $0.title = $0.tag
                 $0.onCellSelection(self.cancelPressed)
-                $0.cellSetup({ cell, row in cell.tintColor = .fablerOrangeColor()})
+                $0.cellSetup { cell, row in
+                    cell.tintColor = .fablerOrangeColor()
+                }
             }
 
         self.setFormValues()

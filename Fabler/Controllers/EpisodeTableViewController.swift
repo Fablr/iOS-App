@@ -45,14 +45,14 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
         let service = CommentService()
 
-        service.getCommentsForEpisode(episode, completion: { [weak self] (comments) in
+        service.getCommentsForEpisode(episode) { [weak self] (comments) in
             self?.comments = comments
             self?.tableView.reloadData()
 
             if let refresher = self?.refreshControl where refresher.refreshing {
                 refresher.endRefreshing()
             }
-        })
+        }
     }
 
     func commentButtonPressed(sender: AnyObject) {
@@ -106,23 +106,23 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         if !self.editingComment {
             let id = self.replyComment?.commentId
 
-            service.addCommentForEpisode(episode, comment: message, parentCommentId: id, completion: { [weak self] (result) in
+            service.addCommentForEpisode(episode, comment: message, parentCommentId: id) { [weak self] (result) in
                 if let controller = self {
                     if result {
                         controller.refreshData(controller)
                     }
                 }
-            })
+            }
         } else {
             if let comment = self.replyComment {
                 let service = CommentService()
-                service.editComment(comment, newComment: message, completion: { [weak self] result in
+                service.editComment(comment, newComment: message) { [weak self] result in
                     if let controller = self {
                         if result {
                             controller.refreshData(controller)
                         }
                     }
-                })
+                }
             }
         }
 
@@ -213,7 +213,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         //
         self.episode?.podcast?
         .rx_observeWeakly(Bool.self, "primarySet")
-        .subscribeNext({ [weak self] (set) in
+        .subscribeNext { [weak self] (set) in
             if let primary = self?.episode?.podcast?.primaryColor {
                 self?.refreshControl?.backgroundColor = primary
                 self?.leftButton.tintColor = primary
@@ -227,7 +227,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
                 self?.tableView.reloadData()
             }
-        })
+        }
         .addDisposableTo(self.bag)
 
         //

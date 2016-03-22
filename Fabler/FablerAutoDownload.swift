@@ -56,13 +56,13 @@ public class FablerAutoDownload {
     public func addTask(task: FablerAutoDownloadTask) {
         Log.info("Adding task to AutoDownload")
 
-        dispatch_async(self.queue, {
+        dispatch_async(self.queue) {
             self.tasks.insert(task, atIndex: 0)
 
             if self.tasks.count == 1 {
                 self.performNextTask()
             }
-        })
+        }
     }
 
     public func suspend() {
@@ -179,7 +179,7 @@ public class FablerAutoDownload {
                 self.downloads.append(download)
 
                 download.rx_observe(FablerDownloadState.self, "state")
-                .subscribeNext({ state in
+                .subscribeNext { state in
                     Log.info("AutoDownload removing completed downloads")
 
                     let finished = self.downloads.filter { $0.state == .Completed || $0.state == .Failed }
@@ -189,13 +189,13 @@ public class FablerAutoDownload {
                     }
 
                     if self.downloads.count == 0 {
-                        dispatch_async(self.queue, {
+                        dispatch_async(self.queue) {
                             Log.info("AutoDownload downloads finished")
                             self.episodes.removeAll()
                             self.completeTask()
-                        })
+                        }
                     }
-                })
+                }
                 .addDisposableTo(self.bag)
             }
         }
@@ -208,7 +208,7 @@ public class FablerAutoDownload {
     }
 
     private func calculateDownloadsForPodcast(count: Int, episodes: [Episode]) {
-        let sortedEpisodes = episodes.sort({ $0.pubdate > $1.pubdate })
+        let sortedEpisodes = episodes.sort { $0.pubdate > $1.pubdate }
         let localEpisodes = sortedEpisodes.filter { $0.download != nil }
 
         if localEpisodes.count < count {
@@ -229,7 +229,7 @@ public class FablerAutoDownload {
 
         let service = PodcastService()
 
-        _ = service.getSubscribedPodcasts(self.queue, completion: { (podcasts) in
+        _ = service.getSubscribedPodcasts(self.queue) { (podcasts) in
             Log.info("Caching subscribed podcast images.")
 
             let manager = KingfisherManager.sharedManager
@@ -246,20 +246,20 @@ public class FablerAutoDownload {
                 if let url = NSURL(string: podcast.image) {
                     self.podcasts += 1
 
-                    manager.retrieveImageWithURL(url, optionsInfo: [.CallbackDispatchQueue(self.queue)], progressBlock: nil, completionHandler: { (image, error, cacheType, url) in
+                    manager.retrieveImageWithURL(url, optionsInfo: [.CallbackDispatchQueue(self.queue)], progressBlock: nil) { (image, error, cacheType, url) in
                         self.podcasts -= 1
 
                         if self.podcasts == 0 {
                             self.completeTask()
                         }
-                    })
+                    }
                 }
             }
 
             if self.podcasts == 0 {
                 self.completeTask()
             }
-        })
+        }
     }
 
     private func deleteEpisodes() {
@@ -274,7 +274,7 @@ public class FablerAutoDownload {
 
         for podcast in podcasts {
             let episodes = episodeService.getEpisodesForPodcast(podcast, completion: nil)
-            let filteredEpisodes = episodes.filter({ $0.completed && !($0.saved) && ($0.download != nil) })
+            let filteredEpisodes = episodes.filter { $0.completed && !($0.saved) && ($0.download != nil) }
 
             for episode in filteredEpisodes {
                 episode.download?.remove()

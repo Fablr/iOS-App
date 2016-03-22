@@ -50,11 +50,11 @@ class CommentTableViewCell: UITableViewCell {
             self.segueDelegate?.performSegueToUser(user)
         } else if let id = self.comment?.userId {
             let service = UserService()
-            service.getUserFor(id, completion: { [weak self] (user) in
+            service.getUserFor(id) { [weak self] (user) in
                 if let controller = self, let user = user {
                     controller.segueDelegate?.performSegueToUser(user)
                 }
-            })
+            }
         }
     }
 
@@ -113,29 +113,29 @@ class CommentTableViewCell: UITableViewCell {
     @IBAction func moreButtonPressed(sender: AnyObject) {
         let menu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
 
-        let delete = UIAlertAction(title: "Delete", style: .Destructive, handler: { [weak self] (action) in
+        let delete = UIAlertAction(title: "Delete", style: .Destructive) { [weak self] (action) in
             guard let controller = self, let comment = controller.comment else {
                 return
             }
 
             let service = CommentService()
 
-            service.deleteComment(comment, completion: { [weak self] (result) in
+            service.deleteComment(comment) { [weak self] (result) in
                 guard result else {
                     return
                 }
 
                 self?.collapseDelegate?.setCollapseState(controller, collapsed: !controller.barCollapsed)
-            })
-        })
+            }
+        }
 
-        let edit = UIAlertAction(title: "Edit", style: .Default, handler: { [weak self] (action) in
+        let edit = UIAlertAction(title: "Edit", style: .Default) { [weak self] (action) in
             guard let comment = self?.comment else {
                 return
             }
 
             self?.replyDelegate?.editComment(comment)
-        })
+        }
 
         let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
 

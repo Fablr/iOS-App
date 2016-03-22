@@ -146,20 +146,20 @@ class SettingViewController: FormViewController {
             <<< ButtonRow("ClearEpisodes") {
                 $0.title = "Delete downloaded episodes "
                 $0.onCellSelection(self.downloadsClear)
-                $0.cellSetup({ cell, row in
+                $0.cellSetup { cell, row in
                     cell.tintColor = .flatRedColor()
                     if let size = cell.textLabel?.font.pointSize {
                         cell.textLabel?.font = .boldSystemFontOfSize(size)
                     }
-                })
+                }
             }
 
         let downloadManager = FablerDownloadManager.sharedInstance
 
-        downloadManager.calculateSizeOnDisk(completionHandler: { [weak self] (size) in
+        downloadManager.calculateSizeOnDisk { [weak self] (size) in
             self?.downloadSizeInBytes = size
             self?.updateValues()
-        })
+        }
 
         //
         // Image Cache
@@ -173,12 +173,12 @@ class SettingViewController: FormViewController {
             <<< ButtonRow("ClearImageCache") {
                 $0.title = "Clear image cache"
                 $0.onCellSelection(self.imageCacheClear)
-                $0.cellSetup({ cell, row in
+                $0.cellSetup { cell, row in
                     cell.tintColor = .flatRedColor()
                     if let size = cell.textLabel?.font.pointSize {
                         cell.textLabel?.font = .boldSystemFontOfSize(size)
                     }
-                })
+                }
             }
 
         //
@@ -189,18 +189,18 @@ class SettingViewController: FormViewController {
         }
 
         let podcastService = PodcastService()
-        let podcasts = podcastService.getSubscribedPodcasts(completion: { [weak self] (podcasts) in
+        let podcasts = podcastService.getSubscribedPodcasts { [weak self] (podcasts) in
             self?.setupPodcastSection(podcasts)
-        })
+        }
 
         self.setupPodcastSection(podcasts)
 
         let cacheManager = KingfisherManager.sharedManager
 
-        cacheManager.cache.calculateDiskCacheSizeWithCompletionHandler({ [weak self] (size) in
+        cacheManager.cache.calculateDiskCacheSizeWithCompletionHandler { [weak self] (size) in
             self?.imageCacheSizeInBytes = Int(size)
             self?.updateValues()
-        })
+        }
 
         //
         // Default values

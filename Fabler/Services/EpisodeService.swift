@@ -27,7 +27,9 @@ public class EpisodeService {
                         Log.error("User request failed with \(error).")
                     }
 
-                    dispatch_async(queue, {completion(result: self.getEpisodeFromRealm(episodeId))})
+                    dispatch_async(queue) {
+                        completion(result: self.getEpisodeFromRealm(episodeId))
+                    }
             }
 
             Log.debug("Read user request: \(request)")
@@ -65,7 +67,9 @@ public class EpisodeService {
                     Log.error("Episodes request failed with \(error).")
                 }
 
-                dispatch_async(queue, {completion(result: self.getEpisodesForPodcastFromRealm(id))})
+                dispatch_async(queue) {
+                    completion(result: self.getEpisodesForPodcastFromRealm(id))
+                }
             }
 
             Log.debug("Read episodes request: \(request)")

@@ -40,7 +40,9 @@ public class CommentService {
                 Log.error("Episode comments request failed with \(error).")
             }
 
-            dispatch_async(queue, {completion(result: self.getCommentsForEpisodeFromRealm(id))})
+            dispatch_async(queue) {
+                completion(result: self.getCommentsForEpisodeFromRealm(id))
+            }
         }
 
         Log.debug("Episode comments request: \(request)")
@@ -84,12 +86,14 @@ public class CommentService {
                 result = false
                 Log.error("Adding comment failed with \(error).")
 
-                dispatch_async(dispatch_get_main_queue(), {
+                dispatch_async(dispatch_get_main_queue()) {
                     SCLAlertView().showWarning("Warning", subTitle: "Unable to add comment to episode \(title).")
-                })
+                }
             }
 
-            dispatch_async(queue, {completion(result: result)})
+            dispatch_async(queue) {
+                completion(result: result)
+            }
         }
 
         Log.debug("Adding comment request: \(request)")
@@ -109,7 +113,9 @@ public class CommentService {
                 Log.error("Episode comments request failed with \(error).")
             }
 
-            dispatch_async(queue, {completion(result: self.getCommentsForPodcastFromRealm(id))})
+            dispatch_async(queue) {
+                completion(result: self.getCommentsForPodcastFromRealm(id))
+            }
         }
 
         Log.debug("Episode comments request: \(request)")
@@ -153,12 +159,14 @@ public class CommentService {
                 result = false
                 Log.error("Adding comment failed with \(error).")
 
-                dispatch_async(dispatch_get_main_queue(), {
+                dispatch_async(dispatch_get_main_queue()) {
                     SCLAlertView().showWarning("Warning", subTitle: "Unable to add comment to podcast \(title).")
-                })
+                }
             }
 
-            dispatch_async(queue, {completion(result: result)})
+            dispatch_async(queue) {
+                completion(result: result)
+            }
         }
 
         Log.debug("Adding comment request: \(request)")
@@ -196,9 +204,9 @@ public class CommentService {
                 do {
                     let responseRealm = try self.scratchRealm()
                     if let responseComment = responseRealm.objectForPrimaryKey(Comment.self, key: id) {
-                        dispatch_async(dispatch_get_main_queue(), {
+                        dispatch_async(dispatch_get_main_queue()) {
                             SCLAlertView().showWarning("Warning", subTitle: "Unable to vote on comment by \(user).")
-                        })
+                        }
 
                         try responseRealm.write {
                             responseComment.voteCount = responseComment.voteCount - responseComment.userVoteRaw + initialVote
@@ -210,7 +218,9 @@ public class CommentService {
                 }
             }
 
-            dispatch_async(queue, {completion(result: result)})
+            dispatch_async(queue) {
+                completion(result: result)
+            }
         }
 
         Log.debug("Voting comment request: \(request)")
@@ -242,12 +252,14 @@ public class CommentService {
                 result = false
                 Log.error("Delete failed with \(error).")
 
-                dispatch_async(dispatch_get_main_queue(), {
+                dispatch_async(dispatch_get_main_queue()) {
                     SCLAlertView().showWarning("Warning", subTitle: "Unable to delete comment.")
-                })
+                }
             }
 
-            dispatch_async(queue, {completion(result: result)})
+            dispatch_async(queue) {
+                completion(result: result)
+            }
         }
 
         Log.debug("Delete comment request: \(request)")
@@ -279,12 +291,14 @@ public class CommentService {
                 result = false
                 Log.error("Edit failed with \(error).")
 
-                dispatch_async(dispatch_get_main_queue(), {
+                dispatch_async(dispatch_get_main_queue()) {
                     SCLAlertView().showWarning("Warning", subTitle: "Unable to edit comment.")
-                })
+                }
             }
 
-            dispatch_async(queue, {completion(result: result)})
+            dispatch_async(queue) {
+                completion(result: result)
+            }
         }
 
         Log.debug("Edit comment request: \(request)")

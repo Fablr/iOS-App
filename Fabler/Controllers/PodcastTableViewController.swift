@@ -92,7 +92,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
             self.updateImages(image)
         } else {
-            manager.retrieveImageWithURL(url, optionsInfo: [.CallbackDispatchQueue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))], progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, url) in
+            manager.retrieveImageWithURL(url, optionsInfo: [.CallbackDispatchQueue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))], progressBlock: nil) { [weak self] (image, error, cacheType, url) in
                 guard let image = image where error == nil else {
                     return
                 }
@@ -103,12 +103,12 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
                     self?.setColorFor(podcast, image: image)
                 }
 
-                dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                dispatch_async(dispatch_get_main_queue()) { [weak self] in
                     Log.debug("Setting header image.")
 
                     self?.updateImages(image)
-                })
-            })
+                }
+            }
         }
     }
 
@@ -135,7 +135,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     func filterEpisodes() {
         switch self.currentSegment {
         case 0:
-            self.filteredEpisodes = self.episodes.filter({ $0.download != nil })
+            self.filteredEpisodes = self.episodes.filter { $0.download != nil }
         case 1:
             self.filteredEpisodes = self.episodes
         default:
@@ -152,9 +152,9 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
         switch order {
         case .NewestOldest:
-            self.filteredEpisodes.sortInPlace({ $0.pubdate > $1.pubdate })
+            self.filteredEpisodes.sortInPlace { $0.pubdate > $1.pubdate }
         case .OldestNewest:
-            self.filteredEpisodes.sortInPlace({ $1.pubdate > $0.pubdate })
+            self.filteredEpisodes.sortInPlace { $1.pubdate > $0.pubdate }
         }
     }
 
@@ -177,7 +177,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
 
         let service = EpisodeService()
-        self.episodes = service.getEpisodesForPodcast(podcast, completion: { [weak self] (episodes) in
+        self.episodes = service.getEpisodesForPodcast(podcast) { [weak self] (episodes) in
             self?.episodes = episodes
             self?.filterEpisodes()
             self?.tableView?.reloadData()
@@ -185,7 +185,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             if let refresher = self?.refreshControl where refresher.refreshing {
                 refresher.endRefreshing()
             }
-        })
+        }
 
         self.filterEpisodes()
     }
@@ -197,14 +197,14 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
         let service = CommentService()
 
-        service.getCommentsForPodcast(podcast, completion: { [weak self] (comments) in
+        service.getCommentsForPodcast(podcast) { [weak self] (comments) in
             self?.comments = comments
             self?.tableView.reloadData()
 
             if let refresher = self?.refreshControl where refresher.refreshing {
                 refresher.endRefreshing()
             }
-        })
+        }
     }
 
     func subscribeButtonPressed() {
@@ -269,20 +269,20 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         if !self.editingComment {
             let id = self.replyComment?.commentId
 
-            service.addCommentForPodcast(podcast, comment: message, parentCommentId: id, completion: { [weak self] (result) in
+            service.addCommentForPodcast(podcast, comment: message, parentCommentId: id) { [weak self] (result) in
                 if result {
                     self?.refreshData(nil)
                 }
-            })
+            }
         } else {
             if let comment = self.replyComment {
                 let service = CommentService()
 
-                service.editComment(comment, newComment: message, completion: { [weak self] result in
+                service.editComment(comment, newComment: message) { [weak self] result in
                         if result {
                             self?.refreshData(nil)
                         }
-                })
+                }
             }
         }
 
@@ -373,12 +373,12 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
         self.podcast?
         .rx_observeWeakly(Bool.self, "primarySet")
-        .subscribeNext({ [weak self] (set) in
+        .subscribeNext { [weak self] (set) in
             if let primary = self?.podcast?.primaryColor {
                 self?.leftButton.tintColor = primary
                 self?.rightButton.tintColor = primary
             }
-        })
+        }
         .addDisposableTo(self.bag)
 
         self.textInputbar.autoHideRightButton = true
@@ -397,7 +397,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         //
         self.podcast?
         .rx_observeWeakly(Bool.self, "subscribed")
-        .subscribeNext({ subscribed in
+        .subscribeNext { subscribed in
             if let subscribed = subscribed {
                 if subscribed {
                     let button = UIBarButtonItem(title: "Settings", style: .Plain, target: self, action: #selector(PodcastTableViewController.settingsButtonPressed))
@@ -408,15 +408,15 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
                 }
             }
 
-        })
+        }
         .addDisposableTo(self.bag)
 
         self.podcast?
         .rx_observeWeakly(String.self, "sortOrderRaw")
-        .subscribeNext({ [weak self] (_) in
+        .subscribeNext { [weak self] (_) in
             self?.sortEpisodes()
             self?.tableView.reloadData()
-        })
+        }
         .addDisposableTo(self.bag)
 
         //
@@ -657,12 +657,12 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     func episodesEditActions(indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         var results: [UITableViewRowAction] = []
 
-        let detailAction = UITableViewRowAction(style: .Normal, title: "Details", handler: { [weak self] (action: UITableViewRowAction, indexPath: NSIndexPath) in
+        let detailAction = UITableViewRowAction(style: .Normal, title: "Details") { [weak self] (action: UITableViewRowAction, indexPath: NSIndexPath) in
             if let controller = self {
                 let episode = controller.filteredEpisodes[indexPath.row]
                 controller.performSegueWithIdentifier("displayEpisodeSegue", sender: episode)
             }
-        })
+        }
 
         if let primary = self.podcast?.primaryColor {
             detailAction.backgroundColor = primary
@@ -675,12 +675,12 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         let episode = filteredEpisodes[indexPath.row]
 
         if let download = episode.download where download.state == .Completed {
-            let deleteAction = UITableViewRowAction(style: .Destructive, title: "Delete", handler: { [weak self] (action: UITableViewRowAction, indexPath: NSIndexPath) in
+            let deleteAction = UITableViewRowAction(style: .Destructive, title: "Delete") { [weak self] (action: UITableViewRowAction, indexPath: NSIndexPath) in
                 if let controller = self, let download = controller.filteredEpisodes[indexPath.row].download {
                     download.remove()
                     controller.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 }
-            })
+            }
 
             results.append(deleteAction)
         }

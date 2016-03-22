@@ -39,16 +39,16 @@ class BackpaneViewController: UIViewController {
                 if let circle = cache.retrieveImageInDiskCacheForKey(key) {
                     self.userImage?.image = circle
                 } else {
-                    manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, url) in
+                    manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil) { [weak self] (image, error, cacheType, url) in
                         if error == nil, let image = image {
                             let circle = image.imageRoundedIntoCircle()
                             cache.storeImage(circle, forKey: key)
 
-                            dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                            dispatch_async(dispatch_get_main_queue()) { [weak self] in
                                 self?.userImage?.image = circle
-                            })
+                            }
                         }
-                    })
+                    }
                 }
             }
 
