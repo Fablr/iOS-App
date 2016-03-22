@@ -247,7 +247,7 @@ public class PodcastService {
 
     // MARK: - PodcastService serialize methods
 
-    private func serializePodcastObject(data: JSON) -> Podcast? {
+    public func serializePodcastObject(data: JSON) -> Podcast? {
         var podcast: Podcast?
 
         do {
@@ -313,7 +313,7 @@ public class PodcastService {
         return podcast
     }
 
-    private func serializePodcastCollection(data: JSON) -> [Podcast] {
+    public func serializePodcastCollection(data: JSON) -> [Podcast] {
         var podcasts: [Podcast] = []
 
         for (_, subJson):(String, JSON) in data {

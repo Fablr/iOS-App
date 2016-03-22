@@ -39,6 +39,7 @@ final public class User: Object {
 
     let followers = List<User>()
     let following = List<User>()
+    let subscribed = List<Podcast>()
 
     // MARK: - Realm methods
 

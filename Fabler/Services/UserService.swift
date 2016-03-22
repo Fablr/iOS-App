@@ -263,7 +263,7 @@ public final class UserService {
         Log.debug("Update user username: \(request)")
     }
 
-    public func getFollowers(user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    public func getFollowers(user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Bool) -> Void)?) {
         let id = user.userId
 
         let request = Alamofire
@@ -296,7 +296,9 @@ public final class UserService {
                 self.removeRequestFromPending(request)
             }
 
-            dispatch_async(queue, {completion(result: result)})
+            if let completion = completion {
+                dispatch_async(queue, {completion(result: result)})
+            }
         }
 
         self.addRequestToPending(request)
@@ -304,7 +306,7 @@ public final class UserService {
         Log.debug("Read followers request: \(request)")
     }
 
-    public func getFollowing(user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: (result: Bool) -> Void) {
+    public func getFollowing(user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Bool) -> Void)?) {
         let id = user.userId
 
         let request = Alamofire
@@ -337,7 +339,9 @@ public final class UserService {
                 self.removeRequestFromPending(request)
             }
 
-            dispatch_async(queue, {completion(result: result)})
+            if let completion = completion {
+                dispatch_async(queue, {completion(result: result)})
+            }
         }
 
         self.addRequestToPending(request)
@@ -425,6 +429,50 @@ public final class UserService {
                 Log.error("Realm write failed.")
             }
         }
+    }
+
+    public func getSubscribed(user: User, queue: dispatch_queue_t = dispatch_get_main_queue(), completion: ((result: Bool) -> Void)?) {
+        let id = user.userId
+
+        let request = Alamofire
+        .request(FablerClient.Router.ReadSubscribed(user: id))
+        .validate()
+        .responseSwiftyJSON { response in
+            var result: Bool = false
+
+            switch response.result {
+            case .Success(let json):
+                let service = PodcastService()
+                let subscribed = service.serializePodcastCollection(json)
+                if let responseUser = self.getUserFor(id, completion: nil) {
+                    do {
+                        let realm = try Realm()
+
+                        try realm.write {
+                            responseUser.subscribed.removeAll()
+                            responseUser.subscribed.appendContentsOf(subscribed)
+                            result = true
+                        }
+                    } catch {
+                        Log.error("Realm write failed")
+                    }
+                }
+            case .Failure(let error):
+                Log.error("Follower request error occured: \(error)")
+            }
+
+            if let request = response.request {
+                self.removeRequestFromPending(request)
+            }
+
+            if let completion = completion {
+                dispatch_async(queue, {completion(result: result)})
+            }
+        }
+        
+        self.addRequestToPending(request)
+        
+        Log.debug("Read subscribed request: \(request)")
     }
 
     // MARK: UserService request functions

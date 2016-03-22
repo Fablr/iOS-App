@@ -33,6 +33,8 @@
 		45633A681C17BB3B00E6023A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45633A671C17BB3B00E6023A /* CoreGraphics.framework */; };
 		456BB5C91BF5B4A600D59C47 /* FablerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */; };
 		456BB5CB1BF5CD3E00D59C47 /* FablerPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */; };
+		456E44001CA1188100DFE24A /* PodcastCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 456E43FF1CA1188100DFE24A /* PodcastCell.xib */; };
+		456E44021CA127F500DFE24A /* SubscribedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E44011CA127F500DFE24A /* SubscribedTableViewController.swift */; };
 		4576FC001C13ACC900381A28 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4576FBFF1C13ACC900381A28 /* CommentCell.xib */; };
 		4576FC041C13CF0000381A28 /* EpisodeHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4576FC031C13CF0000381A28 /* EpisodeHeader.xib */; };
 		4576FC061C13D74000381A28 /* EpisodeHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4576FC051C13D74000381A28 /* EpisodeHeaderViewController.swift */; };
@@ -106,6 +108,8 @@
 		45633A671C17BB3B00E6023A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerNavigationController.swift; sourceTree = "<group>"; };
 		456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerPlayer.swift; sourceTree = "<group>"; };
+		456E43FF1CA1188100DFE24A /* PodcastCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PodcastCell.xib; sourceTree = "<group>"; };
+		456E44011CA127F500DFE24A /* SubscribedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribedTableViewController.swift; sourceTree = "<group>"; };
 		4576FBFF1C13ACC900381A28 /* CommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentCell.xib; sourceTree = "<group>"; };
 		4576FC031C13CF0000381A28 /* EpisodeHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EpisodeHeader.xib; sourceTree = "<group>"; };
 		4576FC051C13D74000381A28 /* EpisodeHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeHeaderViewController.swift; sourceTree = "<group>"; };
@@ -178,6 +182,7 @@
 				4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */,
 				45173E391C2A4C10006A8926 /* UserHeader.xib */,
 				45149BE41C8D787F0044E8F1 /* UpNextSectionHeader.xib */,
+				456E43FF1CA1188100DFE24A /* PodcastCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -243,6 +248,7 @@
 				45149BDE1C894DE00044E8F1 /* UpNextTableViewController.swift */,
 				45149BE21C8D74840044E8F1 /* UpNextSectionHeaderView.swift */,
 				453671861C97C47300D89AF8 /* SettingViewController.swift */,
+				456E44011CA127F500DFE24A /* SubscribedTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -427,6 +433,7 @@
 				4538B57D1BF55C3800039DF1 /* SmallPlayer.xib in Resources */,
 				45173E3A1C2A4C10006A8926 /* UserHeader.xib in Resources */,
 				4576FC041C13CF0000381A28 /* EpisodeHeader.xib in Resources */,
+				456E44001CA1188100DFE24A /* PodcastCell.xib in Resources */,
 				45149BE11C896AAC0044E8F1 /* LargePlayer.storyboard in Resources */,
 				45BFCC191C154299007D31C8 /* EpisodeCell.xib in Resources */,
 				4576FC001C13ACC900381A28 /* CommentCell.xib in Resources */,
@@ -564,6 +571,7 @@
 				F491E74A1A7F4B300026528E /* CollectionTableViewController.swift in Sources */,
 				450B76781BE9DAA90033C0B6 /* EpisodeService.swift in Sources */,
 				4578890A1C10C108007D3600 /* Comment.swift in Sources */,
+				456E44021CA127F500DFE24A /* SubscribedTableViewController.swift in Sources */,
 				F491E7551A7F7E010026528E /* DiscoveryCollectionViewController.swift in Sources */,
 				453671871C97C47300D89AF8 /* SettingViewController.swift in Sources */,
 				45173E3F1C2A877A006A8926 /* UsersTableViewController.swift in Sources */,

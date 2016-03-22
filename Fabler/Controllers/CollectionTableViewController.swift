@@ -53,6 +53,8 @@ class CollectionTableViewController: UITableViewController {
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
 
+        self.tableView.registerNib(UINib(nibName: "PodcastCell", bundle: nil), forCellReuseIdentifier: "PodcastCell")
+
         self.refreshControl = UIRefreshControl()
         if let refresher = self.refreshControl {
             refresher.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
@@ -129,14 +131,10 @@ class CollectionTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("PodcastCell", forIndexPath: indexPath)
 
         if let cell = cell as? PodcastTableViewCell, let podcast = podcasts?[indexPath.row] {
-            cell.titleLabel?.text = podcast.title
-
-            if let url = NSURL(string: podcast.image) {
-                cell.tileImage?.kf_setImageWithURL(url, placeholderImage: nil)
-            }
+            cell.setPodcastInstance(podcast)
         }
 
         return cell

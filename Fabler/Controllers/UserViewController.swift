@@ -78,8 +78,9 @@ class UserViewController: FormViewController {
 
         let service = UserService()
 
-        service.getFollowers(user, completion: { _ in })
-        service.getFollowing(user, completion: { _ in })
+        service.getFollowers(user, completion: nil)
+        service.getFollowing(user, completion: nil)
+        service.getSubscribed(user, completion: nil)
 
         if self.root {
             if revealViewController() != nil {
@@ -136,7 +137,8 @@ class UserViewController: FormViewController {
                 cell.textLabel?.textAlignment = .Left
             }
             <<< ButtonRow() {
-                $0.title = "Subscribed"
+                $0.title = "Subscribed Podcasts"
+                $0.presentationMode = .SegueName(segueName: "displaySubscribedSegue", completionCallback: nil)
             }.cellUpdate { cell, row in
                 cell.textLabel?.textAlignment = .Left
             }
@@ -203,6 +205,14 @@ class UserViewController: FormViewController {
                     controller.users = Array(following)
                 }
             }
+        } else if segue.identifier == "displaySubscribedSegue" {
+            if let controller = segue.destinationViewController as? SubscribedTableViewController {
+                controller.user = self.user
+            }
+        }
+
+        if let topItem = self.navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
     }
 

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="115" id="wQG-Ta-46t" customClass="PodcastTableViewCell" customModule="Fabler" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="115"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wQG-Ta-46t" id="ba9-uw-foN">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="114.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jk6-5L-zZC">
+                        <rect key="frame" x="8" y="8" width="99" height="99"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="jk6-5L-zZC" secondAttribute="height" multiplier="1:1" id="YRe-MN-v06"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="hrA-wt-Gea">
+                        <rect key="frame" x="112" y="8" width="214" height="99"/>
+                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zgp-0v-qW0">
+                        <rect key="frame" x="331" y="8" width="75" height="98.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="75" id="ZP7-vc-8IQ"/>
+                        </constraints>
+                        <state key="normal" title="Subscribe">
+                            <color key="titleColor" red="0.95686274509803915" green="0.5490196078431373" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="subscribeButtonPressed:" destination="wQG-Ta-46t" eventType="touchUpInside" id="oBg-MT-AsI"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Zgp-0v-qW0" firstAttribute="leading" secondItem="hrA-wt-Gea" secondAttribute="trailing" constant="5" id="8MX-Pa-0jh"/>
+                    <constraint firstItem="jk6-5L-zZC" firstAttribute="top" secondItem="ba9-uw-foN" secondAttribute="topMargin" id="ErU-m3-kHH"/>
+                    <constraint firstItem="hrA-wt-Gea" firstAttribute="leading" secondItem="jk6-5L-zZC" secondAttribute="trailing" constant="5" id="G9L-vf-sIn"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="hrA-wt-Gea" secondAttribute="bottom" id="GEN-S2-vnU"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Zgp-0v-qW0" secondAttribute="trailing" id="VcW-3Y-EyR"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Zgp-0v-qW0" secondAttribute="bottom" id="cyX-pl-2yX"/>
+                    <constraint firstItem="Zgp-0v-qW0" firstAttribute="top" secondItem="ba9-uw-foN" secondAttribute="topMargin" id="fm2-lc-svR"/>
+                    <constraint firstItem="hrA-wt-Gea" firstAttribute="top" secondItem="ba9-uw-foN" secondAttribute="topMargin" id="jX4-0b-sIK"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="jk6-5L-zZC" secondAttribute="bottom" id="rn1-XI-e9Z"/>
+                    <constraint firstItem="jk6-5L-zZC" firstAttribute="leading" secondItem="ba9-uw-foN" secondAttribute="leadingMargin" id="zb2-xk-bnn"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="subscribeButton" destination="Zgp-0v-qW0" id="n8W-hb-IIh"/>
+                <outlet property="tileImage" destination="jk6-5L-zZC" id="rOQ-Nb-PKn"/>
+                <outlet property="titleLabel" destination="hrA-wt-Gea" id="8Z5-rK-qSt"/>
+            </connections>
+            <point key="canvasLocation" x="482" y="451.5"/>
+        </tableViewCell>
+    </objects>
+</document>

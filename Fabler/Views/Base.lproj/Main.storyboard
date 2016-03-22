@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -73,46 +73,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="115" id="m7N-Q8-5h6" customClass="PodcastTableViewCell" customModule="Fabler" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="86" width="600" height="115"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m7N-Q8-5h6" id="uxv-3b-FYp">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="115"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="kDt-WW-G7s">
-                                            <rect key="frame" x="8" y="8" width="584" height="99"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0WY-Jm-nKf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="99" height="99"/>
-                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="0WY-Jm-nKf" secondAttribute="height" multiplier="1:1" id="Apd-cf-uOQ"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="OtZ-9g-wvC">
-                                                    <rect key="frame" x="106" y="0.0" width="478" height="99"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </stackView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="kDt-WW-G7s" secondAttribute="trailing" id="2QI-jY-pKC"/>
-                                        <constraint firstItem="kDt-WW-G7s" firstAttribute="top" secondItem="uxv-3b-FYp" secondAttribute="topMargin" id="LTY-Sg-VVq"/>
-                                        <constraint firstItem="kDt-WW-G7s" firstAttribute="leading" secondItem="uxv-3b-FYp" secondAttribute="leadingMargin" id="pP0-6a-n2N"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="kDt-WW-G7s" secondAttribute="bottom" id="rWr-a8-cyv"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="tileImage" destination="0WY-Jm-nKf" id="l68-Kv-UBQ"/>
-                                    <outlet property="titleLabel" destination="OtZ-9g-wvC" id="QDz-hZ-BV5"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="RaP-X2-i0v" id="jNr-gl-Xge"/>
                             <outlet property="delegate" destination="RaP-X2-i0v" id="oCV-kR-hme"/>
@@ -212,6 +172,7 @@
                         <segue destination="e2I-xx-yxH" kind="presentation" identifier="editProfileSegue" modalPresentationStyle="overCurrentContext" id="dwz-iN-WPR"/>
                         <segue destination="Xfz-qC-mKb" kind="show" identifier="displayFollowingSegue" id="cPh-g7-fxF"/>
                         <segue destination="Xfz-qC-mKb" kind="show" identifier="displayFollowersSegue" id="aS3-kE-trV"/>
+                        <segue destination="Hc9-sa-fTd" kind="show" identifier="displaySubscribedSegue" id="QHG-h9-6x1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V0H-Tq-97I" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -231,7 +192,7 @@
                                 <rect key="frame" x="0.0" y="28" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="C9y-MZ-hG2" id="lXr-SK-kbI">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="b0b-KU-7Xo">
@@ -291,6 +252,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MT4-4G-d6D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4162" y="960"/>
+        </scene>
+        <!--Subscribed Table View Controller-->
+        <scene sceneID="ovn-N1-CnK">
+            <objects>
+                <tableViewController id="Hc9-sa-fTd" customClass="SubscribedTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="AfP-X9-MlI">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="Hc9-sa-fTd" id="Vd0-nw-pHO"/>
+                            <outlet property="delegate" destination="Hc9-sa-fTd" id="kar-7z-h1N"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <segue destination="WBR-4F-trW" kind="show" identifier="displayPodcastSegue" id="tAh-KX-ewG"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zfG-qG-d5g" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4162" y="1804"/>
         </scene>
         <!--User Edit View Controller-->
         <scene sceneID="JVv-rt-6wU">
@@ -605,10 +587,10 @@
         <image name="profile" width="70" height="70"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AX5-vf-8TQ"/>
-        <segue reference="aS3-kE-trV"/>
         <segue reference="P5W-DW-uff"/>
         <segue reference="Y9H-zW-Zfi"/>
-        <segue reference="nsB-VR-E4f"/>
+        <segue reference="tAh-KX-ewG"/>
+        <segue reference="dJZ-pb-oc5"/>
+        <segue reference="aS3-kE-trV"/>
     </inferredMetricsTieBreakers>
 </document>
