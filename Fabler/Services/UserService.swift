@@ -469,9 +469,9 @@ public final class UserService {
                 dispatch_async(queue, {completion(result: result)})
             }
         }
-        
+
         self.addRequestToPending(request)
-        
+
         Log.debug("Read subscribed request: \(request)")
     }
 
