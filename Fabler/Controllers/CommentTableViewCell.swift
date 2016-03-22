@@ -240,7 +240,7 @@ class CommentTableViewCell: UITableViewCell {
         self.moreButton?.tintColor = tint
 
         let tapRec = UITapGestureRecognizer()
-        tapRec.addTarget(self, action: "barTapped")
+        tapRec.addTarget(self, action: #selector(CommentTableViewCell.barTapped))
         self.contentView.addGestureRecognizer(tapRec)
     }
 

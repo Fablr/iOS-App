@@ -49,14 +49,14 @@ class CollectionTableViewController: UITableViewController {
 
         if revealViewController() != nil {
             self.menuButton?.target = revealViewController()
-            self.menuButton?.action = "revealToggle:"
+            self.menuButton?.action = #selector(SWRevealViewController.revealToggle)
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
 
         self.refreshControl = UIRefreshControl()
         if let refresher = self.refreshControl {
             refresher.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-            refresher.addTarget(self, action: "refreshData:", forControlEvents: .ValueChanged)
+            refresher.addTarget(self, action: #selector(CollectionTableViewController.refreshData), forControlEvents: .ValueChanged)
             refresher.backgroundColor = .fablerOrangeColor()
             refresher.tintColor = .whiteColor()
             self.tableView.addSubview(refresher)
@@ -111,7 +111,7 @@ class CollectionTableViewController: UITableViewController {
             button.tintColor = .fablerOrangeColor()
             button.setTitle("Click here to discover podcasts.", forState: .Normal)
             button.frame = frame
-            button.addTarget(self, action: "discoverButtonPressed:", forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(CollectionTableViewController.discoverButtonPressed), forControlEvents: .TouchUpInside)
 
             self.tableView.backgroundView = button
             self.tableView.separatorStyle = .None

@@ -400,10 +400,10 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         .subscribeNext({ subscribed in
             if let subscribed = subscribed {
                 if subscribed {
-                    let button = UIBarButtonItem(title: "Settings", style: .Plain, target: self, action: "settingsButtonPressed")
+                    let button = UIBarButtonItem(title: "Settings", style: .Plain, target: self, action: #selector(PodcastTableViewController.settingsButtonPressed))
                     self.navigationItem.rightBarButtonItem = button
                 } else {
-                    let button = UIBarButtonItem(title: "Subscribe", style: .Plain, target: self, action: "subscribeButtonPressed")
+                    let button = UIBarButtonItem(title: "Subscribe", style: .Plain, target: self, action: #selector(PodcastTableViewController.subscribeButtonPressed))
                     self.navigationItem.rightBarButtonItem = button
                 }
             }
@@ -425,7 +425,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.refreshControl = UIRefreshControl()
         if let refresher = self.refreshControl {
             refresher.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-            refresher.addTarget(self, action: "refreshData:", forControlEvents: UIControlEvents.ValueChanged)
+            refresher.addTarget(self, action: #selector(PodcastTableViewController.refreshData), forControlEvents: UIControlEvents.ValueChanged)
             refresher.backgroundColor = .clearColor()
             refresher.tintColor = .whiteColor()
             self.tableView.addSubview(refresher)
@@ -711,7 +711,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             let button = UIButton(type: .System)
             button.frame = frame
             button.setTitle("Be the first to comment!", forState: .Normal)
-            button.addTarget(self, action: "didRequestKeyboard", forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(PodcastTableViewController.didRequestKeyboard), forControlEvents: .TouchUpInside)
             if let primary = self.podcast?.primaryColor {
                 button.tintColor = primary
             } else {

@@ -58,7 +58,7 @@ public class UpNextTableViewController: UITableViewController, PresentAlertContr
         let cell = tableView.dequeueReusableHeaderFooterViewWithIdentifier("SectionHeader")
 
         if let cell = cell as? UpNextSectionHeaderView {
-            cell.backButton.addTarget(self, action: "backButtonPressed", forControlEvents: .TouchUpInside)
+            cell.backButton.addTarget(self, action: #selector(UpNextTableViewController.backButtonPressed), forControlEvents: .TouchUpInside)
         }
 
         return cell

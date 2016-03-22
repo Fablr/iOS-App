@@ -190,21 +190,27 @@ public class LargePlayerViewController: UIViewController {
         updatePlayerProgress(player.getCurrentDuration(), current: player.getCurrentTime())
     }
 
-    func updatePlayerProgress(var duration: Float, var current: Float) {
+    func updatePlayerProgress(duration: Float, current: Float) {
+        let actualDuration: Float
         if duration.isNaN {
-            duration = 0.0
+            actualDuration = 0.0
+        } else {
+            actualDuration = duration
         }
 
+        let actualCurrent: Float
         if current.isNaN {
-            current = 0.0
+            actualCurrent = 0.0
+        } else {
+            actualCurrent = current
         }
 
-        guard current <= duration else {
+        guard actualCurrent <= actualDuration else {
             return
         }
 
-        let currentNSDate = NSDate.init(timeIntervalSince1970: Double(current))
-        let durationNSDate = NSDate.init(timeIntervalSince1970: Double(duration))
+        let currentNSDate = NSDate.init(timeIntervalSince1970: Double(actualCurrent))
+        let durationNSDate = NSDate.init(timeIntervalSince1970: Double(actualDuration))
         let formatter = NSDateFormatter()
         formatter.timeZone = NSTimeZone(abbreviation: "UTC")
         formatter.dateFormat = "HH:mm:ss"
@@ -214,9 +220,9 @@ public class LargePlayerViewController: UIViewController {
 
         if let highlighted = playbackSlider?.highlighted {
             if !highlighted {
-                playbackSlider?.maximumValue = duration
+                playbackSlider?.maximumValue = actualDuration
                 playbackSlider?.minimumValue = 0.0
-                playbackSlider?.setValue(current, animated: true)
+                playbackSlider?.setValue(actualCurrent, animated: true)
             }
         }
     }

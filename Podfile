@@ -15,7 +15,7 @@ target 'Fabler' do
   pod 'SCLAlertView', '~>0.5.1'
   pod 'Kingfisher', '~>2.1.0'
   pod 'SWRevealViewController', '~>2.3.0'
-  pod 'Eureka', '~>1.4.1'
+  pod 'Eureka', :git => 'https://github.com/xmartlabs/Eureka.git', :branch => 'Xcode7_3'
   pod 'ACPDownload', '~>1.1.0'
   pod 'ChameleonFramework', '~>2.1.0'
   pod 'SwiftDate', '~>3.0.8'

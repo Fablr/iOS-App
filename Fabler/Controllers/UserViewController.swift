@@ -13,6 +13,7 @@ import RxSwift
 import RxCocoa
 import SCLAlertView
 import RealmSwift
+import SWRevealViewController
 
 class UserViewController: FormViewController {
 
@@ -82,7 +83,7 @@ class UserViewController: FormViewController {
 
         if self.root {
             if revealViewController() != nil {
-                let menu = UIBarButtonItem(image: UIImage(named: "menu"), style: .Plain, target: revealViewController(), action: "revealToggle:")
+                let menu = UIBarButtonItem(image: UIImage(named: "menu"), style: .Plain, target: revealViewController(), action: #selector(SWRevealViewController.revealToggle))
                 self.navigationItem.leftBarButtonItem = menu
                 view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
             }
@@ -148,7 +149,7 @@ class UserViewController: FormViewController {
                     cell.textLabel?.textAlignment = .Left
                 }
 
-            let button = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editButtonPushed")
+            let button = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(UserViewController.editButtonPushed))
             self.navigationItem.rightBarButtonItem = button
         }
 
@@ -164,7 +165,7 @@ class UserViewController: FormViewController {
                         title = "Follow"
                     }
 
-                    let button = UIBarButtonItem(title: title, style: .Plain, target: self, action: "followButtonPressed")
+                    let button = UIBarButtonItem(title: title, style: .Plain, target: self, action: #selector(UserViewController.followButtonPressed))
                     self?.navigationItem.rightBarButtonItem = button
                 }
             })

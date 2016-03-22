@@ -28,11 +28,11 @@ class FablerToolBarController: UIToolbar {
         }
 
         if self.flexItemLeft == nil {
-            self.flexItemLeft = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: "")
+            self.flexItemLeft = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: Selector())
         }
 
         if self.flexItemRight == nil {
-            self.flexItemRight = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: "")
+            self.flexItemRight = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: Selector())
         }
 
         super.setItems([self.flexItemLeft!, self.item!, self.flexItemRight!], animated: false)

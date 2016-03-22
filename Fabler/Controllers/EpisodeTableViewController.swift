@@ -202,7 +202,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.refreshControl = UIRefreshControl()
         if let refresher = self.refreshControl {
             refresher.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-            refresher.addTarget(self, action: "refreshData:", forControlEvents: .ValueChanged)
+            refresher.addTarget(self, action: #selector(EpisodeTableViewController.refreshData), forControlEvents: .ValueChanged)
             refresher.backgroundColor = .fablerOrangeColor()
             refresher.tintColor = .whiteColor()
             self.tableView.addSubview(refresher)
@@ -234,7 +234,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         // Show dismiss button if we are the root of a navigation controller
         //
         if self.root {
-            let done = UIBarButtonItem(title: "Done", style: .Done, target: self, action: "doneButtonPressed:")
+            let done = UIBarButtonItem(title: "Done", style: .Done, target: self, action: #selector(EpisodeTableViewController.doneButtonPressed))
             self.navigationItem.leftBarButtonItem = done
         }
     }
@@ -282,7 +282,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
             button.frame = frame
             button.setTitle("Be the first to comment!", forState: .Normal)
-            button.addTarget(self, action: "didRequestKeyboard", forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(EpisodeTableViewController.didRequestKeyboard), forControlEvents: .TouchUpInside)
             if let primary = self.episode?.podcast?.primaryColor {
                 button.tintColor = primary
             } else {

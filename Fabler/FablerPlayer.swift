@@ -130,17 +130,17 @@ public class FablerPlayer: NSObject {
         //
         let commandCenter = MPRemoteCommandCenter.sharedCommandCenter()
 
-        commandCenter.playCommand.addTarget(self, action: "playPlayback")
+        commandCenter.playCommand.addTarget(self, action: #selector(FablerPlayer.playPlayback))
         commandCenter.playCommand.enabled = true
 
-        commandCenter.pauseCommand.addTarget(self, action: "pausePlayback")
+        commandCenter.pauseCommand.addTarget(self, action: #selector(FablerPlayer.pausePlayback))
         commandCenter.pauseCommand.enabled = true
 
-        commandCenter.skipBackwardCommand.addTarget(self, action: "skipBackward")
+        commandCenter.skipBackwardCommand.addTarget(self, action: #selector(FablerPlayer.skipBackward))
         commandCenter.skipBackwardCommand.preferredIntervals = [15]
         commandCenter.skipBackwardCommand.enabled = true
 
-        commandCenter.skipForwardCommand.addTarget(self, action: "skipForward")
+        commandCenter.skipForwardCommand.addTarget(self, action: #selector(FablerPlayer.skipForward))
         commandCenter.skipForwardCommand.preferredIntervals = [15]
         commandCenter.skipForwardCommand.enabled = true
 
@@ -208,8 +208,8 @@ public class FablerPlayer: NSObject {
         playing = true
         started = true
 
-        uiTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "updateCurrentTime", userInfo: nil, repeats: true)
-        serviceTimer = NSTimer.scheduledTimerWithTimeInterval(5, target:  self, selector: "updateService", userInfo: nil, repeats: true)
+        uiTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: #selector(FablerPlayer.updateCurrentTime), userInfo: nil, repeats: true)
+        serviceTimer = NSTimer.scheduledTimerWithTimeInterval(5, target:  self, selector: #selector(FablerPlayer.updateService), userInfo: nil, repeats: true)
 
         smallPlayer.updateOutlets()
         largePlayer.updateOutlets()
@@ -285,8 +285,8 @@ public class FablerPlayer: NSObject {
         audioPlayer.play()
         audioPlayer.rate = self.rate.rawValue
 
-        uiTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "updateCurrentTime", userInfo: nil, repeats: true)
-        serviceTimer = NSTimer.scheduledTimerWithTimeInterval(5, target:  self, selector: "updateService", userInfo: nil, repeats: true)
+        uiTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: #selector(FablerPlayer.updateCurrentTime), userInfo: nil, repeats: true)
+        serviceTimer = NSTimer.scheduledTimerWithTimeInterval(5, target:  self, selector: #selector(FablerPlayer.updateService), userInfo: nil, repeats: true)
 
         smallPlayer.updateOutlets()
         largePlayer.updateOutlets()

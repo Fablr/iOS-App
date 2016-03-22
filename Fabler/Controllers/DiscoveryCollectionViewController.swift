@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import SWRevealViewController
 
 class DiscoveryCollectionViewController: UICollectionViewController {
 
@@ -27,7 +28,7 @@ class DiscoveryCollectionViewController: UICollectionViewController {
 
         if revealViewController() != nil {
             self.menuButton?.target = revealViewController()
-            self.menuButton?.action = "revealToggle:"
+            self.menuButton?.action = #selector(SWRevealViewController.revealToggle)
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
 
