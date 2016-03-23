@@ -14,6 +14,7 @@ import RxCocoa
 import SCLAlertView
 import RealmSwift
 import SWRevealViewController
+import AlamofireImage
 
 class UserViewController: FormViewController {
 
@@ -108,7 +109,7 @@ class UserViewController: FormViewController {
                     } else {
                         manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil) { (image, error, cacheType, url) in
                             if error == nil, let image = image {
-                                let circle = image.imageRoundedIntoCircle()
+                                let circle = image.af_imageRoundedIntoCircle()
                                 cache.storeImage(circle, forKey: key)
 
                                 dispatch_async(dispatch_get_main_queue()) {

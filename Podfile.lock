@@ -1,6 +1,8 @@
 PODS:
   - ACPDownload (1.1.0)
   - Alamofire (3.2.1)
+  - AlamofireImage (2.3.1):
+    - Alamofire (~> 3.2)
   - Bolts (1.6.0):
     - Bolts/AppLinks (= 1.6.0)
     - Bolts/Tasks (= 1.6.0)
@@ -36,6 +38,7 @@ PODS:
 DEPENDENCIES:
   - ACPDownload (~> 1.1.0)
   - Alamofire (~> 3.2.1)
+  - AlamofireImage (~> 2.3.1)
   - ChameleonFramework (~> 2.1.0)
   - Eureka (~> 1.5.0)
   - FBSDKCoreKit (~> 4.10.1)
@@ -56,6 +59,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   ACPDownload: 9c6349be96019b6c8c87ad46570af1cbc7106bf4
   Alamofire: f11d8624a05f5d39e0c99309b3e600a3ba64298a
+  AlamofireImage: e52336282757bbe1644f075d6cb85f19c891f939
   Bolts: f52a250053bb517ca874523c3913776359ab3def
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Eureka: 2fb37bb50569c62ee3284689d5b7aca694b040e0

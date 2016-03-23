@@ -9,6 +9,7 @@
 import UIKit
 import Kingfisher
 import SCLAlertView
+import AlamofireImage
 
 class UserTableViewCell: UITableViewCell {
 
@@ -78,7 +79,7 @@ class UserTableViewCell: UITableViewCell {
                         return
                     }
 
-                    let circle = image.imageRoundedIntoCircle()
+                    let circle = image.af_imageRoundedIntoCircle()
                     cache.storeImage(circle, forKey: key)
 
                     dispatch_async(dispatch_get_main_queue()) {

@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import AlamofireImage
 
 class BackpaneViewController: UIViewController {
 
@@ -29,31 +30,35 @@ class BackpaneViewController: UIViewController {
     // MARK: - BackpaneViewController methods
 
     func updateUserElements() {
-        if let user = self.user {
-            if let url = NSURL(string: user.image) {
-                let manager = KingfisherManager.sharedManager
-                let cache = manager.cache
+        guard let user = self.user else {
+            return
+        }
 
-                let key = "\(user.userId)-profile"
+        if let url = NSURL(string: user.image) {
+            let manager = KingfisherManager.sharedManager
+            let cache = manager.cache
 
-                if let circle = cache.retrieveImageInDiskCacheForKey(key) {
-                    self.userImage?.image = circle
-                } else {
-                    manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil) { [weak self] (image, error, cacheType, url) in
-                        if error == nil, let image = image {
-                            let circle = image.imageRoundedIntoCircle()
-                            cache.storeImage(circle, forKey: key)
+            let key = "\(user.userId)-profile"
 
-                            dispatch_async(dispatch_get_main_queue()) { [weak self] in
-                                self?.userImage?.image = circle
-                            }
-                        }
+            if let circle = cache.retrieveImageInDiskCacheForKey(key) {
+                self.userImage?.image = circle
+            } else {
+                manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil) { [weak self] (image, error, cacheType, url) in
+                    guard let image = image where error == nil else {
+                        return
+                    }
+
+                    let circle = image.af_imageRoundedIntoCircle()
+                    cache.storeImage(circle, forKey: key)
+
+                    dispatch_async(dispatch_get_main_queue()) { [weak self] in
+                        self?.userImage?.image = circle
                     }
                 }
             }
-
-            self.userButton?.setTitle(user.userName, forState: .Normal)
         }
+
+        self.userButton?.setTitle(user.userName, forState: .Normal)
     }
 
     // MARK: - UIViewController methods

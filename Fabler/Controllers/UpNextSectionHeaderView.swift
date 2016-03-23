@@ -12,5 +12,5 @@ public class UpNextSectionHeaderView: UITableViewHeaderFooterView {
 
     // MARK: - IBActions
 
-    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var backButton: UIButton?
 }

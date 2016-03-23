@@ -19,7 +19,7 @@ class DiscoveryCollectionViewController: UICollectionViewController {
     // MARK: - DiscoveryViewController properties
 
     private let reuseIdentifier = "ShowCell"
-    private var podcasts: [Podcast]?
+    private var podcasts: [Podcast] = []
 
     // MARK: - UIViewController methods
 
@@ -48,22 +48,15 @@ class DiscoveryCollectionViewController: UICollectionViewController {
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "displayPodcastSegue" {
-            if let controller = segue.destinationViewController as? PodcastTableViewController, let podcast = sender as? Podcast {
-                controller.podcast = podcast
-            }
+        if let controller = segue.destinationViewController as? PodcastTableViewController, let podcast = sender as? Podcast where segue.identifier == "displayPodcastSegue" {
+            controller.podcast = podcast
         }
     }
 
     // MARK: - UICollectionViewController methods
 
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        guard indexPath.section == 0 else {
-            Log.warning("Unexpected section selected.")
-            return
-        }
-
-        performSegueWithIdentifier("displayPodcastSegue", sender: podcasts![indexPath.row])
+        performSegueWithIdentifier("displayPodcastSegue", sender: podcasts[indexPath.row])
     }
 
     // MARK: - UICollectionViewDataSource methods
@@ -73,10 +66,6 @@ class DiscoveryCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let podcasts = self.podcasts else {
-            return 0
-        }
-
         return podcasts.count
     }
 
@@ -84,7 +73,9 @@ class DiscoveryCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
 
         if let cell = cell as? PodcastCell {
-            if let path = podcasts?[indexPath.row].image, let url = NSURL(string: path) {
+            let path = podcasts[indexPath.row].image
+
+            if let url = NSURL(string: path) {
                 cell.tileImage?.kf_setImageWithURL(url, placeholderImage: nil)
             }
         }

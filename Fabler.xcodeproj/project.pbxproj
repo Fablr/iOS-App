@@ -25,7 +25,6 @@
 		45173E3F1C2A877A006A8926 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45173E3E1C2A877A006A8926 /* UsersTableViewController.swift */; };
 		45173E411C2B1EE7006A8926 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45173E401C2B1EE7006A8926 /* UserTableViewCell.swift */; };
 		451CBBCC1C229CD300758A81 /* UserEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CBBCB1C229CD300758A81 /* UserEditViewController.swift */; };
-		453382201C1EA11000EA9DEE /* FablerImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533821F1C1EA11000EA9DEE /* FablerImage.swift */; };
 		453671871C97C47300D89AF8 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453671861C97C47300D89AF8 /* SettingViewController.swift */; };
 		4538B57D1BF55C3800039DF1 /* SmallPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */; };
 		4538B5801BF55E1800039DF1 /* SmallPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */; };
@@ -100,7 +99,6 @@
 		45173E3E1C2A877A006A8926 /* UsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
 		45173E401C2B1EE7006A8926 /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		451CBBCB1C229CD300758A81 /* UserEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEditViewController.swift; sourceTree = "<group>"; };
-		4533821F1C1EA11000EA9DEE /* FablerImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerImage.swift; sourceTree = "<group>"; };
 		453671861C97C47300D89AF8 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		4538B57C1BF55C3800039DF1 /* SmallPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallPlayer.xib; sourceTree = "<group>"; };
 		4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallPlayerViewController.swift; sourceTree = "<group>"; };
@@ -295,7 +293,6 @@
 				45505F701BFB1EF600481291 /* FablerDownloadManager.swift */,
 				45E5367D1BE1F980009E3F10 /* FablerClient.swift */,
 				456BB5CA1BF5CD3E00D59C47 /* FablerPlayer.swift */,
-				4533821F1C1EA11000EA9DEE /* FablerImage.swift */,
 				4501BB9A1C177F330021171C /* FablerUI.swift */,
 				F47029FC1A7F27DB00E30A3C /* Images.xcassets */,
 				F4702A081A7F27DC00E30A3C /* FablerTests */,
@@ -542,7 +539,6 @@
 				4538B5801BF55E1800039DF1 /* SmallPlayerViewController.swift in Sources */,
 				45505F711BFB1EF600481291 /* FablerDownloadManager.swift in Sources */,
 				4576FC061C13D74000381A28 /* EpisodeHeaderViewController.swift in Sources */,
-				453382201C1EA11000EA9DEE /* FablerImage.swift in Sources */,
 				45A3433C1C76E99A00A660A2 /* FablerAutoDownload.swift in Sources */,
 				4501BB9B1C177F330021171C /* FablerUI.swift in Sources */,
 				45149BDF1C894DE00044E8F1 /* UpNextTableViewController.swift in Sources */,

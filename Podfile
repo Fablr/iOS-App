@@ -22,6 +22,7 @@ target 'Fabler' do
   pod 'RxSwift', '~>2.3.1'
   pod 'RxCocoa', '~>2.3.1'
   pod 'Hue', '~>1.1'
+  pod 'AlamofireImage', '~>2.3.1'
 end
 
 target 'FablerTests' do
