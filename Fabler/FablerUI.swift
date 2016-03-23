@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import Foundation
-import Eureka
+import Hue
+import ChameleonFramework
 
 extension UIColor {
     static func fablerOrangeColor() -> UIColor {
@@ -17,6 +17,31 @@ extension UIColor {
 
     static func washedOutFablerOrangeColor() -> UIColor {
         return UIColor(red: 231.0/255.0, green: 210.0/255.0, blue: 198.0/255.0, alpha: 1.0)
+    }
+}
+
+extension UIImage {
+    func f_color() -> UIColor {
+        let average = UIColor(averageColorFromImage: self).flatten()
+        var result: UIColor = average
+
+        var potentials: [UIColor] = []
+        potentials.append(average)
+
+        let colors = self.colors()
+        potentials.append(colors.background.flatten())
+        potentials.append(colors.primary.flatten())
+        potentials.append(colors.secondary.flatten())
+        potentials.append(colors.detail.flatten())
+
+        for color in potentials {
+            if color.isContrastingWith(.whiteColor()) {
+                result = color
+                break
+            }
+        }
+
+        return result
     }
 }
 

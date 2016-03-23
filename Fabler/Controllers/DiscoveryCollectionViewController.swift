@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
 import SWRevealViewController
 
 class DiscoveryCollectionViewController: UICollectionViewController {
@@ -73,11 +72,9 @@ class DiscoveryCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
 
         if let cell = cell as? PodcastCell {
-            let path = podcasts[indexPath.row].image
+            let podcast = podcasts[indexPath.row]
 
-            if let url = NSURL(string: path) {
-                cell.tileImage?.kf_setImageWithURL(url, placeholderImage: nil)
-            }
+            cell.setPodcastInstance(podcast)
         }
 
         return cell

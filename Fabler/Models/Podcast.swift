@@ -7,6 +7,9 @@
 //
 
 import RealmSwift
+import Kingfisher
+import Hue
+import ChameleonFramework
 
 public enum SortOrder: String {
     case NewestOldest = "Newest to oldest"
@@ -59,6 +62,49 @@ final public class Podcast: Object, Equatable {
             }
 
             return nil
+        }
+    }
+
+    // MARK: - Podcast methods
+
+    public func image(completion: (image: UIImage?) -> ()) {
+        guard let url = NSURL(string: self.image) else {
+            return
+        }
+
+        let manager = KingfisherManager.sharedManager
+        let cache = manager.cache
+
+        let id = self.podcastId
+        let calcColors = !self.primarySet
+
+        if let image = cache.retrieveImageInDiskCacheForKey(url.absoluteString) {
+            if calcColors {
+                let service = PodcastService()
+                service.setPrimaryColorForPodcast(self, color: image.f_color())
+            }
+
+            completion(image: image)
+        } else {
+            manager.retrieveImageWithURL(url, optionsInfo: [.CallbackDispatchQueue(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0))], progressBlock: nil) { (image, error, cacheType, url) in
+                let result: UIImage?
+
+                if let image = image where error == nil {
+                    let service = PodcastService()
+
+                    if let podcast = service.readPodcastFor(id, completion: nil) where calcColors {
+                        service.setPrimaryColorForPodcast(podcast, color: image.f_color())
+                    }
+
+                    result = image
+                } else {
+                    result = nil
+                }
+
+                dispatch_async(dispatch_get_main_queue()) {
+                    completion(image: result)
+                }
+            }
         }
     }
 

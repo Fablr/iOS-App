@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
-import AlamofireImage
 
 class BackpaneViewController: UIViewController {
 
@@ -34,28 +32,8 @@ class BackpaneViewController: UIViewController {
             return
         }
 
-        if let url = NSURL(string: user.image) {
-            let manager = KingfisherManager.sharedManager
-            let cache = manager.cache
-
-            let key = "\(user.userId)-profile"
-
-            if let circle = cache.retrieveImageInDiskCacheForKey(key) {
-                self.userImage?.image = circle
-            } else {
-                manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil) { [weak self] (image, error, cacheType, url) in
-                    guard let image = image where error == nil else {
-                        return
-                    }
-
-                    let circle = image.af_imageRoundedIntoCircle()
-                    cache.storeImage(circle, forKey: key)
-
-                    dispatch_async(dispatch_get_main_queue()) { [weak self] in
-                        self?.userImage?.image = circle
-                    }
-                }
-            }
+        user.profileImage { [weak self] (image) in
+            self?.userImage?.image = image
         }
 
         self.userButton?.setTitle(user.userName, forState: .Normal)

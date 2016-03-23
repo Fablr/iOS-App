@@ -7,9 +7,7 @@
 //
 
 import UIKit
-import Kingfisher
 import SCLAlertView
-import AlamofireImage
 
 class UserTableViewCell: UITableViewCell {
 
@@ -65,28 +63,8 @@ class UserTableViewCell: UITableViewCell {
 
         self.setupFollowButton(user.followingUser)
 
-        if let url = NSURL(string: user.image) {
-            let manager = KingfisherManager.sharedManager
-            let cache = manager.cache
-
-            let key = "\(user.userId)-profile"
-
-            if let circle = cache.retrieveImageInDiskCacheForKey(key) {
-                self.profileImage?.image = circle
-            } else {
-                manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil) { [weak self] (image, error, cacheType, url) in
-                    guard let cell = self, let image = image where error == nil else {
-                        return
-                    }
-
-                    let circle = image.af_imageRoundedIntoCircle()
-                    cache.storeImage(circle, forKey: key)
-
-                    dispatch_async(dispatch_get_main_queue()) {
-                        cell.profileImage?.image = circle
-                    }
-                }
-            }
+        user.profileImage { [weak self] (image) in
+            self?.profileImage?.image = image
         }
 
         self.userLabel?.text = title

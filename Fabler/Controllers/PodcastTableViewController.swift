@@ -8,8 +8,6 @@
 
 import UIKit
 import SlackTextViewController
-import Kingfisher
-import Hue
 import ChameleonFramework
 import RxSwift
 import RxCocoa
@@ -46,90 +44,25 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     // MARK: - PodcastTableViewController methods
 
-    func setColorFor(podcast: Podcast, image: UIImage) {
-        let service = PodcastService()
-
-        let average = UIColor(averageColorFromImage: image).flatten()
-
-        var potentials: [UIColor] = []
-        potentials.append(average)
-
-        let colors = image.colors()
-        potentials.append(colors.background.flatten())
-        potentials.append(colors.primary.flatten())
-        potentials.append(colors.secondary.flatten())
-        potentials.append(colors.detail.flatten())
-
-        var colorSet: Bool = false
-
-        for color in potentials {
-            if color.isContrastingWith(.whiteColor()) {
-                service.setPrimaryColorForPodcast(podcast, color: color)
-                colorSet = true
-                break
-            }
-        }
-
-        if !colorSet {
-            service.setPrimaryColorForPodcast(podcast, color: average)
-        }
-    }
-
-    func setupImages() {
-        guard let podcast = self.podcast, let url = NSURL(string: podcast.image) else {
+    func updateImages() {
+        guard let podcast = self.podcast else {
             return
         }
 
-        let manager = KingfisherManager.sharedManager
-        let cache = manager.cache
+        podcast.image { [weak self] (image) in
+            self?.headerImage?.image = image
 
-        let id = podcast.podcastId
-
-        if let image = cache.retrieveImageInDiskCacheForKey(url.absoluteString) {
-            if !podcast.primarySet {
-                self.setColorFor(podcast, image: image)
+            guard let primary = self?.podcast?.primaryColor else {
+                return
             }
 
-            self.updateImages(image)
-        } else {
-            manager.retrieveImageWithURL(url, optionsInfo: [.CallbackDispatchQueue(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))], progressBlock: nil) { [weak self] (image, error, cacheType, url) in
-                guard let image = image where error == nil else {
-                    return
-                }
-
-                let service = PodcastService()
-
-                if let podcast = service.readPodcastFor(id, completion: nil) where !podcast.primarySet {
-                    self?.setColorFor(podcast, image: image)
-                }
-
-                dispatch_async(dispatch_get_main_queue()) { [weak self] in
-                    Log.debug("Setting header image.")
-
-                    self?.updateImages(image)
-                }
-            }
+            self?.navigationController?.navigationBar.barTintColor = primary
+            self?.navigationController?.navigationBar.translucent = false
+            self?.navigationController?.navigationBar.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primary, isFlat: true)
+            self?.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(contrastingBlackOrWhiteColorOn: primary, isFlat: true)]
+            self?.navigationController?.navigationBar.clipsToBounds = false
+            self?.setStatusBarStyle(UIStatusBarStyleContrast)
         }
-    }
-
-    func updateImages(image: UIImage) {
-        self.headerImage?.image = image
-
-        guard let podcast = self.podcast, let primary = podcast.primaryColor else {
-            return
-        }
-
-        //
-        // Setup navigation bar
-        //
-        self.navigationController?.navigationBar.barTintColor = primary
-        self.navigationController?.navigationBar.translucent = false
-        self.navigationController?.navigationBar.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primary, isFlat: true)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(contrastingBlackOrWhiteColorOn: primary, isFlat: true)]
-        self.navigationController?.navigationBar.clipsToBounds = false
-        self.setStatusBarStyle(UIStatusBarStyleContrast)
-
-        self.tableView.reloadData()
     }
 
     func filterEpisodes() {
@@ -436,7 +369,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
-        self.setupImages()
+        self.updateImages()
 
         //
         // Refresh data

@@ -7,6 +7,8 @@
 //
 
 import RealmSwift
+import Kingfisher
+import AlamofireImage
 
 final public class User: Object {
 
@@ -40,6 +42,38 @@ final public class User: Object {
     let followers = List<User>()
     let following = List<User>()
     let subscribed = List<Podcast>()
+
+    // MARK: - User methods
+
+    public func profileImage(completion: (image: UIImage?) -> ()) {
+        guard let url = NSURL(string: self.image) else {
+            return
+        }
+
+        let key = "\(self.userId)-profile"
+
+        let manager = KingfisherManager.sharedManager
+        let cache = manager.cache
+
+        if let cached = cache.retrieveImageInDiskCacheForKey(key) {
+            completion(image: cached)
+        } else {
+            manager.retrieveImageWithURL(url, optionsInfo: [.CallbackDispatchQueue(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0))], progressBlock: nil) { (image, error, cacheType, url) in
+                let circle: UIImage?
+
+                if let image = image where error == nil {
+                    circle = image.af_imageRoundedIntoCircle()
+                    cache.storeImage(circle!, forKey: key)
+                } else {
+                    circle = nil
+                }
+
+                dispatch_async(dispatch_get_main_queue()) {
+                    completion(image: circle)
+                }
+            }
+        }
+    }
 
     // MARK: - Realm methods
 

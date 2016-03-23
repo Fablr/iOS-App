@@ -7,14 +7,12 @@
 //
 
 import UIKit
-import Kingfisher
 import Eureka
 import RxSwift
 import RxCocoa
 import SCLAlertView
 import RealmSwift
 import SWRevealViewController
-import AlamofireImage
 
 class UserViewController: FormViewController {
 
@@ -98,26 +96,8 @@ class UserViewController: FormViewController {
         self.form +++= Section() {
             var header = HeaderFooterView<UserHeaderView>(HeaderFooterProvider.NibFile(name: "UserHeader", bundle: nil))
             header.onSetupView = { (view, section, form) -> () in
-                if let url = NSURL(string: user.image) {
-                    let manager = KingfisherManager.sharedManager
-                    let cache = manager.cache
-
-                    let key = "\(user.userId)-profile"
-
-                    if let circle = cache.retrieveImageInDiskCacheForKey(key) {
-                        view.profileImage?.image = circle
-                    } else {
-                        manager.retrieveImageWithURL(url, optionsInfo: nil, progressBlock: nil) { (image, error, cacheType, url) in
-                            if error == nil, let image = image {
-                                let circle = image.af_imageRoundedIntoCircle()
-                                cache.storeImage(circle, forKey: key)
-
-                                dispatch_async(dispatch_get_main_queue()) {
-                                    view.profileImage?.image = circle
-                                }
-                            }
-                        }
-                    }
+                user.profileImage { image in
+                    view.profileImage?.image = image
                 }
             }
 
