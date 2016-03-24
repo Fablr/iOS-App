@@ -18,7 +18,7 @@ import RealmSwift
 
 struct FablerClient {
     enum Router: URLRequestConvertible {
-        static let baseURLString = "http://api.fablersite-dev.elasticbeanstalk.com"
+        static let baseURLString = "http://fablersite-dev.elasticbeanstalk.com"
         static var token: String?
 
         // MARK: - Calls
