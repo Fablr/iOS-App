@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         Log.info("Application did finish launching.")
 
-        let config = Realm.Configuration(schemaVersion: 5, migrationBlock: { migration, oldSchemaVersion in
+        let config = Realm.Configuration(schemaVersion: 6, migrationBlock: { migration, oldSchemaVersion in
             if oldSchemaVersion < 1 {
                 migration.enumerate(Podcast.className()) { oldObject, newObject in
                     newObject!["sortOrderRaw"] = 1

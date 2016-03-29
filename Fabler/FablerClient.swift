@@ -46,6 +46,7 @@ struct FablerClient {
         case SetFollowing(user: Int)
         case SetUnfollow(user: Int)
         case ReadSubscribed(user: Int)
+        case ReadUsersFeed(user: Int)
 
         var method: Alamofire.Method {
             switch self {
@@ -82,7 +83,7 @@ struct FablerClient {
             case .DeleteComment:
                 return .DELETE
             case .EditComment:
-                return .PUT
+                return .PATCH
             case .UpdateUser:
                 return .PATCH
             case .ReadFollowers:
@@ -94,6 +95,8 @@ struct FablerClient {
             case .SetUnfollow:
                 return .DELETE
             case .ReadSubscribed:
+                return .GET
+            case .ReadUsersFeed:
                 return .GET
             }
         }
@@ -146,6 +149,8 @@ struct FablerClient {
                 return "/following/\(user)/"
             case .ReadSubscribed(let user):
                 return "/userprofile/\(user)/subscribed/"
+            case .ReadUsersFeed(let user):
+                return "/feed/\(user)/"
             }
         }
 

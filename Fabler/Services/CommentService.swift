@@ -306,7 +306,7 @@ public class CommentService {
 
     // MARK: - CommentService serialize methods
 
-    private func serializeCommentObject(data: JSON, episode: Int?, podcast: Int?) -> Comment? {
+    public func serializeCommentObject(data: JSON, episode: Int?, podcast: Int?) -> Comment? {
         var result: Comment?
 
         do {
@@ -394,6 +394,27 @@ public class CommentService {
                 }
             }
 
+            if let type = data["content_type"].string {
+                let objectJson = data["content_object"]
+
+                switch type {
+                case "podcast":
+                    let podcastService = PodcastService()
+                    if let podcast = podcastService.serializePodcastObject(objectJson) {
+                        comment.podcast = podcast
+                    }
+
+                case "episode":
+                    let episodeService = EpisodeService()
+                    if let episode = episodeService.serializeEpisodeObject(objectJson) {
+                        comment.episode = episode
+                    }
+
+                default:
+                    Log.warning("Invalid content type: \(type)")
+                }
+            }
+
             try realm.write {
                 realm.add(comment, update: true)
                 comment.parent?.children.append(comment)
@@ -407,7 +428,7 @@ public class CommentService {
         return result
     }
 
-    private func serializeCommentCollection(data: JSON, episode: Int?, podcast: Int?) -> [Comment] {
+    public func serializeCommentCollection(data: JSON, episode: Int?, podcast: Int?) -> [Comment] {
         var comments: [Comment] = []
 
         for (_, subJson):(String, JSON) in data {

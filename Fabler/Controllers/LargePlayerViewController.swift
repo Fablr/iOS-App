@@ -149,9 +149,7 @@ public class LargePlayerViewController: UIViewController {
         playbackSlider?.maximumValue = 0.0
         playbackSlider?.minimumValue = 0.0
 
-        if let podcast = self.player?.episode?.podcast, let url = NSURL(string: podcast.image) {
-            let placeholder = UIImage()
-
+        if let podcast = self.player?.episode?.podcast {
             podcast.image { [weak self] (image) in
                 self?.artImage?.image = image
             }

@@ -519,7 +519,7 @@ public final class UserService {
 
     // MARK: - UserService serialize methods
 
-    private func serializeUserObject(data: JSON) -> User? {
+    public func serializeUserObject(data: JSON) -> User? {
         var user: User?
 
         do {
@@ -583,7 +583,7 @@ public final class UserService {
         return user
     }
 
-    private func serializeUserCollection(data: JSON) -> [User] {
+    public func serializeUserCollection(data: JSON) -> [User] {
         var users: [User] = []
 
         for (_, subJson):(String, JSON) in data {

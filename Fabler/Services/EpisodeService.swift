@@ -133,7 +133,7 @@ public class EpisodeService {
 
     // MARK: - EpisodeService serialize functions
 
-    private func serializeEpisodeObject(data: JSON) -> Episode? {
+    public func serializeEpisodeObject(data: JSON) -> Episode? {
         var episode: Episode?
 
         do {
@@ -206,7 +206,7 @@ public class EpisodeService {
         return episode
     }
 
-    private func serializeEpisodeCollection(data: JSON) -> [Episode] {
+    public func serializeEpisodeCollection(data: JSON) -> [Episode] {
         var episodes: [Episode] = []
 
         for (_, subJson):(String, JSON) in data {
