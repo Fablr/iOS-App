@@ -24,20 +24,20 @@
             </objects>
             <point key="canvasLocation" x="-308" y="540"/>
         </scene>
-        <!--Feed Table View Controller-->
+        <!--Your Feed-->
         <scene sceneID="uz4-xn-Xgj">
             <objects>
                 <tableViewController id="xCD-TN-4rd" customClass="FeedTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="XJX-nP-ylG">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="XJX-nP-ylG">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <connections>
                             <outlet property="dataSource" destination="xCD-TN-4rd" id="PLB-Em-cNc"/>
                             <outlet property="delegate" destination="xCD-TN-4rd" id="ozI-Dx-P40"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="wjf-aa-IWY"/>
+                    <navigationItem key="navigationItem" title="Your Feed" id="wjf-aa-IWY"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mvw-Gk-feh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

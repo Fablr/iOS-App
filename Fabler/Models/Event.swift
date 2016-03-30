@@ -16,7 +16,7 @@ public enum EventType: String {
     case None = "None"
 }
 
-final public class Event: Object {
+final public class Event: Object, Equatable {
 
     // MARK: - Event properties
 
@@ -38,4 +38,16 @@ final public class Event: Object {
             return .None
         }
     }
+
+    // MARK: - Realm methods
+
+    override public static func primaryKey() -> String? {
+        return "eventId"
+    }
+}
+
+// MARK: - Event helper methods
+
+public func == (lhs: Event, rhs: Event) -> Bool {
+    return lhs.eventId == rhs.eventId
 }
