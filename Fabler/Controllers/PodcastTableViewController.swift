@@ -252,7 +252,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         }
 
         self.headerImage = UIImageView()
-        self.headerImage?.backgroundColor = .fablerOrangeColor()
+        self.headerImage?.backgroundColor = FablerColors.Orange.Regular
         self.headerImage?.translatesAutoresizingMaskIntoConstraints = false
         self.headerImage?.contentMode = .ScaleAspectFill
         self.headerImage?.clipsToBounds = true
@@ -300,9 +300,9 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.inverted = false
 
         self.leftButton.setImage(UIImage(named: "delete"), forState: .Normal)
-        self.leftButton.tintColor = .fablerOrangeColor()
+        self.leftButton.tintColor = FablerColors.Orange.Regular
         self.rightButton.setTitle("Post", forState: .Normal)
-        self.rightButton.tintColor = .fablerOrangeColor()
+        self.rightButton.tintColor = FablerColors.Orange.Regular
 
         self.podcast?
         .rx_observeWeakly(Bool.self, "primarySet")
@@ -600,7 +600,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         if let primary = self.podcast?.primaryColor {
             detailAction.backgroundColor = primary
         } else {
-            detailAction.backgroundColor = .fablerOrangeColor()
+            detailAction.backgroundColor = FablerColors.Orange.Regular
         }
 
         results.append(detailAction)
@@ -648,7 +648,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             if let primary = self.podcast?.primaryColor {
                 button.tintColor = primary
             } else {
-                button.tintColor = .fablerOrangeColor()
+                button.tintColor = FablerColors.Orange.Regular
             }
 
             self.tableView?.backgroundView = button

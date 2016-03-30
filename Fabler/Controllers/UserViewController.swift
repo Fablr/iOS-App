@@ -91,7 +91,7 @@ class UserViewController: FormViewController {
 
         self.tableView?.bounces = false
 
-        ButtonRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
+        ButtonRow.defaultCellSetup = { cell, row in cell.tintColor = FablerColors.Orange.Regular }
 
         self.form +++= Section() {
             var header = HeaderFooterView<UserHeaderView>(HeaderFooterProvider.NibFile(name: "UserHeader", bundle: nil))

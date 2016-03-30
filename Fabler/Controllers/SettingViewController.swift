@@ -107,12 +107,12 @@ class SettingViewController: FormViewController {
 
         self.navigationItem.title = "Settings"
 
-        self.navigationAccessoryView.tintColor = .fablerOrangeColor()
+        self.navigationAccessoryView.tintColor = FablerColors.Orange.Regular
 
-        ButtonRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
-        CheckRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
-        IntRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
-        DecimalRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
+        ButtonRow.defaultCellSetup = { cell, row in cell.tintColor = FablerColors.Orange.Regular }
+        CheckRow.defaultCellSetup = { cell, row in cell.tintColor = FablerColors.Orange.Regular }
+        IntRow.defaultCellSetup = { cell, row in cell.tintColor = FablerColors.Orange.Regular }
+        DecimalRow.defaultCellSetup = { cell, row in cell.tintColor = FablerColors.Orange.Regular }
 
         //
         // Episode cache

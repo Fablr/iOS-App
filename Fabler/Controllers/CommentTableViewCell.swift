@@ -151,7 +151,7 @@ class CommentTableViewCell: UITableViewCell {
     var comment: Comment?
     var barCollapsed: Bool = true
 
-    var tint: UIColor = .fablerOrangeColor()
+    var tint: UIColor = FablerColors.Orange.Regular
 
     var collapseDelegate: CollapsibleUITableViewCellDelegate?
     var replyDelegate: RepliesToCommentDelegate?

@@ -32,10 +32,10 @@ class FablerNavigationController: UINavigationController {
 
     func setDefaultNavigationBar() {
         self.navigationBar.barStyle = UIBarStyle.Default
-        self.navigationBar.barTintColor = UIColor.fablerOrangeColor().flatten()
+        self.navigationBar.barTintColor = FablerColors.Orange.Regular.flatten()
         self.navigationBar.translucent = false
-        self.navigationBar.tintColor = UIColor(contrastingBlackOrWhiteColorOn: UIColor.fablerOrangeColor().flatten(), isFlat: true)
-        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(contrastingBlackOrWhiteColorOn: UIColor.fablerOrangeColor().flatten(), isFlat: true)]
+        self.navigationBar.tintColor = UIColor(contrastingBlackOrWhiteColorOn: FablerColors.Orange.Regular.flatten(), isFlat: true)
+        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(contrastingBlackOrWhiteColorOn: FablerColors.Orange.Regular.flatten(), isFlat: true)]
         self.navigationBar.setTitleVerticalPositionAdjustment(0.0, forBarMetrics: UIBarMetrics.Default)
         self.setStatusBarStyle(UIStatusBarStyleContrast)
     }

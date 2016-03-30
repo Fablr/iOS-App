@@ -161,11 +161,11 @@ class UserEditViewController: FormViewController {
         self.view.insertSubview(veView, atIndex: 0)
         self.tableView?.backgroundColor = .clearColor()
 
-        NameRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
-        EmailRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
-        DateRow.defaultCellSetup = { cell, row in cell.tintColor = .fablerOrangeColor() }
+        NameRow.defaultCellSetup = { cell, row in cell.tintColor = FablerColors.Orange.Regular }
+        EmailRow.defaultCellSetup = { cell, row in cell.tintColor = FablerColors.Orange.Regular }
+        DateRow.defaultCellSetup = { cell, row in cell.tintColor = FablerColors.Orange.Regular }
 
-        self.navigationAccessoryView.tintColor = .fablerOrangeColor()
+        self.navigationAccessoryView.tintColor = FablerColors.Orange.Regular
 
         self.form +++= Section()
             <<< NameRow("Username") {
@@ -193,7 +193,7 @@ class UserEditViewController: FormViewController {
                 $0.title = $0.tag
                 $0.onCellSelection(self.savePressed)
                 $0.cellSetup { cell, row in
-                    cell.tintColor = .fablerOrangeColor()
+                    cell.tintColor = FablerColors.Orange.Regular
                     if let size = cell.textLabel?.font.pointSize {
                         cell.textLabel?.font = .boldSystemFontOfSize(size)
                     }
@@ -205,7 +205,7 @@ class UserEditViewController: FormViewController {
                 $0.title = $0.tag
                 $0.onCellSelection(self.cancelPressed)
                 $0.cellSetup { cell, row in
-                    cell.tintColor = .fablerOrangeColor()
+                    cell.tintColor = FablerColors.Orange.Regular
                 }
             }
 

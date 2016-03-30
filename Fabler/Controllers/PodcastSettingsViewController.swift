@@ -112,7 +112,7 @@ class PodcastSettingsViewController: FormViewController {
         if podcast!.primaryColor != nil {
             tint = podcast!.primaryColor!
         } else {
-            tint = .fablerOrangeColor()
+            tint = FablerColors.Orange.Regular
         }
 
         if !self.embeddedNavigation {

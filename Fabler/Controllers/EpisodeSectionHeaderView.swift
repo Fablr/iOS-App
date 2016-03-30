@@ -40,7 +40,7 @@ class EpisodeSectionHeaderView: UITableViewHeaderFooterView {
         var background: UIColor
 
         if primary == nil {
-            foreground = .fablerOrangeColor()
+            foreground = FablerColors.Orange.Regular
         } else {
             foreground = primary!
         }

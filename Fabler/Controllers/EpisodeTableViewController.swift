@@ -175,9 +175,9 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.inverted = false
 
         self.leftButton.setImage(UIImage(named: "delete"), forState: .Normal)
-        self.leftButton.tintColor = .fablerOrangeColor()
+        self.leftButton.tintColor = FablerColors.Orange.Regular
         self.rightButton.setTitle("Post", forState: .Normal)
-        self.rightButton.tintColor = .fablerOrangeColor()
+        self.rightButton.tintColor = FablerColors.Orange.Regular
 
         self.textInputbar.autoHideRightButton = true
 
@@ -203,7 +203,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         if let refresher = self.refreshControl {
             refresher.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
             refresher.addTarget(self, action: #selector(EpisodeTableViewController.refreshData), forControlEvents: .ValueChanged)
-            refresher.backgroundColor = .fablerOrangeColor()
+            refresher.backgroundColor = FablerColors.Orange.Regular
             refresher.tintColor = .whiteColor()
             self.tableView.addSubview(refresher)
         }
@@ -286,7 +286,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
             if let primary = self.episode?.podcast?.primaryColor {
                 button.tintColor = primary
             } else {
-                button.tintColor = .fablerOrangeColor()
+                button.tintColor = FablerColors.Orange.Regular
             }
 
             self.tableView?.backgroundView = button
