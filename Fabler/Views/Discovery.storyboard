@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Discovery-->
+        <scene sceneID="atG-Ea-p80">
+            <objects>
+                <viewController storyboardIdentifier="showDiscovery" id="9hv-xt-6nn" customClass="DiscoveryCollectionViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Ye4-nP-CkH">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hbl-AP-CZw">
+                            <size key="itemSize" width="175" height="175"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ShowCell" id="yHl-61-CHe" customClass="PodcastCell" customModule="Fabler" customModuleProvider="target">
+                                <rect key="frame" x="10" y="74" width="175" height="175"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="175" height="175"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RsL-xw-qCK">
+                                            <rect key="frame" x="0.0" y="0.0" width="175" height="175"/>
+                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="RsL-xw-qCK" firstAttribute="bottom" secondItem="yHl-61-CHe" secondAttribute="bottom" id="0Jt-yg-O5d"/>
+                                    <constraint firstItem="RsL-xw-qCK" firstAttribute="top" secondItem="yHl-61-CHe" secondAttribute="top" id="OWi-a9-vBs"/>
+                                    <constraint firstAttribute="trailing" secondItem="RsL-xw-qCK" secondAttribute="trailing" id="ZLa-Qy-7TW"/>
+                                    <constraint firstItem="RsL-xw-qCK" firstAttribute="leading" secondItem="yHl-61-CHe" secondAttribute="leading" id="tnM-dj-zVf"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="tileImage" destination="RsL-xw-qCK" id="ENS-R8-Kty"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Discovery" id="7lC-oY-dA8">
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="tSE-rT-peM"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="menuButton" destination="tSE-rT-peM" id="gRK-mZ-spB"/>
+                        <segue destination="fl9-hX-0gb" kind="show" identifier="displayPodcastSegue" id="hVo-J7-u6o"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xmI-GD-v32" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2577" y="162"/>
+        </scene>
+        <!--showPodcast-->
+        <scene sceneID="oe2-lK-fyr">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Podcast" referencedIdentifier="showPodcast" id="fl9-hX-0gb" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HWN-Kf-YHb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2577.5" y="682"/>
+        </scene>
+        <!--Fabler Navigation Controller-->
+        <scene sceneID="aUg-Ni-eWS">
+            <objects>
+                <navigationController storyboardIdentifier="startDiscovery" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="oMv-2g-0u6" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bHc-8n-G7j">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="z2t-cZ-hGN" customClass="FablerToolBarController" customModule="Fabler" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="9hv-xt-6nn" kind="relationship" relationship="rootViewController" id="an3-DF-mO4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3kt-hU-a5h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1725" y="162"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="menu" width="22" height="22"/>
+    </resources>
+</document>

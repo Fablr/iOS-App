@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Fabler Navigation Controller-->
+        <scene sceneID="iwx-yd-V4s">
+            <objects>
+                <navigationController storyboardIdentifier="startFeed" toolbarHidden="NO" id="QrM-as-RKL" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8eT-Q0-96a">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="nf3-TK-qd9" customClass="FablerToolBarController" customModule="Fabler" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="xCD-TN-4rd" kind="relationship" relationship="rootViewController" id="6HB-ev-KBK"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eSe-LH-dOZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-308" y="540"/>
+        </scene>
+        <!--Feed Table View Controller-->
+        <scene sceneID="uz4-xn-Xgj">
+            <objects>
+                <tableViewController id="xCD-TN-4rd" customClass="FeedTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="XJX-nP-ylG">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="xCD-TN-4rd" id="PLB-Em-cNc"/>
+                            <outlet property="delegate" destination="xCD-TN-4rd" id="ozI-Dx-P40"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="wjf-aa-IWY"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mvw-Gk-feh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="474" y="540"/>
+        </scene>
+    </scenes>
+</document>

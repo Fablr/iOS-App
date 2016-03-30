@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Podcast Settings View Controller-->
+        <scene sceneID="zLu-rb-RVU">
+            <objects>
+                <viewController id="8Ow-MI-ouS" customClass="PodcastSettingsViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0C7-kK-oyU"/>
+                        <viewControllerLayoutGuide type="bottom" id="t1g-OB-xhM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="HuJ-0h-M4R">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="To9-Z2-adK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3339" y="2717"/>
+        </scene>
+        <!--Setting View Controller-->
+        <scene sceneID="GgS-4K-NyE">
+            <objects>
+                <viewController id="nUj-dV-GYA" customClass="SettingViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iOR-ME-PGg"/>
+                        <viewControllerLayoutGuide type="bottom" id="As7-lf-DWT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5oR-Or-iw1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Zab-By-krr"/>
+                    <connections>
+                        <segue destination="8Ow-MI-ouS" kind="show" identifier="displayPodcastSettingsSegue" id="l3c-qn-rWl">
+                            <nil key="action"/>
+                        </segue>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TNR-Rm-6hk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2577" y="2717"/>
+        </scene>
+        <!--Fabler Navigation Controller-->
+        <scene sceneID="dpB-Ij-zD7">
+            <objects>
+                <navigationController storyboardIdentifier="startSettings" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="BFC-BH-k8u" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0lL-BI-jjz">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="eCR-49-2UN" customClass="FablerToolBarController" customModule="Fabler" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="nUj-dV-GYA" kind="relationship" relationship="rootViewController" id="l9k-rZ-v5e"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f2V-PA-0iX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1765" y="2717"/>
+        </scene>
+    </scenes>
+</document>

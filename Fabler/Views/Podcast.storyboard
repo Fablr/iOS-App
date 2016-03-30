@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Your Shows-->
+        <scene sceneID="FSl-Tf-8Oa">
+            <objects>
+                <tableViewController id="wk1-Is-qzg" customClass="CollectionTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="115" sectionHeaderHeight="22" sectionFooterHeight="22" id="sJw-fQ-hRA">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="wk1-Is-qzg" id="GLQ-du-2VG"/>
+                            <outlet property="delegate" destination="wk1-Is-qzg" id="ark-6A-eP3"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Your Shows" id="SEL-Mm-kgj">
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="vG9-wZ-5AZ"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="menuButton" destination="vG9-wZ-5AZ" id="jbO-f6-TG5"/>
+                        <segue destination="eoy-Vn-Upg" kind="show" identifier="displayPodcastSegue" id="I6t-IJ-Mg6">
+                            <nil key="action"/>
+                        </segue>
+                        <segue destination="8kd-9p-lKx" kind="show" identifier="displayDiscoverySegue" id="che-JL-tUO"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="C1U-7g-Q9K" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2577" y="-686"/>
+        </scene>
+        <!--showDiscovery-->
+        <scene sceneID="UAN-LX-oi6">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Discovery" referencedIdentifier="showDiscovery" id="8kd-9p-lKx" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wCf-MO-nYB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2577.5" y="-12"/>
+        </scene>
+        <!--Podcast Table View Controller-->
+        <scene sceneID="7YI-SW-Ga4">
+            <objects>
+                <viewController storyboardIdentifier="showPodcast" id="eoy-Vn-Upg" customClass="PodcastTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KbQ-CB-N5q"/>
+                        <viewControllerLayoutGuide type="bottom" id="u0Q-wG-VRe"/>
+                    </layoutGuides>
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="RrQ-kB-u3Y">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <segue destination="i2n-gv-Ajt" kind="show" identifier="displayEpisodeSegue" id="V8u-BT-T8K">
+                            <nil key="action"/>
+                        </segue>
+                        <segue destination="AV9-ad-wus" kind="presentation" identifier="displaySettingsSegue" modalPresentationStyle="overCurrentContext" id="yP1-T2-NoL"/>
+                        <segue destination="BzL-9w-Fol" kind="show" identifier="displayUserSegue" id="7cS-TJ-Jqz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CLg-Tg-l0s" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3339" y="-686"/>
+        </scene>
+        <!--Podcast Settings View Controller-->
+        <scene sceneID="18J-F6-TAj">
+            <objects>
+                <viewController id="AV9-ad-wus" customClass="PodcastSettingsViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MTb-92-ZBW"/>
+                        <viewControllerLayoutGuide type="bottom" id="L1R-ZG-lcX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="W9k-qn-YS7">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XHp-yv-LJS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4162" y="-1518"/>
+        </scene>
+        <!--Episode Table View Controller-->
+        <scene sceneID="3nq-Kw-6We">
+            <objects>
+                <viewController storyboardIdentifier="showEpisode" id="i2n-gv-Ajt" customClass="EpisodeTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hgf-s0-pHr"/>
+                        <viewControllerLayoutGuide type="bottom" id="Os8-YE-jag"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tDb-cu-plW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="BzL-9w-Fol" kind="show" identifier="displayUserSegue" id="eF5-28-CHl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GzA-4A-IXb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4162" y="-686"/>
+        </scene>
+        <!--showProfile-->
+        <scene sceneID="f4i-mB-oMk">
+            <objects>
+                <viewControllerPlaceholder storyboardName="User" referencedIdentifier="showProfile" id="BzL-9w-Fol" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s6q-nh-bJG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4162.5" y="-12"/>
+        </scene>
+        <!--Fabler Navigation Controller-->
+        <scene sceneID="Eul-3N-brq">
+            <objects>
+                <navigationController storyboardIdentifier="startPodcast" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="8X6-q1-Iil" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Kcq-r8-NDg">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="SaS-FQ-8O7" customClass="FablerToolBarController" customModule="Fabler" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="wk1-Is-qzg" kind="relationship" relationship="rootViewController" id="E2c-Ne-K24"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OOl-1W-1yv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1765" y="-686"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="menu" width="22" height="22"/>
+    </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="eF5-28-CHl"/>
+    </inferredMetricsTieBreakers>
+</document>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--User View Controller-->
+        <scene sceneID="3Ib-UC-eUq">
+            <objects>
+                <viewController storyboardIdentifier="showProfile" id="exF-1Y-skr" customClass="UserViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Mw0-25-Dzc"/>
+                        <viewControllerLayoutGuide type="bottom" id="piD-kt-7jl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="YbJ-fK-sNH">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="cvS-2l-z2G"/>
+                    <connections>
+                        <segue destination="zG3-we-Ab1" kind="presentation" identifier="editProfileSegue" modalPresentationStyle="overCurrentContext" id="DEF-OA-msU"/>
+                        <segue destination="ZVU-gj-D2Z" kind="show" identifier="displayFollowingSegue" id="WGI-hO-Eag">
+                            <nil key="action"/>
+                        </segue>
+                        <segue destination="ZVU-gj-D2Z" kind="show" identifier="displayFollowersSegue" id="Jjf-04-hQX">
+                            <nil key="action"/>
+                        </segue>
+                        <segue destination="enq-4b-XWs" kind="show" identifier="displaySubscribedSegue" id="Co1-7N-DeI">
+                            <nil key="action"/>
+                        </segue>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NJB-JC-yyV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3339" y="960"/>
+        </scene>
+        <!--Users Table View Controller-->
+        <scene sceneID="9sf-92-gpL">
+            <objects>
+                <tableViewController id="ZVU-gj-D2Z" customClass="UsersTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="hH9-vQ-Djl">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserCell" rowHeight="80" id="CJN-MY-Zbc" customClass="UserTableViewCell" customModule="Fabler" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CJN-MY-Zbc" id="63Y-G1-lur">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="fEE-fY-R3r">
+                                            <rect key="frame" x="5" y="5" width="70" height="70"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="70" id="3bH-Rr-CLC"/>
+                                                <constraint firstAttribute="width" constant="70" id="HYB-BH-iOl"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M8g-Wj-VbZ">
+                                            <rect key="frame" x="90" y="29" width="427" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LcH-fn-Ex7">
+                                            <rect key="frame" x="532" y="20" width="60" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="H0m-Ks-B3o"/>
+                                                <constraint firstAttribute="width" constant="60" id="vvx-Lq-yQg"/>
+                                            </constraints>
+                                            <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal" title="Follow">
+                                                <color key="titleColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="followButtonPressed:" destination="CJN-MY-Zbc" eventType="touchUpInside" id="byg-zB-v5X"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="LcH-fn-Ex7" firstAttribute="leading" secondItem="M8g-Wj-VbZ" secondAttribute="trailing" constant="15" id="6XR-TS-0li"/>
+                                        <constraint firstItem="LcH-fn-Ex7" firstAttribute="centerY" secondItem="63Y-G1-lur" secondAttribute="centerY" id="6wl-jJ-Y0n"/>
+                                        <constraint firstItem="LcH-fn-Ex7" firstAttribute="trailing" secondItem="63Y-G1-lur" secondAttribute="trailingMargin" id="HVR-Y7-kDd"/>
+                                        <constraint firstItem="fEE-fY-R3r" firstAttribute="top" secondItem="63Y-G1-lur" secondAttribute="top" constant="5" id="Hwf-Mp-Cog"/>
+                                        <constraint firstItem="M8g-Wj-VbZ" firstAttribute="leading" secondItem="fEE-fY-R3r" secondAttribute="trailing" constant="15" id="Jyx-BZ-8lL"/>
+                                        <constraint firstItem="fEE-fY-R3r" firstAttribute="leading" secondItem="63Y-G1-lur" secondAttribute="leading" constant="5" id="mh0-fM-FGD"/>
+                                        <constraint firstItem="M8g-Wj-VbZ" firstAttribute="centerY" secondItem="63Y-G1-lur" secondAttribute="centerY" id="wsZ-QO-m5J"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="followButton" destination="LcH-fn-Ex7" id="vQv-BA-81f"/>
+                                    <outlet property="profileImage" destination="fEE-fY-R3r" id="V9W-wJ-1rM"/>
+                                    <outlet property="userLabel" destination="M8g-Wj-VbZ" id="jww-UV-7Cy"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="ZVU-gj-D2Z" id="8lv-ZJ-Juv"/>
+                            <outlet property="delegate" destination="ZVU-gj-D2Z" id="PXy-1S-TBn"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <segue destination="exF-1Y-skr" kind="show" identifier="displayUserSegue" id="4mg-dM-jqS">
+                            <nil key="action"/>
+                        </segue>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Eov-r3-NbV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4162" y="960"/>
+        </scene>
+        <!--Subscribed Table View Controller-->
+        <scene sceneID="dUc-me-hjf">
+            <objects>
+                <tableViewController id="enq-4b-XWs" customClass="SubscribedTableViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Xni-aO-GoW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="enq-4b-XWs" id="alW-Zl-QgN"/>
+                            <outlet property="delegate" destination="enq-4b-XWs" id="1Yd-EL-CkJ"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <segue destination="Whi-vH-GdV" kind="show" identifier="displayPodcastSegue" id="M0E-L7-3Tj"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lk5-Kp-Qqn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4162" y="1804"/>
+        </scene>
+        <!--showPodcast-->
+        <scene sceneID="329-5F-JQy">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Podcast" referencedIdentifier="showPodcast" id="Whi-vH-GdV" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S73-Zq-o3O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4814.5" y="1804"/>
+        </scene>
+        <!--User Edit View Controller-->
+        <scene sceneID="kLP-Cr-WWG">
+            <objects>
+                <viewController id="zG3-we-Ab1" customClass="UserEditViewController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jTC-ig-1Ra"/>
+                        <viewControllerLayoutGuide type="bottom" id="Th4-EG-qhO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LCq-Qy-Gfl">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="58L-lC-27d" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4162" y="250"/>
+        </scene>
+        <!--Fabler Navigation Controller-->
+        <scene sceneID="zDc-kd-tKl">
+            <objects>
+                <navigationController storyboardIdentifier="startUser" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="8Km-hM-bdY" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8gA-Hr-N4l">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="oMe-uH-Ykj" customClass="FablerToolBarController" customModule="Fabler" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="exF-1Y-skr" kind="relationship" relationship="rootViewController" id="RfA-xn-CRd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="N8n-0B-Kkm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2523" y="960"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="profile" width="70" height="70"/>
+    </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="RfA-xn-CRd"/>
+        <segue reference="WGI-hO-Eag"/>
+    </inferredMetricsTieBreakers>
+</document>

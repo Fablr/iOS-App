@@ -91,7 +91,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tqd-ui-oHs">
-                                                <rect key="frame" x="170" y="0.0" width="75" height="172"/>
+                                                <rect key="frame" x="170" y="0.0" width="74" height="172"/>
                                                 <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" image="play"/>
                                                 <connections>
@@ -99,7 +99,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TKn-nE-hK7">
-                                                <rect key="frame" x="255" y="0.0" width="75" height="172"/>
+                                                <rect key="frame" x="254" y="0.0" width="75" height="172"/>
                                                 <color key="tintColor" red="1" green="0.56470588239999997" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" image="forward">
                                                     <attributedString key="attributedTitle"/>
@@ -230,10 +230,10 @@
             </objects>
             <point key="canvasLocation" x="1361" y="1243"/>
         </scene>
-        <!--episode-->
+        <!--showEpisode-->
         <scene sceneID="8q1-JH-rDf">
             <objects>
-                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="episode" id="fQM-6c-Cr5" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Podcast" referencedIdentifier="showEpisode" id="fQM-6c-Cr5" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="PoF-Xw-y9d"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pf0-Hs-FE9" userLabel="First Responder" sceneMemberID="firstResponder"/>
