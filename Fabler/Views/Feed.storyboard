@@ -38,10 +38,21 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Your Feed" id="wjf-aa-IWY"/>
+                    <connections>
+                        <segue destination="ut5-aM-ZdX" kind="show" identifier="displayUserSegue" id="JiW-yh-L0O"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mvw-Gk-feh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="474" y="540"/>
+        </scene>
+        <!--showProfile-->
+        <scene sceneID="dZT-LI-7LU">
+            <objects>
+                <viewControllerPlaceholder storyboardName="User" referencedIdentifier="showProfile" id="ut5-aM-ZdX" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D5s-5c-vKE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="998.5" y="540"/>
         </scene>
     </scenes>
 </document>

@@ -91,6 +91,10 @@ public class FeedService {
                 event.user = user
             }
 
+            if let time = (data["posted_time"].string)?.toNSDate() {
+                event.time = time
+            }
+
             let eventObjectJson = data["event_object"]
             switch event.eventType {
             case .Commented:

@@ -8,8 +8,9 @@
 
 import UIKit
 import SWRevealViewController
+import SwiftDate
 
-public class FeedTableViewController: UITableViewController {
+public class FeedTableViewController: UITableViewController, PerformsUserSegueDelegate {
 
     // MARK: - FeedTableViewController properties
 
@@ -25,7 +26,9 @@ public class FeedTableViewController: UITableViewController {
         let service = FeedService()
 
         service.getFeedFor(user) { [weak self] (events) in
-            self?.events = events
+            let sortedEvents = events.sort { $0.time > $1.time }
+
+            self?.events = sortedEvents
             self?.tableView.reloadData()
 
             if let refresher = self?.refreshControl where refresher.refreshing {
@@ -51,7 +54,7 @@ public class FeedTableViewController: UITableViewController {
         //
         // Register Nibs for reuse
         //
-        self.tableView.registerNib(UINib(nibName: "FeedSubscribedCell", bundle: nil), forCellReuseIdentifier: "SubscribedCell")
+        self.tableView.registerNib(UINib(nibName: "FeedFollowedCell", bundle: nil), forCellReuseIdentifier: "FollowedCell")
 
         //
         // RefreshControl setup
@@ -79,6 +82,14 @@ public class FeedTableViewController: UITableViewController {
         self.refreshControl?.beginRefreshing()
     }
 
+    override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "displayUserSegue" {
+            if let controller = segue.destinationViewController as? UserViewController, let user = sender as? User {
+                controller.user = user
+            }
+        }
+    }
+
     // MARK: - UITableViewController methods
 
     override public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -90,18 +101,38 @@ public class FeedTableViewController: UITableViewController {
     }
 
     override public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SubscribedCell", forIndexPath: indexPath)
+        let event = events[indexPath.row]
 
-        if let cell = cell as? FeedSubscribedTableViewCell {
-            let event = events[indexPath.row]
+        switch event.eventType {
+        case .Followed:
+            let cell = tableView.dequeueReusableCellWithIdentifier("FollowedCell", forIndexPath: indexPath)
 
-            if let userName = event.user?.userName {
-                cell.userButton?.setTitle(userName, forState: .Normal)
+            if let cell = cell as? FeedFollowedTableViewCell {
+                cell.delegate = self
+                cell.setEventInstance(event)
             }
 
-            cell.eventLabel?.text = "\(event.eventTypeRaw) at \(event.time)"
+            return cell
+
+        case .Commented:
+            break
+
+        case .Listened:
+            break
+
+        case .Subscribed:
+            break
+
+        case .None:
+            fatalError()
         }
 
-        return cell
+        return UITableViewCell()
+    }
+
+    // MARK: - PerformsUserSegue methods
+
+    public func performSegueToUser(user: User) {
+        performSegueWithIdentifier("displayUserSegue", sender: user)
     }
 }

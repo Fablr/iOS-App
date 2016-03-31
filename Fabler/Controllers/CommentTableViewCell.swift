@@ -19,7 +19,7 @@ protocol RepliesToCommentDelegate {
     func showActionSheet(menu: UIAlertController)
 }
 
-protocol PerformsUserSegueDelegate {
+public protocol PerformsUserSegueDelegate {
     func performSegueToUser(user: User)
 }
 
