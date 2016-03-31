@@ -8,6 +8,8 @@
 
 import UIKit
 import SwiftDate
+import RxSwift
+import RxCocoa
 
 public protocol PerformsPodcastSegueDelegate {
     func performSegueToPodcast(podcast: Podcast)
@@ -64,9 +66,14 @@ public class FeedSubscribedTableViewCell: UITableViewCell {
     public var userDelegate: PerformsUserSegueDelegate?
     public var podcastDelegate: PerformsPodcastSegueDelegate?
 
+    private var bag: DisposeBag! = DisposeBag()
+
     // MARK: - FeedSubscribedTableViewCell methods
 
     public func setEventInstance(event: Event) {
+        self.bag = nil
+        self.bag = DisposeBag()
+
         guard event.eventType == .Subscribed else {
             fatalError("\(event.eventTypeRaw) passed to subscribed cell")
         }
@@ -100,5 +107,21 @@ public class FeedSubscribedTableViewCell: UITableViewCell {
         } else {
             self.timeLabel?.text = ""
         }
+
+        podcast
+        .rx_observeWeakly(Bool.self, "primarySet")
+        .subscribeNext { [weak self] color in
+            if let primary = self?.event?.podcast?.primaryColor {
+                self?.podcastLargeButton?.tintColor = primary
+                self?.subscribeButton?.tintColor = primary
+            }
+        }
+        .addDisposableTo(self.bag)
+    }
+
+    // MARK: - UIViewController methods
+
+    deinit {
+        self.bag = nil
     }
 }

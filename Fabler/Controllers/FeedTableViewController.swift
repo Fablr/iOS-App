@@ -10,7 +10,7 @@ import UIKit
 import SWRevealViewController
 import SwiftDate
 
-public class FeedTableViewController: UITableViewController, PerformsUserSegueDelegate, PerformsPodcastSegueDelegate {
+public class FeedTableViewController: UITableViewController, PerformsUserSegueDelegate, PerformsPodcastSegueDelegate, PerformsEpisodeSegueDelegate {
 
     // MARK: - FeedTableViewController properties
 
@@ -56,6 +56,7 @@ public class FeedTableViewController: UITableViewController, PerformsUserSegueDe
         //
         self.tableView.registerNib(UINib(nibName: "FeedFollowedCell", bundle: nil), forCellReuseIdentifier: "FollowedCell")
         self.tableView.registerNib(UINib(nibName: "FeedSubscribedCell", bundle: nil), forCellReuseIdentifier: "SubscribedCell")
+        self.tableView.registerNib(UINib(nibName: "FeedListenedCell", bundle: nil), forCellReuseIdentifier: "ListenedCell")
 
         //
         // RefreshControl setup
@@ -96,6 +97,10 @@ public class FeedTableViewController: UITableViewController, PerformsUserSegueDe
             if let controller = segue.destinationViewController as? PodcastTableViewController, let podcast = sender as? Podcast {
                 controller.podcast = podcast
             }
+        } else if segue.identifier == "displayEpisodeSegue" {
+            if let controller = segue.destinationViewController as? EpisodeTableViewController, let episode = sender as? Episode {
+                controller.episode = episode
+            }
         }
     }
 
@@ -124,10 +129,19 @@ public class FeedTableViewController: UITableViewController, PerformsUserSegueDe
             return cell
 
         case .Commented:
-            break
+            return UITableViewCell()
 
         case .Listened:
-            break
+            let cell = tableView.dequeueReusableCellWithIdentifier("ListenedCell", forIndexPath: indexPath)
+
+            if let cell = cell as? FeedListenedTableViewCell {
+                cell.userDelegate = self
+                cell.podcastDelegate = self
+                cell.episodeDelegate = self
+                cell.setEventInstance(event)
+            }
+
+            return cell
 
         case .Subscribed:
             let cell = tableView.dequeueReusableCellWithIdentifier("SubscribedCell", forIndexPath: indexPath)
@@ -143,8 +157,6 @@ public class FeedTableViewController: UITableViewController, PerformsUserSegueDe
         case .None:
             fatalError()
         }
-
-        return UITableViewCell()
     }
 
     // MARK: - PerformsUserSegue methods
@@ -157,5 +169,11 @@ public class FeedTableViewController: UITableViewController, PerformsUserSegueDe
 
     public func performSegueToPodcast(podcast: Podcast) {
         performSegueWithIdentifier("displayPodcastSegue", sender: podcast)
+    }
+
+    // MARK: - PerformsEpisodeSegue methods
+
+    public func performSegueToEpisode(episode: Episode) {
+        performSegueWithIdentifier("displayEpisodeSegue", sender: episode)
     }
 }

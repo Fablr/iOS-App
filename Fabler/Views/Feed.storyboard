@@ -41,11 +41,20 @@
                     <connections>
                         <segue destination="ut5-aM-ZdX" kind="show" identifier="displayUserSegue" id="JiW-yh-L0O"/>
                         <segue destination="Bik-01-xgd" kind="show" identifier="displayPodcastSegue" id="Bvj-Oo-UFh"/>
+                        <segue destination="y5i-s8-wtq" kind="show" identifier="displayEpisodeSegue" id="k5S-2l-Z09"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mvw-Gk-feh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="474" y="540"/>
+        </scene>
+        <!--showEpisode-->
+        <scene sceneID="4Pj-ff-afd">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Podcast" referencedIdentifier="showEpisode" id="y5i-s8-wtq" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eKT-e5-I9F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="998" y="429"/>
         </scene>
         <!--showProfile-->
         <scene sceneID="dZT-LI-7LU">

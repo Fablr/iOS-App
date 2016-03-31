@@ -16,7 +16,7 @@ protocol PresentAlertControllerDelegate {
     func presentAlert(controller: UIAlertController)
 }
 
-protocol PerformsEpisodeSegueDelegate {
+public protocol PerformsEpisodeSegueDelegate {
     func performSegueToEpisode(episode: Episode)
 }
 

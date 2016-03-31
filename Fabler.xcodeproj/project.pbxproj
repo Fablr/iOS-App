@@ -30,6 +30,8 @@
 		4538B5801BF55E1800039DF1 /* SmallPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */; };
 		453ACAEF1CACED8D006518AF /* FeedSubscribedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 453ACAEE1CACED8D006518AF /* FeedSubscribedCell.xib */; };
 		453ACAF11CACEEE1006518AF /* FeedSubscribedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453ACAF01CACEEE1006518AF /* FeedSubscribedTableViewCell.swift */; };
+		453ACAF31CADC208006518AF /* FeedListenedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 453ACAF21CADC208006518AF /* FeedListenedCell.xib */; };
+		453ACAF51CADC22A006518AF /* FeedListenedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453ACAF41CADC22A006518AF /* FeedListenedTableViewCell.swift */; };
 		45505F711BFB1EF600481291 /* FablerDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45505F701BFB1EF600481291 /* FablerDownloadManager.swift */; };
 		45633A681C17BB3B00E6023A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45633A671C17BB3B00E6023A /* CoreGraphics.framework */; };
 		456BB5C91BF5B4A600D59C47 /* FablerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */; };
@@ -116,6 +118,8 @@
 		4538B57F1BF55E1800039DF1 /* SmallPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallPlayerViewController.swift; sourceTree = "<group>"; };
 		453ACAEE1CACED8D006518AF /* FeedSubscribedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedSubscribedCell.xib; sourceTree = "<group>"; };
 		453ACAF01CACEEE1006518AF /* FeedSubscribedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSubscribedTableViewCell.swift; sourceTree = "<group>"; };
+		453ACAF21CADC208006518AF /* FeedListenedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedListenedCell.xib; sourceTree = "<group>"; };
+		453ACAF41CADC22A006518AF /* FeedListenedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListenedTableViewCell.swift; sourceTree = "<group>"; };
 		45505F701BFB1EF600481291 /* FablerDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerDownloadManager.swift; sourceTree = "<group>"; };
 		45633A671C17BB3B00E6023A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerNavigationController.swift; sourceTree = "<group>"; };
@@ -206,6 +210,7 @@
 				4576FC031C13CF0000381A28 /* EpisodeHeader.xib */,
 				45A386A11C1AE4E900B2EDDA /* EpisodeSectionHeader.xib */,
 				45DF4A2F1CABA07B0066BBF7 /* FeedFollowedCell.xib */,
+				453ACAF21CADC208006518AF /* FeedListenedCell.xib */,
 				453ACAEE1CACED8D006518AF /* FeedSubscribedCell.xib */,
 				F47029FE1A7F27DB00E30A3C /* LaunchScreen.xib */,
 				456E43FF1CA1188100DFE24A /* PodcastCell.xib */,
@@ -266,6 +271,7 @@
 				456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */,
 				457889111C12482A007D3600 /* FablerToolBarController.swift */,
 				45DF4A311CABA6B50066BBF7 /* FeedFollowedTableViewCell.swift */,
+				453ACAF41CADC22A006518AF /* FeedListenedTableViewCell.swift */,
 				453ACAF01CACEEE1006518AF /* FeedSubscribedTableViewCell.swift */,
 				45DF4A2B1CAB647C0066BBF7 /* FeedTableViewController.swift */,
 				45FBA2591BF5E7FE00DD8D14 /* LargePlayerViewController.swift */,
@@ -462,6 +468,7 @@
 				45A386A01C1ADFF900B2EDDA /* CommentSectionFooter.xib in Resources */,
 				45E536781BDF06E0009E3F10 /* Main.storyboard in Resources */,
 				45A386A21C1AE4E900B2EDDA /* EpisodeSectionHeader.xib in Resources */,
+				453ACAF31CADC208006518AF /* FeedListenedCell.xib in Resources */,
 				F4702A001A7F27DC00E30A3C /* LaunchScreen.xib in Resources */,
 				4538B57D1BF55C3800039DF1 /* SmallPlayer.xib in Resources */,
 				45DF4A261CAB5DBA0066BBF7 /* User.storyboard in Resources */,
@@ -608,6 +615,7 @@
 				45DF4A321CABA6B50066BBF7 /* FeedFollowedTableViewCell.swift in Sources */,
 				4578890E1C1153E4007D3600 /* CommentTableViewCell.swift in Sources */,
 				F491E74C1A7F4C630026528E /* PodcastTableViewCell.swift in Sources */,
+				453ACAF51CADC22A006518AF /* FeedListenedTableViewCell.swift in Sources */,
 				457E51E31BE864170079845E /* PodcastCell.swift in Sources */,
 				45D36F5C1C9BBA9B00F5ABE2 /* Setting.swift in Sources */,
 				45173E411C2B1EE7006A8926 /* UserTableViewCell.swift in Sources */,

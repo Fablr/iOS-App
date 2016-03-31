@@ -112,7 +112,7 @@ public class UpNextTableViewController: UITableViewController, PresentAlertContr
 
     // MARK: - PerformsEpisodeSegueDelegate methods
 
-    func performSegueToEpisode(episode: Episode) {
+    public func performSegueToEpisode(episode: Episode) {
         performSegueWithIdentifier("displayEpisodeSegue", sender: episode)
     }
 }
