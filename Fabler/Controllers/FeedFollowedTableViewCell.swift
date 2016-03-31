@@ -54,12 +54,12 @@ public class FeedFollowedTableViewCell: UITableViewCell {
         self.followButton?.hidden = true
     }
 
-    // MARK: - FeedSubscribedTableViewCell properties
+    // MARK: - FeedFollowedTableViewCell properties
 
     public var event: Event?
     public var delegate: PerformsUserSegueDelegate?
 
-    // MARK: - FeedSubscribedTableViewCell methods
+    // MARK: - FeedFollowedTableViewCell methods
 
     public func setEventInstance(event: Event) {
         guard event.eventType == .Followed else {

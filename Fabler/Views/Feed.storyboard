@@ -40,6 +40,7 @@
                     <navigationItem key="navigationItem" title="Your Feed" id="wjf-aa-IWY"/>
                     <connections>
                         <segue destination="ut5-aM-ZdX" kind="show" identifier="displayUserSegue" id="JiW-yh-L0O"/>
+                        <segue destination="Bik-01-xgd" kind="show" identifier="displayPodcastSegue" id="Bvj-Oo-UFh"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mvw-Gk-feh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -53,6 +54,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D5s-5c-vKE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="998.5" y="540"/>
+        </scene>
+        <!--showPodcast-->
+        <scene sceneID="xgJ-bT-jBm">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Podcast" referencedIdentifier="showPodcast" id="Bik-01-xgd" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="85X-fd-9Ni" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="998.5" y="638"/>
         </scene>
     </scenes>
 </document>

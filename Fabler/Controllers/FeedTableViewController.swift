@@ -10,7 +10,7 @@ import UIKit
 import SWRevealViewController
 import SwiftDate
 
-public class FeedTableViewController: UITableViewController, PerformsUserSegueDelegate {
+public class FeedTableViewController: UITableViewController, PerformsUserSegueDelegate, PerformsPodcastSegueDelegate {
 
     // MARK: - FeedTableViewController properties
 
@@ -55,6 +55,7 @@ public class FeedTableViewController: UITableViewController, PerformsUserSegueDe
         // Register Nibs for reuse
         //
         self.tableView.registerNib(UINib(nibName: "FeedFollowedCell", bundle: nil), forCellReuseIdentifier: "FollowedCell")
+        self.tableView.registerNib(UINib(nibName: "FeedSubscribedCell", bundle: nil), forCellReuseIdentifier: "SubscribedCell")
 
         //
         // RefreshControl setup
@@ -78,6 +79,10 @@ public class FeedTableViewController: UITableViewController, PerformsUserSegueDe
     override public func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
+        if let navigation = self.navigationController as? FablerNavigationController {
+            navigation.setDefaultNavigationBar()
+        }
+
         self.refreshData(self)
         self.refreshControl?.beginRefreshing()
     }
@@ -86,6 +91,10 @@ public class FeedTableViewController: UITableViewController, PerformsUserSegueDe
         if segue.identifier == "displayUserSegue" {
             if let controller = segue.destinationViewController as? UserViewController, let user = sender as? User {
                 controller.user = user
+            }
+        } else if segue.identifier == "displayPodcastSegue" {
+            if let controller = segue.destinationViewController as? PodcastTableViewController, let podcast = sender as? Podcast {
+                controller.podcast = podcast
             }
         }
     }
@@ -121,7 +130,15 @@ public class FeedTableViewController: UITableViewController, PerformsUserSegueDe
             break
 
         case .Subscribed:
-            break
+            let cell = tableView.dequeueReusableCellWithIdentifier("SubscribedCell", forIndexPath: indexPath)
+
+            if let cell = cell as? FeedSubscribedTableViewCell {
+                cell.userDelegate = self
+                cell.podcastDelegate = self
+                cell.setEventInstance(event)
+            }
+
+            return cell
 
         case .None:
             fatalError()
@@ -134,5 +151,11 @@ public class FeedTableViewController: UITableViewController, PerformsUserSegueDe
 
     public func performSegueToUser(user: User) {
         performSegueWithIdentifier("displayUserSegue", sender: user)
+    }
+
+    // MARK: - PerformsPodcastSegue methods
+
+    public func performSegueToPodcast(podcast: Podcast) {
+        performSegueWithIdentifier("displayPodcastSegue", sender: podcast)
     }
 }

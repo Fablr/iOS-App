@@ -46,7 +46,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserCell" rowHeight="80" id="CJN-MY-Zbc" customClass="UserTableViewCell" customModule="Fabler" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="80"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CJN-MY-Zbc" id="63Y-G1-lur">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
@@ -186,7 +186,7 @@
         <image name="profile" width="70" height="70"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="RfA-xn-CRd"/>
+        <segue reference="4mg-dM-jqS"/>
         <segue reference="WGI-hO-Eag"/>
     </inferredMetricsTieBreakers>
 </document>
