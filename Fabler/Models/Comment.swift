@@ -17,6 +17,12 @@ public enum Vote: Int {
     case Up = 1
 }
 
+public enum CommentType: String {
+    case Podcast = "Podcast"
+    case Episode = "Episode"
+    case None = "None"
+}
+
 // swiftlint:enable type_name
 
 final public class Comment: Object {
@@ -36,8 +42,19 @@ final public class Comment: Object {
     dynamic var podcast: Podcast?
     dynamic var episode: Episode?
     dynamic var removed: Bool = false
+    dynamic var commentTypeRaw: String = "None"
 
     let children = List<Comment>()
+
+    var commentType: CommentType {
+        get {
+            if let state = CommentType(rawValue: self.commentTypeRaw) {
+                return state
+            }
+
+            return .None
+        }
+    }
 
     // MARK: - Computed properties
 

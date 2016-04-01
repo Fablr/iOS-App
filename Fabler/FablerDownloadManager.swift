@@ -433,11 +433,6 @@ public class FablerDownloadManager: NSObject, NSURLSessionDownloadDelegate, NSUR
     }
 
     public func remove(download: FablerDownload) {
-        guard download.state == .Completed else {
-            Log.warning("Invalid state to remove download from")
-            return
-        }
-
         let urlString = download.urlString
 
         dispatch_sync(downloadsLockQueue) {

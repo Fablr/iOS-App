@@ -43,18 +43,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dif-5b-VjO">
-                                <rect key="frame" x="144" y="8" width="33" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="6X1-ai-Lpb"/>
-                                    <constraint firstAttribute="width" priority="250" constant="33" id="nyZ-Nd-EzK"/>
-                                </constraints>
-                                <color key="tintColor" red="0.95686274510000002" green="0.54901960780000003" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="User"/>
-                                <connections>
-                                    <action selector="followedButtonPressed:" destination="GnZ-wm-H3X" eventType="touchUpInside" id="HYV-W1-xVS"/>
-                                </connections>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile-large" translatesAutoresizingMaskIntoConstraints="NO" id="OkS-dq-Yu5">
                                 <rect key="frame" x="18" y="58" width="70" height="70"/>
                                 <constraints>
@@ -91,6 +79,18 @@
                                     <action selector="followerButtonPressed:" destination="GnZ-wm-H3X" eventType="touchUpInside" id="gag-wS-OIh"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="950" verticalCompressionResistancePriority="950" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dif-5b-VjO">
+                                <rect key="frame" x="144" y="8" width="249" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="6X1-ai-Lpb"/>
+                                    <constraint firstAttribute="width" priority="200" constant="33" id="nyZ-Nd-EzK"/>
+                                </constraints>
+                                <color key="tintColor" red="0.95686274510000002" green="0.54901960780000003" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="User"/>
+                                <connections>
+                                    <action selector="followedButtonPressed:" destination="GnZ-wm-H3X" eventType="touchUpInside" id="HYV-W1-xVS"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -108,6 +108,7 @@
                             <constraint firstItem="b28-J7-4dK" firstAttribute="leading" secondItem="z4r-E1-ew1" secondAttribute="leading" id="lNq-GY-8LK"/>
                             <constraint firstItem="dif-5b-VjO" firstAttribute="bottom" secondItem="jwZ-hm-WdO" secondAttribute="bottom" id="mtm-DB-nQa"/>
                             <constraint firstItem="z4r-E1-ew1" firstAttribute="leading" secondItem="hhE-1S-wYO" secondAttribute="trailing" constant="5" id="ocR-Mq-TAs"/>
+                            <constraint firstAttribute="trailing" secondItem="dif-5b-VjO" secondAttribute="trailing" constant="5" id="oqw-Oj-Neg"/>
                             <constraint firstItem="dif-5b-VjO" firstAttribute="leading" secondItem="jwZ-hm-WdO" secondAttribute="trailing" constant="2" id="sWF-WJ-trH"/>
                             <constraint firstItem="jlp-V7-tMs" firstAttribute="centerY" secondItem="OkS-dq-Yu5" secondAttribute="centerY" id="ssB-RP-ElM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jlp-V7-tMs" secondAttribute="trailing" constant="10" id="vTF-pH-Xn4"/>

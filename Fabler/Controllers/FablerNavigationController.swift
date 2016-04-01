@@ -23,6 +23,8 @@ class FablerNavigationController: UINavigationController {
     func displaySmallPlayer() {
         if playerAdded && showPlayer {
             self.setToolbarHidden(false, animated: true)
+            //let frame = self.toolbar.frame
+            //self.toolbar.frame = CGRect(x: frame.origin.x, y: frame.origin.y - 100, width: frame.width, height: frame.height)
         }
     }
 

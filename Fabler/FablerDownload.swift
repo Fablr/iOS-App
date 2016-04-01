@@ -208,11 +208,6 @@ public class FablerDownload: Object {
     }
 
     public func remove() {
-        guard self.state == .Completed else {
-            Log.warning("Invalid state to remove download from")
-            return
-        }
-
         self.manager.remove(self)
     }
 

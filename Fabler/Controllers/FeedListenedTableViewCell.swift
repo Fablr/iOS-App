@@ -114,11 +114,15 @@ public class FeedListenedTableViewCell: UITableViewCell {
         self.episodeButton?.setTitle(episode.title, forState: .Normal)
 
         user.profileImage { [weak self] image in
-            self?.userImage?.image = image
+            if let image = image {
+                self?.userImage?.image = image
+            }
         }
 
         podcast.image { [weak self] image in
-            self?.podcastImage?.image = image
+            if let image = image {
+                self?.podcastImage?.image = image
+            }
         }
 
         if podcast.subscribed {

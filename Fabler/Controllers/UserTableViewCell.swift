@@ -63,8 +63,10 @@ class UserTableViewCell: UITableViewCell {
 
         self.setupFollowButton(user.followingUser)
 
-        user.profileImage { [weak self] (image) in
-            self?.profileImage?.image = image
+        user.profileImage { [weak self] image in
+            if let image = image {
+                self?.profileImage?.image = image
+            }
         }
 
         self.userLabel?.text = title

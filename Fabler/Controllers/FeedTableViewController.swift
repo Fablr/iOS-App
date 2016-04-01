@@ -57,6 +57,7 @@ public class FeedTableViewController: UITableViewController, PerformsUserSegueDe
         self.tableView.registerNib(UINib(nibName: "FeedFollowedCell", bundle: nil), forCellReuseIdentifier: "FollowedCell")
         self.tableView.registerNib(UINib(nibName: "FeedSubscribedCell", bundle: nil), forCellReuseIdentifier: "SubscribedCell")
         self.tableView.registerNib(UINib(nibName: "FeedListenedCell", bundle: nil), forCellReuseIdentifier: "ListenedCell")
+        self.tableView.registerNib(UINib(nibName: "FeedCommentedCell", bundle: nil), forCellReuseIdentifier: "CommentedCell")
 
         //
         // RefreshControl setup
@@ -129,7 +130,16 @@ public class FeedTableViewController: UITableViewController, PerformsUserSegueDe
             return cell
 
         case .Commented:
-            return UITableViewCell()
+            let cell = tableView.dequeueReusableCellWithIdentifier("CommentedCell", forIndexPath: indexPath)
+
+            if let cell = cell as? FeedCommentedTableViewCell {
+                cell.userDelegate = self
+                cell.podcastDelegate = self
+                cell.episodeDelegate = self
+                cell.setEventInstance(event)
+            }
+
+            return cell
 
         case .Listened:
             let cell = tableView.dequeueReusableCellWithIdentifier("ListenedCell", forIndexPath: indexPath)
@@ -155,7 +165,7 @@ public class FeedTableViewController: UITableViewController, PerformsUserSegueDe
             return cell
 
         case .None:
-            fatalError()
+            fatalError("Invalid feed event")
         }
     }
 

@@ -162,7 +162,7 @@ class EpisodeTableViewCell: UITableViewCell {
             case .Indeterminate:
                 fallthrough
             case .Running:
-                episode.download?.cancel()
+                episode.download?.remove()
                 view.setIndicatorStatus(.None)
                 self.token?.stop()
                 self.token = nil

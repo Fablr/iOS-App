@@ -95,11 +95,15 @@ public class FeedSubscribedTableViewCell: UITableViewCell {
         }
 
         user.profileImage { [weak self] image in
-            self?.userImage?.image = image
+            if let image = image {
+                self?.userImage?.image = image
+            }
         }
 
         podcast.image { [weak self] image in
-            self?.podcastImage?.image = image
+            if let image = image {
+                self?.podcastImage?.image = image
+            }
         }
 
         if let date = event.time.toNaturalString(NSDate(), inRegion: nil, style: FormatterStyle(style: .Full, max: 1)) {

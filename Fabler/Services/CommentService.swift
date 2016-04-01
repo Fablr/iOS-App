@@ -17,6 +17,10 @@ let ScratchRealmIdentifier = "fabler-scratch"
 
 // swiftlint:enable variable_name
 
+enum CommentServiceError: ErrorType {
+    case CommentSerializationError
+}
+
 public class CommentService {
 
     // MARK: - CommentService API methods
@@ -379,6 +383,7 @@ public class CommentService {
                     }
 
                     comment.episode = scratchEpisode
+                    comment.commentTypeRaw = CommentType.Episode.rawValue
                 }
             }
 
@@ -391,6 +396,7 @@ public class CommentService {
                     }
 
                     comment.podcast = scratchPodcast
+                    comment.commentTypeRaw = CommentType.Podcast.rawValue
                 }
             }
 
@@ -402,17 +408,23 @@ public class CommentService {
                     let podcastService = PodcastService()
                     if let podcast = podcastService.serializePodcastObject(objectJson) {
                         comment.podcast = podcast
+                        comment.commentTypeRaw = CommentType.Podcast.rawValue
                     }
 
                 case "episode":
                     let episodeService = EpisodeService()
                     if let episode = episodeService.serializeEpisodeObject(objectJson) {
                         comment.episode = episode
+                        comment.commentTypeRaw = CommentType.Episode.rawValue
                     }
 
                 default:
-                    Log.warning("Invalid content type: \(type)")
+                    throw CommentServiceError.CommentSerializationError
                 }
+            }
+
+            if comment.commentType == .None {
+                throw CommentServiceError.CommentSerializationError
             }
 
             try realm.write {

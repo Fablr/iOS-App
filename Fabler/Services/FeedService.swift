@@ -10,6 +10,10 @@ import Alamofire
 import SwiftyJSON
 import RealmSwift
 
+enum FeedServiceError: ErrorType {
+    case FeedSerializationError
+}
+
 public class FeedService {
 
     // MARK: - FeedService API methods
@@ -121,7 +125,11 @@ public class FeedService {
                 }
 
             case .None:
-                Log.warning("Invalid content type for event")
+                throw FeedServiceError.FeedSerializationError
+            }
+
+            if event.eventType == .None {
+                throw FeedServiceError.FeedSerializationError
             }
 
             try realm.write {

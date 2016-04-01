@@ -32,6 +32,8 @@
 		453ACAF11CACEEE1006518AF /* FeedSubscribedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453ACAF01CACEEE1006518AF /* FeedSubscribedTableViewCell.swift */; };
 		453ACAF31CADC208006518AF /* FeedListenedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 453ACAF21CADC208006518AF /* FeedListenedCell.xib */; };
 		453ACAF51CADC22A006518AF /* FeedListenedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453ACAF41CADC22A006518AF /* FeedListenedTableViewCell.swift */; };
+		453ACAF71CAE10F9006518AF /* FeedCommentedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 453ACAF61CAE10F9006518AF /* FeedCommentedCell.xib */; };
+		453ACAF91CAE1657006518AF /* FeedCommentedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453ACAF81CAE1657006518AF /* FeedCommentedTableViewCell.swift */; };
 		45505F711BFB1EF600481291 /* FablerDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45505F701BFB1EF600481291 /* FablerDownloadManager.swift */; };
 		45633A681C17BB3B00E6023A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45633A671C17BB3B00E6023A /* CoreGraphics.framework */; };
 		456BB5C91BF5B4A600D59C47 /* FablerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */; };
@@ -120,6 +122,8 @@
 		453ACAF01CACEEE1006518AF /* FeedSubscribedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSubscribedTableViewCell.swift; sourceTree = "<group>"; };
 		453ACAF21CADC208006518AF /* FeedListenedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedListenedCell.xib; sourceTree = "<group>"; };
 		453ACAF41CADC22A006518AF /* FeedListenedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListenedTableViewCell.swift; sourceTree = "<group>"; };
+		453ACAF61CAE10F9006518AF /* FeedCommentedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedCommentedCell.xib; sourceTree = "<group>"; };
+		453ACAF81CAE1657006518AF /* FeedCommentedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCommentedTableViewCell.swift; sourceTree = "<group>"; };
 		45505F701BFB1EF600481291 /* FablerDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerDownloadManager.swift; sourceTree = "<group>"; };
 		45633A671C17BB3B00E6023A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerNavigationController.swift; sourceTree = "<group>"; };
@@ -209,6 +213,7 @@
 				45BFCC181C154299007D31C8 /* EpisodeCell.xib */,
 				4576FC031C13CF0000381A28 /* EpisodeHeader.xib */,
 				45A386A11C1AE4E900B2EDDA /* EpisodeSectionHeader.xib */,
+				453ACAF61CAE10F9006518AF /* FeedCommentedCell.xib */,
 				45DF4A2F1CABA07B0066BBF7 /* FeedFollowedCell.xib */,
 				453ACAF21CADC208006518AF /* FeedListenedCell.xib */,
 				453ACAEE1CACED8D006518AF /* FeedSubscribedCell.xib */,
@@ -270,6 +275,7 @@
 				450B767B1BECABB30033C0B6 /* EpisodeTableViewController.swift */,
 				456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */,
 				457889111C12482A007D3600 /* FablerToolBarController.swift */,
+				453ACAF81CAE1657006518AF /* FeedCommentedTableViewCell.swift */,
 				45DF4A311CABA6B50066BBF7 /* FeedFollowedTableViewCell.swift */,
 				453ACAF41CADC22A006518AF /* FeedListenedTableViewCell.swift */,
 				453ACAF01CACEEE1006518AF /* FeedSubscribedTableViewCell.swift */,
@@ -465,6 +471,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				453ACAF71CAE10F9006518AF /* FeedCommentedCell.xib in Resources */,
 				45A386A01C1ADFF900B2EDDA /* CommentSectionFooter.xib in Resources */,
 				45E536781BDF06E0009E3F10 /* Main.storyboard in Resources */,
 				45A386A21C1AE4E900B2EDDA /* EpisodeSectionHeader.xib in Resources */,
@@ -611,6 +618,7 @@
 				F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */,
 				45D36F5E1C9BCAFE00F5ABE2 /* SettingService.swift in Sources */,
 				450B76801BEF567D0033C0B6 /* BackpaneViewController.swift in Sources */,
+				453ACAF91CAE1657006518AF /* FeedCommentedTableViewCell.swift in Sources */,
 				45BF1C661BE31EF600665402 /* UserService.swift in Sources */,
 				45DF4A321CABA6B50066BBF7 /* FeedFollowedTableViewCell.swift in Sources */,
 				4578890E1C1153E4007D3600 /* CommentTableViewCell.swift in Sources */,

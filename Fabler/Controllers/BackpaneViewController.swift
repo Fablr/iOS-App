@@ -32,8 +32,10 @@ class BackpaneViewController: UIViewController {
             return
         }
 
-        user.profileImage { [weak self] (image) in
-            self?.userImage?.image = image
+        user.profileImage { [weak self] image in
+            if let image = image {
+                self?.userImage?.image = image
+            }
         }
 
         self.userButton?.setTitle(user.userName, forState: .Normal)

@@ -72,9 +72,9 @@ public class FeedFollowedTableViewCell: UITableViewCell {
             fatalError("Invalid subscribed event passed to followed cell")
         }
 
-        let followedText = followed.currentUser ? "you" : followed.userName.lowercaseString
+        let followedText = followed.currentUser ? "You" : followed.userName
 
-        self.userButton?.setTitle(follower.userName.lowercaseString, forState: .Normal)
+        self.userButton?.setTitle(follower.userName, forState: .Normal)
         self.followedButton?.setTitle(followedText, forState: .Normal)
         self.followedLargeButton?.setTitle(followed.userName, forState: .Normal)
 
@@ -85,11 +85,15 @@ public class FeedFollowedTableViewCell: UITableViewCell {
         }
 
         follower.profileImage { [weak self] image in
-            self?.profileImage?.image = image
+            if let image = image {
+                self?.profileImage?.image = image
+            }
         }
 
         followed.profileImage { [weak self] image in
-            self?.followedImage?.image = image
+            if let image = image {
+                self?.followedImage?.image = image
+            }
         }
 
         if let date = event.time.toNaturalString(NSDate(), inRegion: nil, style: FormatterStyle(style: .Full, max: 1)) {

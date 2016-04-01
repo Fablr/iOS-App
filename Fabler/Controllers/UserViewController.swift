@@ -97,7 +97,9 @@ class UserViewController: FormViewController {
             var header = HeaderFooterView<UserHeaderView>(HeaderFooterProvider.NibFile(name: "UserHeader", bundle: nil))
             header.onSetupView = { (view, section, form) -> () in
                 user.profileImage { image in
-                    view.profileImage?.image = image
+                    if let image = image {
+                        view.profileImage?.image = image
+                    }
                 }
             }
 
