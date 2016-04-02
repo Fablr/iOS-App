@@ -28,9 +28,11 @@ public final class UserService {
 
     static var currentFacebookToken: FBSDKAccessToken?
 
-    private let queueIdentifier: String
+    private let pendingQueueIdentifier: String
     private let pendingRequestQueue: dispatch_queue_t
     private var pendingRequests: [Request] = []
+
+    private let serializationQueue: dispatch_queue_t = dispatch_queue_create("com.Fabler.userSerialization", nil)
 
     // MARK: - UserService methods
 
@@ -38,8 +40,8 @@ public final class UserService {
         let notificationCenter = NSNotificationCenter.defaultCenter()
         let mainQueue = NSOperationQueue.mainQueue()
 
-        self.queueIdentifier = NSUUID().UUIDString
-        self.pendingRequestQueue = dispatch_queue_create(self.queueIdentifier, nil)
+        self.pendingQueueIdentifier = NSUUID().UUIDString
+        self.pendingRequestQueue = dispatch_queue_create(self.pendingQueueIdentifier, nil)
 
         notificationCenter.addObserverForName(FBSDKAccessTokenDidChangeNotification, object: nil, queue: mainQueue) { notification in
             Log.info("Facebook token updated")
@@ -522,62 +524,64 @@ public final class UserService {
     public func serializeUserObject(data: JSON) -> User? {
         var user: User?
 
-        do {
-            let realm = try Realm()
+        dispatch_sync(self.serializationQueue) {
+            do {
+                let realm = try Realm()
 
-            if let id = data["id"].int {
-                if let existingUser = realm.objectForPrimaryKey(User.self, key: id) {
-                    user = existingUser
-                } else {
-                    user = User()
-                    user?.userId = id
+                if let id = data["id"].int {
+                    if let existingUser = realm.objectForPrimaryKey(User.self, key: id) {
+                        user = existingUser
+                    } else {
+                        user = User()
+                        user?.userId = id
 
+                        try realm.write {
+                            realm.add(user!)
+                        }
+                    }
+
+                    Log.verbose("Serializing user \(id).")
+                }
+
+                if let user = user {
                     try realm.write {
-                        realm.add(user!)
+                        if let userName = data["username"].string {
+                            user.userName = userName
+                        }
+
+                        if let firstName = data["first_name"].string {
+                            user.firstName = firstName
+                        }
+
+                        if let lastName = data["last_name"].string {
+                            user.lastName = lastName
+                        }
+
+                        if let email = data["email"].string {
+                            user.email = email
+                        }
+
+                        if let currentUser = data["currentUser"].bool {
+                            user.currentUser = currentUser
+                        }
+
+                        if let image = data["image"].string {
+                            user.image = image
+                        }
+
+                        if let birthday = (data["birthday"].string)?.toNSDate() {
+                            user.birthday = birthday
+                        }
+
+                        if let following = data["following"].bool {
+                            user.followingUser = following
+                        }
                     }
                 }
-
-                Log.verbose("Serializing user \(id).")
+            } catch {
+                Log.error("Realm write failed")
+                user = nil
             }
-
-            if let user = user {
-                try realm.write {
-                    if let userName = data["username"].string {
-                        user.userName = userName
-                    }
-
-                    if let firstName = data["first_name"].string {
-                        user.firstName = firstName
-                    }
-
-                    if let lastName = data["last_name"].string {
-                        user.lastName = lastName
-                    }
-
-                    if let email = data["email"].string {
-                        user.email = email
-                    }
-
-                    if let currentUser = data["currentUser"].bool {
-                        user.currentUser = currentUser
-                    }
-
-                    if let image = data["image"].string {
-                        user.image = image
-                    }
-
-                    if let birthday = (data["birthday"].string)?.toNSDate() {
-                        user.birthday = birthday
-                    }
-
-                    if let following = data["following"].bool {
-                        user.followingUser = following
-                    }
-                }
-            }
-        } catch {
-            Log.error("Realm write failed")
-            user = nil
         }
 
         return user
