@@ -1,6 +1,6 @@
 PODS:
   - ACPDownload (1.1.0)
-  - Alamofire (3.3.0)
+  - Alamofire (3.3.1)
   - AlamofireImage (2.4.0):
     - Alamofire (~> 3.3)
   - Bolts (1.6.0):
@@ -18,7 +18,7 @@ PODS:
   - FBSDKLoginKit (4.10.1):
     - FBSDKCoreKit
   - Hue (1.1)
-  - Kingfisher (2.2.0)
+  - Kingfisher (2.2.2)
   - Realm (0.98.6):
     - Realm/Headers (= 0.98.6)
   - Realm/Headers (0.98.6)
@@ -37,14 +37,14 @@ PODS:
 
 DEPENDENCIES:
   - ACPDownload (~> 1.1.0)
-  - Alamofire (~> 3.3.0)
+  - Alamofire (~> 3.3.1)
   - AlamofireImage (~> 2.4.0)
   - ChameleonFramework (~> 2.1.0)
   - Eureka (~> 1.5.0)
   - FBSDKCoreKit (~> 4.10.1)
   - FBSDKLoginKit (~> 4.10.1)
   - Hue (~> 1.1)
-  - Kingfisher (~> 2.2.0)
+  - Kingfisher (~> 2.2.2)
   - RealmSwift (~> 0.98.6)
   - RxCocoa (~> 2.3.1)
   - RxSwift (~> 2.3.1)
@@ -58,7 +58,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   ACPDownload: 9c6349be96019b6c8c87ad46570af1cbc7106bf4
-  Alamofire: 9054db4a1b1ca9e363223183e01cea380159a27c
+  Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
   AlamofireImage: 87408b652e0f5ae5fe364035f15aea8b9b24c77e
   Bolts: f52a250053bb517ca874523c3913776359ab3def
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
@@ -66,7 +66,7 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: d2aaed5e9ab7d8d6301c533376a1fbff1cf3deb5
   FBSDKLoginKit: 699ff169080e3072de4b9b0faca90bf23dc36deb
   Hue: ed6781be844b58b2a38150cfd4bf24c33449faf8
-  Kingfisher: 350869ed88d6451803b390475d977abdd9f0a357
+  Kingfisher: 7e8de5b0cf7b5dc8ec559d193029a0859df93ef1
   Realm: 44803f35418c5d89b27825a564247fcd190de37e
   RealmSwift: c7239c52c83f8c43525a5269ba7be1694da33afc
   RxCocoa: a2baaf3462b989559a51dce59d78fbebb8fe0afa
