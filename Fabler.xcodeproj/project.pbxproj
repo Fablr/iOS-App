@@ -52,6 +52,7 @@
 		457889121C12482A007D3600 /* FablerToolBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457889111C12482A007D3600 /* FablerToolBarController.swift */; };
 		457E51E31BE864170079845E /* PodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E51E21BE864170079845E /* PodcastCell.swift */; };
 		4588CF2C1BDB46E40080E13D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4588CF2B1BDB46E40080E13D /* LoginViewController.swift */; };
+		459152351CB865F8001140B0 /* FablerTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459152341CB865F8001140B0 /* FablerTabBarController.swift */; };
 		45A3433C1C76E99A00A660A2 /* FablerAutoDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3433B1C76E99A00A660A2 /* FablerAutoDownload.swift */; };
 		45A386A01C1ADFF900B2EDDA /* CommentSectionFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45A3869F1C1ADFF900B2EDDA /* CommentSectionFooter.xib */; };
 		45A386A21C1AE4E900B2EDDA /* EpisodeSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45A386A11C1AE4E900B2EDDA /* EpisodeSectionHeader.xib */; };
@@ -142,6 +143,7 @@
 		457889111C12482A007D3600 /* FablerToolBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerToolBarController.swift; sourceTree = "<group>"; };
 		457E51E21BE864170079845E /* PodcastCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCell.swift; sourceTree = "<group>"; };
 		4588CF2B1BDB46E40080E13D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		459152341CB865F8001140B0 /* FablerTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerTabBarController.swift; sourceTree = "<group>"; };
 		45A3433B1C76E99A00A660A2 /* FablerAutoDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FablerAutoDownload.swift; sourceTree = "<group>"; };
 		45A3869F1C1ADFF900B2EDDA /* CommentSectionFooter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentSectionFooter.xib; sourceTree = "<group>"; };
 		45A386A11C1AE4E900B2EDDA /* EpisodeSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EpisodeSectionHeader.xib; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				450B76791BECA7610033C0B6 /* EpisodeTableViewCell.swift */,
 				450B767B1BECABB30033C0B6 /* EpisodeTableViewController.swift */,
 				456BB5C81BF5B4A600D59C47 /* FablerNavigationController.swift */,
+				459152341CB865F8001140B0 /* FablerTabBarController.swift */,
 				457889111C12482A007D3600 /* FablerToolBarController.swift */,
 				453ACAF81CAE1657006518AF /* FeedCommentedTableViewCell.swift */,
 				45DF4A311CABA6B50066BBF7 /* FeedFollowedTableViewCell.swift */,
@@ -595,6 +598,7 @@
 				45E5367E1BE1F980009E3F10 /* FablerClient.swift in Sources */,
 				4538B5801BF55E1800039DF1 /* SmallPlayerViewController.swift in Sources */,
 				45505F711BFB1EF600481291 /* FablerDownloadManager.swift in Sources */,
+				459152351CB865F8001140B0 /* FablerTabBarController.swift in Sources */,
 				4576FC061C13D74000381A28 /* EpisodeHeaderViewController.swift in Sources */,
 				45A3433C1C76E99A00A660A2 /* FablerAutoDownload.swift in Sources */,
 				4501BB9B1C177F330021171C /* FablerUI.swift in Sources */,

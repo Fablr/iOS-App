@@ -11,10 +11,6 @@ import SWRevealViewController
 
 class DiscoveryCollectionViewController: UICollectionViewController {
 
-    // MARK: - IBOutlets
-
-    @IBOutlet weak var menuButton: UIBarButtonItem?
-
     // MARK: - DiscoveryViewController properties
 
     private let reuseIdentifier = "ShowCell"
@@ -24,12 +20,6 @@ class DiscoveryCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if revealViewController() != nil {
-            self.menuButton?.target = revealViewController()
-            self.menuButton?.action = #selector(SWRevealViewController.revealToggle)
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
 
         let service = PodcastService()
         self.podcasts = service.readAllPodcasts { [weak self] (podcasts) in

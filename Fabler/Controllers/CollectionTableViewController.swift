@@ -11,10 +11,6 @@ import SWRevealViewController
 
 class CollectionTableViewController: UITableViewController {
 
-    // MARK: - IBOutlets
-
-    @IBOutlet var menuButton: UIBarButtonItem?
-
     // MARK: - CollectionTableViewController properties
 
     var podcasts: [Podcast] = []
@@ -45,12 +41,6 @@ class CollectionTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if revealViewController() != nil {
-            self.menuButton?.target = revealViewController()
-            self.menuButton?.action = #selector(SWRevealViewController.revealToggle)
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
 
         self.tableView.registerNib(UINib(nibName: "PodcastCell", bundle: nil), forCellReuseIdentifier: "PodcastCell")
 

@@ -4,10 +4,12 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--Fabler Navigation Controller-->
+        <!--Your Feed-->
         <scene sceneID="iwx-yd-V4s">
             <objects>
-                <navigationController storyboardIdentifier="startFeed" toolbarHidden="NO" id="QrM-as-RKL" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="startFeed" id="QrM-as-RKL" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Your Feed" image="newspaper" id="3N5-Ok-P8J"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8eT-Q0-96a">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -31,7 +33,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="XJX-nP-ylG">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <connections>
                             <outlet property="dataSource" destination="xCD-TN-4rd" id="PLB-Em-cNc"/>
                             <outlet property="delegate" destination="xCD-TN-4rd" id="ozI-Dx-P40"/>
@@ -73,4 +75,7 @@
             <point key="canvasLocation" x="998.5" y="638"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="newspaper" width="30" height="30"/>
+    </resources>
 </document>

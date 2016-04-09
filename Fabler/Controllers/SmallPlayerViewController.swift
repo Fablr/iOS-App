@@ -77,4 +77,14 @@ public class SmallPlayerViewController: UIViewController {
         let progress = current / duration
         self.progressView?.setProgress(Float(progress), animated: true)
     }
+
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+
+        let blurEffect = UIBlurEffect(style: .Light)
+        let veView = UIVisualEffectView(effect: blurEffect)
+        veView.frame = self.view.bounds
+        self.view.backgroundColor = .clearColor()
+        self.view.insertSubview(veView, atIndex: 0)
+    }
 }

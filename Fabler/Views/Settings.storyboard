@@ -46,12 +46,13 @@
             </objects>
             <point key="canvasLocation" x="2577" y="2717"/>
         </scene>
-        <!--Fabler Navigation Controller-->
+        <!--Settings-->
         <scene sceneID="dpB-Ij-zD7">
             <objects>
-                <navigationController storyboardIdentifier="startSettings" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="BFC-BH-k8u" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="startSettings" automaticallyAdjustsScrollViewInsets="NO" id="BFC-BH-k8u" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Settings" image="settings" id="bJo-7v-weM"/>
                     <toolbarItems/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0lL-BI-jjz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -70,4 +71,7 @@
             <point key="canvasLocation" x="1765" y="2717"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="settings" width="30" height="30"/>
+    </resources>
 </document>

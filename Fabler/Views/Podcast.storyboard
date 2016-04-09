@@ -17,11 +17,8 @@
                             <outlet property="delegate" destination="wk1-Is-qzg" id="ark-6A-eP3"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Your Shows" id="SEL-Mm-kgj">
-                        <barButtonItem key="leftBarButtonItem" image="menu" id="vG9-wZ-5AZ"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Your Shows" id="SEL-Mm-kgj"/>
                     <connections>
-                        <outlet property="menuButton" destination="vG9-wZ-5AZ" id="jbO-f6-TG5"/>
                         <segue destination="eoy-Vn-Upg" kind="show" identifier="displayPodcastSegue" id="I6t-IJ-Mg6">
                             <nil key="action"/>
                         </segue>
@@ -92,7 +89,7 @@
                         <viewControllerLayoutGuide type="top" id="hgf-s0-pHr"/>
                         <viewControllerLayoutGuide type="bottom" id="Os8-YE-jag"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="tDb-cu-plW">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="tDb-cu-plW">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -113,11 +110,13 @@
             </objects>
             <point key="canvasLocation" x="4162.5" y="-12"/>
         </scene>
-        <!--Fabler Navigation Controller-->
+        <!--Your Podcasts-->
         <scene sceneID="Eul-3N-brq">
             <objects>
-                <navigationController storyboardIdentifier="startPodcast" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="8X6-q1-Iil" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="startPodcast" automaticallyAdjustsScrollViewInsets="NO" id="8X6-q1-Iil" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Your Podcasts" image="list" id="99D-6O-8tW"/>
                     <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Kcq-r8-NDg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -137,7 +136,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="menu" width="22" height="22"/>
+        <image name="list" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="eF5-28-CHl"/>

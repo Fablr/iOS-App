@@ -45,11 +45,8 @@
                             </collectionViewCell>
                         </cells>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Discovery" id="7lC-oY-dA8">
-                        <barButtonItem key="leftBarButtonItem" image="menu" id="tSE-rT-peM"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Discovery" id="7lC-oY-dA8"/>
                     <connections>
-                        <outlet property="menuButton" destination="tSE-rT-peM" id="gRK-mZ-spB"/>
                         <segue destination="fl9-hX-0gb" kind="show" identifier="displayPodcastSegue" id="hVo-J7-u6o"/>
                     </connections>
                 </viewController>
@@ -65,11 +62,13 @@
             </objects>
             <point key="canvasLocation" x="2577.5" y="682"/>
         </scene>
-        <!--Fabler Navigation Controller-->
+        <!--Discover-->
         <scene sceneID="aUg-Ni-eWS">
             <objects>
-                <navigationController storyboardIdentifier="startDiscovery" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="oMv-2g-0u6" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="startDiscovery" automaticallyAdjustsScrollViewInsets="NO" id="oMv-2g-0u6" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Discover" image="search" id="oIG-3T-pDj"/>
                     <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bHc-8n-G7j">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -89,6 +88,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="menu" width="22" height="22"/>
+        <image name="search" width="30" height="30"/>
     </resources>
 </document>

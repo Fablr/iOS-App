@@ -37,6 +37,7 @@
                     <connections>
                         <outlet property="loginButton" destination="ES1-aW-U8k" id="SP0-lB-5Sy"/>
                         <segue destination="vXZ-lx-hvc" kind="show" identifier="loggedInSegue" id="CX1-hn-47q"/>
+                        <segue destination="nCi-7m-m26" kind="show" identifier="loggedInSegue" id="eCy-1n-xUp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P5X-7A-i8g" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -46,7 +47,7 @@
         <!--Reveal View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController storyboardIdentifier="start" id="vXZ-lx-hvc" customClass="SWRevealViewController" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="SWRevealViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -63,7 +64,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="888" y="-686"/>
+            <point key="canvasLocation" x="898" y="-302"/>
         </scene>
         <!--Backpane View Controller-->
         <scene sceneID="4SI-bp-lri">
@@ -181,12 +182,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fjX-l1-SZ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="888" y="162"/>
+            <point key="canvasLocation" x="898" y="448"/>
         </scene>
         <!--startFeed-->
         <scene sceneID="6aK-t3-wXJ">
             <objects>
-                <viewControllerPlaceholder storyboardName="Feed" referencedIdentifier="startFeed" id="Ebm-nZ-GcR" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Feed" referencedIdentifier="startFeed" id="Ebm-nZ-GcR" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Feed" image="newspaper" id="9ko-un-RrV"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6At-3j-xGM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1392.5" y="267"/>
@@ -194,15 +197,40 @@
         <!--startUser-->
         <scene sceneID="qST-ta-WVw">
             <objects>
-                <viewControllerPlaceholder storyboardName="User" referencedIdentifier="startUser" id="MM5-pb-18m" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="User" referencedIdentifier="startUser" id="MM5-pb-18m" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="You" image="podcast" id="VQx-4B-VRy"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="scB-gp-vCR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1392" y="378"/>
         </scene>
+        <!--Fabler Tab Bar Controller-->
+        <scene sceneID="DaC-PB-TfB">
+            <objects>
+                <tabBarController storyboardIdentifier="start" id="nCi-7m-m26" customClass="FablerTabBarController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="Hmc-4h-vs3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="Zhs-dn-EZJ" kind="relationship" relationship="viewControllers" id="vnV-lo-gsL"/>
+                        <segue destination="7jE-CW-TEp" kind="relationship" relationship="viewControllers" id="1hn-1a-YJ3"/>
+                        <segue destination="Ebm-nZ-GcR" kind="relationship" relationship="viewControllers" id="lUu-pC-teV"/>
+                        <segue destination="MM5-pb-18m" kind="relationship" relationship="viewControllers" id="duP-Z8-3a9"/>
+                        <segue destination="Zv7-v1-eWO" kind="relationship" relationship="viewControllers" id="Si6-c5-IiQ"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BiG-R1-xRL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1662" y="-686"/>
+        </scene>
         <!--startPodcast-->
         <scene sceneID="biv-KK-PkF">
             <objects>
-                <viewControllerPlaceholder storyboardName="Podcast" referencedIdentifier="startPodcast" id="Zhs-dn-EZJ" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Podcast" referencedIdentifier="startPodcast" id="Zhs-dn-EZJ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Collection" image="list" id="AAE-Sm-coG"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Fj-OA-5kY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1392.5" y="-72"/>
@@ -210,7 +238,9 @@
         <!--startDiscovery-->
         <scene sceneID="AgR-qi-LTa">
             <objects>
-                <viewControllerPlaceholder storyboardName="Discovery" referencedIdentifier="startDiscovery" id="7jE-CW-TEp" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Discovery" referencedIdentifier="startDiscovery" id="7jE-CW-TEp" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Discover" image="search" id="Cj9-RA-hhF"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eug-Na-OL5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1392" y="44"/>
@@ -218,17 +248,28 @@
         <!--startSettings-->
         <scene sceneID="GhU-mj-94N">
             <objects>
-                <viewControllerPlaceholder storyboardName="Settings" referencedIdentifier="startSettings" id="Zv7-v1-eWO" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Settings" referencedIdentifier="startSettings" id="Zv7-v1-eWO" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Settings" image="settings" id="hMW-IS-hSm"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3EU-NO-acS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1392" y="162"/>
         </scene>
     </scenes>
     <resources>
+        <image name="list" width="30" height="30"/>
         <image name="logo-sidebar" width="126" height="45"/>
+        <image name="newspaper" width="30" height="30"/>
+        <image name="podcast" width="30" height="30"/>
         <image name="profile" width="70" height="70"/>
+        <image name="search" width="30" height="30"/>
+        <image name="settings" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="EWr-Mq-r5F"/>
+        <segue reference="1hn-1a-YJ3"/>
+        <segue reference="Si6-c5-IiQ"/>
+        <segue reference="vnV-lo-gsL"/>
+        <segue reference="lUu-pC-teV"/>
+        <segue reference="duP-Z8-3a9"/>
     </inferredMetricsTieBreakers>
 </document>

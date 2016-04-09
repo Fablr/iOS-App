@@ -18,18 +18,20 @@ class FablerNavigationController: UINavigationController {
 
     var currentStatusBarStyle: UIStatusBarStyle = .LightContent
 
+    var playerView: UIView?
+
     // MARK: - FablerNavigationController methods
 
     func displaySmallPlayer() {
         if playerAdded && showPlayer {
-            self.setToolbarHidden(false, animated: true)
-            //let frame = self.toolbar.frame
-            //self.toolbar.frame = CGRect(x: frame.origin.x, y: frame.origin.y - 100, width: frame.width, height: frame.height)
+            //self.setToolbarHidden(false, animated: true)
+            self.playerView?.hidden = false
         }
     }
 
     func dismissSmallPlayer() {
-        self.setToolbarHidden(true, animated: true)
+        //self.setToolbarHidden(true, animated: true)
+        self.playerView?.hidden = true
     }
 
     func setDefaultNavigationBar() {
@@ -47,24 +49,38 @@ class FablerNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.setDefaultNavigationBar()
-
-        self.setToolbarHidden(true, animated: true)
-
         let player = FablerPlayer.sharedInstance
 
-        if player.started && showPlayer {
-            self.playerAdded = true
-            self.setToolbarHidden(false, animated: true)
-        }
+        self.playerView = player.smallPlayer.view
+        self.playerView?.frame = CGRect(x: 0.0, y: UIScreen.mainScreen().bounds.size.height - 92.0, width: UIScreen.mainScreen().bounds.size.width, height: 44.0)
+        self.view.addSubview(self.playerView!)
+
+        self.setDefaultNavigationBar()
+
+        self.dismissSmallPlayer()
 
         if showPlayer {
             player.registerPlaybackStarted { [weak self] in
                 if let controller = self where !controller.playerAdded {
                     controller.playerAdded = true
-                    controller.setToolbarHidden(false, animated: true)
+                    self?.displaySmallPlayer()
                 }
             }
+        }
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+        let player = FablerPlayer.sharedInstance
+
+        self.playerView = player.smallPlayer.view
+        self.playerView?.frame = CGRect(x: 0.0, y: UIScreen.mainScreen().bounds.size.height - 92.0, width: UIScreen.mainScreen().bounds.size.width, height: 44.0)
+        self.view.addSubview(self.playerView!)
+
+        if player.started && showPlayer {
+            self.playerAdded = true
+            self.displaySmallPlayer()
         }
     }
 }

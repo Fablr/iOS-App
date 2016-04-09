@@ -46,7 +46,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserCell" rowHeight="80" id="CJN-MY-Zbc" customClass="UserTableViewCell" customModule="Fabler" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="600" height="80"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CJN-MY-Zbc" id="63Y-G1-lur">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
@@ -159,11 +159,13 @@
             </objects>
             <point key="canvasLocation" x="4162" y="250"/>
         </scene>
-        <!--Fabler Navigation Controller-->
+        <!--You-->
         <scene sceneID="zDc-kd-tKl">
             <objects>
-                <navigationController storyboardIdentifier="startUser" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="8Km-hM-bdY" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="startUser" automaticallyAdjustsScrollViewInsets="NO" id="8Km-hM-bdY" customClass="FablerNavigationController" customModule="Fabler" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="You" image="podcast" id="4pa-gG-jjK"/>
                     <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8gA-Hr-N4l">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -183,10 +185,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="podcast" width="30" height="30"/>
         <image name="profile" width="70" height="70"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="4mg-dM-jqS"/>
+        <segue reference="RfA-xn-CRd"/>
         <segue reference="WGI-hO-Eag"/>
     </inferredMetricsTieBreakers>
 </document>
