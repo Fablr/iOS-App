@@ -12,7 +12,6 @@ import RxSwift
 import RxCocoa
 import SCLAlertView
 import RealmSwift
-import SWRevealViewController
 
 class UserViewController: FormViewController {
 
@@ -80,14 +79,6 @@ class UserViewController: FormViewController {
         service.getFollowers(user, completion: nil)
         service.getFollowing(user, completion: nil)
         service.getSubscribed(user, completion: nil)
-
-        if self.root {
-            if revealViewController() != nil {
-                let menu = UIBarButtonItem(image: UIImage(named: "menu"), style: .Plain, target: revealViewController(), action: #selector(SWRevealViewController.revealToggle))
-                self.navigationItem.leftBarButtonItem = menu
-                view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-            }
-        }
 
         self.tableView?.bounces = false
 

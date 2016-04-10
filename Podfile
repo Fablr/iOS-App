@@ -14,7 +14,6 @@ target 'Fabler' do
   pod 'XNGMarkdownParser', '~>0.3.2'
   pod 'SCLAlertView', '~>0.5.1'
   pod 'Kingfisher', '~>2.2.2'
-  pod 'SWRevealViewController', '~>2.3.0'
   pod 'Eureka', '~>1.5.0'
   pod 'ACPDownload', '~>1.1.0'
   pod 'ChameleonFramework', '~>2.1.0'

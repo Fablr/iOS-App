@@ -9,7 +9,6 @@
 import UIKit
 import Eureka
 import Kingfisher
-import SWRevealViewController
 
 class SettingViewController: FormViewController {
 
@@ -95,12 +94,6 @@ class SettingViewController: FormViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if revealViewController() != nil {
-            let menu = UIBarButtonItem(image: UIImage(named: "menu"), style: .Plain, target: revealViewController(), action: #selector(SWRevealViewController.revealToggle))
-            self.navigationItem.leftBarButtonItem = menu
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
 
         let service = SettingService()
         self.setting = service.getSettingForCurrentUser()

@@ -32,7 +32,6 @@ PODS:
   - SwiftDate (3.0.8)
   - SwiftyBeaver (0.4.2)
   - SwiftyJSON (2.3.2)
-  - SWRevealViewController (2.3.0)
   - XNGMarkdownParser (0.3.2)
 
 DEPENDENCIES:
@@ -53,7 +52,6 @@ DEPENDENCIES:
   - SwiftDate (~> 3.0.8)
   - SwiftyBeaver (~> 0.4.2)
   - SwiftyJSON (~> 2.3.2)
-  - SWRevealViewController (~> 2.3.0)
   - XNGMarkdownParser (~> 0.3.2)
 
 SPEC CHECKSUMS:
@@ -76,7 +74,6 @@ SPEC CHECKSUMS:
   SwiftDate: 971f8b9394f664f2226b9c3ab64e801a7291c612
   SwiftyBeaver: 3eced9aabe4f10b975453cc1baaa2d523a5eaeae
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
-  SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
   XNGMarkdownParser: aed98c14f0c0eb20064184ddf9bac26c482722b2
 
 COCOAPODS: 0.39.0

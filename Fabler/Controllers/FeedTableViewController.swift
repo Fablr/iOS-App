@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SWRevealViewController
 import SwiftDate
 
 public class FeedTableViewController: UITableViewController, PerformsUserSegueDelegate, PerformsPodcastSegueDelegate, PerformsEpisodeSegueDelegate {
@@ -41,15 +40,6 @@ public class FeedTableViewController: UITableViewController, PerformsUserSegueDe
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-
-        //
-        // RevealView setup
-        //
-        if revealViewController() != nil {
-            let menu = UIBarButtonItem(image: UIImage(named: "menu"), style: .Plain, target: revealViewController(), action: #selector(SWRevealViewController.revealToggle))
-            self.navigationItem.leftBarButtonItem = menu
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
 
         //
         // Register Nibs for reuse

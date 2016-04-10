@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SWRevealViewController
 
 class DiscoveryCollectionViewController: UICollectionViewController {
 
