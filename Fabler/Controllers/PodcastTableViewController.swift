@@ -42,6 +42,18 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     var currentSegment: Int = 0
 
+    // MARK: - SLKTextViewController properties
+
+    override var tableView: UITableView {
+        get {
+            guard let tableView = super.tableView else {
+                fatalError("Unable to unwrap tableView")
+            }
+
+            return tableView
+        }
+    }
+
     // MARK: - PodcastTableViewController methods
 
     func updateImages() {
@@ -113,7 +125,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.episodes = service.getEpisodesForPodcast(podcast) { [weak self] (episodes) in
             self?.episodes = episodes
             self?.filterEpisodes()
-            self?.tableView?.reloadData()
+            self?.tableView.reloadData()
 
             if let refresher = self?.refreshControl where refresher.refreshing {
                 refresher.endRefreshing()
@@ -132,7 +144,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
         service.getCommentsForPodcast(podcast) { [weak self] (comments) in
             self?.comments = comments
-            self?.tableView?.reloadData()
+            self?.tableView.reloadData()
 
             if let refresher = self?.refreshControl where refresher.refreshing {
                 refresher.endRefreshing()
@@ -262,7 +274,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         if let image = self.headerImage {
             header.addSubview(image)
 
-            self.tableView?.tableHeaderView = header
+            self.tableView.tableHeaderView = header
 
             let views = ["super": self.view, "tableView": self.tableView, "image": image]
 
@@ -278,18 +290,18 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             self.view.addConstraint(magic)
         }
 
-        self.tableView?.rowHeight = UITableViewAutomaticDimension
-        self.tableView?.estimatedRowHeight = 120.0
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 120.0
 
-        self.tableView?.allowsMultipleSelection = false
+        self.tableView.allowsMultipleSelection = false
 
         //
         // Register Nibs for reuse
         //
-        self.tableView?.registerNib(UINib(nibName: "EpisodeCell", bundle: nil), forCellReuseIdentifier: "EpisodeCell")
-        self.tableView?.registerNib(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
-        self.tableView?.registerNib(UINib(nibName: "EpisodeSectionHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "EpisodeSectionHeader")
-        self.tableView?.registerNib(UINib(nibName: "CommentSectionFooter", bundle: nil), forHeaderFooterViewReuseIdentifier: "CommentSectionFooter")
+        self.tableView.registerNib(UINib(nibName: "EpisodeCell", bundle: nil), forCellReuseIdentifier: "EpisodeCell")
+        self.tableView.registerNib(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
+        self.tableView.registerNib(UINib(nibName: "EpisodeSectionHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "EpisodeSectionHeader")
+        self.tableView.registerNib(UINib(nibName: "CommentSectionFooter", bundle: nil), forHeaderFooterViewReuseIdentifier: "CommentSectionFooter")
 
         //
         // SLKTextViewController setup
@@ -348,7 +360,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
         .rx_observeWeakly(String.self, "sortOrderRaw")
         .subscribeNext { [weak self] (_) in
             self?.sortEpisodes()
-            self?.tableView?.reloadData()
+            self?.tableView.reloadData()
         }
         .addDisposableTo(self.bag)
 
@@ -361,7 +373,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             refresher.addTarget(self, action: #selector(PodcastTableViewController.refreshData), forControlEvents: UIControlEvents.ValueChanged)
             refresher.backgroundColor = .clearColor()
             refresher.tintColor = .whiteColor()
-            self.tableView?.addSubview(refresher)
+            self.tableView.addSubview(refresher)
         }
     }
     // swiftlint:enable function_body_length
@@ -534,7 +546,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     // MARK: - PodcastTableViewController episode table methods
 
     func setupTableForEpisodes() {
-        self.tableView?.allowsSelection = true
+        self.tableView.allowsSelection = true
     }
 
     func episodesDidSelectRowAtIndexPath(indexPath: NSIndexPath) {
@@ -548,8 +560,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     func episodesNumberOfSectionsInTableView() -> Int {
         if self.filteredEpisodes.count > 0 {
-            self.tableView?.backgroundView = nil
-            self.tableView?.separatorStyle = .None
+            self.tableView.backgroundView = nil
+            self.tableView.separatorStyle = .None
         } else {
             let frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
             let label = UILabel(frame: frame)
@@ -565,17 +577,15 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             label.text = text
             label.textAlignment = NSTextAlignment.Center
 
-            self.tableView?.backgroundView = label
-            self.tableView?.separatorStyle = .None
+            self.tableView.backgroundView = label
+            self.tableView.separatorStyle = .None
         }
 
         return 1
     }
 
     func episodesSetupCell(indexPath: NSIndexPath) -> UITableViewCell {
-        guard let cell = self.tableView?.dequeueReusableCellWithIdentifier("EpisodeCell", forIndexPath: indexPath) else {
-            return UITableViewCell()
-        }
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("EpisodeCell", forIndexPath: indexPath)
 
         let episode = filteredEpisodes[indexPath.row]
 
@@ -613,7 +623,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             let deleteAction = UITableViewRowAction(style: .Destructive, title: "Delete") { [weak self] (action: UITableViewRowAction, indexPath: NSIndexPath) in
                 if let controller = self, let download = controller.filteredEpisodes[indexPath.row].download {
                     download.remove()
-                    controller.tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                    controller.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 }
             }
 
@@ -626,7 +636,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     // MARK: - PodcastTableViewController comment table methods
 
     func setupTableForComments() {
-        self.tableView?.allowsSelection = false
+        self.tableView.allowsSelection = false
     }
 
     func commentsDidSelectRowAtIndexPath(indexPath: NSIndexPath) {
@@ -635,8 +645,8 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
     func commentsNumberOfSectionsInTableView() -> Int {
         if self.comments.count > 0 {
-            self.tableView?.backgroundView = nil
-            self.tableView?.separatorStyle = .None
+            self.tableView.backgroundView = nil
+            self.tableView.separatorStyle = .None
         } else {
             //
             // Display empty view message but, still display section header
@@ -653,17 +663,15 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
                 button.tintColor = FablerColors.Orange.Regular
             }
 
-            self.tableView?.backgroundView = button
-            self.tableView?.separatorStyle = .None
+            self.tableView.backgroundView = button
+            self.tableView.separatorStyle = .None
         }
 
         return 1
     }
 
     func commentsSetupCell(indexPath: NSIndexPath) -> UITableViewCell {
-        guard let cell = self.tableView?.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) else {
-            return UITableViewCell()
-        }
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath)
 
         let comment = comments[indexPath.row]
 
@@ -699,16 +707,16 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
     // MARK: - CollapsibleUITableViewCellDelegate methods
 
     func setCollapseState(cell: UITableViewCell, collapsed: Bool) {
-        guard let indexPath = self.tableView?.indexPathForCell(cell) else {
+        guard let indexPath = self.tableView.indexPathForCell(cell) else {
             return
         }
 
         self.indexPath = indexPath
         self.collapsed = collapsed
 
-        self.tableView?.beginUpdates()
-        self.tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-        self.tableView?.endUpdates()
+        self.tableView.beginUpdates()
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        self.tableView.endUpdates()
     }
 
     // MARK: - RepliesToCommentDelegate methods
@@ -740,7 +748,7 @@ class PodcastTableViewController: SLKTextViewController, CollapsibleUITableViewC
             self.didDismissKeyboard()
             self.refreshData(self)
 
-            self.tableView?.reloadData()
+            self.tableView.reloadData()
         }
     }
 
