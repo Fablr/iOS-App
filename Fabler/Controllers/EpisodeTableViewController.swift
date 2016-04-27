@@ -47,7 +47,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
 
         service.getCommentsForEpisode(episode) { [weak self] (comments) in
             self?.comments = comments
-            self?.tableView.reloadData()
+            self?.tableView?.reloadData()
 
             if let refresher = self?.refreshControl where refresher.refreshing {
                 refresher.endRefreshing()
@@ -143,14 +143,14 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         //
         // Register Nibs for reuse
         //
-        self.tableView.registerNib(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
-        self.tableView.registerNib(UINib(nibName: "CommentSectionFooter", bundle: nil), forHeaderFooterViewReuseIdentifier: "CommentSectionFooter")
+        self.tableView?.registerNib(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
+        self.tableView?.registerNib(UINib(nibName: "CommentSectionFooter", bundle: nil), forHeaderFooterViewReuseIdentifier: "CommentSectionFooter")
 
         //
         // TableView setup
         //
         self.headerController = EpisodeHeaderViewController(nibName: "EpisodeHeader", bundle: nil)
-        self.tableView.tableHeaderView = self.headerController?.view
+        self.tableView?.tableHeaderView = self.headerController?.view
 
         if let header = self.headerController {
             var frame = header.view.frame
@@ -158,11 +158,11 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
             header.view.frame = frame
         }
 
-        self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 120.0
+        self.tableView?.rowHeight = UITableViewAutomaticDimension
+        self.tableView?.estimatedRowHeight = 120.0
 
-        self.tableView.allowsSelection = false
-        self.tableView.allowsMultipleSelection = false
+        self.tableView?.allowsSelection = false
+        self.tableView?.allowsMultipleSelection = false
 
         self.edgesForExtendedLayout = .None
 
@@ -205,7 +205,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
             refresher.addTarget(self, action: #selector(EpisodeTableViewController.refreshData), forControlEvents: .ValueChanged)
             refresher.backgroundColor = FablerColors.Orange.Regular
             refresher.tintColor = .whiteColor()
-            self.tableView.addSubview(refresher)
+            self.tableView?.addSubview(refresher)
         }
 
         //
@@ -225,7 +225,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
                 self?.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor(contrastingBlackOrWhiteColorOn: primary, isFlat: true)]
                 self?.setStatusBarStyle(UIStatusBarStyleContrast)
 
-                self?.tableView.reloadData()
+                self?.tableView?.reloadData()
             }
         }
         .addDisposableTo(self.bag)
@@ -272,7 +272,7 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
         self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
 
         if self.comments.count > 0 {
-            self.tableView.backgroundView = nil
+            self.tableView?.backgroundView = nil
         } else {
             //
             // Display empty view message but, still display section header
@@ -353,15 +353,15 @@ class EpisodeTableViewController: SLKTextViewController, CollapsibleUITableViewC
     // MARK: - CollapsibleUITableViewCellDelegate methods
 
     func setCollapseState(cell: UITableViewCell, collapsed: Bool) {
-        if let indexPath = self.tableView.indexPathForCell(cell) {
+        if let indexPath = self.tableView?.indexPathForCell(cell) {
             Log.verbose("Setting index path to \(indexPath).")
 
             self.indexPath = indexPath
             self.collapsed = collapsed
 
-            self.tableView.beginUpdates()
-            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            self.tableView.endUpdates()
+            self.tableView?.beginUpdates()
+            self.tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            self.tableView?.endUpdates()
         }
     }
 

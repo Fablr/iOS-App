@@ -3,34 +3,34 @@ PODS:
   - Alamofire (3.3.1)
   - AlamofireImage (2.4.0):
     - Alamofire (~> 3.3)
-  - Bolts (1.6.0):
-    - Bolts/AppLinks (= 1.6.0)
-    - Bolts/Tasks (= 1.6.0)
-  - Bolts/AppLinks (1.6.0):
+  - Bolts (1.7.0):
+    - Bolts/AppLinks (= 1.7.0)
+    - Bolts/Tasks (= 1.7.0)
+  - Bolts/AppLinks (1.7.0):
     - Bolts/Tasks
-  - Bolts/Tasks (1.6.0)
+  - Bolts/Tasks (1.7.0)
   - ChameleonFramework (2.1.0):
     - ChameleonFramework/Default (= 2.1.0)
   - ChameleonFramework/Default (2.1.0)
   - Eureka (1.5.0)
-  - FBSDKCoreKit (4.10.1):
-    - Bolts (~> 1.5)
-  - FBSDKLoginKit (4.10.1):
+  - FBSDKCoreKit (4.11.0):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.11.0):
     - FBSDKCoreKit
   - Hue (1.1)
-  - Kingfisher (2.2.2)
-  - Realm (0.98.6):
-    - Realm/Headers (= 0.98.6)
-  - Realm/Headers (0.98.6)
-  - RealmSwift (0.98.6):
-    - Realm (= 0.98.6)
-  - RxCocoa (2.3.1):
-    - RxSwift (~> 2.3.1)
-  - RxSwift (2.3.1)
-  - SCLAlertView (0.5.1)
-  - SlackTextViewController (1.9.1)
+  - Kingfisher (2.3.1)
+  - Realm (0.99.1):
+    - Realm/Headers (= 0.99.1)
+  - Realm/Headers (0.99.1)
+  - RealmSwift (0.99.1):
+    - Realm (= 0.99.1)
+  - RxCocoa (2.4):
+    - RxSwift (~> 2.4)
+  - RxSwift (2.4)
+  - SCLAlertView (0.5.4)
+  - SlackTextViewController (1.9.2)
   - SwiftDate (3.0.8)
-  - SwiftyBeaver (0.4.2)
+  - SwiftyBeaver (0.5.0)
   - SwiftyJSON (2.3.2)
   - XNGMarkdownParser (0.3.2)
 
@@ -40,17 +40,17 @@ DEPENDENCIES:
   - AlamofireImage (~> 2.4.0)
   - ChameleonFramework (~> 2.1.0)
   - Eureka (~> 1.5.0)
-  - FBSDKCoreKit (~> 4.10.1)
-  - FBSDKLoginKit (~> 4.10.1)
+  - FBSDKCoreKit (~> 4.11.0)
+  - FBSDKLoginKit (~> 4.11.0)
   - Hue (~> 1.1)
-  - Kingfisher (~> 2.2.2)
-  - RealmSwift (~> 0.98.6)
-  - RxCocoa (~> 2.3.1)
-  - RxSwift (~> 2.3.1)
-  - SCLAlertView (~> 0.5.1)
-  - SlackTextViewController (~> 1.9.1)
+  - Kingfisher (~> 2.3.1)
+  - RealmSwift (~> 0.99.1)
+  - RxCocoa (~> 2.4)
+  - RxSwift (~> 2.4)
+  - SCLAlertView (~> 0.5.4)
+  - SlackTextViewController (~> 1.9.2)
   - SwiftDate (~> 3.0.8)
-  - SwiftyBeaver (~> 0.4.2)
+  - SwiftyBeaver (~> 0.5.0)
   - SwiftyJSON (~> 2.3.2)
   - XNGMarkdownParser (~> 0.3.2)
 
@@ -58,21 +58,21 @@ SPEC CHECKSUMS:
   ACPDownload: 9c6349be96019b6c8c87ad46570af1cbc7106bf4
   Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
   AlamofireImage: 87408b652e0f5ae5fe364035f15aea8b9b24c77e
-  Bolts: f52a250053bb517ca874523c3913776359ab3def
+  Bolts: a0058fa3b331c5a1e4402d534f2dae36dbff31e4
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Eureka: 2fb37bb50569c62ee3284689d5b7aca694b040e0
-  FBSDKCoreKit: d2aaed5e9ab7d8d6301c533376a1fbff1cf3deb5
-  FBSDKLoginKit: 699ff169080e3072de4b9b0faca90bf23dc36deb
+  FBSDKCoreKit: 686ac982723a14ec9ddb85e2f81235d7706c891b
+  FBSDKLoginKit: bade9fc78277764149ccc5bfaadbf13c83175c6a
   Hue: ed6781be844b58b2a38150cfd4bf24c33449faf8
-  Kingfisher: 7e8de5b0cf7b5dc8ec559d193029a0859df93ef1
-  Realm: 44803f35418c5d89b27825a564247fcd190de37e
-  RealmSwift: c7239c52c83f8c43525a5269ba7be1694da33afc
-  RxCocoa: a2baaf3462b989559a51dce59d78fbebb8fe0afa
-  RxSwift: 829b2843e9eddc77a02cb3f5117f0d55f8f646f1
-  SCLAlertView: 3ac39a863d3e10fc165662b1228b03402297aea9
-  SlackTextViewController: 6b0d1030c53937226fc5358f217af2a34fc211cf
+  Kingfisher: 6d3fbada4829cbc7b89e883e8218c28afeb64e42
+  Realm: 522a0cc8e1f8755ee56d7dc16ca0fc380d045766
+  RealmSwift: 1d9c4299ef5dbf575c5da09fc706ed726327cfa0
+  RxCocoa: 7d6cd877de99f5640306b3d6cf87f580c1d91b61
+  RxSwift: 67b9ef4e8b34fb394e200e754c6a09cc16559f94
+  SCLAlertView: 081f824b17b7cf41057159535591f4d6fc8acde3
+  SlackTextViewController: bac3350ccc639bc446bb14cbd09da238f5e01f32
   SwiftDate: 971f8b9394f664f2226b9c3ab64e801a7291c612
-  SwiftyBeaver: 3eced9aabe4f10b975453cc1baaa2d523a5eaeae
+  SwiftyBeaver: 3a03b25c7102b792e67821a481610ef0f28185c7
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   XNGMarkdownParser: aed98c14f0c0eb20064184ddf9bac26c482722b2
 

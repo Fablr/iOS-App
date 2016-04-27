@@ -1,21 +1,12 @@
 //
-//   Copyright 2014-2016 Slack Technologies, Inc.
+//  SlackTextViewController
+//  https://github.com/slackhq/SlackTextViewController
 //
-//   Licensed under the Apache License, Version 2.0 (the "License");
-//   you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
-//
-//       http://www.apache.org/licenses/LICENSE-2.0
-//
-//   Unless required by applicable law or agreed to in writing, software
-//   distributed under the License is distributed on an "AS IS" BASIS,
-//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//   See the License for the specific language governing permissions and
-//   limitations under the License.
+//  Copyright 2014-2016 Slack Technologies, Inc.
+//  Licence: MIT-Licence
 //
 
 #import "SLKTextView.h"
-
 #import "SLKTextView+SLKAdditions.h"
 
 #import "SLKUIConstants.h"
@@ -207,7 +198,7 @@ static NSString *const SLKTextViewGenericFormattingSelectorPrefix = @"slk_format
     
     if (self.isDynamicTypeEnabled) {
         NSString *contentSizeCategory = [[UIApplication sharedApplication] preferredContentSizeCategory];
-        CGFloat pointSizeDifference = [SLKTextView pointSizeDifferenceForCategory:contentSizeCategory];
+        CGFloat pointSizeDifference = SLKPointSizeDifferenceForCategory(contentSizeCategory);
         
         CGFloat factor = pointSizeDifference/self.initialFontSize;
         
@@ -434,6 +425,13 @@ SLKPastableMediaType SLKPastableMediaTypeFromNSString(NSString *string)
     [self refreshFirstResponder];
 }
 
+- (void)setContentOffset:(CGPoint)contentOffset
+{
+    // At times during a layout pass, the content offset's x value may change.
+    // Since we only care about vertical offset, let's override its horizontal value to avoid other layout issues.
+    [super setContentOffset:CGPointMake(0.0, contentOffset.y)];
+}
+
 
 #pragma mark - UITextView Overrides
 
@@ -481,7 +479,7 @@ SLKPastableMediaType SLKPastableMediaTypeFromNSString(NSString *string)
 - (void)setFontName:(NSString *)fontName pointSize:(CGFloat)pointSize withContentSizeCategory:(NSString *)contentSizeCategory
 {
     if (self.isDynamicTypeEnabled) {
-        pointSize += [SLKTextView pointSizeDifferenceForCategory:contentSizeCategory];
+        pointSize += SLKPointSizeDifferenceForCategory(contentSizeCategory);
     }
     
     UIFont *dynamicFont = [UIFont fontWithName:fontName size:pointSize];
@@ -920,7 +918,7 @@ SLKPastableMediaType SLKPastableMediaTypeFromNSString(NSString *string)
 
 typedef void (^SLKKeyCommandHandler)(UIKeyCommand *keyCommand);
 
-- (void)observeKeyInput:(NSString *)input modifiers:(UIKeyModifierFlags)modifiers title:(NSString *)title completion:(SLKKeyCommandHandler)completion;
+- (void)observeKeyInput:(NSString *)input modifiers:(UIKeyModifierFlags)modifiers title:(NSString *_Nullable)title completion:(void (^)(UIKeyCommand *keyCommand))completion
 {
     NSAssert([input isKindOfClass:[NSString class]], @"You must provide a string with one or more characters corresponding to the keys to observe.");
     NSAssert(completion != nil, @"You must provide a non-nil completion block.");
